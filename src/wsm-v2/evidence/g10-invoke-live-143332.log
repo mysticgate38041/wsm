@@ -1,0 +1,3 @@
+10-06 14:29:53.659 I/WSMEngine( 6622): WATCH alive: mods=0x0 instance=0x0 smdt=0.0000 modsN=-1
+10-06 14:33:06.122 I/WSMEngine( 6622): INVOKE get_Instance -> 0x795c9a07ec80 match_static=1
+10-06 14:33:06.122 I/WSMEngine( 6622): WATCH static: mods=0x795ca2f21e70 instance=0x795c9a07ec80 smdt=0.0000(has=0) modsN=0 (t=432s)

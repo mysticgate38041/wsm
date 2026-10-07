@@ -1,0 +1,46 @@
+
+C:\Users\Administrator\Downloads\Mod\gt_dump\out\carve\libil2cpp_reloc_norela.so:	file format elf64-littleaarch64
+
+Disassembly of section il2cpp:
+
+0000000003abc390 <__start_il2cpp>:
+ 63b77a0: d10383ff     	sub	sp, sp, #0xe0
+ 63b77a4: a90b5ffe     	stp	x30, x23, [sp, #0xb0]
+ 63b77a8: a90c57f6     	stp	x22, x21, [sp, #0xc0]
+ 63b77ac: a90d4ff4     	stp	x20, x19, [sp, #0xd0]
+ 63b77b0: 9001f595     	adrp	x21, 0xa267000
+ 63b77b4: 397c86a8     	ldrb	w8, [x21, #0xf21]
+ 63b77b8: 2a0103f4     	mov	w20, w1
+ 63b77bc: aa0003f3     	mov	x19, x0
+ 63b77c0: 37000188     	tbnz	w8, #0x0, 0x63b77f0 <__start_il2cpp+0x28fb460>
+ 63b77c4: 9001be20     	adrp	x0, 0x9b7b000
+ 63b77c8: f9432000     	ldr	x0, [x0, #0x640]
+ 63b77cc: 97586f3c     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 63b77d0: b001bea0     	adrp	x0, 0x9b8c000
+ 63b77d4: f9465800     	ldr	x0, [x0, #0xcb0]
+ 63b77d8: 97586f39     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 63b77dc: b001bc60     	adrp	x0, 0x9b44000
+ 63b77e0: f9478000     	ldr	x0, [x0, #0xf00]
+ 63b77e4: 97586f36     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 63b77e8: 52800028     	mov	w8, #0x1                // =1
+ 63b77ec: 393c86a8     	strb	w8, [x21, #0xf21]
+ 63b77f0: 528cca40     	mov	w0, #0x6652             // =26194
+ 63b77f4: aa1f03e1     	mov	x1, xzr
+ 63b77f8: 9491bc09     	bl	0x882681c <__start_il2cpp+0x4d6a48c>
+ 63b77fc: 360001a0     	tbz	w0, #0x0, 0x63b7830 <__start_il2cpp+0x28fb4a0>
+ 63b7800: 528cca40     	mov	w0, #0x6652             // =26194
+ 63b7804: aa1f03e1     	mov	x1, xzr
+ 63b7808: 9491bc32     	bl	0x88268d0 <__start_il2cpp+0x4d6a540>
+ 63b780c: b4000ce0     	cbz	x0, 0x63b79a8 <__start_il2cpp+0x28fb618>
+ 63b7810: aa1303e1     	mov	x1, x19
+ 63b7814: 2a1403e2     	mov	w2, w20
+ 63b7818: a94d4ff4     	ldp	x20, x19, [sp, #0xd0]
+ 63b781c: a94c57f6     	ldp	x22, x21, [sp, #0xc0]
+ 63b7820: a94b5ffe     	ldp	x30, x23, [sp, #0xb0]
+ 63b7824: aa1f03e3     	mov	x3, xzr
+ 63b7828: 910383ff     	add	sp, sp, #0xe0
+ 63b782c: 1489b713     	b	0x8625478 <__start_il2cpp+0x4b690e8>
+ 63b7830: b9406e68     	ldr	w8, [x19, #0x6c]
+ 63b7834: 3cc5c260     	ldur	q0, [x19, #0x5c]
+ 63b7838: 910243e0     	add	x0, sp, #0x90
+ 63b783c: aa1f03e1     	mov	x1, xzr

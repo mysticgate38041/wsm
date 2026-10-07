@@ -1,0 +1,4 @@
+10-07 02:05:39.601  8880  9366 I WSMEngine: HOOKCOUNT: HOOKCOUNT secs=280 code=0x400026966dd8 nmaps=0 patched=2 | INSTALLED, tunggu 280s...
+10-07 02:10:19.722  8880  9589 I WSM-H64 : agent: HOOKRESTOREv2 nr=2 count=0
+10-07 02:10:19.725  8880  9366 I WSMEngine: HOOKCOUNT done: HOOKCOUNT secs=280 code=0x400026966dd8 nmaps=0 patched=2 | INSTALLED, tunggu 280s... | HOTCOUNT=0
+10-07 02:10:19.725  8880  9366 I WSMEngine: CTL[0] hookcount 280 z -> HOOKCOUNT secs=280 code=0x400026966dd8 nmaps=0 patched=2 | INSTALLED, tunggu 280s... | HOTCOUNT=0

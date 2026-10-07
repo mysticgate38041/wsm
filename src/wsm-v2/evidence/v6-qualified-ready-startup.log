@@ -1,0 +1,61 @@
+--------- beginning of main
+10-07 11:33:58.964  2412  2412 I WSM     : [com.kakaogames.gdts] pre-staged payload=203760 B fnv64=8663fd1775bab767 staging=deferred_to_post
+10-07 11:33:58.970  2412  2412 I WSM     : [com.kakaogames.gdts] pre-staged dex=26552 B
+10-07 11:33:59.052  2412  2412 I WSM     : [com.kakaogames.gdts] dex staged 26552 B fd=56
+10-07 11:33:59.052  2412  2412 I WSM     : post staged+signaled pid=2412 chan_fd=58 payload_fd=55
+10-07 11:33:59.056  2412  2419 I WSMEngine: JNI_OnLoad received (build=wsm-v6.0.0 abi=x86_64)
+10-07 11:33:59.056  2412  2419 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/55 handle=0x267dbe80d8e8b865 jni_ver=0x10006 (payload 203760 B fnv64=8663fd1775bab767)
+10-07 11:33:59.056  2412  2426 I WSMEngine: ALIVE pid=2412 uid=10075 hello_magic=0x574d5348 hello_proto=3
+10-07 11:33:59.056  2412  2426 I WSMEngine: handshake ack written (proto=3 nonce=e24f5a03ff1ecf56)
+10-07 11:33:59.106  2412  2419 I WSM     : HANDSHAKE_OK engine_pid=2412 engine_uid=10075 state=1 caps=0x0 build=wsm-v6.0.0 abi=x86_64
+10-07 11:34:46.652  2534  2534 I WSM     : [com.kakaogames.gdts] pre-staged payload=203760 B fnv64=8663fd1775bab767 staging=deferred_to_post
+10-07 11:34:46.653  2534  2534 I WSM     : [com.kakaogames.gdts] pre-staged dex=26552 B
+10-07 11:34:46.674  2534  2534 I WSM     : [com.kakaogames.gdts] dex staged 26552 B fd=56
+10-07 11:34:46.674  2534  2534 I WSM     : post staged+signaled pid=2534 chan_fd=58 payload_fd=55
+10-07 11:34:46.675  2534  2541 I WSMEngine: JNI_OnLoad received (build=wsm-v6.0.0 abi=x86_64)
+10-07 11:34:46.675  2534  2541 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/55 handle=0xc3ca95d05d4aa2f jni_ver=0x10006 (payload 203760 B fnv64=8663fd1775bab767)
+10-07 11:34:46.676  2534  2542 I WSMEngine: ALIVE pid=2534 uid=10075 hello_magic=0x574d5348 hello_proto=3
+10-07 11:34:46.676  2534  2542 I WSMEngine: handshake ack written (proto=3 nonce=09903f0fad2e56ff)
+10-07 11:34:46.725  2534  2541 I WSM     : HANDSHAKE_OK engine_pid=2534 engine_uid=10075 state=1 caps=0x0 build=wsm-v6.0.0 abi=x86_64
+10-07 11:35:40.362  2580  2580 I WSM     : [com.kakaogames.gdts] pre-staged payload=203760 B fnv64=8663fd1775bab767 staging=deferred_to_post
+10-07 11:35:40.362  2580  2580 I WSM     : [com.kakaogames.gdts] pre-staged dex=26552 B
+10-07 11:35:40.372  2580  2580 I WSM     : [com.kakaogames.gdts] dex staged 26552 B fd=56
+10-07 11:35:40.372  2580  2580 I WSM     : post staged+signaled pid=2580 chan_fd=58 payload_fd=55
+10-07 11:35:40.373  2580  2587 I WSMEngine: JNI_OnLoad received (build=wsm-v6.0.0 abi=x86_64)
+10-07 11:35:40.373  2580  2587 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/55 handle=0x6d9573d42b3245b7 jni_ver=0x10006 (payload 203760 B fnv64=8663fd1775bab767)
+10-07 11:35:40.373  2580  2593 I WSMEngine: ALIVE pid=2580 uid=10075 hello_magic=0x574d5348 hello_proto=3
+10-07 11:35:40.373  2580  2593 I WSMEngine: handshake ack written (proto=3 nonce=acc10fe80732ed38)
+10-07 11:35:40.424  2580  2587 I WSM     : HANDSHAKE_OK engine_pid=2580 engine_uid=10075 state=1 caps=0x0 build=wsm-v6.0.0 abi=x86_64
+10-07 11:37:06.781  2665  2665 I WSM     : [com.kakaogames.gdts] pre-staged payload=203760 B fnv64=8663fd1775bab767 staging=deferred_to_post
+10-07 11:37:06.781  2665  2665 I WSM     : [com.kakaogames.gdts] pre-staged dex=26552 B
+10-07 11:37:06.795  2665  2665 I WSM     : [com.kakaogames.gdts] dex staged 26552 B fd=56
+10-07 11:37:06.795  2665  2665 I WSM     : post staged+signaled pid=2665 chan_fd=58 payload_fd=55
+10-07 11:37:06.796  2665  2672 I WSMEngine: JNI_OnLoad received (build=wsm-v6.0.0 abi=x86_64)
+10-07 11:37:06.796  2665  2672 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/55 handle=0xe4971d5527a87807 jni_ver=0x10006 (payload 203760 B fnv64=8663fd1775bab767)
+10-07 11:37:06.796  2665  2673 I WSMEngine: ALIVE pid=2665 uid=10075 hello_magic=0x574d5348 hello_proto=3
+10-07 11:37:06.796  2665  2673 I WSMEngine: handshake ack written (proto=3 nonce=02d04dc9ff51b787)
+10-07 11:37:06.846  2665  2672 I WSM     : HANDSHAKE_OK engine_pid=2665 engine_uid=10075 state=1 caps=0x0 build=wsm-v6.0.0 abi=x86_64
+10-07 11:37:09.812  2697  2697 I WSM     : [com.kakaogames.gdts] pre-staged payload=203760 B fnv64=8663fd1775bab767 staging=deferred_to_post
+10-07 11:37:09.812  2697  2697 I WSM     : [com.kakaogames.gdts] pre-staged dex=26552 B
+10-07 11:37:09.820  2697  2697 I WSM     : [com.kakaogames.gdts] dex staged 26552 B fd=56
+10-07 11:37:09.820  2697  2697 I WSM     : post staged+signaled pid=2697 chan_fd=58 payload_fd=55
+10-07 11:37:09.821  2697  2704 I WSMEngine: JNI_OnLoad received (build=wsm-v6.0.0 abi=x86_64)
+10-07 11:37:09.821  2697  2704 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/55 handle=0x104c7f2b42678763 jni_ver=0x10006 (payload 203760 B fnv64=8663fd1775bab767)
+10-07 11:37:09.821  2697  2710 I WSMEngine: ALIVE pid=2697 uid=10075 hello_magic=0x574d5348 hello_proto=3
+10-07 11:37:09.821  2697  2710 I WSMEngine: handshake ack written (proto=3 nonce=f3e0c945a94b6162)
+10-07 11:37:09.872  2697  2704 I WSM     : HANDSHAKE_OK engine_pid=2697 engine_uid=10075 state=1 caps=0x0 build=wsm-v6.0.0 abi=x86_64
+10-07 11:37:10.825  2697  2710 I WSMEngine: probe: fixture class absent or app not ready (expected in game)
+10-07 11:37:11.830  2697  2710 I WSMEngine: il2cpp mapline: 77daa5dae000-77dab0000000 r--p 00000000 08:12 655620                     /data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64/libil2cpp.so
+10-07 11:37:12.842  2697  2710 I WSMEngine: elf parsed at candidate base=0x400022c00000 (#1/1)
+10-07 11:37:24.852  2697  2710 I WSMEngine: WATCH direct-read verify: mods api=0x0 direct=0x77da27377180 -> skip | inst api=0x0 direct=0x0 -> LOCK
+10-07 11:37:24.852  2697  2710 I WSMEngine: probe done: libil2cpp base=0x400022c00000 elf sym 16/17 miss:il2cpp_method_get_pointer  | dom=0x77dbd42d8fc0 asm=0x77da90280e60 img=0x77da9027e430 cls=0x77da931be6c0 mth=0x77da93a40938 fld=0x77da93a40b78 off=8 sval=0x0 | inst=0x0 smdt=0.0000(has=-1) modsN=-1
+10-07 11:37:24.852  2697  2710 I WSMEngine: WATCH static: mods=0x0 instance=0x0 smdt=0.0000(has=-1) modsN=-1 (t=0s)
+10-07 11:37:24.853  2697  3264 I WSMEngine: CTL thread up (paths=1)
+10-07 11:37:24.853  2697  3265 I WSMEngine: FEAT v6 single owner (settle 2s)
+10-07 11:37:24.897  2697  2704 I WSM     : PROBE stage=2 base=0x400022c00000 :: LIVE base=0x400022c00000 cls=0x77da931be6c0 fld=0x77da93a40b78 off=8 | mods=0x0 instance=0x0 smdt=0.0000(has=-1) modsN=-1 (t=0s)
+10-07 11:37:25.860  2697  3264 I WSMEngine: CTL[0] @1791347481814441400 status -> {"request":1791347481814441400,"state":"booting","epoch":1,"features":{}}
+10-07 11:37:26.856  2697  3265 I WSMEngine: FEAT thread attached to il2cpp domain
+10-07 11:37:26.857  2697  3265 I WSMEngine: FEAT resolver ready (Stage/CharacterManager/CharacterStatsBehaviour)
+10-07 11:37:30.863  2697  3263 I WSMEngine: MENU dex loaded (wsm.WsmMenu)
+10-07 11:37:30.863  2697  3263 I WSMEngine: MENU native registered
+10-07 11:37:30.872  2697  3263 I WSMEngine: MENU showInActivity called

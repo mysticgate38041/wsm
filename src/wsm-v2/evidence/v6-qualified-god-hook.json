@@ -1,0 +1,26 @@
+{
+  "target": "0x400028fb64b4",
+  "before": "fd0f1af8fe6f01a9fa6702a9f85f03a9f65704a9f44f05a9ffc33cd1f30301aa",
+  "on": {
+    "request": 1791348140883347000,
+    "id": 2,
+    "epoch": 3,
+    "state": "rejected",
+    "detail": "GOD armed hero_stats=0x77d981650000 addr=0x400028fb64b4 slot=18 np=0 rc=-10"
+  },
+  "patched": "fd0f1af8fe6f01a9fa6702a9f85f03a9f65704a9f44f05a9ffc33cd1f30301aa",
+  "trampoline": "0x0",
+  "trampolineBytes": null,
+  "trampolineMap": null,
+  "off": {
+    "request": 1791348142923673400,
+    "id": 3,
+    "epoch": 3,
+    "state": "applied",
+    "detail": "OK GOD OFF (nr=0)"
+  },
+  "after": "fd0f1af8fe6f01a9fa6702a9f85f03a9f65704a9f44f05a9ffc33cd1f30301aa",
+  "onlyFirstWordChanged": true,
+  "restored": true,
+  "targetIdentity": "FieldObjectStatsBehaviour.ApplyDamage: IL2CPP methodPointer and dump prologue match"
+}

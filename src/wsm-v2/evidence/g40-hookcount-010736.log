@@ -1,0 +1,9 @@
+10-07 01:05:52.436  5283  5811 I WSMEngine: CTL thread up (paths=3)
+10-07 01:06:57.474  5283  5811 I WSM-H64 : ctor v4: arch=aarch64 pid=5283 bus=0x7c12172762e0
+10-07 01:06:57.474  5283  5811 I WSM-H64 : agent spawned
+10-07 01:06:57.475  5283  5952 I WSM-H64 : agent thread UP pid=5283
+10-07 01:06:57.517  5283  5952 I WSM-H64 : agent: HOOKINSTALL code=0x400026366dd8 cnt=0x40002f9c4fb0 nmaps=21 patched=2
+10-07 01:06:57.522  5283  5811 I WSMEngine: HOOKCOUNT: HOOKCOUNT secs=20 load=0x7c1210d96401 e=0 code=0x400026366dd8 nmaps=21 patched=2 | INSTALLED, tunggu 20s...
+10-07 01:07:17.550  5283  5952 I WSM-H64 : agent: HOOKRESTORE done, count=0
+10-07 01:07:17.554  5283  5811 I WSMEngine: HOOKCOUNT done: HOOKCOUNT secs=20 load=0x7c1210d96401 e=0 code=0x400026366dd8 nmaps=21 patched=2 | INSTALLED, tunggu 20s... | HOTCOUNT=0
+10-07 01:07:17.554  5283  5811 I WSMEngine: CTL[0] hookcount 20 -> HOOKCOUNT secs=20 load=0x7c1210d96401 e=0 code=0x400026366dd8 nmaps=21 patched=2 | INSTALLED, tunggu 20s... | HOTCOUNT=0

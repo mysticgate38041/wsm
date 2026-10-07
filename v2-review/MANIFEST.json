@@ -1,0 +1,50 @@
+{
+  "artifact_type": "REVIEW_AND_READ_ONLY_PREFLIGHT_NOT_INSTALLABLE_MODULE",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2250,
+      "sha256": "da0c9b0333311f94ed35a5aeff21d66ce9f5f7aee130f9d91718600e22d3f7d1"
+    },
+    {
+      "path": "VERIFICATION.md",
+      "bytes": 2629,
+      "sha256": "0eaf3d115b27ba8b5f8d6159301366e0ba7bcb7553dac3435f5c148eef39d115"
+    },
+    {
+      "path": "WSM_V2_MODERNIZATION.md",
+      "bytes": 35658,
+      "sha256": "9053d0e4655090e5cd0ebe8748541e69dd3aaf476a72d7d9009433e853503fd0"
+    },
+    {
+      "path": "evidence/artifact-review.json",
+      "bytes": 684,
+      "sha256": "df89a57766ce921ee80c7df721e4ab7013585ad88828cb50447dc31ab299f29a"
+    },
+    {
+      "path": "evidence/preflight-2026-10-06.json",
+      "bytes": 3501,
+      "sha256": "47a470adfa023e35b469d495cf27ce842940f11422ef9ccb265023307e65bd42"
+    },
+    {
+      "path": "evidence/tests-final.txt",
+      "bytes": 3714,
+      "sha256": "5ff77f9d68d329e42f1ff07400a07b05b13c1cf718515806436d60e7f0e40209"
+    },
+    {
+      "path": "evidence/tests-summary.json",
+      "bytes": 257,
+      "sha256": "3b5d0521dd8a5f4a354565c7cc6a634a53e6db069349ccb38a63cf2b2b08f106"
+    },
+    {
+      "path": "tests/test_preflight.py",
+      "bytes": 9373,
+      "sha256": "082ced25df23d384027485e93684bb5f420c80e1026a4d740010e32ac6486565"
+    },
+    {
+      "path": "tools/wsm_preflight.py",
+      "bytes": 9199,
+      "sha256": "60af615a0bec233f27e7bb277157f8c0915b2c65db706b3bdb13d30ea3bc1c80"
+    }
+  ]
+}

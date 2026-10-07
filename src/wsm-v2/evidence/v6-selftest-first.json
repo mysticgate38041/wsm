@@ -1,0 +1,7 @@
+{
+  "request": 1791346432324843500,
+  "id": 1,
+  "epoch": 3,
+  "state": "applied",
+  "detail": "OK payload ping/multiply 6*7=42"
+}

@@ -1,0 +1,26 @@
+10-06 11:11:05.724  2760  2774 I WSMEngine: handshake ack written (proto=2 nonce=6d721a6b7982899c)
+10-06 11:11:05.774  2760  2768 I WSM     : HANDSHAKE_OK engine_pid=2760 engine_uid=10075 state=1 caps=0x0 build=wsm-v2.0.0-poc1 abi=x86_64
+10-06 11:11:39.018  2807  2807 I WSM     : [com.kakaogames.gdts] pre-staged payload=13592 B fnv64=23580a88dd0867b2 staging=deferred_to_post
+10-06 11:11:39.044  2807  2807 I WSM     : post staged+signaled pid=2807 chan_fd=57 payload_fd=56
+10-06 11:11:39.046  2807  2815 I WSMEngine: JNI_OnLoad received (build=wsm-v2.0.0-poc1 abi=x86_64)
+10-06 11:11:39.046  2807  2815 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/56 handle=0x9547cde46ee9ff67 jni_ver=0x10006 (payload 13592 B fnv64=23580a88dd0867b2)
+10-06 11:11:39.046  2807  2822 I WSMEngine: ALIVE pid=2807 uid=10075 hello_magic=0x574d5348 hello_proto=2
+10-06 11:11:39.046  2807  2822 I WSMEngine: handshake ack written (proto=2 nonce=817060ea886efdaf)
+10-06 11:11:39.096  2807  2815 I WSM     : HANDSHAKE_OK engine_pid=2807 engine_uid=10075 state=1 caps=0x0 build=wsm-v2.0.0-poc1 abi=x86_64
+10-06 11:12:49.334  2897  2897 I WSM     : [com.kakaogames.gdts] pre-staged payload=13592 B fnv64=23580a88dd0867b2 staging=deferred_to_post
+10-06 11:12:49.360  2897  2897 I WSM     : post staged+signaled pid=2897 chan_fd=57 payload_fd=56
+10-06 11:12:49.361  2897  2904 I WSMEngine: JNI_OnLoad received (build=wsm-v2.0.0-poc1 abi=x86_64)
+10-06 11:12:49.361  2897  2904 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/56 handle=0x39d26a7ec0a60d9 jni_ver=0x10006 (payload 13592 B fnv64=23580a88dd0867b2)
+10-06 11:12:49.361  2897  2907 I WSMEngine: ALIVE pid=2897 uid=10075 hello_magic=0x574d5348 hello_proto=2
+10-06 11:12:49.361  2897  2907 I WSMEngine: handshake ack written (proto=2 nonce=4816adf8a698cab6)
+10-06 11:12:49.411  2897  2904 I WSM     : HANDSHAKE_OK engine_pid=2897 engine_uid=10075 state=1 caps=0x0 build=wsm-v2.0.0-poc1 abi=x86_64
+10-06 11:13:19.627  2939  2939 I WSM     : [com.kakaogames.gdts] pre-staged payload=13592 B fnv64=23580a88dd0867b2 staging=deferred_to_post
+10-06 11:13:19.647  2939  2939 I WSM     : post staged+signaled pid=2939 chan_fd=57 payload_fd=56
+10-06 11:13:19.649  2939  2947 I WSMEngine: JNI_OnLoad received (build=wsm-v2.0.0-poc1 abi=x86_64)
+10-06 11:13:19.649  2939  2947 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/56 handle=0x6aa89f562d8f0ea7 jni_ver=0x10006 (payload 13592 B fnv64=23580a88dd0867b2)
+10-06 11:13:19.652  2939  2955 I WSMEngine: ALIVE pid=2939 uid=10075 hello_magic=0x574d5348 hello_proto=2
+10-06 11:13:19.652  2939  2955 I WSMEngine: handshake ack written (proto=2 nonce=dc5b0777f16cc9bc)
+10-06 11:13:19.700  2939  2947 I WSM     : HANDSHAKE_OK engine_pid=2939 engine_uid=10075 state=1 caps=0x0 build=wsm-v2.0.0-poc1 abi=x86_64
+10-06 11:13:20.655  2939  2955 I WSMEngine: probe: fixture class absent or app not ready (expected in game)
+10-06 11:13:21.660  2939  2955 I WSMEngine: probe done: libil2cpp base=0x78dcb5dae000 elf sym 0/10 dg=0x0 cfn=0x0 miss:no-query | query dom=0x0 asm=0x0 img=0x0 cls=0x0
+10-06 11:13:21.705  2939  2947 I WSM     : PROBE stage=2 base=0x78dcb5dae000 :: libil2cpp base=0x78dcb5dae000 elf sym 0/10 dg=0x0 cfn=0x0 miss:no-query | query dom=0x0 asm=0x0 img=0x0 cls=0x0

@@ -1,0 +1,10 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.pdf binary
+# Preserve recorded evidence bytes and their historical hashes.
+src/wsm-v2/evidence/** -text
+analysis/dump-source-audit/** -text

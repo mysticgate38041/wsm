@@ -1,0 +1,65 @@
+{
+  "scope": "INSTALLER_UNIT_ONLY_NO_MODULE_INSTALLED",
+  "serial": "emulator-5554",
+  "temporaryDeviceDirectory": "/data/local/tmp/wsm-installer-unit-1791345396425581200",
+  "cases": [
+    {
+      "case": "x86_64",
+      "expected": 0,
+      "exit": 1,
+      "pass": false,
+      "output": ""
+    },
+    {
+      "case": "arm64",
+      "expected": 0,
+      "exit": 1,
+      "pass": false,
+      "output": ""
+    },
+    {
+      "case": "old_api",
+      "expected": 91,
+      "exit": 1,
+      "pass": false,
+      "output": ""
+    },
+    {
+      "case": "unsupported_abi",
+      "expected": 91,
+      "exit": 1,
+      "pass": false,
+      "output": ""
+    },
+    {
+      "case": "recovery",
+      "expected": 91,
+      "exit": 1,
+      "pass": false,
+      "output": ""
+    },
+    {
+      "case": "old_magisk",
+      "expected": 91,
+      "exit": 1,
+      "pass": false,
+      "output": ""
+    },
+    {
+      "case": "invalid_api",
+      "expected": 91,
+      "exit": 1,
+      "pass": false,
+      "output": ""
+    },
+    {
+      "case": "tampered_hash",
+      "expected": 91,
+      "exit": 1,
+      "pass": false,
+      "output": ""
+    }
+  ],
+  "passed": 0,
+  "total": 8
+}

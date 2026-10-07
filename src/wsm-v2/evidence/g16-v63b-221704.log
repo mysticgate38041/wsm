@@ -1,0 +1,5 @@
+10-06 22:15:58.775 I/WSMEngine(25702): FEAT thread start (settle 18s)
+10-06 22:16:04.793 I/WSMEngine(25702): MENU showInActivity called
+10-06 22:16:16.777 I/WSMEngine(25702): FEAT thread attached to il2cpp domain
+10-06 22:16:16.777 I/WSMEngine(25702): FEAT resolver ready (Stage/CharacterManager/CharacterStatsBehaviour)
+10-06 22:16:16.777 I/WSMEngine(25702): FEAT apply v=0 chars=-2

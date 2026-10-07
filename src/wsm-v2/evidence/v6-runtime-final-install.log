@@ -1,0 +1,16 @@
+- Device is system-as-root
+***************************
+ WS Menu (WSM) 6 
+ by worm shadow (untuk He) 
+***************************
+*******************
+ Powered by Magisk 
+*******************
+- Extracting module files
+- WSM v6.0.0 / x86_64 / integrity PASS
+- Enable a compatible Zygisk provider and reboot once.
+- Target: com.kakaogames.gdts, version 3.54.0 only.
+- Profiles are manual; controls begin OFF.
+- Disable other GT injection modules before testing WSM.
+- Runtime diagnostics: WSM / WSMEngine / WSM-H64.
+- Done

@@ -1,0 +1,10 @@
+10-07 00:19:23.564  9224  9744 I WSMEngine: CTL thread up (paths=3)
+10-07 00:20:28.593  9224  9744 I WSM-H64 : ctor v4: arch=aarch64 pid=9224 bus=0x7730b1eabcd0
+10-07 00:20:28.593  9224  9744 I WSM-H64 : agent spawned
+10-07 00:20:28.593  9224  9744 I WSMEngine: POC2B: handle=0x773059a7d401
+10-07 00:20:28.593  9224  9888 I WSM-H64 : agent thread UP pid=9224
+10-07 00:20:28.599  9224  9744 I WSMEngine: POC2B thread=UP hb=2 tmag=0x74ead001
+10-07 00:20:28.600  9224  9888 I WSM-H64 : agent: ping served
+10-07 00:20:28.604  9224  9888 I WSM-H64 : agent: mul 6 x 7 = 42
+10-07 00:20:28.609  9224  9744 I WSMEngine: POC2B done: POC2B busfile=1 load h=0x773059a7d401 e=0 thread=UP hb=2 tid=9224 mag=0xa864cafe ping=2 pid=9224 m=0xa864cafe mul=42 hb2=5
+10-07 00:20:28.609  9224  9744 I WSMEngine: CTL[0] nbpoc2 -> POC2B busfile=1 load h=0x773059a7d401 e=0 thread=UP hb=2 tid=9224 mag=0xa864cafe ping=2 pid=9224 m=0xa864cafe mul=42 hb2=5

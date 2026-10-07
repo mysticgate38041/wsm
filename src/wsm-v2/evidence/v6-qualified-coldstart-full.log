@@ -1,0 +1,1530 @@
+--------- beginning of system
+10-07 11:33:58.878   396  1423 D CompatibilityChangeReporter: Compat change id reported: 161252188; UID 10075; state: DISABLED
+10-07 11:33:58.880   396  1423 W ActivityTaskManager: callingPackage for (uid=2000, pid=2409) has no WPC
+10-07 11:33:58.880   396  1423 D CompatibilityChangeReporter: Compat change id reported: 244637991; UID 2000; state: ENABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 265464455; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 265452344; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 266124927; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 265451093; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 265456536; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 255940284; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 236283604; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 263959004; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 264304459; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 264301586; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 254631730; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 273509367; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 263259275; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 174042980; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 174042936; UID 10075; state: DISABLED
+10-07 11:33:58.885   396  1423 D CompatibilityChangeReporter: Compat change id reported: 181136395; UID 10075; state: DISABLED
+10-07 11:33:58.892   396  1423 D CompatibilityChangeReporter: Compat change id reported: 194480991; UID 10075; state: ENABLED
+--------- beginning of main
+10-07 11:33:58.894   396  1423 E CellBroadcastUtils: getDefaultCellBroadcastReceiverPackageName: no package found
+10-07 11:33:58.902   234   234 I binder:234_1: type=1400 audit(0.0:1077): avc:  denied  { call } for  scontext=u:r:surfaceflinger:s0 tcontext=u:r:init:s0 tclass=binder permissive=1
+10-07 11:33:58.907   396  1423 D CompatibilityChangeReporter: Compat change id reported: 184838306; UID 10075; state: DISABLED
+10-07 11:33:58.907   396  1423 D CompatibilityChangeReporter: Compat change id reported: 185004937; UID 10075; state: DISABLED
+10-07 11:33:58.908   396  1423 D CompatibilityChangeReporter: Compat change id reported: 197654537; UID 10075; state: ENABLED
+10-07 11:33:58.910   396  1423 D CompatibilityChangeReporter: Compat change id reported: 205907456; UID 10075; state: ENABLED
+10-07 11:33:58.915   396  1423 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity} with LAUNCH_SINGLE_TASK from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+10-07 11:33:58.916   605   700 V WindowManagerShell: Transition requested: android.os.BinderProxy@10f7a78 TransitionRequestInfo { type = 1, triggerTask = TaskInfo{userId=0 taskId=7 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity } baseActivity=ComponentInfo{com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity} topActivity=ComponentInfo{com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity} origActivity=null realActivity=ComponentInfo{com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity} numActivities=1 lastActiveTime=36235 supportsMultiWindow=true resizeMode=2 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@bb7e551} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{2d181b6 com.kakaogame.KGUnityPlayerActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 isUserFullscreenOverrideEnabled=false isTopActivityTransparent=false locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null, flags = 0 }
+10-07 11:33:58.930   396   415 I UTILS   : config cache reloaded, version=2, lastModified=1791347613062, length=35412
+10-07 11:33:58.938   396   415 D CompatibilityChangeReporter: Compat change id reported: 135634846; UID 10075; state: DISABLED
+10-07 11:33:58.938   396   415 D CompatibilityChangeReporter: Compat change id reported: 177438394; UID 10075; state: DISABLED
+10-07 11:33:58.938   396   415 D CompatibilityChangeReporter: Compat change id reported: 135772972; UID 10075; state: DISABLED
+10-07 11:33:58.939   396   424 D CompatibilityChangeReporter: Compat change id reported: 143937733; UID 10075; state: ENABLED
+10-07 11:33:58.945   192   192 D Zygote  : Forked child process 2412
+10-07 11:33:58.945   234   234 I RenderEngine: type=1400 audit(0.0:1078): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6869 scontext=u:r:surfaceflinger:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:33:58.951   396   424 I ActivityManager: Start proc 2412:com.kakaogames.gdts/u0a75 for next-top-activity {com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity}
+10-07 11:33:58.958   925  1076 E FA      : Task exception on worker thread: java.lang.IllegalStateException: Not initialized: m7.sd.m(:com.google.android.gms.dynamite_measurementdynamite@262334032@26.23.34 (190800-0):12)
+10-07 11:33:58.959   925  1076 E FA      : Persisted config not initialized. Not logging error/warn
+10-07 11:33:58.964  2412  2412 I WSM     : [com.kakaogames.gdts] pre-staged payload=203760 B fnv64=8663fd1775bab767 staging=deferred_to_post
+10-07 11:33:58.968  1195  1195 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.startService:1899 android.content.ContextWrapper.startService:825 android.content.ContextWrapper.startService:825 com.android.coreservice.CoreBroadcastReceiver.onReceive:46 android.app.ActivityThread.handleReceiver:4499 
+10-07 11:33:58.970   396   455 D CompatibilityChangeReporter: Compat change id reported: 265195908; UID 10075; state: ENABLED
+10-07 11:33:58.970  2412  2412 I WSM     : [com.kakaogames.gdts] pre-staged dex=26552 B
+10-07 11:33:58.969  1195  1195 I oid.coreservice: type=1400 audit(0.0:1079): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6869 scontext=u:r:system_app:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:33:58.974   396   428 W libprocessgroup: SetCgroup::ExecuteForProcess: failed to open /dev/cpuctl/top-app/cgroup.procs: No such file or directory
+10-07 11:33:58.979   209   209 I HwBinder:209_2: type=1400 audit(0.0:1080): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6869 scontext=u:r:hal_graphics_composer_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:33:58.982   234   234 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-07 11:33:58.991  2412  2412 W nativebridge: Failed to bind-mount /data/local/cfg-ednye/ as /proc/cpuinfo: Not a directory
+10-07 11:33:58.995  2412  2412 W nativebridge: Failed to bind-mount /system/etc/cpuinfo.arm64.txt as /proc/cpuinfo: No such file or directory
+10-07 11:33:59.002   396  1425 D CompatibilityChangeReporter: Compat change id reported: 168419799; UID 10075; state: DISABLED
+10-07 11:33:59.002   396  1425 D CompatibilityChangeReporter: Compat change id reported: 273564678; UID 10075; state: DISABLED
+10-07 11:33:59.005  2412  2412 I main    : type=1400 audit(0.0:1081): avc:  denied  { write } for  name="property_service" dev="tmpfs" ino=326 scontext=u:r:zygote:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=1
+10-07 11:33:59.005  2412  2412 I main    : type=1400 audit(0.0:1082): avc:  denied  { connectto } for  path="/dev/socket/property_service" scontext=u:r:zygote:s0 tcontext=u:r:init:s0 tclass=unix_stream_socket permissive=1
+10-07 11:33:59.009  2412  2412 I main    : type=1400 audit(0.0:1083): avc:  denied  { read } for  name="0" dev="tmpfs" ino=2 scontext=u:r:zygote:s0 tcontext=u:object_r:system_data_file:s0 tclass=lnk_file permissive=1
+10-07 11:33:59.009  2412  2412 I main    : type=1400 audit(0.0:1084): avc:  denied  { search } for  name="com.kakaogames.gdts" dev="sdb2" ino=131300 scontext=u:r:zygote:s0 tcontext=u:object_r:app_data_file:s0:c75,c256,c512,c768 tclass=dir permissive=1
+10-07 11:33:59.018   605   823 W System  : ClassLoader referenced unknown path: 
+10-07 11:33:59.015  2412  2412 I main    : type=1400 audit(0.0:1085): avc:  denied  { search } for  name="/" dev="vboxsf" ino=1 scontext=u:r:zygote:s0 tcontext=u:object_r:unlabeled:s0 tclass=dir permissive=1
+10-07 11:33:59.019   605   823 D nativeloader: Configuring clns-7 for other apk . target_sdk_version=36, uses_libraries=, library_path=/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/base.apk!/lib/arm64-v8a:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand
+10-07 11:33:59.019  2412  2412 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:33:59.020   605   823 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:33:59.023  2412  2412 I Zygote  : seccomp disabled by setenforce 0
+10-07 11:33:59.031  2412  2412 I kakaogames.gdts: Using CollectorTypeCC GC.
+10-07 11:33:59.033   396  1425 D CoreBackPreview: Window{ed16fe0 u0 Splash Screen com.kakaogames.gdts}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@cfb95e, mPriority=0, mIsAnimationCallback=false}
+10-07 11:33:59.041  2412  2412 I houdini : [2412] Houdini now in android app mode
+10-07 11:33:59.041  2412  2412 I houdini : [2412] Intel Bridge Technology for Leidian Android Emulator only, Copyright(C) Intel Corp. 2012-2025.
+10-07 11:33:59.041  2412  2412 I houdini : [2412] Use permitted only under a valid evaluation software license agreement - all other rights reserved. Expire date 20261101.
+10-07 11:33:59.041  2412  2412 I houdini : [2412] Initialize library(version: 14.0.0_z.leidian_com1.0 RELEASE)... successfully.
+10-07 11:33:59.052  2412  2412 E kakaogames.gdts: Not starting debugger since process cannot load the jdwp agent.
+10-07 11:33:59.052  2412  2412 I WSM     : [com.kakaogames.gdts] dex staged 26552 B fd=56
+10-07 11:33:59.052  2412  2412 I WSM     : post staged+signaled pid=2412 chan_fd=58 payload_fd=55
+10-07 11:33:59.054   605   854 E EGL_emulation: tid 854: eglSurfaceAttrib(1504): error 0x3009 (EGL_BAD_MATCH)
+10-07 11:33:59.054   605   854 W OpenGLRenderer: Failed to set EGL_SWAP_BEHAVIOR on surface 0x77db2adb2580, error=EGL_BAD_MATCH
+10-07 11:33:59.054   605   854 E OpenGLRenderer: Unable to match the desired swap behavior.
+10-07 11:33:59.056  2412  2419 I WSMEngine: JNI_OnLoad received (build=wsm-v6.0.0 abi=x86_64)
+10-07 11:33:59.056  2412  2419 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/55 handle=0x267dbe80d8e8b865 jni_ver=0x10006 (payload 203760 B fnv64=8663fd1775bab767)
+10-07 11:33:59.056  2412  2426 I WSMEngine: ALIVE pid=2412 uid=10075 hello_magic=0x574d5348 hello_proto=3
+10-07 11:33:59.056  2412  2426 I WSMEngine: handshake ack written (proto=3 nonce=e24f5a03ff1ecf56)
+10-07 11:33:59.060  2412  2412 V appproc : App process: starting thread pool.
+10-07 11:33:59.072   605  2421 I ndroid.systemui: fastpipe: Connect success
+10-07 11:33:59.073   605  2421 D HostConnection: HostRPC::connect sucess: app=com.android.systemui, pid=605, tid=2421, this=0x77dad42d0d40
+10-07 11:33:59.076   605  2421 D HostConnection: queryAndSetGLESMaxVersion select gles-version: 3.1 hostGLVersion:46 process:com.android.systemui
+10-07 11:33:59.091   396   413 V GameManagerService: Game power mode ON (process state was changed to foreground)
+10-07 11:33:59.095   396   428 W libprocessgroup: SetCgroup::ExecuteForProcess: failed to open /dev/cpuctl/top-app/cgroup.procs: No such file or directory
+10-07 11:33:59.101   605  2421 I ndroid.systemui: fastpipe: close connect
+10-07 11:33:59.102   234  1421 I surfaceflinger: fastpipe: Connect success
+10-07 11:33:59.102   234  1421 D HostConnection: HostRPC::connect sucess: app=surfaceflinger, pid=234, tid=1421, this=0x7052e8f43580
+10-07 11:33:59.103   234  1421 D HostConnection: queryAndSetGLESMaxVersion select gles-version: 3.1 hostGLVersion:46 process:surfaceflinger
+10-07 11:33:59.104  2412  2412 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10075; state: ENABLED
+10-07 11:33:59.104  2412  2412 D CompatibilityChangeReporter: Compat change id reported: 242716250; UID 10075; state: ENABLED
+10-07 11:33:59.106  2412  2419 I WSM     : HANDSHAKE_OK engine_pid=2412 engine_uid=10075 state=1 caps=0x0 build=wsm-v6.0.0 abi=x86_64
+10-07 11:33:59.110   396   412 V WindowManager: Sent Transition #4 createdAt=10-07 11:33:58.893 via request=TransitionRequestInfo { type = 1, triggerTask = TaskInfo{userId=0 taskId=7 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity } baseActivity=ComponentInfo{com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity} topActivity=ComponentInfo{com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity} origActivity=null realActivity=ComponentInfo{com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity} numActivities=1 lastActiveTime=36235 supportsMultiWindow=true resizeMode=2 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{2839636 Task{ade6fc8 #7 type=standard A=10075:com.kakaogames.gdts}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{d8f9937 com.kakaogame.KGUnityPlayerActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 isUserFullscreenOverrideEnabled=false isTopActivityTransparent=false locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null, flags = 0 }
+10-07 11:33:59.110   396   412 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+10-07 11:33:59.110   605   700 V WindowManagerShell: onTransitionReady android.os.BinderProxy@10f7a78: {id=4 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@ef3dd50} m=OPEN f=NONE leash=Surface(name=Task=7)/@0x841074d sb=Rect(0, 0 - 1600, 900) eb=Rect(0, 0 - 1600, 900) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@723cb49} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x677c202 sb=Rect(0, 0 - 1600, 900) eb=Rect(0, 0 - 1600, 900) d=0}]}
+10-07 11:33:59.110   396   412 V WindowManager:     info={id=4 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{RemoteToken{2839636 Task{ade6fc8 #7 type=standard A=10075:com.kakaogames.gdts}}} m=OPEN f=NONE leash=Surface(name=Task=7)/@0xd5a0d6a sb=Rect(0, 0 - 1600, 900) eb=Rect(0, 0 - 1600, 900) d=0},{WCT{RemoteToken{e5d2ea4 Task{1e510aa #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x8e93f55 sb=Rect(0, 0 - 1600, 900) eb=Rect(0, 0 - 1600, 900) d=0}]}
+10-07 11:33:59.111   605   700 V WindowManagerShell: Playing animation for (#4)android.os.BinderProxy@10f7a78@0
+10-07 11:33:59.111   605   700 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@c364465
+10-07 11:33:59.111   605   700 V WindowManagerShell:  try handler com.android.wm.shell.keyguard.KeyguardTransitionHandler@710153a
+10-07 11:33:59.111   605   700 V WindowManagerShell:  try handler com.android.wm.shell.pip.PipTransition@d2ce5eb
+10-07 11:33:59.111   605   700 V WindowManagerShell:  try handler com.android.wm.shell.activityembedding.ActivityEmbeddingController@8edaf48
+10-07 11:33:59.111   605   700 V WindowManagerShell:  try handler com.android.wm.shell.recents.RecentsTransitionHandler@24bc1e1
+10-07 11:33:59.111   605   700 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-07 11:33:59.112   605   700 V WindowManagerShell:  try handler com.android.wm.shell.splitscreen.StageCoordinator@45a4b06
+10-07 11:33:59.112   605   700 V WindowManagerShell:  try handler com.android.wm.shell.transition.RemoteTransitionHandler@9f1f5c7
+10-07 11:33:59.112   605   700 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=4 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@ef3dd50} m=OPEN f=NONE leash=Surface(name=Task=7)/@0x841074d sb=Rect(0, 0 - 1600, 900) eb=Rect(0, 0 - 1600, 900) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@723cb49} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x677c202 sb=Rect(0, 0 - 1600, 900) eb=Rect(0, 0 - 1600, 900) d=0}]}
+10-07 11:33:59.112   605   700 V WindowManagerShell:  Delegate animation for #4 to null
+10-07 11:33:59.112   605   700 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultTransitionHandler@3d277f4
+10-07 11:33:59.112   605   700 V WindowManagerShell: start default transition animation, info = {id=4 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@ef3dd50} m=OPEN f=NONE leash=Surface(name=Task=7)/@0x841074d sb=Rect(0, 0 - 1600, 900) eb=Rect(0, 0 - 1600, 900) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@723cb49} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x677c202 sb=Rect(0, 0 - 1600, 900) eb=Rect(0, 0 - 1600, 900) d=0}]}
+10-07 11:33:59.114   605   700 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@354d305 animAttr=0x13 type=OPEN isEntrance=false
+10-07 11:33:59.117   605   700 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@bd49a81 animAttr=0x12 type=OPEN isEntrance=true
+10-07 11:33:59.118   605   700 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@3d277f4
+10-07 11:33:59.126   396  1423 D CompatibilityChangeReporter: Compat change id reported: 170503758; UID 10075; state: ENABLED
+10-07 11:33:59.132  1195  1195 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.startService:1899 android.content.ContextWrapper.startService:825 android.content.ContextWrapper.startService:825 com.android.coreservice.CoreBroadcastReceiver.onReceive:55 android.app.ActivityThread.handleReceiver:4499 
+10-07 11:33:59.134  2412  2412 D nativeloader: Configuring clns-6 for other apk /system/framework/org.apache.http.legacy.jar. target_sdk_version=36, uses_libraries=ALL, library_path=/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/base.apk!/lib/arm64-v8a:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.kakaogames.gdts
+10-07 11:33:59.137  2412  2412 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:33:59.160  2412  2412 W ziparchive: Unable to open '/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.dm': No such file or directory
+10-07 11:33:59.160  2412  2412 W ziparchive: Unable to open '/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.dm': No such file or directory
+10-07 11:33:59.160  2412  2412 W kakaogames.gdts: Entry not found
+10-07 11:33:59.161  2412  2412 D nativeloader: Configuring clns-7 for other apk /data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/base.apk:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/base.apk!/lib/arm64-v8a:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.kakaogames.gdts
+10-07 11:33:59.161  2412  2412 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:33:59.191  1195  1195 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:1235 android.content.ContextWrapper.sendBroadcast:509 com.android.coreservice.TabManager.notifyGoogleInstall:341 com.android.coreservice.TabManager.notifyOpening:362 com.android.coreservice.TabManager.updateInner:219 
+10-07 11:33:59.280  2412  2412 V GraphicsEnvironment: Currently set values for:
+10-07 11:33:59.280  2412  2412 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-07 11:33:59.280  2412  2412 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-07 11:33:59.281  2412  2412 V GraphicsEnvironment: ANGLE GameManagerService for com.kakaogames.gdts: false
+10-07 11:33:59.281  2412  2412 V GraphicsEnvironment: com.kakaogames.gdts is not listed in per-application setting
+10-07 11:33:59.281  2412  2412 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-07 11:33:59.446   605   700 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#4)android.os.BinderProxy@10f7a78@0
+10-07 11:33:59.447   396   412 V WindowManager: Finish Transition #4: created at 10-07 11:33:58.893 collect-started=0.038ms request-sent=19.383ms started=39.616ms ready=209.481ms sent=210.861ms finished=553.343ms
+10-07 11:33:59.454   605   700 V WindowManagerShell: Track 0 became idle
+10-07 11:33:59.454   605   700 V WindowManagerShell: All active transition animations finished
+10-07 11:33:59.476   925   925 I ldmnq.launcher3: fastpipe: Connect success
+10-07 11:33:59.476   925   925 D HostConnection: HostRPC::connect sucess: app=com.ldmnq.launcher3, pid=925, tid=925, this=0x77dadefc32c0
+10-07 11:33:59.477   925   925 D HostConnection: queryAndSetGLESMaxVersion select gles-version: 3.1 hostGLVersion:46 process:com.ldmnq.launcher3
+10-07 11:33:59.518   396   587 I ActivityManager: Process com.kakaogames.gdts (pid 2412) has died: fg  TOP 
+10-07 11:33:59.519   396   425 I libprocessgroup: Successfully killed process cgroup uid 10075 pid 2412 in 0ms
+10-07 11:33:59.520   192   192 I Zygote  : Process 2412 exited due to signal 9 (Killed)
+10-07 11:33:59.536   396   413 V GameManagerService: Game power mode OFF (process remomved or state changed to background)
+10-07 11:33:59.538   396   413 D DisplayManagerService: Drop pending events for gone uid 10075
+10-07 11:34:00.042   234   234 I RenderEngine: type=1400 audit(0.0:1109): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6867 scontext=u:r:surfaceflinger:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:34:00.045   209   209 I HwBinder:209_2: type=1400 audit(0.0:1110): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6867 scontext=u:r:hal_graphics_composer_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:34:00.264  1738  1754 W utmethod.pinyin: Cleared Reference was only reachable from finalizer (only reported once)
+10-07 11:34:00.966   925  1076 E FA      : Task exception on worker thread: java.lang.IllegalStateException: Not initialized: m7.sd.m(:com.google.android.gms.dynamite_measurementdynamite@262334032@26.23.34 (190800-0):12)
+10-07 11:34:00.966   925  1076 E FA      : Persisted config not initialized. Not logging error/warn
+10-07 11:34:03.136   396   587 D OomAdjuster: Not killing cached processes
+10-07 11:34:03.136   396   587 W ProcessStats: Tracking association SourceState{dc8a51a com.ldmnq.launcher3/10051 BTop #1277} whose proc state 2 is better than process ProcessState{b9c394b com.google.android.gms.persistent/10042 pkg=com.google.android.gms} proc state 4 (206 skipped)
+10-07 11:34:03.509   964   964 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.libs.gmscorelogger.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+10-07 11:34:04.455   223   223 I ldinit  : type=1400 audit(0.0:1111): avc:  denied  { read } for  name="partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:34:04.455   223   223 I ldinit  : type=1400 audit(0.0:1112): avc:  denied  { open } for  path="/proc/partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:34:04.455   223   223 I ldinit  : type=1400 audit(0.0:1113): avc:  denied  { getattr } for  path="/proc/partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:34:05.062   396   465 D ActivityManager: freezing 2101 com.google.android.gms.unstable
+10-07 11:34:05.070   396   465 D ActivityManager: freezing 1696 com.android.imsserviceentitlement
+10-07 11:34:05.700   396   465 D ActivityManager: freezing 1878 com.android.providers.calendar
+10-07 11:34:05.836   396   465 D ActivityManager: freezing 1904 com.android.rkpdapp
+10-07 11:34:06.062   396   465 D ActivityManager: freezing 1947 com.android.statementservice
+10-07 11:34:07.953   396   465 D ActivityManager: freezing 2072 com.google.android.syncadapters.calendar
+10-07 11:34:08.340   964   964 I NearbyUWB: (REDACTED) Initiating shutdown of ServiceControllerRouter %s.
+10-07 11:34:08.346   964  1275 I NearbyUWB: (REDACTED) Completed shutdown of ServiceControllerRouter %s.
+10-07 11:34:08.347   964   964 I Nearby  : (REDACTED) Successfully shutdown executor %s.
+10-07 11:34:08.350   964   964 I Nearby  : (REDACTED) Successfully shutdown executor %s.
+10-07 11:34:08.416   396   465 D ActivityManager: freezing 1040 com.android.permissioncontroller
+10-07 11:34:08.717   396   587 D OomAdjuster: Not killing cached processes
+10-07 11:34:08.881   396   507 I WifiConnectivityManager: SetInitialScanState to : 2
+10-07 11:34:08.892   396   517 D InstantWifi: Drop, size: 1
+10-07 11:34:08.893   287   287 W wificond: Scan already started
+10-07 11:34:08.893   287   287 I wificond: Scan
+10-07 11:34:08.921   396   415 W ActivityTaskManager: Launch timeout has expired, giving up wake lock!
+10-07 11:34:08.966  1113  1449 I ChimeraPrvdrProxy: Shutting down chimera ContentProvider com.google.android.gms.reminders.provider.RemindersChimeraProvider
+10-07 11:34:09.893   396   782 D WifiNl80211Manager: Scan result ready event
+10-07 11:34:09.893   396   782 D WifiNative: Scan result ready event
+10-07 11:34:09.912   964   964 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.clearcut.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+10-07 11:34:12.525   396   507 E WifiHealthMonitor:  Hit PackageManager exception
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: android.content.pm.PackageManager$NameNotFoundException: No module info for package: com.android.wifi
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at android.app.ApplicationPackageManager.getModuleInfo(ApplicationPackageManager.java:1204)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at com.android.server.wifi.WifiHealthMonitor.getWifiStackVersion(WifiHealthMonitor.java:367)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at com.android.server.wifi.WifiHealthMonitor.extractCurrentSoftwareBuildInfo(WifiHealthMonitor.java:588)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at com.android.server.wifi.WifiHealthMonitor.postBootSwBuildCheck(WifiHealthMonitor.java:523)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at com.android.server.wifi.WifiHealthMonitor.postBootDetectionHandler(WifiHealthMonitor.java:514)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at com.android.server.wifi.WifiHealthMonitor.-$$Nest$mpostBootDetectionHandler(WifiHealthMonitor.java:0)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at com.android.server.wifi.WifiHealthMonitor$2.onAlarm(WifiHealthMonitor.java:190)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at android.app.AlarmManager$ListenerWrapper.run(AlarmManager.java:375)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at android.os.Handler.handleCallback(Handler.java:958)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at com.android.server.wifi.RunnerHandler.dispatchMessage(RunnerHandler.java:122)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at android.os.Looper.loopOnce(Looper.java:205)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at android.os.Looper.loop(Looper.java:294)
+10-07 11:34:12.525   396   507 E WifiHealthMonitor: 	at android.os.HandlerThread.run(HandlerThread.java:67)
+10-07 11:34:12.562   191   191 I binder:191_4: type=1400 audit(0.0:1114): avc:  denied  { add_name } for  name="globalAlert" scontext=u:r:netd:s0 tcontext=u:object_r:proc_net:s0 tclass=dir permissive=1
+10-07 11:34:12.562   191   191 I binder:191_4: type=1400 audit(0.0:1115): avc:  denied  { create } for  name="globalAlert" scontext=u:r:netd:s0 tcontext=u:object_r:proc_net:s0 tclass=file permissive=1
+10-07 11:34:12.570   396  1434 D CompatibilityChangeReporter: Compat change id reported: 161145287; UID 10042; state: ENABLED
+10-07 11:34:12.591   964  2393 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+10-07 11:34:12.600   964  1077 E NFC     : could not retrieve NFC service
+10-07 11:34:12.600   964  1077 I TapAndPay: NfcAdapter is null while obtaining CardEmulation instance. [CONTEXT service_id=79 ]
+10-07 11:34:12.605   964  2393 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+10-07 11:34:12.617   396  1434 D ActivityManager: sync unfroze 2101 com.google.android.gms.unstable for 6
+10-07 11:34:12.623  2101  2101 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.droidguard.DroidGuardFastRefreshGmsTaskBoundService.ACTION_TASK_READY dat=chimera-action:/... cmp=com.google.android.gms/.chimera.UnstableInternalBoundBrokerService }
+10-07 11:34:12.623  2101  2101 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.droidguard.DroidGuardFastRefreshGmsTaskBoundService.ACTION_TASK_READY dat=chimera-action:/... cmp=com.google.android.gms/.chimera.UnstableInternalBoundBrokerService }
+10-07 11:34:12.628   964  1077 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+10-07 11:34:12.633  2101  2179 W FileUtils: Failed to chmod(/data/user/0/com.google.android.gms/app_dg_cache): android.system.ErrnoException: chmod failed: ENOENT (No such file or directory)
+10-07 11:34:12.634  2101  2179 E DGFRR   : FR error [CONTEXT service_id=25 ]
+10-07 11:34:12.634  2101  2179 E DGFRR   : bqui: Failed to get VM keys.
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at bqul.c(:com.google.android.gms@262334032@26.23.34 (190800-933906539):87)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at bqwg.f(:com.google.android.gms@262334032@26.23.34 (190800-933906539):3)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at bqvm.a(:com.google.android.gms@262334032@26.23.34 (190800-933906539):87)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at bqvh.g(:com.google.android.gms@262334032@26.23.34 (190800-933906539):207)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at com.google.android.gms.droidguard.DroidGuardFastRefreshGmsTaskBoundService.a(:com.google.android.gms@262334032@26.23.34 (190800-933906539):50)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at dadx.call(:com.google.android.gms@262334032@26.23.34 (190800-933906539):36)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at bkey.c(:com.google.android.gms@262334032@26.23.34 (190800-933906539):50)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at bkey.run(:com.google.android.gms@262334032@26.23.34 (190800-933906539):66)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at bkkq.run(:com.google.android.gms@262334032@26.23.34 (190800-933906539):8)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at java.lang.Thread.run(Thread.java:1012)
+10-07 11:34:12.634  2101  2179 E DGFRR   : Caused by: java.nio.file.NoSuchFileException: /data/user/0/com.google.android.gms/app_dg_cache
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at sun.nio.fs.UnixFileSystemProvider.newDirectoryStream(UnixFileSystemProvider.java:447)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at j$.nio.file.spi.a.r(r8-map-id-a006b7fbb89d91042a01993caa35bbc9d16bfaad9039fb6cc58ea8d904f5ec0a:13)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at j$.nio.file.Files.newDirectoryStream(r8-map-id-a006b7fbb89d91042a01993caa35bbc9d16bfaad9039fb6cc58ea8d904f5ec0a:7)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	at bqul.c(:com.google.android.gms@262334032@26.23.34 (190800-933906539):14)
+10-07 11:34:12.634  2101  2179 E DGFRR   : 	... 12 more
+10-07 11:34:12.640   964  2393 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+10-07 11:34:12.640  2101  2101 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.droidguard.DroidGuardFastRefreshGmsTaskBoundService.ACTION_TASK_READY dat=chimera-action:/... cmp=com.google.android.gms/.chimera.UnstableInternalBoundBrokerService }
+10-07 11:34:12.650   964  1077 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+10-07 11:34:12.660  1113  1361 I Pay     : Active account was null, notification task will be cancelled. [CONTEXT service_id=198 ]
+10-07 11:34:12.687  1113  1361 E Pay     : NfcAdapter is null while obtaining CardEmulation instance. [CONTEXT service_id=198 ]
+10-07 11:34:12.687  1113  1361 E Pay     : CardEmulation is null while checking aid registration. [CONTEXT service_id=198 ]
+10-07 11:34:12.688  1113  1361 I SyntheticOperationsLogg: (REDACTED) SyntheticOperationsLogger unable to log "%s"'s use of "%s" because installOperationsCollector never executed
+10-07 11:34:12.692  1113  1361 I Pay     : (REDACTED) enabling component %s
+10-07 11:34:12.692  1113  1361 E Pay     : NfcAdapter is null while obtaining CardEmulation instance. [CONTEXT service_id=198 ]
+10-07 11:34:12.692  1113  1361 E Pay     : CardEmulation is null while trying to register AIDs. [CONTEXT service_id=198 ]
+10-07 11:34:12.692  1113  1361 I SyntheticOperationsLogg: (REDACTED) SyntheticOperationsLogger unable to log "%s"'s use of "%s" because installOperationsCollector never executed
+10-07 11:34:12.693  1113  1361 E Pay     : HCE service enablement failed: FAILED_CARD_EMULATION [CONTEXT service_id=198 ]
+10-07 11:34:12.697   964  1077 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+10-07 11:34:17.702   396   423 D OomAdjuster: Not killing cached processes
+10-07 11:34:17.702   396   423 W ProcessStats: Tracking association SourceState{dc8a51a com.ldmnq.launcher3/10051 BTop #1308} whose proc state 2 is better than process ProcessState{b9c394b com.google.android.gms.persistent/10042 pkg=com.google.android.gms} proc state 4 (27 skipped)
+10-07 11:34:17.715  1113  1113 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.checkin.internal.scheduler.ScheduledCheckinGmsTaskService.ACTION_TASK_READY dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsInternalBoundBrokerService }
+10-07 11:34:17.715  1113  1113 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.checkin.internal.scheduler.ScheduledCheckinGmsTaskService.ACTION_TASK_READY dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsInternalBoundBrokerService }
+10-07 11:34:17.717   964  2488 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+10-07 11:34:17.719  1113  1449 I Checkin : [ScheduledCheckinGmsTaskService] onRunTask
+10-07 11:34:17.721  1113  1449 I WakefulBroadcastRcvr: Processing wakeful broadcast: com.google.android.gms.checkin.CHECKIN_START_ACTION
+10-07 11:34:17.723  1113  1113 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.checkin.internal.scheduler.ScheduledCheckinGmsTaskService.ACTION_TASK_READY dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsInternalBoundBrokerService }
+10-07 11:34:17.723   964  1077 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+10-07 11:34:17.723  1113  2490 I Checkin : [CheckinIntentOperation] onHandleIntent, Intent { act=com.google.android.gms.checkin.CHECKIN_START_ACTION cat=[targeted_intent_op_prefix:.checkin.CheckinIntentOperation] cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }
+10-07 11:34:17.727  1113  2490 W Checkin : [ParamsBuilder] Gms missing READ_PHONE_STATE permission, cannot read hw info.
+10-07 11:34:17.734  2101  2228 W FileUtils: Failed to chmod(/data/user/0/com.google.android.gms/app_dg_cache): android.system.ErrnoException: chmod failed: ENOENT (No such file or directory)
+10-07 11:34:17.734  2101  2228 E DGFRR   : FR error [CONTEXT service_id=25 ]
+10-07 11:34:17.734  2101  2228 E DGFRR   : bqui: Failed to get VM keys.
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at bqul.c(:com.google.android.gms@262334032@26.23.34 (190800-933906539):87)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at bqwg.f(:com.google.android.gms@262334032@26.23.34 (190800-933906539):3)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at bqvm.a(:com.google.android.gms@262334032@26.23.34 (190800-933906539):87)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at bqvh.g(:com.google.android.gms@262334032@26.23.34 (190800-933906539):207)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at bquq.c(:com.google.android.gms@262334032@26.23.34 (190800-933906539):168)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at bqsa.e(:com.google.android.gms@262334032@26.23.34 (190800-933906539):58)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at bqsa.a(:com.google.android.gms@262334032@26.23.34 (190800-933906539):14)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at bqud.dispatchTransaction(:com.google.android.gms@262334032@26.23.34 (190800-933906539):30)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at ccgj.a(:com.google.android.gms@262334032@26.23.34 (190800-933906539):64)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at aabz.onTransact(:com.google.android.gms@262334032@26.23.34 (190800-933906539):23)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at android.os.Binder.transact(Binder.java:1212)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at ccgx.onTransact(:com.google.android.gms@262334032@26.23.34 (190800-933906539):169)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at android.os.Binder.execTransactInternal(Binder.java:1358)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at android.os.Binder.execTransact(Binder.java:1304)
+10-07 11:34:17.734  2101  2228 E DGFRR   : Caused by: java.nio.file.NoSuchFileException: /data/user/0/com.google.android.gms/app_dg_cache
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at sun.nio.fs.UnixFileSystemProvider.newDirectoryStream(UnixFileSystemProvider.java:447)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at j$.nio.file.spi.a.r(r8-map-id-a006b7fbb89d91042a01993caa35bbc9d16bfaad9039fb6cc58ea8d904f5ec0a:13)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at j$.nio.file.Files.newDirectoryStream(r8-map-id-a006b7fbb89d91042a01993caa35bbc9d16bfaad9039fb6cc58ea8d904f5ec0a:7)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	at bqul.c(:com.google.android.gms@262334032@26.23.34 (190800-933906539):14)
+10-07 11:34:17.734  2101  2228 E DGFRR   : 	... 13 more
+10-07 11:34:17.735  2101  2228 W DG      : [flow checkin] DroidGuardRunner.initSignalCollection() exception [CONTEXT service_id=25 ]
+10-07 11:34:17.735  2101  2228 W DG      : bquo
+10-07 11:34:17.735  2101  2228 W DG      : 	at bquq.c(:com.google.android.gms@262334032@26.23.34 (190800-933906539):180)
+10-07 11:34:17.735  2101  2228 W DG      : 	at bqsa.e(:com.google.android.gms@262334032@26.23.34 (190800-933906539):58)
+10-07 11:34:17.735  2101  2228 W DG      : 	at bqsa.a(:com.google.android.gms@262334032@26.23.34 (190800-933906539):14)
+10-07 11:34:17.735  2101  2228 W DG      : 	at bqud.dispatchTransaction(:com.google.android.gms@262334032@26.23.34 (190800-933906539):30)
+10-07 11:34:17.735  2101  2228 W DG      : 	at ccgj.a(:com.google.android.gms@262334032@26.23.34 (190800-933906539):64)
+10-07 11:34:17.735  2101  2228 W DG      : 	at aabz.onTransact(:com.google.android.gms@262334032@26.23.34 (190800-933906539):23)
+10-07 11:34:17.735  2101  2228 W DG      : 	at android.os.Binder.transact(Binder.java:1212)
+10-07 11:34:17.735  2101  2228 W DG      : 	at ccgx.onTransact(:com.google.android.gms@262334032@26.23.34 (190800-933906539):169)
+10-07 11:34:17.735  2101  2228 W DG      : 	at android.os.Binder.execTransactInternal(Binder.java:1358)
+10-07 11:34:17.735  2101  2228 W DG      : 	at android.os.Binder.execTransact(Binder.java:1304)
+10-07 11:34:17.737  1113  2490 I Checkin : [CheckinOperation] Starting Checkin: Default Task Reason : 8 Force : false UserId : 0 Start time : 55060
+10-07 11:34:17.740  1113  2490 I CheckinUtil: Classify the device as Phone. [CONTEXT service_id=130 ]
+10-07 11:34:17.754  1113  2490 I Checkin : [AndroidCheckinProtoModule] Checkin reason type: 8 attempt count: 1.
+10-07 11:34:17.771   396   782 D FileUtils: Rounded bytes from 3138699264 to 4000000000
+10-07 11:34:17.784  2101  2116 I id.gms.unstable: Compiler allocated 4286KB to compile byte[] bqsi.a(java.lang.String, java.lang.String, android.content.Context, com.google.android.gms.droidguard.DroidGuardResultsRequest, bqwr, java.util.Map, int, java.lang.Throwable)
+10-07 11:34:17.792   121  2231 W keystore2: system/security/keystore2/src/remote_provisioning.rs:102 - Error occurred: system/security/keystore2/src/rkpd_client.rs:226: Trying to get to IRegistration service.
+10-07 11:34:17.792   121  2231 W keystore2: 
+10-07 11:34:17.792   121  2231 W keystore2: Caused by:
+10-07 11:34:17.792   121  2231 W keystore2:     0: system/security/keystore2/src/rkpd_client.rs:120: Trying to get IRPC name.
+10-07 11:34:17.792   121  2231 W keystore2:     1: system/security/keystore2/src/globals.rs:440
+10-07 11:34:17.792   121  2231 W keystore2:     2: Error::Km(r#HARDWARE_TYPE_UNAVAILABLE)
+10-07 11:34:17.837   121  2231 W keystore2: system/security/keystore2/src/remote_provisioning.rs:102 - Error occurred: system/security/keystore2/src/rkpd_client.rs:226: Trying to get to IRegistration service.
+10-07 11:34:17.837   121  2231 W keystore2: 
+10-07 11:34:17.837   121  2231 W keystore2: Caused by:
+10-07 11:34:17.837   121  2231 W keystore2:     0: system/security/keystore2/src/rkpd_client.rs:120: Trying to get IRPC name.
+10-07 11:34:17.837   121  2231 W keystore2:     1: system/security/keystore2/src/globals.rs:440
+10-07 11:34:17.837   121  2231 W keystore2:     2: Error::Km(r#HARDWARE_TYPE_UNAVAILABLE)
+10-07 11:34:17.839   121  2231 E keystore2: system/security/keystore2/src/error.rs:180 - system/security/keystore2/src/security_level.rs:622
+10-07 11:34:17.839   121  2231 E keystore2: 
+10-07 11:34:17.839   121  2231 E keystore2: Caused by:
+10-07 11:34:17.839   121  2231 E keystore2:     0: system/security/keystore2/src/security_level.rs:620: While generating Key without explicit attestation key.
+10-07 11:34:17.839   121  2231 E keystore2:     1: Error::Km(r#CANNOT_ATTEST_IDS)
+10-07 11:34:17.839  1113  2490 W KeyAttestationHandler: Device supports DeviceIdAttestation, but KeyStoreException is caught with error code 8 [CONTEXT service_id=130 ]
+10-07 11:34:17.844  1113  2490 D TrafficStats: tagSocket(86) with statsTag=0x408, statsUid=-1
+10-07 11:34:17.881  1113  2490 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+10-07 11:34:17.882  1113  2490 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@262334032@26.23.34 (190800-933906539):204)
+10-07 11:34:17.882  1113  2490 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@262334032@26.23.34 (190800-933906539):4)
+10-07 11:34:17.920  1113  2490 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+10-07 11:34:17.920  1113  2490 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@262334032@26.23.34 (190800-933906539):204)
+10-07 11:34:17.920  1113  2490 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@262334032@26.23.34 (190800-933906539):4)
+10-07 11:34:18.049  1113  2490 I Checkin : [CheckinRequestProcessor] updateCheckinIdTokenFileFromResponse, Reading existing AID
+10-07 11:34:18.050  1113  2490 I Checkin : [CheckinRequestProcessor] Default Task : Checkin Succeeded: https://android.googleapis.com/checkin (fragment #1).
+10-07 11:34:18.057  1113  2490 I Checkin : [CheckinOperation] Checkin Operation finished with result: SUCCESS finish time: 55380.
+10-07 11:34:18.064  1113  2491 W ModuleInitIntentOp: Dropping unexpected action com.google.android.checkin.CHECKIN_COMPLETE
+10-07 11:34:18.064  1113  2500 I EnterpriseLoader: [ConditionsChecker] ZT config not present. [CONTEXT service_id=225 ]
+10-07 11:34:18.066  1113  2490 I AccountSeedingPrefetchI: AccountSeedingPrefetchInit intent operation started. [CONTEXT service_id=42 ]
+10-07 11:34:18.066   964   964 D BoundBrokerSvc: onRebind: Intent { act=com.google.android.gms.auth.aang.events.services.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentApiService }
+10-07 11:34:19.091   396   423 I ActivityManager: Skip zero pid ANR, process=com.kakaogames.gdts
+10-07 11:34:22.697   717   717 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-07 11:34:22.698   605   605 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-07 11:34:22.699   785   785 D CarrierSvcBindHelper: onPackageModified: com.google.android.gms
+10-07 11:34:22.716   396   477 I InputReader: Reconfiguring input devices, changes=KEYBOARD_LAYOUTS
+10-07 11:34:22.717   785   785 D CarrierSvcBindHelper: No carrier app for: 0
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: Failed to verity-protect package restrictions
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: java.io.IOException: Failed to enable fs-verity on FD(556): Operation not supported on transport endpoint
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at com.android.internal.security.VerityUtils.setUpFsverity(VerityUtils.java:89)
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at com.android.server.security.FileIntegrity.setUpFsVerity(FileIntegrity.java:56)
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at com.android.server.pm.ResilientAtomicFile.finishWrite(ResilientAtomicFile.java:146)
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at com.android.server.pm.Settings.writePackageRestrictions(Settings.java:2377)
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at com.android.server.pm.Settings.writePackageRestrictions(Settings.java:2212)
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at com.android.server.pm.PackageManagerService.writePendingRestrictions(PackageManagerService.java:1482)
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at com.android.server.pm.PackageManagerService$2.handleMessage(PackageManagerService.java:1509)
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at android.os.Handler.dispatchMessage(Handler.java:102)
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at android.os.Looper.loopOnce(Looper.java:205)
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at android.os.Looper.loop(Looper.java:294)
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at android.os.HandlerThread.run(HandlerThread.java:67)
+10-07 11:34:22.720   396   439 E ResilientAtomicFile: 	at com.android.server.ServiceThread.run(ServiceThread.java:46)
+10-07 11:34:22.721   785   948 D ImsResolver: maybeAddedImsService, packageName: com.google.android.gms
+10-07 11:34:22.728   396   592 D ActivityManager: sync unfroze 1040 com.android.permissioncontroller for 6
+10-07 11:34:22.728   396   592 D OomAdjuster: Not killing cached processes
+10-07 11:34:22.739  1040  2508 I PermissionControllerServiceImpl: Updating user sensitive for uid 10042
+10-07 11:34:22.741   396   422 W Searchables: No global search activity found
+10-07 11:34:22.745   396  1422 D CompatibilityChangeReporter: Compat change id reported: 261072174; UID 10041; state: ENABLED
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.746   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.747   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:34:22.761   396   422 W VoiceInteractionManager: no available voice recognition services found for user 0
+10-07 11:34:22.817   396   407 W System  : A resource failed to call release. 
+10-07 11:34:23.020   925   925 I Launcher: Deferring update until onResume
+10-07 11:34:23.205  1113  2227 W PeopleGalProvider: Don't have Contacts permission.
+10-07 11:34:23.205  1113  2227 I PeopleGalProvider: Method 0 completed.
+10-07 11:34:23.206  1261  2280 I ContactDirectoryManager: Directory provider com.google.android.gms(com.google.android.gms.people.gal.provider) returned a NULL cursor.
+10-07 11:34:23.212  1113  2225 I FraudProtectUtils: Not in testing population, skipping local test bank apps. [CONTEXT service_id=469 ]
+10-07 11:34:23.212  1113  2225 I FraudProtectUtils: (REDACTED) Latest bank app list size: %d, %s isBankApp: false
+10-07 11:34:23.212  1113  2225 W ComponentChangedIO: No package name in intent data or package is not a bank app [CONTEXT service_id=469 ]
+10-07 11:34:24.455   223   223 I ldinit  : type=1400 audit(0.0:1116): avc:  denied  { search } for  name="data" dev="sdb2" ino=17 scontext=u:r:ldinit:s0 tcontext=u:object_r:system_data_file:s0:c512,c768 tclass=dir permissive=1
+10-07 11:34:24.665   286   286 I storaged: type=1400 audit(0.0:1117): avc:  denied  { read } for  name="stat" dev="sysfs" ino=9012 scontext=u:r:storaged:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+10-07 11:34:24.665   286   286 I storaged: type=1400 audit(0.0:1118): avc:  denied  { open } for  path="/sys/devices/pci0000:00/0000:00:0f.0/virtio1/host0/target0:0:0/0:0:0:0/block/sda/stat" dev="sysfs" ino=9012 scontext=u:r:storaged:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+10-07 11:34:24.665   286   286 I storaged: type=1400 audit(0.0:1119): avc:  denied  { getattr } for  path="/sys/devices/pci0000:00/0000:00:0f.0/virtio1/host0/target0:0:0/0:0:0:0/block/sda/stat" dev="sysfs" ino=9012 scontext=u:r:storaged:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+10-07 11:34:26.813  1040  2508 I PermissionControllerServiceImpl: Updating user sensitive for user 0
+10-07 11:34:28.344   121  2493 I keystore2: system/security/keystore2/src/watchdog.rs:319 - Watchdog thread idle -> terminating. Have a great day.
+10-07 11:34:28.540   396  1433 D OomAdjuster: Not killing cached processes
+10-07 11:34:28.540   396  1433 W ProcessStats: Tracking association SourceState{dc8a51a com.ldmnq.launcher3/10051 BTop #1361} whose proc state 2 is better than process ProcessState{b9c394b com.google.android.gms.persistent/10042 pkg=com.google.android.gms} proc state 4 (35 skipped)
+10-07 11:34:29.026   396  1433 W BatteryExternalStatsWorker: error reading Bluetooth stats: 11
+10-07 11:34:31.064   964   964 D BoundBrokerSvc: onRebind: Intent { act=com.google.android.gms.libs.gmscorelogger.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+10-07 11:34:32.858   396   465 D ActivityManager: freezing 2101 com.google.android.gms.unstable
+10-07 11:34:33.074   964   964 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.auth.aang.events.services.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentApiService }
+10-07 11:34:33.212   396   465 D ActivityManager: freezing 1261 android.process.acore
+10-07 11:34:33.841   396  1433 D OomAdjuster: Not killing cached processes
+10-07 11:34:37.263  1983  2048 I Finsky  : [30] Stats for Executor: LightweightExecutor usf@4056b24[Running, pool size = 3, active threads = 0, queued tasks = 0, completed tasks = 214]
+10-07 11:34:37.350  1983  2048 I Finsky  : [30] Stats for Executor: BlockingExecutor usf@ecbc68d[Running, pool size = 3, active threads = 0, queued tasks = 0, completed tasks = 20]
+10-07 11:34:37.497  1983  2048 I Finsky  : [30] Stats for Executor: bgExecutor usf@150b042[Running, pool size = 4, active threads = 0, queued tasks = 0, completed tasks = 200]
+10-07 11:34:38.096  1113  1113 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.common.BIND_SHARED_PREFS pkg=com.google.android.gms }
+10-07 11:34:38.476  1274  1601 W System  : Ignoring header moid because its value was null.
+10-07 11:34:38.519  1274  1601 D TrafficStats: tagSocket(5) with statsTag=0xffffffff, statsUid=-1
+10-07 11:34:42.064  1274  1601 W Settings: Setting adb_enabled has moved from android.provider.Settings.Secure to android.provider.Settings.Global.
+10-07 11:34:42.098   396   410 W ActivityManager: Unable to start service Intent { act=action.com.heytap.openid.OPEN_ID_SERVICE cmp=com.heytap.openid/.IdentifyService } U=0: not found
+10-07 11:34:42.099   396   410 W ActivityManager: Unbind failed: could not find connection for android.os.BinderProxy@3a78b07
+10-07 11:34:42.103  1274  2520 W System  : Ignoring header moid because its value was null.
+10-07 11:34:42.104  1274  2520 D TrafficStats: tagSocket(120) with statsTag=0xffffffff, statsUid=-1
+10-07 11:34:43.560   396   410 D OomAdjuster: Not killing cached processes
+10-07 11:34:43.560   396   410 W ProcessStats: Tracking association SourceState{dc8a51a com.ldmnq.launcher3/10051 BTop #1381} whose proc state 2 is better than process ProcessState{b9c394b com.google.android.gms.persistent/10042 pkg=com.google.android.gms} proc state 4 (12 skipped)
+10-07 11:34:46.078   964   964 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.libs.gmscorelogger.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+10-07 11:34:46.607   396   410 D CompatibilityChangeReporter: Compat change id reported: 161252188; UID 10075; state: DISABLED
+10-07 11:34:46.610   396   410 W ActivityTaskManager: callingPackage for (uid=2000, pid=2531) has no WPC
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 265464455; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 265452344; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 266124927; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 265451093; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 265456536; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 255940284; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 236283604; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 263959004; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 264304459; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 264301586; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 254631730; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 273509367; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 263259275; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 174042980; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 174042936; UID 10075; state: DISABLED
+10-07 11:34:46.614   396   410 D CompatibilityChangeReporter: Compat change id reported: 181136395; UID 10075; state: DISABLED
+10-07 11:34:46.618   396   410 D CompatibilityChangeReporter: Compat change id reported: 194480991; UID 10075; state: ENABLED
+10-07 11:34:46.623   396   410 E CellBroadcastUtils: getDefaultCellBroadcastReceiverPackageName: no package found
+10-07 11:34:46.624   396   410 D CompatibilityChangeReporter: Compat change id reported: 197654537; UID 10075; state: ENABLED
+10-07 11:34:46.634   396   410 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity} with LAUNCH_SINGLE_TASK from uid 2000 (BAL_ALLOW_PERMISSION) result code=3
+10-07 11:34:46.635   396   415 D CompatibilityChangeReporter: Compat change id reported: 135634846; UID 10075; state: DISABLED
+10-07 11:34:46.635   396   415 D CompatibilityChangeReporter: Compat change id reported: 177438394; UID 10075; state: DISABLED
+10-07 11:34:46.635   396   415 D CompatibilityChangeReporter: Compat change id reported: 135772972; UID 10075; state: DISABLED
+10-07 11:34:46.635   396   424 D CompatibilityChangeReporter: Compat change id reported: 143937733; UID 10075; state: ENABLED
+10-07 11:34:46.636   605   632 D KeyguardService: setOccluded(false)
+10-07 11:34:46.637   605   632 D KeyguardViewMediator: setOccluded(false)
+10-07 11:34:46.639   605   605 D KeyguardViewMediator: handleSetOccluded(false)
+10-07 11:34:46.640   192   192 D Zygote  : Forked child process 2534
+10-07 11:34:46.645   605   605 D KeyguardViewMediator: KeyguardViewMediator queue processing message: SET_OCCLUDED
+10-07 11:34:46.646   396   424 I ActivityManager: Start proc 2534:com.kakaogames.gdts/u0a75 for top-activity {com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity}
+10-07 11:34:46.652  2534  2534 I WSM     : [com.kakaogames.gdts] pre-staged payload=203760 B fnv64=8663fd1775bab767 staging=deferred_to_post
+10-07 11:34:46.653  2534  2534 I WSM     : [com.kakaogames.gdts] pre-staged dex=26552 B
+10-07 11:34:46.657   605   700 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity}
+10-07 11:34:46.658  2534  2534 W nativebridge: Failed to bind-mount /data/local/cfg-ednye/ as /proc/cpuinfo: Not a directory
+10-07 11:34:46.658  2534  2534 W nativebridge: Failed to bind-mount /system/etc/cpuinfo.arm64.txt as /proc/cpuinfo: No such file or directory
+10-07 11:34:46.658  1195  1195 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.startService:1899 android.content.ContextWrapper.startService:825 android.content.ContextWrapper.startService:825 com.android.coreservice.CoreBroadcastReceiver.onReceive:46 android.app.ActivityThread.handleReceiver:4499 
+10-07 11:34:46.655  2534  2534 I main    : type=1400 audit(0.0:1120): avc:  denied  { write } for  name="property_service" dev="tmpfs" ino=326 scontext=u:r:zygote:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=1
+10-07 11:34:46.655  2534  2534 I main    : type=1400 audit(0.0:1121): avc:  denied  { connectto } for  path="/dev/socket/property_service" scontext=u:r:zygote:s0 tcontext=u:r:init:s0 tclass=unix_stream_socket permissive=1
+10-07 11:34:46.659  1195  1195 I oid.coreservice: type=1400 audit(0.0:1122): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6869 scontext=u:r:system_app:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:34:46.659  2534  2534 I main    : type=1400 audit(0.0:1123): avc:  denied  { read } for  name="0" dev="tmpfs" ino=2 scontext=u:r:zygote:s0 tcontext=u:object_r:system_data_file:s0 tclass=lnk_file permissive=1
+10-07 11:34:46.659  2534  2534 I main    : type=1400 audit(0.0:1124): avc:  denied  { search } for  name="com.kakaogames.gdts" dev="sdb2" ino=131300 scontext=u:r:zygote:s0 tcontext=u:object_r:app_data_file:s0:c75,c256,c512,c768 tclass=dir permissive=1
+10-07 11:34:46.659  2534  2534 I main    : type=1400 audit(0.0:1125): avc:  denied  { search } for  name="/" dev="vboxsf" ino=1 scontext=u:r:zygote:s0 tcontext=u:object_r:unlabeled:s0 tclass=dir permissive=1
+10-07 11:34:46.664  2534  2534 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:34:46.666  2534  2534 I Zygote  : seccomp disabled by setenforce 0
+10-07 11:34:46.670  2534  2534 I kakaogames.gdts: Using CollectorTypeCC GC.
+10-07 11:34:46.671  2534  2534 I houdini : [2534] Houdini now in android app mode
+10-07 11:34:46.671  2534  2534 I houdini : [2534] Intel Bridge Technology for Leidian Android Emulator only, Copyright(C) Intel Corp. 2012-2025.
+10-07 11:34:46.671  2534  2534 I houdini : [2534] Use permitted only under a valid evaluation software license agreement - all other rights reserved. Expire date 20261101.
+10-07 11:34:46.671  2534  2534 I houdini : [2534] Initialize library(version: 14.0.0_z.leidian_com1.0 RELEASE)... successfully.
+10-07 11:34:46.669  2534  2534 I kakaogames.gdts: type=1400 audit(0.0:1126): avc:  denied  { read execute } for  path="/system/vendor/lib64/libhoudini.so" dev="sda2" ino=5868 scontext=u:r:untrusted_app:s0:c75,c256,c512,c768 tcontext=u:object_r:vendor_file:s0 tclass=file permissive=1
+10-07 11:34:46.674  2534  2534 E kakaogames.gdts: Not starting debugger since process cannot load the jdwp agent.
+10-07 11:34:46.674  2534  2534 I WSM     : [com.kakaogames.gdts] dex staged 26552 B fd=56
+10-07 11:34:46.674  2534  2534 I WSM     : post staged+signaled pid=2534 chan_fd=58 payload_fd=55
+10-07 11:34:46.675  2534  2541 I WSMEngine: JNI_OnLoad received (build=wsm-v6.0.0 abi=x86_64)
+10-07 11:34:46.675  2534  2541 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/55 handle=0xc3ca95d05d4aa2f jni_ver=0x10006 (payload 203760 B fnv64=8663fd1775bab767)
+10-07 11:34:46.672  2534  2534 I Thread-2: type=1400 audit(0.0:1127): avc:  denied  { open } for  path=2F6D656D66643A77736D5F7061796C6F6164202864656C6574656429 dev="tmpfs" ino=195 scontext=u:r:untrusted_app:s0:c75,c256,c512,c768 tcontext=u:object_r:appdomain_tmpfs:s0:c75,c256,c512,c768 tclass=file permissive=1
+10-07 11:34:46.676  2534  2542 I WSMEngine: ALIVE pid=2534 uid=10075 hello_magic=0x574d5348 hello_proto=3
+10-07 11:34:46.676  2534  2542 I WSMEngine: handshake ack written (proto=3 nonce=09903f0fad2e56ff)
+10-07 11:34:46.676  2534  2534 V appproc : App process: starting thread pool.
+10-07 11:34:46.675  2534  2534 I elockcontroller: type=1400 audit(0.0:1128): avc:  denied  { open } for  path="/data/local/cfg-ednye/app_device" dev="sdb2" ino=132883 scontext=u:r:untrusted_app:s0:c75,c256,c512,c768 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+10-07 11:34:46.687   396   410 D CompatibilityChangeReporter: Compat change id reported: 168419799; UID 10075; state: DISABLED
+10-07 11:34:46.687   396   410 D CompatibilityChangeReporter: Compat change id reported: 273564678; UID 10075; state: DISABLED
+10-07 11:34:46.688   396   428 W libprocessgroup: SetCgroup::ExecuteForProcess: failed to open /dev/cpuctl/top-app/cgroup.procs: No such file or directory
+10-07 11:34:46.688   396   455 D CompatibilityChangeReporter: Compat change id reported: 265195908; UID 10075; state: ENABLED
+10-07 11:34:46.688   396   413 V GameManagerService: Game power mode ON (process state was changed to foreground)
+10-07 11:34:46.722  2534  2534 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10075; state: ENABLED
+10-07 11:34:46.722  2534  2534 D CompatibilityChangeReporter: Compat change id reported: 242716250; UID 10075; state: ENABLED
+10-07 11:34:46.725  2534  2541 I WSM     : HANDSHAKE_OK engine_pid=2534 engine_uid=10075 state=1 caps=0x0 build=wsm-v6.0.0 abi=x86_64
+10-07 11:34:46.738   396   410 D CompatibilityChangeReporter: Compat change id reported: 170503758; UID 10075; state: ENABLED
+10-07 11:34:46.741  1195  1195 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.startService:1899 android.content.ContextWrapper.startService:825 android.content.ContextWrapper.startService:825 com.android.coreservice.CoreBroadcastReceiver.onReceive:55 android.app.ActivityThread.handleReceiver:4499 
+10-07 11:34:46.743  2534  2534 D nativeloader: Configuring clns-6 for other apk /system/framework/org.apache.http.legacy.jar. target_sdk_version=36, uses_libraries=ALL, library_path=/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/base.apk!/lib/arm64-v8a:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.kakaogames.gdts
+10-07 11:34:46.744  2534  2534 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:34:46.762  2534  2534 W ziparchive: Unable to open '/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.dm': No such file or directory
+10-07 11:34:46.762  2534  2534 W ziparchive: Unable to open '/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.dm': No such file or directory
+10-07 11:34:46.762  2534  2534 W kakaogames.gdts: Entry not found
+10-07 11:34:46.762  2534  2534 D nativeloader: Configuring clns-7 for other apk /data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/base.apk:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/base.apk!/lib/arm64-v8a:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.kakaogames.gdts
+10-07 11:34:46.763  2534  2534 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:34:46.856  2534  2534 V GraphicsEnvironment: Currently set values for:
+10-07 11:34:46.857  2534  2534 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-07 11:34:46.857  2534  2534 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-07 11:34:46.859  2534  2534 V GraphicsEnvironment: ANGLE GameManagerService for com.kakaogames.gdts: false
+10-07 11:34:46.859  2534  2534 V GraphicsEnvironment: com.kakaogames.gdts is not listed in per-application setting
+10-07 11:34:46.859  2534  2534 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-07 11:34:46.894   396   465 D ActivityManager: freezing 1040 com.android.permissioncontroller
+10-07 11:34:47.057   396   410 I ActivityManager: Process com.kakaogames.gdts (pid 2534) has died: fg  TOP 
+10-07 11:34:47.057   396   425 I libprocessgroup: Successfully killed process cgroup uid 10075 pid 2534 in 0ms
+10-07 11:34:47.057   192   192 I Zygote  : Process 2534 exited due to signal 9 (Killed)
+10-07 11:34:47.061   396   413 V GameManagerService: Game power mode OFF (process remomved or state changed to background)
+10-07 11:34:47.066   396   413 D DisplayManagerService: Drop pending events for gone uid 10075
+10-07 11:34:47.078   209   255 D EmuHWC2 : sent 30 syncs in 83s
+10-07 11:34:47.831  2305  2330 I Finsky:background: [31] Stats for Executor: bgExecutor usf@282ed79[Running, pool size = 4, active threads = 0, queued tasks = 0, completed tasks = 37]
+10-07 11:34:47.834  2305  2330 I Finsky:background: [31] Stats for Executor: LightweightExecutor usf@ab02abe[Running, pool size = 3, active threads = 0, queued tasks = 0, completed tasks = 11]
+10-07 11:34:47.851  2305  2330 I Finsky:background: [31] Stats for Executor: BlockingExecutor usf@6fc471f[Running, pool size = 1, active threads = 0, queued tasks = 0, completed tasks = 1]
+10-07 11:34:48.884   396   507 I WifiConnectivityManager: SetInitialScanState to : 2
+10-07 11:34:48.897   396   517 D InstantWifi: Drop, size: 1
+10-07 11:34:48.898   287   287 W wificond: Scan already started
+10-07 11:34:48.898   287   287 I wificond: Scan
+10-07 11:34:49.899   396   587 D WifiNl80211Manager: Scan result ready event
+10-07 11:34:49.899   396   587 D WifiNative: Scan result ready event
+10-07 11:34:51.637   396   415 E BLASTSyncEngine: WM sent Transaction to organized, but never received commit callback. Application ANR likely to follow.
+10-07 11:34:51.635   234   234 I binder:234_5: type=1400 audit(0.0:1135): avc:  denied  { call } for  scontext=u:r:surfaceflinger:s0 tcontext=u:r:init:s0 tclass=binder permissive=1
+10-07 11:34:54.462   223   223 I ldinit  : type=1400 audit(0.0:1136): avc:  denied  { read } for  name="partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:34:54.462   223   223 I ldinit  : type=1400 audit(0.0:1137): avc:  denied  { open } for  path="/proc/partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:34:54.462   223   223 I ldinit  : type=1400 audit(0.0:1138): avc:  denied  { getattr } for  path="/proc/partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:34:55.001  2305  2392 I PlayCommon: [71] Preparing logs for uploading
+10-07 11:34:55.014  2305  2392 D CompatibilityChangeReporter: Compat change id reported: 247079863; UID 10041; state: ENABLED
+10-07 11:34:55.014  2305  2392 I PlayCommon: [71] Connecting to server for timestamp: https://play.googleapis.com/play/log/timestamp
+10-07 11:34:55.015  2305  2392 D TrafficStats: tagSocket(5) with statsTag=0xffffffff, statsUid=-1
+10-07 11:34:55.140  2305  2392 W PlayCommon: [71] No account for auth token provided
+10-07 11:34:55.140  2305  2392 I PlayCommon: [71] Connecting to server: https://play.googleapis.com/play/log?format=raw&proto_v2=true
+10-07 11:34:55.191  2305  2392 I PlayCommon: [71] Successfully uploaded logs.
+10-07 11:34:55.537   396   465 D ActivityManager: freezing 1113 com.google.android.gms
+10-07 11:34:57.066   396   465 D ActivityManager: freezing 1161 com.google.process.gservices
+10-07 11:34:57.066   396   465 D ActivityManager: freezing 1298 com.google.process.gapps
+10-07 11:34:57.066   396   465 D ActivityManager: freezing 1316 android.process.media
+10-07 11:34:58.808   234  1421 D TimeStats: Enabled
+10-07 11:34:58.808   396   587 W SurfaceFlingerPuller: Failed to pull atom 10062 from surfaceflinger. Success is 0, binder status is EX_NONE
+10-07 11:34:58.808   190  1097 E statsd  : Gauge Stats puller failed for tag: 10062 at 96126695717
+10-07 11:34:58.824   396   587 W StatsPullAtomService: Unable to read diskstats cache file within pullCategorySize
+10-07 11:34:58.824   190  1097 E statsd  : Gauge Stats puller failed for tag: 10028 at 96126695717
+10-07 11:35:00.032   605   605 I RenderThread: type=1400 audit(0.0:1139): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6867 scontext=u:r:platform_app:s0:c512,c768 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:35:00.059   234   234 I RenderEngine: type=1400 audit(0.0:1140): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6867 scontext=u:r:surfaceflinger:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:35:00.065   209   209 I HwBinder:209_2: type=1400 audit(0.0:1141): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6867 scontext=u:r:hal_graphics_composer_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:35:02.913  1983  1999 I IPCThreadState: oneway function results for code 2 on binder at 0x77db2536ec00 will be dropped but finished with status UNKNOWN_TRANSACTION
+10-07 11:35:02.913   396   587 D OomAdjuster: Not killing cached processes
+10-07 11:35:06.691   396   423 I ActivityManager: Skip zero pid ANR, process=com.kakaogames.gdts
+10-07 11:35:11.545   210   210 I binder:210_2: type=1400 audit(0.0:1142): avc:  denied  { read } for  scontext=u:r:init:s0 tcontext=u:r:init:s0 tclass=netlink_kobject_uevent_socket permissive=1
+10-07 11:35:14.682   273   273 I rootcanal: type=1400 audit(0.0:1143): avc:  denied  { read } for  path="socket:[16604]" dev="sockfs" ino=16604 scontext=u:r:init:s0 tcontext=u:r:init:s0 tclass=tcp_socket permissive=1
+10-07 11:35:14.923  2567  2567 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-07 11:35:14.924  2567  2567 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-07 11:35:14.922   208   208 I HwBinder:208_1: type=1400 audit(0.0:1144): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6869 scontext=u:r:hal_graphics_allocator_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:35:14.942   208   208 I HwBinder:208_1: type=1400 audit(0.0:1145): avc:  denied  { read write } for  name="fastpipe" dev="tmpfs" ino=525 scontext=u:r:hal_graphics_allocator_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:35:14.948   234  1421 W ServiceManagerCppClient: Permission failure: android.permission.CAPTURE_BLACKOUT_CONTENT from uid=2000 pid=2567
+10-07 11:35:14.948   234  1421 D PermissionCache: checking android.permission.CAPTURE_BLACKOUT_CONTENT for uid=2000 => denied (338 us)
+10-07 11:35:14.942   208   208 I HwBinder:208_1: type=1400 audit(0.0:1146): avc:  denied  { open } for  path="/dev/fastpipe" dev="tmpfs" ino=525 scontext=u:r:hal_graphics_allocator_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:35:14.945   208   208 I HwBinder:208_1: type=1400 audit(0.0:1147): avc:  denied  { read write } for  path="/dev/fastpipe" dev="tmpfs" ino=525 scontext=u:r:surfaceflinger:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:35:14.962   234   234 I binder:234_5: type=1400 audit(0.0:1148): avc:  denied  { read write } for  path="/dev/fastpipe" dev="tmpfs" ino=525 scontext=u:r:shell:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:35:14.966    97    97 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-07 11:35:14.967  2567  2569 I Gralloc4: mapper 4.x is not supported
+10-07 11:35:14.967    97    97 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device VINTF manifest.
+10-07 11:35:14.967  2567  2569 W Gralloc3: mapper 3.x is not supported
+10-07 11:35:14.965  2567  2567 I binder:2567_1: type=1400 audit(0.0:1149): avc:  denied  { read } for  name="libstagefright_gl1enc.so" dev="sda2" ino=5891 scontext=u:r:shell:s0 tcontext=u:object_r:vendor_file:s0 tclass=file permissive=1
+10-07 11:35:14.978  2567  2569 I screencap: fastpipe: Connect success
+10-07 11:35:15.002  2567  2569 I screencap: fastpipe: Connect success
+10-07 11:35:15.004  2567  2569 D HostConnection: HostRPC::connect sucess: app=screencap, pid=2567, tid=2569, this=0x78da22a42980
+10-07 11:35:15.007  2567  2569 D HostConnection: queryAndSetGLESMaxVersion select gles-version: 3.1 hostGLVersion:46 process:screencap
+10-07 11:35:15.008  2567  2567 I screencap: fastpipe: Connect success
+10-07 11:35:15.010  2567  2567 D HostConnection: HostRPC::connect sucess: app=screencap, pid=2567, tid=2567, this=0x78da22ef0340
+10-07 11:35:15.011  2567  2567 D HostConnection: queryAndSetGLESMaxVersion select gles-version: 3.1 hostGLVersion:46 process:screencap
+10-07 11:35:15.072   396  1433 I ActivityManager: Broadcasting: Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x400000 }
+10-07 11:35:15.072   396   423 D OomAdjuster: Not killing cached processes
+10-07 11:35:15.074   396  1433 I ActivityManager: Enqueued broadcast Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x400000 }: 0
+10-07 11:35:15.089   396   412 I ActivityManager: Broadcast completed: result=0
+10-07 11:35:15.090  2567  2567 I screencap: fastpipe: close connect
+10-07 11:35:15.090  2567  2567 I screencap: fastpipe: close connect
+10-07 11:35:15.091  1156  1502 I MediaProvider: Begin Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x1400010 cmp=com.android.providers.media.module/com.android.providers.media.MediaService }
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: Failed to apply ContentProviderOperation(type=insert uri=content://media/internal/file values={instance_id=null, compilation=null, disc_number=null, duration=null, album_artist=null, description=null, resolution=1600×900, orientation=null, artist=null, author=null, height=900, is_drm=0, date_modified=1788417574, writer=null, composer=null, _modifier=3, datetaken=null, mime_type=image/png, bitrate=null, cd_track_number=null, xmp=[], year=null, _data=/data/local/tmp/wsm-q2.png, _size=11387, album=null, genre=null, title=wsm-q2, width=1600, document_id=null, capture_framerate=null, _special_format=0, num_tracks=null, original_document_id=null, media_type=1} exceptionAllowed)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: java.lang.IllegalArgumentException: Requested path /data/local/tmp/wsm-q2.png doesn't appear under [/system/media, /oem/media, /system/product/media]
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.MediaProvider.insert(MediaProvider.java:4999)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at android.content.ContentProviderOperation.applyInternal(ContentProviderOperation.java:375)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at android.content.ContentProviderOperation.apply(ContentProviderOperation.java:347)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at android.content.ContentProvider.applyBatch(ContentProvider.java:2653)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.MediaProvider.applyBatch(MediaProvider.java:5349)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at android.content.ContentProvider.applyBatch(ContentProvider.java:2644)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at android.content.ContentResolver.applyBatch(ContentResolver.java:2246)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.scan.ModernMediaScanner$Scan.applyPending(ModernMediaScanner.java:957)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.scan.ModernMediaScanner$Scan.walkFileTree(ModernMediaScanner.java:455)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.scan.ModernMediaScanner$Scan.runInternal(ModernMediaScanner.java:417)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.scan.ModernMediaScanner$Scan.run(ModernMediaScanner.java:406)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.scan.ModernMediaScanner.scanFile(ModernMediaScanner.java:272)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.MediaProvider.scanFile(MediaProvider.java:1953)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.MediaService.onScanFile(MediaService.java:225)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.MediaService.onHandleWork(MediaService.java:85)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at androidx.core.app.JobIntentService$CommandProcessor.doInBackground(JobIntentService.java:396)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at androidx.core.app.JobIntentService$CommandProcessor.doInBackground(JobIntentService.java:387)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at android.os.AsyncTask$3.call(AsyncTask.java:394)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-07 11:35:15.113  1156  1502 W ModernMediaScanner: 	at java.lang.Thread.run(Thread.java:1012)
+10-07 11:35:15.119  1156  1502 I MediaProvider: End Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x1400010 cmp=com.android.providers.media.module/com.android.providers.media.MediaService }
+10-07 11:35:24.465   223   223 I ldinit  : type=1400 audit(0.0:1161): avc:  denied  { read } for  name="partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:35:24.465   223   223 I ldinit  : type=1400 audit(0.0:1162): avc:  denied  { open } for  path="/proc/partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:35:24.465   223   223 I ldinit  : type=1400 audit(0.0:1163): avc:  denied  { getattr } for  path="/proc/partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:35:24.465   223   223 I ldinit  : type=1400 audit(0.0:1164): avc:  denied  { search } for  name="data" dev="sdb2" ino=17 scontext=u:r:ldinit:s0 tcontext=u:object_r:system_data_file:s0:c512,c768 tclass=dir permissive=1
+10-07 11:35:24.669   286   286 I storaged: type=1400 audit(0.0:1165): avc:  denied  { read } for  name="stat" dev="sysfs" ino=9012 scontext=u:r:storaged:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+10-07 11:35:28.722   396   396 I PowerStatsServi: type=1400 audit(0.0:1168): avc:  denied  { call } for  scontext=u:r:system_server:s0 tcontext=u:r:init:s0 tclass=binder permissive=1
+10-07 11:35:29.938   605  1364 I ndroid.systemui: fastpipe: close connect
+10-07 11:35:33.523   191   259 W doh::connection: Connection driver returns some Err: Closed
+10-07 11:35:40.349   396   410 D CompatibilityChangeReporter: Compat change id reported: 161252188; UID 10075; state: DISABLED
+10-07 11:35:40.351   396   410 W ActivityTaskManager: callingPackage for (uid=2000, pid=2577) has no WPC
+10-07 11:35:40.353   396   410 E CellBroadcastUtils: getDefaultCellBroadcastReceiverPackageName: no package found
+10-07 11:35:40.354   605   849 D KeyguardService: setOccluded(false)
+10-07 11:35:40.354   605   849 D KeyguardViewMediator: setOccluded(false)
+10-07 11:35:40.354   605   605 D KeyguardViewMediator: handleSetOccluded(false)
+10-07 11:35:40.354   605   605 D KeyguardViewMediator: KeyguardViewMediator queue processing message: SET_OCCLUDED
+10-07 11:35:40.355   396   410 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity} with LAUNCH_SINGLE_TASK from uid 2000 (BAL_ALLOW_PERMISSION) result code=3
+10-07 11:35:40.355   396   415 D CompatibilityChangeReporter: Compat change id reported: 135634846; UID 10075; state: DISABLED
+10-07 11:35:40.355   396   415 D CompatibilityChangeReporter: Compat change id reported: 177438394; UID 10075; state: DISABLED
+10-07 11:35:40.355   396   415 D CompatibilityChangeReporter: Compat change id reported: 135772972; UID 10075; state: DISABLED
+10-07 11:35:40.356   396   424 D CompatibilityChangeReporter: Compat change id reported: 143937733; UID 10075; state: ENABLED
+10-07 11:35:40.356   605   700 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity}
+10-07 11:35:40.358  1195  1195 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.startService:1899 android.content.ContextWrapper.startService:825 android.content.ContextWrapper.startService:825 com.android.coreservice.CoreBroadcastReceiver.onReceive:46 android.app.ActivityThread.handleReceiver:4499 
+10-07 11:35:40.359   192   192 D Zygote  : Forked child process 2580
+10-07 11:35:40.355  1195  1195 I oid.coreservice: type=1400 audit(0.0:1169): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6869 scontext=u:r:system_app:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:35:40.360   396   424 I ActivityManager: Start proc 2580:com.kakaogames.gdts/u0a75 for top-activity {com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity}
+10-07 11:35:40.362  2580  2580 I WSM     : [com.kakaogames.gdts] pre-staged payload=203760 B fnv64=8663fd1775bab767 staging=deferred_to_post
+10-07 11:35:40.362  2580  2580 I WSM     : [com.kakaogames.gdts] pre-staged dex=26552 B
+10-07 11:35:40.363  2580  2580 W nativebridge: Failed to bind-mount /data/local/cfg-ednye/ as /proc/cpuinfo: Not a directory
+10-07 11:35:40.363  2580  2580 W nativebridge: Failed to bind-mount /system/etc/cpuinfo.arm64.txt as /proc/cpuinfo: No such file or directory
+10-07 11:35:40.359  2580  2580 I main    : type=1400 audit(0.0:1170): avc:  denied  { write } for  name="property_service" dev="tmpfs" ino=326 scontext=u:r:zygote:s0 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=1
+10-07 11:35:40.359  2580  2580 I main    : type=1400 audit(0.0:1171): avc:  denied  { connectto } for  path="/dev/socket/property_service" scontext=u:r:zygote:s0 tcontext=u:r:init:s0 tclass=unix_stream_socket permissive=1
+10-07 11:35:40.366  2580  2580 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:35:40.362  2580  2580 I main    : type=1400 audit(0.0:1172): avc:  denied  { search } for  name="com.kakaogames.gdts" dev="sdb2" ino=131300 scontext=u:r:zygote:s0 tcontext=u:object_r:app_data_file:s0:c75,c256,c512,c768 tclass=dir permissive=1
+10-07 11:35:40.362  2580  2580 I main    : type=1400 audit(0.0:1173): avc:  denied  { search } for  name="/" dev="vboxsf" ino=1 scontext=u:r:zygote:s0 tcontext=u:object_r:unlabeled:s0 tclass=dir permissive=1
+10-07 11:35:40.367  2580  2580 I Zygote  : seccomp disabled by setenforce 0
+10-07 11:35:40.369  2580  2580 I kakaogames.gdts: Using CollectorTypeCC GC.
+10-07 11:35:40.369  2580  2580 I houdini : [2580] Houdini now in android app mode
+10-07 11:35:40.369  2580  2580 I houdini : [2580] Intel Bridge Technology for Leidian Android Emulator only, Copyright(C) Intel Corp. 2012-2025.
+10-07 11:35:40.369  2580  2580 I houdini : [2580] Use permitted only under a valid evaluation software license agreement - all other rights reserved. Expire date 20261101.
+10-07 11:35:40.369  2580  2580 I houdini : [2580] Initialize library(version: 14.0.0_z.leidian_com1.0 RELEASE)... successfully.
+10-07 11:35:40.365  2580  2580 I kakaogames.gdts: type=1400 audit(0.0:1174): avc:  denied  { read execute } for  path="/system/vendor/lib64/libhoudini.so" dev="sda2" ino=5868 scontext=u:r:untrusted_app:s0:c75,c256,c512,c768 tcontext=u:object_r:vendor_file:s0 tclass=file permissive=1
+10-07 11:35:40.371  2580  2580 E kakaogames.gdts: Not starting debugger since process cannot load the jdwp agent.
+10-07 11:35:40.372  2580  2580 I WSM     : [com.kakaogames.gdts] dex staged 26552 B fd=56
+10-07 11:35:40.372  2580  2580 I WSM     : post staged+signaled pid=2580 chan_fd=58 payload_fd=55
+10-07 11:35:40.369  2580  2580 I Thread-2: type=1400 audit(0.0:1175): avc:  denied  { open } for  path=2F6D656D66643A77736D5F7061796C6F6164202864656C6574656429 dev="tmpfs" ino=3282 scontext=u:r:untrusted_app:s0:c75,c256,c512,c768 tcontext=u:object_r:appdomain_tmpfs:s0:c75,c256,c512,c768 tclass=file permissive=1
+10-07 11:35:40.373  2580  2587 I WSMEngine: JNI_OnLoad received (build=wsm-v6.0.0 abi=x86_64)
+10-07 11:35:40.373  2580  2587 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/55 handle=0x6d9573d42b3245b7 jni_ver=0x10006 (payload 203760 B fnv64=8663fd1775bab767)
+10-07 11:35:40.373  2580  2593 I WSMEngine: ALIVE pid=2580 uid=10075 hello_magic=0x574d5348 hello_proto=3
+10-07 11:35:40.373  2580  2593 I WSMEngine: handshake ack written (proto=3 nonce=acc10fe80732ed38)
+10-07 11:35:40.374  2580  2580 V appproc : App process: starting thread pool.
+10-07 11:35:40.372  2580  2580 I elockcontroller: type=1400 audit(0.0:1176): avc:  denied  { open } for  path="/data/local/cfg-ednye/app_device" dev="sdb2" ino=132883 scontext=u:r:untrusted_app:s0:c75,c256,c512,c768 tcontext=u:object_r:system_data_file:s0 tclass=file permissive=1
+10-07 11:35:40.379   396   413 V GameManagerService: Game power mode ON (process state was changed to foreground)
+10-07 11:35:40.379   396   428 W libprocessgroup: SetCgroup::ExecuteForProcess: failed to open /dev/cpuctl/top-app/cgroup.procs: No such file or directory
+10-07 11:35:40.398  2580  2580 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10075; state: ENABLED
+10-07 11:35:40.398  2580  2580 D CompatibilityChangeReporter: Compat change id reported: 242716250; UID 10075; state: ENABLED
+10-07 11:35:40.416  1195  1195 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.startService:1899 android.content.ContextWrapper.startService:825 android.content.ContextWrapper.startService:825 com.android.coreservice.CoreBroadcastReceiver.onReceive:55 android.app.ActivityThread.handleReceiver:4499 
+10-07 11:35:40.417  2580  2580 D nativeloader: Configuring clns-6 for other apk /system/framework/org.apache.http.legacy.jar. target_sdk_version=36, uses_libraries=ALL, library_path=/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/base.apk!/lib/arm64-v8a:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.kakaogames.gdts
+10-07 11:35:40.417  2580  2580 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:35:40.415  2580  2580 I kakaogames.gdts: type=1400 audit(0.0:1177): avc:  denied  { search } for  name="/" dev="vboxsf" ino=1 scontext=u:r:untrusted_app:s0:c75,c256,c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=dir permissive=1
+10-07 11:35:40.424  2580  2587 I WSM     : HANDSHAKE_OK engine_pid=2580 engine_uid=10075 state=1 caps=0x0 build=wsm-v6.0.0 abi=x86_64
+10-07 11:35:40.432  2580  2580 W ziparchive: Unable to open '/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.dm': No such file or directory
+10-07 11:35:40.432  2580  2580 W ziparchive: Unable to open '/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.dm': No such file or directory
+10-07 11:35:40.516  2580  2580 W kakaogames.gdts: Entry not found
+10-07 11:35:40.517  2580  2580 D nativeloader: Configuring clns-7 for other apk /data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/base.apk:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/base.apk!/lib/arm64-v8a:/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/split_config.arm64_v8a.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.kakaogames.gdts
+10-07 11:35:40.517  2580  2580 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:35:40.533  2580  2580 V GraphicsEnvironment: Currently set values for:
+10-07 11:35:40.533  2580  2580 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-07 11:35:40.533  2580  2580 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-07 11:35:40.533  2580  2580 V GraphicsEnvironment: ANGLE GameManagerService for com.kakaogames.gdts: false
+10-07 11:35:40.533  2580  2580 V GraphicsEnvironment: com.kakaogames.gdts is not listed in per-application setting
+10-07 11:35:40.533  2580  2580 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-07 11:35:40.710   396  1434 I ActivityManager: Process com.kakaogames.gdts (pid 2580) has died: fg  TOP 
+10-07 11:35:40.710   396   425 I libprocessgroup: Successfully killed process cgroup uid 10075 pid 2580 in 0ms
+10-07 11:35:40.711   396   413 V GameManagerService: Game power mode OFF (process remomved or state changed to background)
+10-07 11:35:40.711   396  1434 D OomAdjuster: Not killing cached processes
+10-07 11:35:40.711   396  1434 W ProcessStats: Tracking association SourceState{dc8a51a com.ldmnq.launcher3/10051 BTop #1409} whose proc state 2 is better than process ProcessState{b9c394b com.google.android.gms.persistent/10042 pkg=com.google.android.gms} proc state 4 (6 skipped)
+10-07 11:35:40.711   396   413 D DisplayManagerService: Drop pending events for gone uid 10075
+10-07 11:35:40.712   192   192 I Zygote  : Process 2580 exited due to signal 9 (Killed)
+10-07 11:35:45.357   396   415 E BLASTSyncEngine: WM sent Transaction to organized, but never received commit callback. Application ANR likely to follow.
+10-07 11:35:45.355   234   234 I binder:234_5: type=1400 audit(0.0:1184): avc:  denied  { call } for  scontext=u:r:surfaceflinger:s0 tcontext=u:r:init:s0 tclass=binder permissive=1
+10-07 11:35:55.521   396   423 D OomAdjuster: Not killing cached processes
+10-07 11:35:55.521   396   423 W ProcessStats: Tracking association SourceState{dc8a51a com.ldmnq.launcher3/10051 BTop #1410} whose proc state 2 is better than process ProcessState{b9c394b com.google.android.gms.persistent/10042 pkg=com.google.android.gms} proc state 4 (0 skipped)
+10-07 11:35:55.599   964  2607 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+10-07 11:35:55.607   964  2498 E NFC     : could not retrieve NFC service
+10-07 11:35:55.608   964  2498 I TapAndPay: NfcAdapter is null while obtaining CardEmulation instance. [CONTEXT service_id=79 ]
+10-07 11:35:55.630   964  2607 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+10-07 11:35:55.651   964  2498 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+10-07 11:35:55.724   964  2393 I DynamiteModule: Considering local module com.google.android.gms.cronet_dynamite:0 and remote module com.google.android.gms.cronet_dynamite:4911
+10-07 11:35:55.724   964  2393 I DynamiteModule: Selected remote version of com.google.android.gms.cronet_dynamite, version >= 4911
+10-07 11:35:55.729   964  2393 E .gms.persistent: Failed to madvise file primary.vdex mapped directly in memory from /system/product/priv-app/GmsCore/split_CronetDynamite_installtime.dm for size:4096: Bad file descriptor
+10-07 11:35:55.738   964   964 D BoundBrokerSvc: onRebind: Intent { act=com.google.android.gms.common.telemetry.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentApiService }
+10-07 11:35:55.747   964  2393 D nativeloader: Configuring clns-13 for other apk . target_sdk_version=37, uses_libraries=ALL, library_path=/system/product/priv-app/GmsCore/split_CronetDynamite_installtime.apk!/lib/x86_64:/system/product/priv-app/GmsCore/split_CronetDynamite_installtime.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand
+10-07 11:35:55.748   964  2393 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:35:55.745   964   964 I lowpool[14]: type=1400 audit(0.0:1185): avc:  denied  { search } for  name="/" dev="vboxsf" ino=1 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:unlabeled:s0 tclass=dir permissive=1
+10-07 11:35:55.761   396  1438 D ConnectivityService: requestNetwork for uid/pid:10042/964 activeRequest: null callbackRequest: 97 [NetworkRequest [ REQUEST id=98, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10042 RequestorUid: 10042 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+10-07 11:35:55.767   396   521 D ConnectivityService: NetReassign [98 : null → 100] [c 0] [a 4] [i 1]
+10-07 11:35:55.767   396   507 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=98, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10042 RequestorUid: 10042 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+10-07 11:35:55.768   396   521 D ConnectivityService: NetReassign [no changes] [c 0] [a 1] [i 0]
+10-07 11:35:55.768   396   507 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=98, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10042 RequestorUid: 10042 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+10-07 11:35:55.769   396   507 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=98, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10042 RequestorUid: 10042 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+10-07 11:35:55.770   396   507 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=98, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10042 RequestorUid: 10042 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+10-07 11:35:55.780   964  2393 I cn_CronetLibraryLoader: Cronet version: 149.0.7827.48, arch: x86_64
+10-07 11:35:55.827   964  2616 D TrafficStats: tagSocket(188) with statsTag=0x5065fff, statsUid=-1
+10-07 11:35:56.218   396  2608 D ActivityManager: sync unfroze 1113 com.google.android.gms for 4
+10-07 11:35:56.219  1113  1113 D BoundBrokerSvc: onRebind: Intent { act=com.google.android.gms.logaggregation.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+10-07 11:35:56.225  1113  1449 I AggregationService: (REDACTED) Making request for PlayLoggerContextKeyList for QoS tiers: %s
+10-07 11:35:56.229  1113  1449 I AggregationService: (REDACTED) No log event detected in the database.
+10-07 11:35:56.232   964   964 D BoundBrokerSvc: onRebind: Intent { act=com.google.android.gms.libs.gmscorelogger.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+10-07 11:35:56.242   964  2607 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+10-07 11:35:56.254   964  2393 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+10-07 11:35:56.255  1113  1361 I TelephonySpamChimeraSer: Running Telephony Spam Chimera Service [CONTEXT service_id=150 ]
+10-07 11:35:56.257  1113  1361 I TelephonySpamChimeraSer: Cleaning SIP Header local table of old entries [CONTEXT service_id=150 ]
+10-07 11:35:56.258  1113  1361 I SpamListSync: Call spam module disabled. Skipping cleaning cache sip header table. [CONTEXT service_id=150 ]
+10-07 11:35:56.258  1113  1361 I TelephonySpamChimeraSer: Syncing Call Spam List [CONTEXT service_id=150 ]
+10-07 11:35:56.258  1113  1361 I SpamListSync: (REDACTED) SpamListSyncChimeraService.syncSpamList called with tag: %s, extras: %s
+10-07 11:35:56.259  1113  1361 I SpamListSync: Call spam module disabled. Skipping spam list syncing. [CONTEXT service_id=150 ]
+10-07 11:35:56.261   964  2607 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+10-07 11:35:56.269   396  1438 D ActivityManager: sync unfroze 2101 com.google.android.gms.unstable for 6
+10-07 11:35:56.271  2101  2101 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.droidguard.DroidGuardFastRefreshGmsTaskBoundService.ACTION_TASK_READY dat=chimera-action:/... cmp=com.google.android.gms/.chimera.UnstableInternalBoundBrokerService }
+10-07 11:35:56.271  2101  2101 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.droidguard.DroidGuardFastRefreshGmsTaskBoundService.ACTION_TASK_READY dat=chimera-action:/... cmp=com.google.android.gms/.chimera.UnstableInternalBoundBrokerService }
+10-07 11:35:56.286   964  2393 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+10-07 11:35:56.293  2101  2196 W FileUtils: Failed to chmod(/data/user/0/com.google.android.gms/app_dg_cache): android.system.ErrnoException: chmod failed: ENOENT (No such file or directory)
+10-07 11:35:56.298  2101  2196 E DGFRR   : FR error [CONTEXT service_id=25 ]
+10-07 11:35:56.298  2101  2196 E DGFRR   : bqui: Failed to get VM keys.
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at bqul.c(:com.google.android.gms@262334032@26.23.34 (190800-933906539):87)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at bqwg.f(:com.google.android.gms@262334032@26.23.34 (190800-933906539):3)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at bqvm.a(:com.google.android.gms@262334032@26.23.34 (190800-933906539):87)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at bqvh.g(:com.google.android.gms@262334032@26.23.34 (190800-933906539):207)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at com.google.android.gms.droidguard.DroidGuardFastRefreshGmsTaskBoundService.a(:com.google.android.gms@262334032@26.23.34 (190800-933906539):50)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at dadx.call(:com.google.android.gms@262334032@26.23.34 (190800-933906539):36)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at bkey.c(:com.google.android.gms@262334032@26.23.34 (190800-933906539):50)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at bkey.run(:com.google.android.gms@262334032@26.23.34 (190800-933906539):66)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at bkkq.run(:com.google.android.gms@262334032@26.23.34 (190800-933906539):8)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at java.lang.Thread.run(Thread.java:1012)
+10-07 11:35:56.298  2101  2196 E DGFRR   : Caused by: java.nio.file.NoSuchFileException: /data/user/0/com.google.android.gms/app_dg_cache
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at sun.nio.fs.UnixFileSystemProvider.newDirectoryStream(UnixFileSystemProvider.java:447)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at j$.nio.file.spi.a.r(r8-map-id-a006b7fbb89d91042a01993caa35bbc9d16bfaad9039fb6cc58ea8d904f5ec0a:13)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at j$.nio.file.Files.newDirectoryStream(r8-map-id-a006b7fbb89d91042a01993caa35bbc9d16bfaad9039fb6cc58ea8d904f5ec0a:7)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	at bqul.c(:com.google.android.gms@262334032@26.23.34 (190800-933906539):14)
+10-07 11:35:56.298  2101  2196 E DGFRR   : 	... 12 more
+10-07 11:35:56.301  2101  2101 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.droidguard.DroidGuardFastRefreshGmsTaskBoundService.ACTION_TASK_READY dat=chimera-action:/... cmp=com.google.android.gms/.chimera.UnstableInternalBoundBrokerService }
+10-07 11:35:56.302   964  2393 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+10-07 11:35:56.311  2101  2183 E JavaBinder: !!! FAILED BINDER TRANSACTION !!!  (parcel size = 532)
+10-07 11:35:56.311  2101  2183 I ActivityThread: Removing dead content provider:android.content.ContentProviderProxy@42d0f7
+10-07 11:35:56.313   396   782 W ActivityManager: pid 2101 com.google.android.gms.unstable sent binder code 1 with flags 2 to frozen apps and got error -2147483646
+10-07 11:35:56.319   396   423 I ActivityManager: Killing 1161:com.google.process.gservices/u0a42 (adj 925): Sync transaction while frozen
+10-07 11:35:56.323   396   425 I libprocessgroup: Successfully killed process cgroup uid 10042 pid 1161 in 0ms
+10-07 11:35:56.324   192   192 I Zygote  : Process 1161 exited due to signal 9 (Killed)
+10-07 11:35:56.325   396  1433 I ActivityManager: Process com.google.process.gservices (pid 1161) early provider death
+10-07 11:35:56.327   396  1438 V ActivityManager: Got obituary of 1161:com.google.process.gservices
+10-07 11:35:56.328   964  2607 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+10-07 11:35:56.336  1113  1449 I Pay     : Active account was null, notification task will be cancelled. [CONTEXT service_id=198 ]
+10-07 11:35:56.352  1113  1449 E Pay     : NfcAdapter is null while obtaining CardEmulation instance. [CONTEXT service_id=198 ]
+10-07 11:35:56.352  1113  1449 E Pay     : CardEmulation is null while checking aid registration. [CONTEXT service_id=198 ]
+10-07 11:35:56.355  1113  1449 I SyntheticOperationsLogg: (REDACTED) SyntheticOperationsLogger unable to log "%s"'s use of "%s" because installOperationsCollector never executed
+10-07 11:35:56.362  1113  1449 I Pay     : (REDACTED) enabling component %s
+10-07 11:35:56.362  1113  1449 E Pay     : NfcAdapter is null while obtaining CardEmulation instance. [CONTEXT service_id=198 ]
+10-07 11:35:56.362  1113  1449 E Pay     : CardEmulation is null while trying to register AIDs. [CONTEXT service_id=198 ]
+10-07 11:35:56.362  1113  1449 I SyntheticOperationsLogg: (REDACTED) SyntheticOperationsLogger unable to log "%s"'s use of "%s" because installOperationsCollector never executed
+10-07 11:35:56.363  1113  1449 E Pay     : HCE service enablement failed: FAILED_CARD_EMULATION [CONTEXT service_id=198 ]
+10-07 11:35:56.368   964  2607 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+10-07 11:35:57.371   785   785 D CarrierSvcBindHelper: onPackageModified: com.google.android.gms
+10-07 11:35:57.373   717   717 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-07 11:35:57.377   605   605 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-07 11:35:57.390   785   785 D CarrierSvcBindHelper: No carrier app for: 0
+10-07 11:35:57.398   785   948 D ImsResolver: maybeAddedImsService, packageName: com.google.android.gms
+10-07 11:35:57.434   396   592 D ActivityManager: sync unfroze 1040 com.android.permissioncontroller for 6
+10-07 11:35:57.438   396   477 I InputReader: Reconfiguring input devices, changes=KEYBOARD_LAYOUTS
+10-07 11:35:57.446  1040  2625 I PermissionControllerServiceImpl: Updating user sensitive for uid 10042
+10-07 11:35:57.511   396   422 W Searchables: No global search activity found
+10-07 11:35:57.516   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.517   396   422 D MidiService: addPackageDeviceServer()0
+10-07 11:35:57.534   396   422 W VoiceInteractionManager: no available voice recognition services found for user 0
+10-07 11:35:57.745   925   925 I Launcher: Deferring update until onResume
+10-07 11:35:57.888  1113  2626 I FraudProtectUtils: Not in testing population, skipping local test bank apps. [CONTEXT service_id=469 ]
+10-07 11:35:57.888  1113  2626 I FraudProtectUtils: (REDACTED) Latest bank app list size: %d, %s isBankApp: false
+10-07 11:35:57.888  1113  2626 W ComponentChangedIO: No package name in intent data or package is not a bank app [CONTEXT service_id=469 ]
+10-07 11:36:00.015   605   605 I RenderThread: type=1400 audit(0.0:1186): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6867 scontext=u:r:platform_app:s0:c512,c768 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:36:00.027   209   255 D EmuHWC2 : sent 12 syncs in 73s
+10-07 11:36:00.029   234   234 I RenderEngine: type=1400 audit(0.0:1187): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6867 scontext=u:r:surfaceflinger:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:36:00.032   209   209 I HwBinder:209_2: type=1400 audit(0.0:1188): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6869 scontext=u:r:hal_graphics_composer_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:36:00.381   396   423 I ActivityManager: Skip zero pid ANR, process=com.kakaogames.gdts
+10-07 11:36:00.759   396  1438 D OomAdjuster: Not killing cached processes
+10-07 11:36:00.760   964   964 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.common.telemetry.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentApiService }
+10-07 11:36:04.469   223   223 I ldinit  : type=1400 audit(0.0:1189): avc:  denied  { read } for  name="partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:36:04.469   223   223 I ldinit  : type=1400 audit(0.0:1190): avc:  denied  { open } for  path="/proc/partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:36:04.469   223   223 I ldinit  : type=1400 audit(0.0:1191): avc:  denied  { getattr } for  path="/proc/partitions" dev="proc" ino=4026532068 scontext=u:r:ldinit:s0 tcontext=u:object_r:proc:s0 tclass=file permissive=1
+10-07 11:36:06.305   396   465 D ActivityManager: freezing 2101 com.google.android.gms.unstable
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: Failed to verity-protect package restrictions
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: java.io.IOException: Failed to enable fs-verity on FD(555): Operation not supported on transport endpoint
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at com.android.internal.security.VerityUtils.setUpFsverity(VerityUtils.java:89)
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at com.android.server.security.FileIntegrity.setUpFsVerity(FileIntegrity.java:56)
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at com.android.server.pm.ResilientAtomicFile.finishWrite(ResilientAtomicFile.java:146)
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at com.android.server.pm.Settings.writePackageRestrictions(Settings.java:2377)
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at com.android.server.pm.Settings.writePackageRestrictions(Settings.java:2212)
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at com.android.server.pm.PackageManagerService.writePendingRestrictions(PackageManagerService.java:1482)
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at com.android.server.pm.PackageManagerService$2.handleMessage(PackageManagerService.java:1509)
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at android.os.Handler.dispatchMessage(Handler.java:102)
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at android.os.Looper.loopOnce(Looper.java:205)
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at android.os.Looper.loop(Looper.java:294)
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at android.os.HandlerThread.run(HandlerThread.java:67)
+10-07 11:36:06.381   396   439 E ResilientAtomicFile: 	at com.android.server.ServiceThread.run(ServiceThread.java:46)
+10-07 11:36:07.487   396   592 D OomAdjuster: Not killing cached processes
+10-07 11:36:08.885   396   507 I WifiConnectivityManager: SetInitialScanState to : 2
+10-07 11:36:08.890   396   517 D InstantWifi: Drop, size: 1
+10-07 11:36:08.890   287   287 W wificond: Scan already started
+10-07 11:36:08.890   287   287 I wificond: Scan
+10-07 11:36:09.892   396  1438 D WifiNl80211Manager: Scan result ready event
+10-07 11:36:09.892   396  1438 D WifiNative: Scan result ready event
+10-07 11:36:10.603  2634  2634 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-07 11:36:10.603  2634  2634 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-07 11:36:10.602   208   208 I HwBinder:208_1: type=1400 audit(0.0:1192): avc:  denied  { ioctl } for  path="/dev/fastpipe" dev="tmpfs" ino=525 ioctlcmd=0x6869 scontext=u:r:hal_graphics_allocator_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:36:10.609   208   208 I HwBinder:208_1: type=1400 audit(0.0:1193): avc:  denied  { read write } for  name="fastpipe" dev="tmpfs" ino=525 scontext=u:r:hal_graphics_allocator_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:36:10.609   208   208 I HwBinder:208_1: type=1400 audit(0.0:1194): avc:  denied  { open } for  path="/dev/fastpipe" dev="tmpfs" ino=525 scontext=u:r:hal_graphics_allocator_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:36:10.612   208   208 I HwBinder:208_1: type=1400 audit(0.0:1195): avc:  denied  { read write } for  path="/dev/fastpipe" dev="tmpfs" ino=525 scontext=u:r:surfaceflinger:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:36:10.615   234   234 I binder:234_5: type=1400 audit(0.0:1196): avc:  denied  { read write } for  path="/dev/fastpipe" dev="tmpfs" ino=525 scontext=u:r:shell:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=1
+10-07 11:36:10.621    97    97 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-07 11:36:10.621  2634  2636 I Gralloc4: mapper 4.x is not supported
+10-07 11:36:10.621    97    97 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device VINTF manifest.
+10-07 11:36:10.621  2634  2636 W Gralloc3: mapper 3.x is not supported
+10-07 11:36:10.619  2634  2634 I binder:2634_1: type=1400 audit(0.0:1197): avc:  denied  { read } for  name="libstagefright_gl1enc.so" dev="sda2" ino=5891 scontext=u:r:shell:s0 tcontext=u:object_r:vendor_file:s0 tclass=file permissive=1
+10-07 11:36:10.619  2634  2634 I binder:2634_1: type=1400 audit(0.0:1198): avc:  denied  { open } for  path="/system/vendor/lib64/libstagefright_gl1enc.so" dev="sda2" ino=5891 scontext=u:r:shell:s0 tcontext=u:object_r:vendor_file:s0 tclass=file permissive=1
+10-07 11:36:10.633  2634  2636 I screencap: fastpipe: Connect success
+10-07 11:36:10.634  2634  2636 I screencap: fastpipe: Connect success
+10-07 11:36:10.636  2634  2636 D HostConnection: HostRPC::connect sucess: app=screencap, pid=2634, tid=2636, this=0x76c34c642f00
+10-07 11:36:10.637  2634  2636 D HostConnection: queryAndSetGLESMaxVersion select gles-version: 3.1 hostGLVersion:46 process:screencap
+10-07 11:36:10.638  2634  2634 I screencap: fastpipe: Connect success
+10-07 11:36:10.639  2634  2634 D HostConnection: HostRPC::connect sucess: app=screencap, pid=2634, tid=2634, this=0x76c34caf0880
+10-07 11:36:10.639  2634  2634 D HostConnection: queryAndSetGLESMaxVersion select gles-version: 3.1 hostGLVersion:46 process:screencap
+10-07 11:36:10.703   396   587 I ActivityManager: Broadcasting: Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x400000 }
+10-07 11:36:10.704   396   587 I ActivityManager: Enqueued broadcast Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x400000 }: 0
+10-07 11:36:10.709   396   412 I ActivityManager: Broadcast completed: result=0
+10-07 11:36:10.710  1156  1502 I MediaProvider: Begin Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x1400010 cmp=com.android.providers.media.module/com.android.providers.media.MediaService }
+10-07 11:36:10.711   396   587 W ProcessStats: Tracking association SourceState{cb30a78 com.google.android.gms.persistent/10042 BTop #1476} whose proc state 2 is better than process ProcessState{2ca6ef1 com.google.android.gms/10042 pkg=com.google.android.gms} proc state 15 (123 skipped)
+10-07 11:36:10.711  2634  2634 I screencap: fastpipe: close connect
+10-07 11:36:10.711  2634  2634 I screencap: fastpipe: close connect
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: Failed to apply ContentProviderOperation(type=insert uri=content://media/internal/file values={instance_id=null, compilation=null, disc_number=null, duration=null, album_artist=null, description=null, resolution=1600×900, orientation=null, artist=null, author=null, height=900, is_drm=0, date_modified=1788417574, writer=null, composer=null, _modifier=3, datetaken=null, mime_type=image/png, bitrate=null, cd_track_number=null, xmp=[], year=null, _data=/data/local/tmp/wsm-q3.png, _size=11425, album=null, genre=null, title=wsm-q3, width=1600, document_id=null, capture_framerate=null, _special_format=0, num_tracks=null, original_document_id=null, media_type=1} exceptionAllowed)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: java.lang.IllegalArgumentException: Requested path /data/local/tmp/wsm-q3.png doesn't appear under [/system/media, /oem/media, /system/product/media]
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.MediaProvider.insert(MediaProvider.java:4999)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at android.content.ContentProviderOperation.applyInternal(ContentProviderOperation.java:375)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at android.content.ContentProviderOperation.apply(ContentProviderOperation.java:347)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at android.content.ContentProvider.applyBatch(ContentProvider.java:2653)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.MediaProvider.applyBatch(MediaProvider.java:5349)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at android.content.ContentProvider.applyBatch(ContentProvider.java:2644)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at android.content.ContentResolver.applyBatch(ContentResolver.java:2246)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.scan.ModernMediaScanner$Scan.applyPending(ModernMediaScanner.java:957)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.scan.ModernMediaScanner$Scan.walkFileTree(ModernMediaScanner.java:455)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.scan.ModernMediaScanner$Scan.runInternal(ModernMediaScanner.java:417)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.scan.ModernMediaScanner$Scan.run(ModernMediaScanner.java:406)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.scan.ModernMediaScanner.scanFile(ModernMediaScanner.java:272)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.MediaProvider.scanFile(MediaProvider.java:1953)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.MediaService.onScanFile(MediaService.java:225)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at com.android.providers.media.MediaService.onHandleWork(MediaService.java:85)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at androidx.core.app.JobIntentService$CommandProcessor.doInBackground(JobIntentService.java:396)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at androidx.core.app.JobIntentService$CommandProcessor.doInBackground(JobIntentService.java:387)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at android.os.AsyncTask$3.call(AsyncTask.java:394)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-07 11:36:10.720  1156  1502 W ModernMediaScanner: 	at java.lang.Thread.run(Thread.java:1012)
+10-07 11:36:10.724  1156  1502 I MediaProvider: End Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x1400010 cmp=com.android.providers.media.module/com.android.providers.media.MediaService }
+10-07 11:36:11.230  1113  1113 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.logaggregation.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+10-07 11:36:11.328   964   964 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.libs.gmscorelogger.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+10-07 11:36:11.328  1113  1149 W gle.android.gms: ApkAssets: Deleting an ApkAssets object '<empty> and /system/product/priv-app/GmsCore/split_AdsDynamite_installtime.apk' with 1 weak references
+10-07 11:36:11.328  1113  1149 W gle.android.gms: ApkAssets: Deleting an ApkAssets object '<empty> and /system/product/priv-app/GmsCore/split_CronetDynamite_installtime.apk' with 1 weak references
+10-07 11:36:11.328  1113  1149 W gle.android.gms: ApkAssets: Deleting an ApkAssets object '<empty> and /system/product/priv-app/GmsCore/split_DynamiteLoader_installtime.apk' with 1 weak references
+10-07 11:36:11.328  1113  1149 W gle.android.gms: ApkAssets: Deleting an ApkAssets object '<empty> and /system/product/priv-app/GmsCore/split_DynamiteModulesA_installtime.apk' with 1 weak references
+10-07 11:36:11.328  1113  1149 W gle.android.gms: ApkAssets: Deleting an ApkAssets object '<empty> and /system/product/priv-app/GmsCore/split_DynamiteModulesC_installtime.apk' with 1 weak references
+10-07 11:36:11.328  1113  1149 W gle.android.gms: ApkAssets: Deleting an ApkAssets object '<empty> and /system/product/priv-app/GmsCore/split_GoogleCertificates_installtime.apk' with 1 weak references
+10-07 11:36:11.328  1113  1149 W gle.android.gms: ApkAssets: Deleting an ApkAssets object '<empty> and /system/product/priv-app/GmsCore/split_MapsDynamite_installtime.apk' with 1 weak references
+10-07 11:36:11.328  1113  1149 W gle.android.gms: ApkAssets: Deleting an ApkAssets object '<empty> and /system/product/priv-app/GmsCore/split_MeasurementDynamite_installtime.apk' with 1 weak references
+10-07 11:36:11.328  1113  1149 W gle.android.gms: ApkAssets: Deleting an ApkAssets object '<empty> and /system/product/priv-app/GmsCore/split_all_locale_splits.apk' with 1 weak references
+10-07 11:36:11.329  1113  1149 W gle.android.gms: ApkAssets: Deleting an ApkAssets object '<empty> and /system/system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+10-07 11:36:17.112  2645  2645 I su      : type=1400 audit(0.0:1209): avc:  denied  { getattr } for  path="/postinstall" dev="sda2" ino=45 scontext=u:r:shell:s0 tcontext=u:object_r:postinstall_mnt_dir:s0 tclass=dir permissive=1
+10-07 11:36:17.541   396   465 D ActivityManager: freezing 1040 com.android.permissioncontroller
+10-07 11:36:21.244   396   465 D ActivityManager: freezing 1113 com.google.android.gms
+10-07 11:36:24.475   223   223 I ldinit  : type=1400 audit(0.0:1210): avc:  denied  { search } for  name="data" dev="sdb2" ino=17 scontext=u:r:ldinit:s0 tcontext=u:object_r:system_data_file:s0:c512,c768 tclass=dir permissive=1
+10-07 11:36:24.669   286   286 I storaged: type=1400 audit(0.0:1211): avc:  denied  { read } for  name="stat" dev="sysfs" ino=9012 scontext=u:r:storaged:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+10-07 11:36:24.669   286   286 I storaged: type=1400 audit(0.0:1212): avc:  denied  { open } for  path="/sys/devices/pci0000:00/0000:00:0f.0/virtio1/host0/target0:0:0/0:0:0:0/block/sda/stat" dev="sysfs" ino=9012 scontext=u:r:storaged:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+10-07 11:36:24.669   286   286 I storaged: type=1400 audit(0.0:1213): avc:  denied  { getattr } for  path="/sys/devices/pci0000:00/0000:00:0f.0/virtio1/host0/target0:0:0/0:0:0:0/block/sda/stat" dev="sysfs" ino=9012 scontext=u:r:storaged:s0 tcontext=u:object_r:sysfs:s0 tclass=file permissive=1
+10-07 11:36:33.469   210   210 I binder:210_2: type=1400 audit(0.0:1214): avc:  denied  { read } for  scontext=u:r:init:s0 tcontext=u:r:init:s0 tclass=netlink_kobject_uevent_socket permissive=1
+10-07 11:36:38.751   964  1460 I NearbyDiscovery: FastPair: isDestroyable: Scanner is alive. [CONTEXT service_id=265 ]
+10-07 11:36:38.751   964  1460 I NearbyDiscovery: DiscoveryService: Skip stopSelf(), fast pair controller is not destroyable. [CONTEXT service_id=265 ]

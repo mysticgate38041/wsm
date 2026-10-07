@@ -1,0 +1,25 @@
+{
+  "test_summary": {
+    "timestamp": "2026-10-06T08:39:43.817717+07:00",
+    "tests_run": 36,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "successful": true,
+    "mutation_cases": 1000,
+    "fixtures": "synthetic, not runtime evidence",
+    "coverage": "not measured"
+  },
+  "original_sources_unchanged": true,
+  "audit_ids": 20,
+  "numbered_sections": 16,
+  "source_ids": 13,
+  "runtime_status": "NOT_TESTED",
+  "blockers": [
+    "BINARY_MISSING:arm64-v8a/libwsm_loader.so",
+    "BINARY_MISSING:arm64-v8a/libwsm_engine.so",
+    "BINARY_MISSING:x86_64/libwsm_loader.so",
+    "BINARY_MISSING:x86_64/libwsm_engine.so",
+    "NO_READY_DEVICE"
+  ]
+}

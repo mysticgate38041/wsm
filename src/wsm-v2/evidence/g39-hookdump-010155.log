@@ -1,0 +1,2 @@
+10-07 01:00:45.351  4421  4955 I WSMEngine: CTL thread up (paths=3)
+10-07 01:01:50.378  4421  4955 I WSMEngine: CTL[0] hookdump -> HOOKDUMP | getpos mi=7c1172a5de68 code=4000263d603c b=a9bf4ffe aa0003e8 aa0203e0 aa0403f3 d63f0100 2d000660 | gethp mi=7c1170d7aa10 code=4000263d2a14 b=a9bf4ffe aa0003e8 aa0203e0 aa0403f3 d63f0100 b9000260 | setpos2 mi=7c1172a5dec0 code=4000263a7784 b=f9400068 aa0003e3 aa0203e0 2d400500 bd400902 d61f0060 | damage mi=7c1173e03700 code=400026366dd8 b=a9bd7bfd a90157f6 a9024ff4 d10c03ff aa0103f5 f9400061

@@ -1,0 +1,29 @@
+2568
+--------- beginning of main
+10-07 11:10:05.213  3006  3006 W nativebridge: Failed to bind-mount /data/local/cfg-ednye/ as /proc/cpuinfo: Not a directory
+10-07 11:10:05.707  3006  3006 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:10:07.127  3006  3099 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:10:08.198  2568  2587 I WSMEngine: WATCH direct-read verify: mods api=0x0 direct=0x73710416dc80 -> skip | inst api=0x0 direct=0x0 -> LOCK
+10-07 11:10:08.198  2568  2587 I WSMEngine: probe done: libil2cpp base=0x400022c00000 elf sym 16/17 miss:il2cpp_method_get_pointer  | dom=0x737231c22fc0 asm=0x7370e0280e60 img=0x7370e027e430 cls=0x7370e31be6c0 mth=0x7370e3a40938 fld=0x7370e3a40b78 off=8 sval=0x0 | inst=0x0 smdt=0.0000(has=-1) modsN=-1
+10-07 11:10:08.198  2568  2587 I WSMEngine: WATCH static: mods=0x0 instance=0x0 smdt=0.0000(has=-1) modsN=-1 (t=0s)
+10-07 11:10:08.200  2568  3164 I WSMEngine: FEAT v6 single owner (settle 2s)
+10-07 11:10:08.201  2568  3163 I WSMEngine: CTL thread up (paths=1)
+10-07 11:10:10.201  2568  3164 I WSMEngine: FEAT thread attached to il2cpp domain
+10-07 11:10:10.207  2568  3164 I WSMEngine: FEAT resolver ready (Stage/CharacterManager/CharacterStatsBehaviour)
+10-07 11:10:11.168  1112  1112 D nativebridge: INJECT Failed to open gspd.json
+10-07 11:10:11.837  3287  3287 W nativebridge: Failed to bind-mount /data/local/cfg-ednye/ as /proc/cpuinfo: Operation not permitted
+10-07 11:10:14.214  2568  3162 I WSMEngine: MENU dex loaded (wsm.WsmMenu)
+10-07 11:10:14.214  2568  3162 I WSMEngine: MENU native registered
+10-07 11:10:14.245  2568  3162 I WSMEngine: MENU showInActivity called
+10-07 11:11:18.228  2568  3163 I WSMEngine: CTL[0] @1791346277248440500 status -> {"request":1791346277248440500,"build":"wsm-v6.0.0","state":"scene_pending","ready":false,"pid":2568,"epoch":1,"faults":0,"payload":false,"players":-1,"lootCandidates":-1,"lootRequested":0,"observed":null,"features":{"god":{"on":false,"value":3.000},"hp":{"on":false,"value":1.000},"stam":{"on":false,"value":100.000},"mana":{"on":false,"value":100.000},"poise":{"on":false,"value":52.000},"immune":{"on":false,"value":224.000},"timescale":{"on":false,"value":1.000},"ohk":{"on":false,"value":1.000},"dmg":{"on":false,"value":10.000},"crit":{"on":false,"value":1.000},"aura":{"on":false,"value":20.000},"onehp":{"on":false,"value":1.000},"godmode":{"on":false,"value":1},"speed":{"on":false,"value":2.00},"nocd":{"on":false,"value":1},"loot":{"on":false,"value":1},"stunall":{"on":false,"value":1}}}
+10-07 11:13:16.767  2568  3164 I WSMEngine: LIFECYCLE epoch=2 stage=7370427056c0 hero=0
+10-07 11:13:20.050  2568  3164 I WSMEngine: LIFECYCLE epoch=3 stage=7370427056c0 hero=736fde7f3000
+10-07 11:13:20.050  2568  3164 I WSMEngine: FEAT apply v=2 chars=1
+10-07 11:13:27.122  2568  3164 I WSMEngine: FEAT apply v=3 chars=2
+10-07 11:13:40.294  2568  3163 I WSMEngine: CTL[0] @1791346418962233700 status -> {"request":1791346418962233700,"build":"wsm-v6.0.0","state":"ready","ready":true,"pid":2568,"epoch":3,"faults":0,"payload":false,"players":2,"lootCandidates":-1,"lootRequested":0,"observed":null,"features":{"god":{"on":false,"value":3.000},"hp":{"on":false,"value":1.000},"stam":{"on":false,"value":100.000},"mana":{"on":false,"value":100.000},"poise":{"on":false,"value":52.000},"immune":{"on":false,"value":224.000},"timescale":{"on":false,"value":1.000},"ohk":{"on":false,"value":1.000},"dmg":{"on":false,"value":10.000},"crit":{"on":false,"value":1.000},"aura":{"on":false,"value":20.000},"onehp":{"on":false,"value":1.000},"godmode":{"on":false,"value":1},"speed":{"on":false,"value":2.00},"nocd":{"on":false,"value":1},"loot":{"on":false,"value":1},"stunall":{"on":false,"value":1}}}
+10-07 11:13:52.298  2568  3163 I WSMEngine: CTL[0] @1791346431403933200 selftest -> {"request":1791346431403933200,"id":1,"state":"accepted"}
+10-07 11:13:52.455  2568  3164 I WSM-H64 : ctor wsm-v6.0.0: arch=aarch64 pid=2568 bus=0x737139a7b470
+10-07 11:13:52.455  2568  3164 I WSM-H64 : agent spawned
+10-07 11:13:52.455  2568  3712 I WSM-H64 : agent thread UP pid=2568
+10-07 11:13:52.462  2568  3712 I WSM-H64 : agent: mul 6 x 7 = 42
+10-07 11:13:53.299  2568  3163 I WSMEngine: CTL[0] @1791346432324843500 result 1 -> {"request":1791346432324843500,"id":1,"epoch":3,"state":"applied","detail":"OK payload ping/multiply 6*7=42"}

@@ -1,0 +1,7 @@
+{
+  "request": 1791348144903601700,
+  "id": 4,
+  "epoch": 3,
+  "state": "rejected",
+  "detail": "SPEED ON hs=0x77d981650000 get_WalkSpeed=shape(0xd103c3ff,0x6d0733ed) get_DashSpeed=shape(0xd104c3ff,0x6d0b33ed) get_SoftDashSpeed=shape(0xd10443ff,0x6d0933ed)"
+}

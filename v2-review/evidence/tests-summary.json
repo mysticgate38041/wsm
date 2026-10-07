@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-10-06T08:39:43.817717+07:00",
+  "tests_run": 36,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "successful": true,
+  "mutation_cases": 1000,
+  "fixtures": "synthetic, not runtime evidence",
+  "coverage": "not measured"
+}

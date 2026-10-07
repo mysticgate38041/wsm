@@ -1,0 +1,132 @@
+[
+  {
+    "command": "selftest",
+    "result": {
+      "request": 1791349612147732000,
+      "id": 1,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK payload multiply=42 branch/hero-getter/god/neighbor/restore"
+    }
+  },
+  {
+    "command": "godmode 1",
+    "result": {
+      "request": 1791349615184726800,
+      "id": 2,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "GOD armed hero_stats=0x77d975b23000 addr=0x400028fb64b4 slot=18 np=2 rc=0"
+    }
+  },
+  {
+    "command": "godmode 1",
+    "result": {
+      "request": 1791349618268081100,
+      "id": 3,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK GOD already ON (owned slot unchanged)"
+    }
+  },
+  {
+    "command": "godmode 0",
+    "result": {
+      "request": 1791349621209820800,
+      "id": 4,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK GOD OFF (nr=2)"
+    }
+  },
+  {
+    "command": "speed 2",
+    "result": {
+      "request": 1791349624158231500,
+      "id": 5,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "SPEED ON hs=0x77d975b23000 get_WalkSpeed@0x40002b88b744/off0 np=2 get_DashSpeed@0x40002b88a850/off0 np=2 get_SoftDashSpeed@0x40002b88b190/off0 np=2"
+    }
+  },
+  {
+    "command": "speed 0",
+    "result": {
+      "request": 1791349627191819900,
+      "id": 6,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK SPEED OFF (nr=2/2/2)"
+    }
+  },
+  {
+    "command": "nocd 1",
+    "result": {
+      "request": 1791349630247033100,
+      "id": 7,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "NOCD ON CanTriggerSuper@0x40002b84e0d0 np=2 CanTriggerExt@0x4000292b7ee4 np=2 CooltimeLeft=0@0x40002b638320 np=2"
+    }
+  },
+  {
+    "command": "nocd 0",
+    "result": {
+      "request": 1791349633278924400,
+      "id": 8,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK NOCD OFF (nr=2/2/2)"
+    }
+  },
+  {
+    "command": "stunall 1",
+    "result": {
+      "request": 1791349636133149200,
+      "id": 9,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "STUNALL ON freeze=2 mon=-1 done=0"
+    }
+  },
+  {
+    "command": "stunall 0",
+    "result": {
+      "request": 1791349639259639600,
+      "id": 10,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK STUNALL OFF (nr=2)"
+    }
+  },
+  {
+    "command": "feat timescale 1.25",
+    "result": {
+      "request": 1791349642117004100,
+      "id": 11,
+      "epoch": 3,
+      "state": "rejected",
+      "detail": "ERR timescale unavailable: GlobalTimeManager instance/API absent"
+    }
+  },
+  {
+    "command": "feat timescale 0",
+    "result": {
+      "request": 1791349645161901000,
+      "id": 12,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK timescale already OFF"
+    }
+  },
+  {
+    "command": "panic",
+    "result": {
+      "request": 1791349648279470300,
+      "id": 13,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK PANIC restore=complete"
+    }
+  }
+]

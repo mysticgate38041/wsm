@@ -1,0 +1,6 @@
+10-07 01:20:13.130  7095  7627 I WSMEngine: CTL[0] hookcount 30 s -> HOOKCOUNT secs=30 code=0x4000263a2c54 nmaps=0 patched=2 | INSTALLED, tunggu 30s... | HOTCOUNT=3
+10-07 01:22:05.213  7095  7776 I WSM-H64 : agent: HOOKINSTALLv2 code=0x4000263a2c54 block=0x40002f9c50c0 patched=2
+10-07 01:22:05.217  7095  7627 I WSMEngine: HOOKCOUNT: HOOKCOUNT secs=60 code=0x4000263a2c54 nmaps=0 patched=2 | INSTALLED, tunggu 60s...
+10-07 01:23:05.241  7095  7776 I WSM-H64 : agent: HOOKRESTOREv2 nr=2 count=3
+10-07 01:23:05.243  7095  7627 I WSMEngine: HOOKCOUNT done: HOOKCOUNT secs=60 code=0x4000263a2c54 nmaps=0 patched=2 | INSTALLED, tunggu 60s... | HOTCOUNT=3
+10-07 01:23:05.243  7095  7627 I WSMEngine: CTL[0] hookcount 60 s -> HOOKCOUNT secs=60 code=0x4000263a2c54 nmaps=0 patched=2 | INSTALLED, tunggu 60s... | HOTCOUNT=3

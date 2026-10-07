@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "collected_at": "2026-10-06T08:47:32.885027+07:00",
+  "scope": "READ_ONLY_HOST_PREFLIGHT",
+  "status": "BLOCKED",
+  "runtime_status": "NOT_TESTED",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.7 (main, Sep  1 2026, 14:17:30) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "paths": {
+    "project": "C:\\Users\\Administrator\\Downloads\\GT_cheat_analysis\\WSMenu\\src\\wsm",
+    "ndk": "D:\\Android\\ndk\\android-ndk-r27c",
+    "adb": "D:\\_migration\\profile\\Downloads\\platform-tools-latest-windows\\platform-tools\\adb.exe"
+  },
+  "source_files": [
+    {
+      "path": "jni/loader.cpp",
+      "bytes": 10319,
+      "sha256": "578e621305808139b7e9edab5e9aacf50b9f5e2be067262c89e79784ae59e637"
+    },
+    {
+      "path": "jni/engine.cpp",
+      "bytes": 1853,
+      "sha256": "d7bc051e1d32dd173e2e4eefd008e016b4507c6d7cc0b4e9967f4f7083d91bd0"
+    },
+    {
+      "path": "jni/zygisk.hpp",
+      "bytes": 15712,
+      "sha256": "fc6523882c0f8659b4fcd1e04ffb07d3a948090e5a8c08817af6e2b506a078d0"
+    },
+    {
+      "path": "jni/Android.mk",
+      "bytes": 584,
+      "sha256": "973022ccec3fe92c0fb2cd7e1158ce5da93633e69bccea5a5744439e826fd1a0"
+    },
+    {
+      "path": "jni/Application.mk",
+      "bytes": 193,
+      "sha256": "84879401241a23a81a02dcf2d2400819c57c67314abe7e7ef55da367d0ffd7dc"
+    },
+    {
+      "path": "scripts/build.ps1",
+      "bytes": 5944,
+      "sha256": "063966c5be21b7ceaafd5af967b99313206159ac62c76af4311ec746ae49fc54"
+    }
+  ],
+  "libraries": [],
+  "devices": [],
+  "commands": [
+    {
+      "command": [
+        "D:\\Android\\ndk\\android-ndk-r27c\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe",
+        "--version"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": "Android (12470979, based on r522817c) clang version 18.0.3 (https://android.googlesource.com/toolchain/llvm-project d8003a456d14a3deb8054cdaa529ffbf02d9b262)\nTarget: x86_64-w64-windows-gnu\nThread model: posix\nInstalledDir: D:/Android/ndk/android-ndk-r27c/toolchains/llvm/prebuilt/windows-x86_64/bin\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\Android\\ndk\\android-ndk-r27c\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\llvm-readelf.exe",
+        "--version"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": "LLVM (http://llvm.org/):\n  LLVM version 18.0.3\n  Optimized build.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\_migration\\profile\\Downloads\\platform-tools-latest-windows\\platform-tools\\adb.exe",
+        "devices",
+        "-l"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": "List of devices attached\n\n",
+      "stderr": ""
+    }
+  ],
+  "blockers": [
+    "BINARY_MISSING:arm64-v8a/libwsm_loader.so",
+    "BINARY_MISSING:arm64-v8a/libwsm_engine.so",
+    "BINARY_MISSING:x86_64/libwsm_loader.so",
+    "BINARY_MISSING:x86_64/libwsm_engine.so",
+    "NO_READY_DEVICE"
+  ],
+  "limitations": [
+    "Does not validate Android module execution",
+    "ELF check does not validate symbol semantics or relocation correctness",
+    "Device attachment does not establish app or bridge compatibility",
+    "ADB may start its host daemon; no device-changing commands are issued"
+  ],
+  "ndk_properties": "Pkg.Desc = Android NDK\nPkg.Revision = 27.2.12479018\nPkg.BaseRevision = 27.2.12479018\nPkg.ReleaseName = r27c\n"
+}

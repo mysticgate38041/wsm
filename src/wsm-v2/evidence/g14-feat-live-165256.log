@@ -1,0 +1,31 @@
+=== G14 BATTERY TEST 16:52:56 ===
+--- status ---
+STATUS instance=0x0 modsN=0 feats=[-]--- feat god 1 ---
+MISS feat=god ON apply=-3 (stage/char belum siap)--- feat poise 1 ---
+MISS feat=poise ON apply=-3 (stage/char belum siap)--- feat stam 1 ---
+MISS feat=stam ON apply=-3 (stage/char belum siap)--- feat mana 1 ---
+MISS feat=mana ON apply=-3 (stage/char belum siap)--- feat immune 1 ---
+MISS feat=immune ON apply=-3 (stage/char belum siap)--- feat hp 1 ---
+MISS feat=hp ON apply=-3 (stage/char belum siap)--- status ---
+STATUS instance=0x7b1f4852bce0 modsN=0 feats=[god,hp,stam,mana,poise,immune,]=== ENGINE LOGS ===
+10-06 16:53:02.629 I/WSMEngine( 4867): FEAT guard: +2 faulted (total=6)
+10-06 16:53:03.539 I/WSMEngine( 4867): FEAT guard: +1 faulted (total=7)
+10-06 16:53:04.453 I/WSMEngine( 4867): FEAT guard: +1 faulted (total=8)
+10-06 16:53:05.185 I/WSMEngine( 4867): CTL[0] feat stam 1 -> MISS feat=stam ON apply=-3 (stage/char belum siap)
+10-06 16:53:05.363 I/WSMEngine( 4867): FEAT guard: +2 faulted (total=10)
+10-06 16:53:06.272 I/WSMEngine( 4867): FEAT guard: +1 faulted (total=11)
+10-06 16:53:07.182 I/WSMEngine( 4867): FEAT guard: +1 faulted (total=12)
+10-06 16:53:07.195 I/WSMEngine( 4867): CTL[0] feat mana 1 -> MISS feat=mana ON apply=-3 (stage/char belum siap)
+10-06 16:53:08.092 I/WSMEngine( 4867): FEAT guard: +2 faulted (total=14)
+10-06 16:53:09.001 I/WSMEngine( 4867): FEAT guard: +1 faulted (total=15)
+10-06 16:53:09.204 I/WSMEngine( 4867): CTL[0] feat immune 1 -> MISS feat=immune ON apply=-3 (stage/char belum siap)
+10-06 16:53:09.910 I/WSMEngine( 4867): FEAT guard: +2 faulted (total=17)
+10-06 16:53:10.819 I/WSMEngine( 4867): FEAT guard: +1 faulted (total=18)
+10-06 16:53:11.212 I/WSMEngine( 4867): CTL[0] feat hp 1 -> MISS feat=hp ON apply=-3 (stage/char belum siap)
+10-06 16:53:11.730 I/WSMEngine( 4867): FEAT guard: +2 faulted (total=20)
+10-06 16:53:12.640 I/WSMEngine( 4867): FEAT guard: +1 faulted (total=21)
+10-06 16:53:13.213 I/WSMEngine( 4867): CTL[0] status -> STATUS instance=0x7b1f4852bce0 modsN=0 feats=[god,hp,stam,mana,poise,immune,]
+10-06 16:53:13.549 I/WSMEngine( 4867): FEAT guard: +1 faulted (total=22)
+10-06 16:53:14.457 I/WSMEngine( 4867): FEAT guard: +1 faulted (total=23)
+10-06 16:53:15.370 I/WSMEngine( 4867): FEAT guard: +1 faulted (total=24)
+=== DONE 16:53:14 ===

@@ -1,0 +1,18 @@
+10-06 16:21:11.023 I/WSMEngine( 2586): MENU native registered
+10-06 16:21:11.045 I/WSMEngine( 2586): MENU showInActivity called
+10-06 16:21:13.658 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:21:19.679 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:21:19.922 I/WSMEngine( 2586): WATCH alive: mods=0x0 instance=0x0
+10-06 16:21:25.701 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:21:26.710 I/WSMEngine( 2586): WATCH alive: mods=0x0 instance=0x0
+10-06 16:21:31.721 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:21:37.742 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:21:43.768 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:21:49.787 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:21:55.819 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:22:01.824 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:22:07.845 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:22:13.863 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:22:19.883 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:22:25.896 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:22:31.925 I/WSMEngine( 2586): MENU exec: status -> STATUS instance=0x0 modsN=0

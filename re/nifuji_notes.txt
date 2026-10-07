@@ -1,0 +1,180 @@
+insns: 41044
+== blob(0x22k-0x2c000) lea refs: 0
+== plt count: 74 syscall plt: ['0x11b980']
+== syscall calls: 3
+-- at 0xf5f65
+    0xf5f46  mov rax, qword ptr [rdi]
+    0xf5f49  call qword ptr [rax + 0x28]
+    0xf5f4c  lea rdi, [rsp + 0x10]
+    0xf5f51  call 0xf7650
+    0xf5f56  mov edi, 0x13f
+    0xf5f5b  mov rsi, rax
+    0xf5f5e  mov edx, 1
+    0xf5f63  xor eax, eax
+-- at 0xfff5f
+    0xfff43  test eax, eax
+    0xfff45  jne 0xfffdd
+    0xfff4b  mov r12b, byte ptr [rbx + 1]
+    0xfff4f  test r12b, 2
+    0xfff53  je 0xfff70
+    0xfff55  mov ebp, dword ptr [rbx + 4]
+    0xfff58  mov edi, 0xba
+    0xfff5d  xor eax, eax
+-- at 0xfffad
+    0xfff98  jmp 0xfff80
+    0xfff9a  xor ebp, ebp
+    0xfff9c  cmp al, 1
+    0xfff9e  je 0xfffc2
+    0xfffa0  test r12b, 2
+    0xfffa4  jne 0xfffb5
+    0xfffa6  mov edi, 0xba
+    0xfffab  xor eax, eax
+
+==== ELF entry @0xf5480 ====
+  0xf5480  lea rdi, [rip + 0x278c9]
+  0xf5487  jmp 0x11b8b0
+  0xf548c  nop dword ptr [rax]
+  0xf5490  ret 
+  0xf5491  nop word ptr cs:[rax + rax]
+  0xf549b  nop dword ptr [rax + rax]
+  0xf54a0  jmp 0x117550
+  0xf54a5  nop word ptr cs:[rax + rax]
+  0xf54af  nop 
+  0xf54b0  test rdi, rdi
+  0xf54b3  je 0xf54b7
+  0xf54b5  jmp rdi
+  0xf54b7  ret 
+  0xf54b8  nop dword ptr [rax + rax]
+  0xf54c0  mov rsi, rdi
+  0xf54c3  lea rdi, [rip - 0x1a]
+  0xf54ca  lea rdx, [rip + 0x2787f]
+  0xf54d1  jmp 0x11b8c0
+  0xf54d6  nop word ptr cs:[rax + rax]
+  0xf54e0  lea rcx, [rip + 0x27869]
+  0xf54e7  jmp 0x11b8d0
+  0xf54ec  int3 
+  0xf54ed  int3 
+  0xf54ee  int3 
+  0xf54ef  int3 
+  0xf54f0  push r15
+  0xf54f2  push r14
+  0xf54f4  push r12
+  0xf54f6  push rbx
+  0xf54f7  push rax
+  0xf54f8  mov r14, rsi
+  0xf54fb  mov r15, rdi
+  0xf54fe  mov edi, 0x40
+  0xf5503  call 0xfeb50
+  0xf5508  mov rbx, rax
+  0xf550b  xorps xmm0, xmm0
+  0xf550e  movaps xmmword ptr [rax], xmm0
+  0xf5511  movaps xmmword ptr [rax + 0x10], xmm0
+  0xf5515  movaps xmmword ptr [rax + 0x20], xmm0
+  0xf5519  movaps xmmword ptr [rax + 0x30], xmm0
+  0xf551d  lea rax, [rip + 0x27844]
+  0xf5524  mov qword ptr [rbx], rax
+  0xf5527  mov qword ptr [rbx + 8], 0
+  0xf552f  mov byte ptr [rbx + 0x10], 0
+  0xf5533  movups xmmword ptr [rbx + 0x18], xmm0
+  0xf5537  movups xmmword ptr [rbx + 0x28], xmm0
+  0xf553b  mov qword ptr [rbx + 0x38], 0
+  0xf5543  mov r12, qword ptr [r15 + 8]
+  0xf5547  mov edi, 0x30
+  0xf554c  call 0xfeb50
+  0xf5551  mov qword ptr [rax], 2
+  0xf5558  mov qword ptr [rax + 8], rbx
+  0xf555c  lea rcx, [rip + 0x44cd]
+  0xf5563  mov qword ptr [rax + 0x10], rcx
+  0xf5567  lea rcx, [rip + 0x44d2]
+  0xf556e  mov qword ptr [rax + 0x18], rcx
+  0xf5572  lea rcx, [rip + 0x44d7]
+  0xf5579  mov qword ptr [rax + 0x20], rcx
+  0xf557d  lea rcx, [rip + 0x44dc]
+
+==== zygisk_module_entry @0xf54f0 ====
+  0xf54f0  push r15
+  0xf54f2  push r14
+  0xf54f4  push r12
+  0xf54f6  push rbx
+  0xf54f7  push rax
+  0xf54f8  mov r14, rsi
+  0xf54fb  mov r15, rdi
+  0xf54fe  mov edi, 0x40
+  0xf5503  call 0xfeb50
+  0xf5508  mov rbx, rax
+  0xf550b  xorps xmm0, xmm0
+  0xf550e  movaps xmmword ptr [rax], xmm0
+  0xf5511  movaps xmmword ptr [rax + 0x10], xmm0
+  0xf5515  movaps xmmword ptr [rax + 0x20], xmm0
+  0xf5519  movaps xmmword ptr [rax + 0x30], xmm0
+  0xf551d  lea rax, [rip + 0x27844]
+  0xf5524  mov qword ptr [rbx], rax
+  0xf5527  mov qword ptr [rbx + 8], 0
+  0xf552f  mov byte ptr [rbx + 0x10], 0
+  0xf5533  movups xmmword ptr [rbx + 0x18], xmm0
+  0xf5537  movups xmmword ptr [rbx + 0x28], xmm0
+  0xf553b  mov qword ptr [rbx + 0x38], 0
+  0xf5543  mov r12, qword ptr [r15 + 8]
+  0xf5547  mov edi, 0x30
+  0xf554c  call 0xfeb50
+  0xf5551  mov qword ptr [rax], 2
+  0xf5558  mov qword ptr [rax + 8], rbx
+  0xf555c  lea rcx, [rip + 0x44cd]
+  0xf5563  mov qword ptr [rax + 0x10], rcx
+  0xf5567  lea rcx, [rip + 0x44d2]
+  0xf556e  mov qword ptr [rax + 0x18], rcx
+  0xf5572  lea rcx, [rip + 0x44d7]
+  0xf5579  mov qword ptr [rax + 0x20], rcx
+  0xf557d  lea rcx, [rip + 0x44dc]
+  0xf5584  mov qword ptr [rax + 0x28], rcx
+  0xf5588  mov rdi, r15
+  0xf558b  mov rsi, rax
+  0xf558e  call r12
+  0xf5591  test al, al
+  0xf5593  je 0xf55be
+  0xf5595  mov edi, 8
+  0xf559a  call 0xfeb50
+  0xf559f  mov qword ptr [rax], r15
+  0xf55a2  mov rcx, qword ptr [rbx]
+  0xf55a5  mov rcx, qword ptr [rcx]
+  0xf55a8  mov rdi, rbx
+  0xf55ab  mov rsi, rax
+  0xf55ae  mov rdx, r14
+  0xf55b1  add rsp, 8
+  0xf55b5  pop rbx
+  0xf55b6  pop r12
+  0xf55b8  pop r14
+  0xf55ba  pop r15
+  0xf55bc  jmp rcx
+  0xf55be  add rsp, 8
+  0xf55c2  pop rbx
+  0xf55c3  pop r12
+  0xf55c5  pop r14
+  0xf55c7  pop r15
+  0xf55c9  ret 
+  0xf55ca  int3 
+  0xf55cb  int3 
+  0xf55cc  int3 
+  0xf55cd  int3 
+  0xf55ce  int3 
+  0xf55cf  int3 
+  0xf55d0  push rbx
+  0xf55d1  mov qword ptr [rip + 0x2be18], rsi
+  0xf55d8  mov qword ptr [rdi + 8], rdx
+  0xf55dc  cmp qword ptr [rip + 0x2be14], 0
+
+== pthread_create plts: ['0x11b950']
+-- pthread_create call at 0xf59b0:
+    0xf5997  mov qword ptr [rax + 8], rbx
+    0xf599b  mov qword ptr [rax + 0x10], r15
+    0xf599f  lea rdx, [rip + 0x49a]
+    0xf59a6  lea rdi, [rsp + 0x10]
+    0xf59ab  xor esi, esi
+    0xf59ad  mov rcx, rax
+-- pthread_create call at 0xf5a6c:
+    0xf5a54  mov byte ptr [rax + 0x10], dl
+    0xf5a57  mov qword ptr [rax + 0x20], rsi
+    0xf5a5b  lea rdx, [rip + 0x1f4e]
+    0xf5a62  lea rdi, [rsp + 0x30]
+    0xf5a67  xor esi, esi
+    0xf5a69  mov rcx, rax

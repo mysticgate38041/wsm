@@ -1,0 +1,8 @@
+=== G19: HOOKPROBE — MethodInfo.methodPointer @ +0x10 TERVERIFIKASI — Tue, Oct  6, 2026  9:14:49 PM ===
+engine v4.1, GT pid 16694
+
+HOOKPROBE mi=0x7eedd2a5ec80 klass=0x40002b833838 name='' | code@+0x10=0x4000263d2a14 | code@+0x28=0x40002cad6610 | code@+0x58=0x40002b833880 | code@+0x60=0x40002b833880 | code@+0x68=0x4000263a3e98
+
+methodPointer pada +0x10 -> menunjuk ke kode libil2cpp (exec range 0x40002...)
+=> fondasi POC payload ARM64 (patch pointer = intercept) tervalidasi layout-nya
+Catatan: name@+0x8 kosong pada build ini (pakai il2cpp_class_get_name untuk nama)

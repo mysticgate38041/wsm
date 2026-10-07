@@ -1,0 +1,2 @@
+10-07 00:10:32.262  7499  8034 I WSMEngine: CTL thread up (paths=3)
+10-07 00:11:37.290  7499  8034 I WSM-H64 : ctor v3: executing arch=aarch64 base=0x40002f9c0000 pid=7499

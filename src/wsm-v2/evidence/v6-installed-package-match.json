@@ -1,0 +1,19 @@
+{
+  "zipSha256": "679906b08a6d6504c292cd2b95767861bde0f523985fd30724f08f79360ff633",
+  "installedFiles": {
+    "dex/wsm_menu.dex": true,
+    "engine/arm64-v8a.so": true,
+    "engine/x86_64.so": true,
+    "module.prop": true,
+    "payload/arm64-v8a.so": true,
+    "release.json": true,
+    "skip_mount": true,
+    "verify.list": true,
+    "zygisk/arm64-v8a.so": true,
+    "zygisk/x86_64.so": true
+  },
+  "installerOnlyRemoved": [
+    "META-INF/*",
+    "customize.sh"
+  ]
+}

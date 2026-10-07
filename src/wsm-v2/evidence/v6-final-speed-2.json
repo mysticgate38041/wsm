@@ -1,0 +1,7 @@
+{
+  "request": 1791348907003485500,
+  "id": 4,
+  "epoch": 3,
+  "state": "applied",
+  "detail": "SPEED ON hs=0x77d987af3000 get_WalkSpeed@0x40002b88b744/off0 np=2 get_DashSpeed@0x40002b88a850/off0 np=2 get_SoftDashSpeed@0x40002b88b190/off0 np=2"
+}

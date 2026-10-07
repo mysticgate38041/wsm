@@ -1,0 +1,11 @@
+10-07 00:28:40.553 10964 11515 I WSMEngine: CTL thread up (paths=3)
+10-07 00:29:45.589 10964 11515 I WSM-H64 : ctor v4: arch=aarch64 pid=10964 bus=0x7730b1eab540
+10-07 00:29:45.589 10964 11515 I WSM-H64 : agent spawned
+10-07 00:29:45.590 10964 11669 I WSM-H64 : agent thread UP pid=10964
+10-07 00:29:45.596 10964 11669 I WSM-H64 : agent: read64 [0x7730b1eab740]=0x5eedf00dcafebabe
+10-07 00:29:45.603 10964 11669 I WSM-H64 : agent: write64 [0x7730b1eab748]=0xb0baf00ddeadbeef
+10-07 00:29:45.606 10964 11669 I WSM-H64 : agent: read64 [0x400022c00000]=0x10102464c457f
+10-07 00:29:45.642 10964 11669 I WSM-H64 : agent: patchv2 n=0 patched=0 ret1=0x64c0de a0=0x0 a1=0x0 a2=0x0
+10-07 00:29:45.642 10964 11669 I WSM-H64 : agent: patchv2 restored ret2=0x64c0de
+10-07 00:29:45.649 10964 11515 I WSMEngine: POC3 done: POC3 load=0x7730aaf96401 e=0 | A:rd=0x5eedf00dcafebabe(OK) | B:wr=OK | C:elf=0x10102464c457f vs x86=0x10102464c457f(MATCH) | D:old=0x72a00c8052981bc0 new=0x72a00c8052981bc0 ret1=0x64c0de mp=0 ret2=0x64c0de hb=7
+10-07 00:29:45.649 10964 11515 I WSMEngine: CTL[0] nbpoc3 -> POC3 load=0x7730aaf96401 e=0 | A:rd=0x5eedf00dcafebabe(OK) | B:wr=OK | C:elf=0x10102464c457f vs x86=0x10102464c457f(MATCH) | D:old=0x72a00c8052981bc0 new=0x72a00c8052981bc0 ret1=0x64c0de mp=0 ret2=0x64c0de hb=7

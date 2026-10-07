@@ -1,0 +1,6 @@
+10-06 10:44:04.536   247   247 I sf_frame_dur: [Splash Screen com.kakaogames.gdts#206,1,0,0,0,1,0,1]
+10-06 10:44:04.707   398  4957 I wm_task_removed: [13,13,0,removeChild, last child = ActivityRecord{9fbba7d u0 com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity t-1 f}} in Task{caead72 #13 type=standard A=10075:com.kakaogames.gdts}]
+10-06 10:44:06.974   398  4957 I wm_create_activity: [0,83791045,14,com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity,NULL,NULL,NULL,268435456]
+10-06 10:44:06.993   398   426 I am_proc_start: [0,5269,10075,com.kakaogames.gdts,next-top-activity,{com.kakaogames.gdts/com.kakaogame.KGUnityPlayerActivity}]
+10-06 10:44:07.077   398  4957 I am_proc_bound: [0,5269,com.kakaogames.gdts]
+10-06 10:44:07.615   398  4957 I am_proc_died: [0,5269,com.kakaogames.gdts,0,2]

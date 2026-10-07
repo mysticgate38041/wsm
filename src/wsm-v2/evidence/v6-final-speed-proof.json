@@ -1,0 +1,84 @@
+{
+  "addresses": {
+    "get_WalkSpeed": "0x40002b88b744",
+    "get_DashSpeed": "0x40002b88a850",
+    "get_SoftDashSpeed": "0x40002b88b190"
+  },
+  "before": {
+    "get_WalkSpeed": "ffc303d1ed33076deb2b086de923096dfe5300f9fa670ba9f85f0ca9f6570da9",
+    "get_DashSpeed": "ffc304d1ed330b6deb2b0c6de9230d6dfd7b0ea9fa670fa9f85f10a9f65711a9",
+    "get_SoftDashSpeed": "ff4304d1ed33096deb2b0a6de9230b6dfd7b0ca9fa670da9f85f0ea9f6570fa9"
+  },
+  "on": {
+    "request": 1791349036225687300,
+    "id": 13,
+    "epoch": 3,
+    "state": "applied",
+    "detail": "SPEED ON hs=0x77d987af3000 get_WalkSpeed@0x40002b88b744/off0 np=2 get_DashSpeed@0x40002b88a850/off0 np=2 get_SoftDashSpeed@0x40002b88b190/off0 np=2"
+  },
+  "patched": {
+    "get_WalkSpeed": "2fa21615ed33076deb2b086de923096dfe5300f9fa670ba9f85f0ca9f6570da9",
+    "get_DashSpeed": "ecb51615ed330b6deb2b0c6de9230d6dfd7b0ea9fa670fa9f85f10a9f65711a9",
+    "get_SoftDashSpeed": "9cc31615ed33096deb2b0a6de9230b6dfd7b0ca9fa670da9f85f0ea9f6570fa9"
+  },
+  "off": {
+    "request": 1791349041239293300,
+    "id": 15,
+    "epoch": 3,
+    "state": "applied",
+    "detail": "OK SPEED OFF (nr=2/2/2)"
+  },
+  "after": {
+    "get_WalkSpeed": "ffc303d1ed33076deb2b086de923096dfe5300f9fa670ba9f85f0ca9f6570da9",
+    "get_DashSpeed": "ffc304d1ed330b6deb2b0c6de9230d6dfd7b0ea9fa670fa9f85f10a9f65711a9",
+    "get_SoftDashSpeed": "ff4304d1ed33096deb2b0a6de9230b6dfd7b0ca9fa670da9f85f0ea9f6570fa9"
+  },
+  "allSingleInstruction": true,
+  "allRestored": true,
+  "movement": {
+    "input": "D-pad down 600 ms",
+    "origin": [
+      0.5,
+      0.0
+    ],
+    "normal": [
+      0.5,
+      -2.3
+    ],
+    "scaled": [
+      0.5,
+      -4.8
+    ],
+    "normalDistance": 2.3,
+    "scaledDistance": 4.8,
+    "ratio": 2.0869565217391304,
+    "normalAck": {
+      "request": 1791349032113528300,
+      "id": 11,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "TP src=P from=(0.5,-2.3) want=(0.5,-2.3) now=(0.5,-2.3) fault=0 ok=1"
+    },
+    "scaledAck": {
+      "request": 1791349039209732000,
+      "id": 14,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "TP src=P from=(0.5,-4.8) want=(0.5,-4.8) now=(0.5,-4.8) fault=0 ok=1"
+    },
+    "reset1": {
+      "request": 1791349034177199400,
+      "id": 12,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "TP src=P from=(0.5,-2.3) want=(0.5,-0.0) now=(0.5,-0.0) fault=0 ok=1"
+    },
+    "reset2": {
+      "request": 1791349043067489800,
+      "id": 16,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "TP src=P from=(0.5,-4.8) want=(0.5,-0.0) now=(0.5,-0.0) fault=0 ok=1"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+10-06 18:21:42.047 I/WSMEngine(14398): MENU showInActivity called
+10-06 18:21:54.029 I/WSMEngine(14398): FEAT thread attached to il2cpp domain
+10-06 18:21:54.029 I/WSMEngine(14398): FEAT resolver ready (Stage/CharacterManager/CharacterStatsBehaviour)
+10-06 18:22:10.218 I/WSMEngine(14398): CTL[0] featdiag -> FEATDIAG resolve=1 stage=0x0 cmgr=0x0 players=0x0 size=-1 obj0=0x0 objcls=- statsM=0x0(0) statscls=- opts=0x0(0) faults=0
+10-06 18:22:37.400 I/WSMEngine(14398): FEAT apply v=2 chars=1

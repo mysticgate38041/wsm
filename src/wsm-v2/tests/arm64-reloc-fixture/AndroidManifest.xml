@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.wsm.relocprobe" android:versionCode="1" android:versionName="1.0">
+  <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="34"/>
+  <application android:label="WSM relocation test" android:hasCode="true" android:debuggable="true"/>
+  <instrumentation android:name="com.wsm.relocprobe.Runner" android:targetPackage="com.wsm.relocprobe"/>
+</manifest>

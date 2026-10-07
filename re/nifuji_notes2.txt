@@ -1,0 +1,339 @@
+== vtable @0x11cd68 (file 0x11bd68):
+   vt[0] = 0x0
+   vt[1] = 0x0
+   vt[2] = 0x0
+   vt[3] = 0x0
+   vt[4] = 0x0
+   vt[5] = 0x0
+   vt[6] = 0x0
+   vt[7] = 0x0
+
+== PLT of interest: {'0x11b8f0': '__openat_2', '0x11ba20': '__open_2', '0x11ba90': 'dl_iterate_phdr', '0x11b930': 'mmap', '0x11ba80': '__read_chk', '0x11b920': 'fstat', '0x11ba70': 'lseek', '0x11bac0': 'fopen', '0x11b990': 'ftruncate', '0x11b9b0': '__system_property_get', '0x11b9c0': 'atoi', '0x11bae0': 'sscanf'}
+-- __openat_2 call @0xf56c3:
+    0xf569c  je 0xf56a8
+    0xf569e  mov rdi, qword ptr [rax]
+    0xf56a1  call rcx
+    0xf56a3  mov r12d, eax
+    0xf56a6  jmp 0xf56ae
+    0xf56a8  mov r12d, 0xffffffff
+    0xf56ae  lea rdi, [rsp + 0x30]
+    0xf56b3  call 0xf5d60
+    0xf56b8  mov r13, rax
+    0xf56bb  mov edi, r12d
+    0xf56be  mov rsi, rax
+    0xf56c1  xor edx, edx
+-- __openat_2 call @0xf5817:
+    0xf57e5  mov qword ptr [rax + 0x10], 0
+    0xf57ed  test byte ptr [rsp + 0x10], 1
+    0xf57f2  je 0xf57fe
+    0xf57f4  mov rdi, qword ptr [rsp + 0x20]
+    0xf57f9  call 0xfebb0
+    0xf57fe  test byte ptr [rsp + 0x30], 1
+    0xf5803  mov edi, dword ptr [rsp + 0xc]
+    0xf5807  je 0xf5810
+    0xf5809  mov rsi, qword ptr [rsp + 0x40]
+    0xf580e  jmp 0xf5815
+    0xf5810  lea rsi, [rsp + 0x31]
+    0xf5815  xor edx, edx
+-- __open_2 call @0xfb874:
+    0xfb844  jne 0xfb852
+    0xfb846  mov rcx, qword ptr [r8 + rcx + 0x10]
+    0xfb84b  cmp rax, rcx
+    0xfb84e  cmova rax, rcx
+    0xfb852  cmp rax, -1
+    0xfb856  je 0xfbb4a
+    0xfb85c  add rax, qword ptr [rdx + 8]
+    0xfb860  mov qword ptr [rdx + 0xa0], rax
+    0xfb867  cmp byte ptr [rdi], 0x2f
+    0xfb86a  jne 0xfb8d0
+    0xfb86c  mov r12, rsi
+    0xfb86f  mov esi, 0x80000
+-- __open_2 call @0xfb9e8:
+    0xfb9ac  lea rdi, [rip + 0x25ddd]
+    0xfb9b3  call 0xfeb20
+    0xfb9b8  mov rbx, qword ptr [rsp + 0x20]
+    0xfb9bd  mov r9, qword ptr [rbx]
+    0xfb9c0  lea rcx, [rip + 0x25674]
+        STR: "v'zs$X"
+    0xfb9c7  lea r8, [rip + 0x25674]
+        STR: "|',%#=4u75?hk`"
+    0xfb9ce  lea rbp, [rsp + 0x80]
+    0xfb9d6  mov rdi, rbp
+    0xfb9d9  xor eax, eax
+    0xfb9db  call 0xfc580
+    0xfb9e0  mov rdi, rbp
+    0xfb9e3  mov esi, 0x80000
+-- dl_iterate_phdr call @0xfc72a:
+    0xfc6f3  mov qword ptr [rsp + 0x18], r15
+    0xfc6f8  lea rax, [rsp + 8]
+    0xfc6fd  mov qword ptr [rsp + 0x20], rax
+    0xfc702  mov qword ptr [rsp + 0x28], rbp
+    0xfc707  movsxd rax, r14d
+    0xfc70a  mov qword ptr [rsp + 0x30], rax
+    0xfc70f  add r13d, -0x15
+    0xfc713  cmp r13d, 2
+    0xfc717  jae 0xfc738
+    0xfc719  call 0xfcdb0
+    0xfc71e  lea rdi, [rip + 0x51b]
+    0xfc725  lea rsi, [rsp + 0x10]
+-- dl_iterate_phdr call @0xfc744:
+    0xfc70f  add r13d, -0x15
+    0xfc713  cmp r13d, 2
+    0xfc717  jae 0xfc738
+    0xfc719  call 0xfcdb0
+    0xfc71e  lea rdi, [rip + 0x51b]
+    0xfc725  lea rsi, [rsp + 0x10]
+    0xfc72a  call 0x11ba90
+    0xfc72f  mov ebx, eax
+    0xfc731  call 0xfd400
+    0xfc736  jmp 0xfc74b
+    0xfc738  lea rdi, [rip + 0x501]
+    0xfc73f  lea rsi, [rsp + 0x10]
+-- dl_iterate_phdr call @0x118210:
+    0x1181cd  test rax, rax
+    0x1181d0  je 0x118367
+    0x1181d6  mov rbx, rax
+    0x1181d9  movzx eax, bpl
+    0x1181dd  sub rbx, rax
+    0x1181e0  mov rax, qword ptr [r14 + 8]
+    0x1181e4  mov qword ptr [rsp + 0xa0], rax
+    0x1181ec  lea rax, [rsp + 0x38]
+    0x1181f1  mov qword ptr [rsp + 0xa8], rax
+    0x1181f9  mov qword ptr [rsp + 0xb0], rbx
+    0x118201  lea rdi, [rip + 0x2b48]
+    0x118208  lea rsi, [rsp + 0xa0]
+-- mmap call @0xf5897:
+    0xf5866  movaps xmmword ptr [rsp + 0x40], xmm0
+    0xf586b  movaps xmmword ptr [rsp + 0x30], xmm0
+    0xf5870  lea rsi, [rsp + 0x30]
+    0xf5875  mov edi, ebp
+    0xf5877  call 0x11b920
+    0xf587c  mov rsi, qword ptr [rsp + 0x60]
+    0xf5881  mov qword ptr [r14 + 0x38], rsi
+    0xf5885  xor edi, edi
+    0xf5887  mov edx, 1
+    0xf588c  mov ecx, 2
+    0xf5891  mov r8d, ebp
+    0xf5894  xor r9d, r9d
+-- mmap call @0xf5f9a:
+    0xf5f6a  mov r15, rax
+    0xf5f6d  test r15d, r15d
+    0xf5f70  js 0xf61ea
+    0xf5f76  mov rsi, qword ptr [r12 + 0x38]
+    0xf5f7b  mov edi, r15d
+    0xf5f7e  call 0x11b990
+    0xf5f83  mov rsi, qword ptr [r12 + 0x38]
+    0xf5f88  xor edi, edi
+    0xf5f8a  mov edx, 2
+    0xf5f8f  mov ecx, 1
+    0xf5f94  mov r8d, r15d
+    0xf5f97  xor r9d, r9d
+-- __read_chk call @0xfc668:
+    0xfc63e  call 0x11ba70
+    0xfc643  cmp rax, rbp
+    0xfc646  jne 0xfc67d
+    0xfc648  mov rdi, rbx
+    0xfc64b  call 0x11b9f0
+    0xfc650  test rax, rax
+    0xfc653  je 0xfc67a
+    0xfc655  mov r14, rax
+    0xfc658  mov edi, r15d
+    0xfc65b  mov rsi, rax
+    0xfc65e  mov rdx, rbx
+    0xfc661  mov rcx, 0xffffffffffffffff
+-- fstat call @0xf5877:
+    0xf5834  xorps xmm0, xmm0
+    0xf5837  movaps xmmword ptr [rsp + 0xb0], xmm0
+    0xf583f  movaps xmmword ptr [rsp + 0xa0], xmm0
+    0xf5847  movaps xmmword ptr [rsp + 0x90], xmm0
+    0xf584f  movaps xmmword ptr [rsp + 0x80], xmm0
+    0xf5857  movaps xmmword ptr [rsp + 0x70], xmm0
+    0xf585c  movaps xmmword ptr [rsp + 0x60], xmm0
+    0xf5861  movaps xmmword ptr [rsp + 0x50], xmm0
+    0xf5866  movaps xmmword ptr [rsp + 0x40], xmm0
+    0xf586b  movaps xmmword ptr [rsp + 0x30], xmm0
+    0xf5870  lea rsi, [rsp + 0x30]
+    0xf5875  mov edi, ebp
+-- fstat call @0xfba42:
+    0xfba0a  mov edx, 0x400
+    0xfba0f  call 0xfc8f0
+    0xfba14  test eax, eax
+    0xfba16  mov r15, qword ptr [rsp + 0x10]
+    0xfba1b  je 0xfbb04
+    0xfba21  test r14d, r14d
+    0xfba24  mov rsi, r12
+    0xfba27  mov rdx, qword ptr [rsp + 0x20]
+    0xfba2c  js 0xfbb4a
+    0xfba32  mov qword ptr [rsp + 0x68], rsi
+    0xfba37  lea rsi, [rsp + 0x80]
+    0xfba3f  mov edi, r14d
+-- lseek call @0xfc63e:
+    0xfc61d  jae 0xfc67d
+    0xfc61f  mov rbx, rcx
+    0xfc622  test rcx, rcx
+    0xfc625  je 0xfc67d
+    0xfc627  mov rbp, rdx
+    0xfc62a  lea rax, [rbx + rdx]
+    0xfc62e  cmp rax, rsi
+    0xfc631  ja 0xfc67d
+    0xfc633  mov r15d, edi
+    0xfc636  xor r14d, r14d
+    0xfc639  mov rsi, rbp
+    0xfc63c  xor edx, edx
+-- fopen call @0xfc9ff:
+    0xfc9b5  je 0xfcbf5
+    0xfc9bb  lea rdi, [rip + 0x24cde]
+        STR: ".eh_frame_hdr"
+    0xfc9c2  call 0xfeaf0
+    0xfc9c7  cmp byte ptr [rip + 0x246e5], 0
+    0xfc9ce  jne 0xfc9e5
+    0xfc9d0  xor byte ptr [rip + 0x246da], 0x53
+    0xfc9d7  xor byte ptr [rip + 0x246d4], 0x54
+    0xfc9de  mov byte ptr [rip + 0x246ce], 1
+    0xfc9e5  lea rdi, [rip + 0x24cb4]
+        STR: ".eh_frame_hdr"
+    0xfc9ec  call 0xfeb20
+    0xfc9f1  lea rdi, [rip + 0x246a8]
+    0xfc9f8  lea rsi, [rip + 0x246b2]
+-- fopen call @0xfe0b8:
+    0xfe06e  je 0xfe28a
+    0xfe074  lea rdi, [rip + 0x23625]
+        STR: ".eh_frame_hdr"
+    0xfe07b  call 0xfeaf0
+    0xfe080  cmp byte ptr [rip + 0x2320f], 0
+    0xfe087  jne 0xfe09e
+    0xfe089  xor byte ptr [rip + 0x23204], 0x53
+    0xfe090  xor byte ptr [rip + 0x231fe], 0x54
+    0xfe097  mov byte ptr [rip + 0x231f8], 1
+    0xfe09e  lea rdi, [rip + 0x235fb]
+        STR: ".eh_frame_hdr"
+    0xfe0a5  call 0xfeb20
+    0xfe0aa  lea rdi, [rip + 0x231cf]
+    0xfe0b1  lea rsi, [rip + 0x231dc]
+-- ftruncate call @0xf5f7e:
+    0xf5f4c  lea rdi, [rsp + 0x10]
+    0xf5f51  call 0xf7650
+    0xf5f56  mov edi, 0x13f
+    0xf5f5b  mov rsi, rax
+    0xf5f5e  mov edx, 1
+    0xf5f63  xor eax, eax
+    0xf5f65  call 0x11b980
+    0xf5f6a  mov r15, rax
+    0xf5f6d  test r15d, r15d
+    0xf5f70  js 0xf61ea
+    0xf5f76  mov rsi, qword ptr [r12 + 0x38]
+    0xf5f7b  mov edi, r15d
+-- __system_property_get call @0xf6167:
+    0xf612e  test rax, rax
+    0xf6131  je 0xf61da
+    0xf6137  mov r13, rax
+    0xf613a  xorps xmm0, xmm0
+    0xf613d  movups xmmword ptr [rsp + 0x5c], xmm0
+    0xf6142  movaps xmmword ptr [rsp + 0x50], xmm0
+    0xf6147  movaps xmmword ptr [rsp + 0x40], xmm0
+    0xf614c  movaps xmmword ptr [rsp + 0x30], xmm0
+    0xf6151  movaps xmmword ptr [rsp + 0x20], xmm0
+    0xf6156  movaps xmmword ptr [rsp + 0x10], xmm0
+    0xf615b  lea rdi, [rip - 0xed13c]
+        STR: "ro.build.version.sdk"
+    0xf6162  lea rsi, [rsp + 0x10]
+-- __system_property_get call @0xf62c1:
+    0xf6271  xor byte ptr [rip + 0x2a8b9], 0x67
+    0xf6278  xor byte ptr [rip + 0x2a8b3], 0x68
+    0xf627f  xor byte ptr [rip + 0x2a8ad], 0x69
+    0xf6286  xor byte ptr [rip + 0x2a8a7], 0x6a
+    0xf628d  xor byte ptr [rip + 0x2a8a1], 0x6b
+    0xf6294  xor byte ptr [rip + 0x2a89b], 0x6c
+    0xf629b  xor byte ptr [rip + 0x2a895], 0x6d
+    0xf62a2  mov byte ptr [rip + 0x2a88f], 1
+    0xf62a9  lea rdi, [rip + 0x2b1b0]
+        STR: "ct b718bcaf8c198c82f3021447d943401e3ab5bd54)"
+    0xf62b0  call 0xfeb20
+    0xf62b5  lea rdi, [rip + 0x2a861]
+    0xf62bc  lea rsi, [rsp + 0x10]
+-- __system_property_get call @0xfdfe9:
+    0xfdfb1  mov eax, dword ptr [rip + 0x232c1]
+    0xfdfb7  test eax, eax
+    0xfdfb9  jns 0xfe239
+    0xfdfbf  xorps xmm0, xmm0
+    0xfdfc2  movups xmmword ptr [rsp + 0x4c], xmm0
+    0xfdfc7  movaps xmmword ptr [rsp + 0x40], xmm0
+    0xfdfcc  movaps xmmword ptr [rsp + 0x30], xmm0
+    0xfdfd1  movaps xmmword ptr [rsp + 0x20], xmm0
+    0xfdfd6  movaps xmmword ptr [rsp + 0x10], xmm0
+    0xfdfdb  movaps xmmword ptr [rsp], xmm0
+    0xfdfdf  lea rdi, [rip - 0xf4fc0]
+        STR: "ro.build.version.sdk"
+    0xfdfe6  mov rsi, rsp
+-- atoi call @0xf6175:
+    0xf613d  movups xmmword ptr [rsp + 0x5c], xmm0
+    0xf6142  movaps xmmword ptr [rsp + 0x50], xmm0
+    0xf6147  movaps xmmword ptr [rsp + 0x40], xmm0
+    0xf614c  movaps xmmword ptr [rsp + 0x30], xmm0
+    0xf6151  movaps xmmword ptr [rsp + 0x20], xmm0
+    0xf6156  movaps xmmword ptr [rsp + 0x10], xmm0
+    0xf615b  lea rdi, [rip - 0xed13c]
+        STR: "ro.build.version.sdk"
+    0xf6162  lea rsi, [rsp + 0x10]
+    0xf6167  call 0x11b9b0
+    0xf616c  test eax, eax
+    0xf616e  jle 0xf6198
+    0xf6170  lea rdi, [rsp + 0x10]
+-- atoi call @0xf718c:
+    0xf7141  lea rdi, [rip + 0x2a5b8]
+        STR: "c_except_table"
+    0xf7148  call 0xfeaf0
+    0xf714d  cmp byte ptr [rip + 0x2999c], 0
+    0xf7154  jne 0xf7179
+    0xf7156  xor byte ptr [rip + 0x2998f], 0x53
+    0xf715d  xor byte ptr [rip + 0x29989], 0x54
+    0xf7164  xor byte ptr [rip + 0x29983], 0x55
+    0xf716b  xor byte ptr [rip + 0x2997d], 0x56
+    0xf7172  mov byte ptr [rip + 0x29977], 1
+    0xf7179  lea rdi, [rip + 0x2a580]
+        STR: "c_except_table"
+    0xf7180  call 0xfeb20
+    0xf7185  lea rdi, [rip + 0x29960]
+        STR: "gffV"
+-- atoi call @0xfdff5:
+    0xfdfc2  movups xmmword ptr [rsp + 0x4c], xmm0
+    0xfdfc7  movaps xmmword ptr [rsp + 0x40], xmm0
+    0xfdfcc  movaps xmmword ptr [rsp + 0x30], xmm0
+    0xfdfd1  movaps xmmword ptr [rsp + 0x20], xmm0
+    0xfdfd6  movaps xmmword ptr [rsp + 0x10], xmm0
+    0xfdfdb  movaps xmmword ptr [rsp], xmm0
+    0xfdfdf  lea rdi, [rip - 0xf4fc0]
+        STR: "ro.build.version.sdk"
+    0xfdfe6  mov rsi, rsp
+    0xfdfe9  call 0x11b9b0
+    0xfdfee  test eax, eax
+    0xfdff0  jle 0xfe006
+    0xfdff2  mov rdi, rsp
+-- atoi call @0xfe209:
+    0xfe1cd  je 0xfe121
+    0xfe1d3  lea rdi, [rip + 0x966]
+    0xfe1da  mov rsi, rbp
+    0xfe1dd  lea rdx, [rip + 0x1eb6c]
+    0xfe1e4  call 0x11b8c0
+    0xfe1e9  lea rdi, [rip + 0x232c8]
+        STR: "llvm-toolchain/out/llvm-project/lld c935d99d7cf2016289302412d708641d52d2f7ee)"
+    0xfe1f0  call 0x100060
+    0xfe1f5  jmp 0xfe121
+    0xfe1fa  mov rdi, r12
+    0xfe1fd  call 0x11baa0
+    0xfe202  jmp 0xfe224
+    0xfe204  lea rdi, [rsp + 0x15]
+-- sscanf call @0xfcb00:
+    0xfcac3  xor byte ptr [rip + 0x245f0], 0x59
+    0xfcaca  xor byte ptr [rip + 0x245ea], 0x5a
+    0xfcad1  xor byte ptr [rip + 0x245e4], 0x5b
+    0xfcad8  xor byte ptr [rip + 0x245de], 0x5c
+    0xfcadf  mov byte ptr [rip + 0x245d8], 1
+    0xfcae6  mov rdi, r13
+    0xfcae9  call 0xfeb20
+    0xfcaee  mov rdi, r15
+    0xfcaf1  lea rsi, [rip + 0x245bc]
+        STR: "v8-{r4!z)\"
+    0xfcaf8  mov rdx, rbp
+    0xfcafb  mov rcx, r12
+    0xfcafe  xor eax, eax

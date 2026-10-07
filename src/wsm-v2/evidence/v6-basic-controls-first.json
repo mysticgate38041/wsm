@@ -1,0 +1,202 @@
+[
+  {
+    "command": "feat god 1",
+    "result": {
+      "request": 1791346756491331100,
+      "id": 2,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=god ON value=3.00 players=2"
+    }
+  },
+  {
+    "command": "feat god 0",
+    "result": {
+      "request": 1791346758512560300,
+      "id": 3,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=god OFF value=3.00 players=2"
+    }
+  },
+  {
+    "command": "feat hp 1",
+    "result": {
+      "request": 1791346760549870200,
+      "id": 4,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=hp ON value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat hp 0",
+    "result": {
+      "request": 1791346762515149500,
+      "id": 5,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=hp OFF value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat stam 1",
+    "result": {
+      "request": 1791346764591013500,
+      "id": 6,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=stam ON value=100.00 players=2"
+    }
+  },
+  {
+    "command": "feat stam 0",
+    "result": {
+      "request": 1791346766543162200,
+      "id": 7,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=stam OFF value=100.00 players=2"
+    }
+  },
+  {
+    "command": "feat mana 1",
+    "result": {
+      "request": 1791346768399154400,
+      "id": 8,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=mana ON value=100.00 players=2"
+    }
+  },
+  {
+    "command": "feat mana 0",
+    "result": {
+      "request": 1791346770498594100,
+      "id": 9,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=mana OFF value=100.00 players=2"
+    }
+  },
+  {
+    "command": "feat poise 1",
+    "result": {
+      "request": 1791346772486711300,
+      "id": 10,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=poise ON value=52.00 players=2"
+    }
+  },
+  {
+    "command": "feat poise 0",
+    "result": {
+      "request": 1791346774420771700,
+      "id": 11,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=poise OFF value=52.00 players=2"
+    }
+  },
+  {
+    "command": "feat immune 1",
+    "result": {
+      "request": 1791346776581794700,
+      "id": 12,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=immune ON value=224.00 players=2"
+    }
+  },
+  {
+    "command": "feat immune 0",
+    "result": {
+      "request": 1791346778414096700,
+      "id": 13,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=immune OFF value=224.00 players=2"
+    }
+  },
+  {
+    "command": "feat dmg 25",
+    "result": {
+      "request": 1791346780578525900,
+      "id": 14,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=dmg ON value=25.00 players=2"
+    }
+  },
+  {
+    "command": "feat dmg 0",
+    "result": {
+      "request": 1791346782531375200,
+      "id": 15,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=dmg OFF value=25.00 players=2"
+    }
+  },
+  {
+    "command": "feat aura 30",
+    "result": {
+      "request": 1791346784503389700,
+      "id": 16,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=aura ON value=30.00 players=2"
+    }
+  },
+  {
+    "command": "feat aura 0",
+    "result": {
+      "request": 1791346786615266400,
+      "id": 17,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=aura OFF value=30.00 players=2"
+    }
+  },
+  {
+    "command": "feat crit 1",
+    "result": {
+      "request": 1791346788478418600,
+      "id": 18,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=crit ON value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat crit 0",
+    "result": {
+      "request": 1791346790605468100,
+      "id": 19,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=crit OFF value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat timescale 1.25",
+    "result": {
+      "request": 1791346792574689100,
+      "id": 20,
+      "epoch": 3,
+      "state": "rejected",
+      "detail": "ERR not-ready (gameplay dulu)"
+    }
+  },
+  {
+    "command": "feat timescale 0",
+    "result": {
+      "request": 1791346794525921100,
+      "id": 21,
+      "epoch": 3,
+      "state": "rejected",
+      "detail": "ERR not-ready (gameplay dulu)"
+    }
+  }
+]

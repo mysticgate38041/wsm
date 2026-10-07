@@ -1,0 +1,84 @@
+{
+  "request": 1791347878195658800,
+  "build": "wsm-v6.0.0",
+  "state": "scene_pending",
+  "ready": false,
+  "pid": 2697,
+  "epoch": 1,
+  "faults": 0,
+  "payload": false,
+  "players": -1,
+  "lootCandidates": -1,
+  "lootRequested": 0,
+  "observed": null,
+  "features": {
+    "god": {
+      "on": false,
+      "value": 3.0
+    },
+    "hp": {
+      "on": false,
+      "value": 1.0
+    },
+    "stam": {
+      "on": false,
+      "value": 100.0
+    },
+    "mana": {
+      "on": false,
+      "value": 100.0
+    },
+    "poise": {
+      "on": false,
+      "value": 52.0
+    },
+    "immune": {
+      "on": false,
+      "value": 224.0
+    },
+    "timescale": {
+      "on": false,
+      "value": 1.0
+    },
+    "ohk": {
+      "on": false,
+      "value": 1.0
+    },
+    "dmg": {
+      "on": false,
+      "value": 10.0
+    },
+    "crit": {
+      "on": false,
+      "value": 1.0
+    },
+    "aura": {
+      "on": false,
+      "value": 20.0
+    },
+    "onehp": {
+      "on": false,
+      "value": 1.0
+    },
+    "godmode": {
+      "on": false,
+      "value": 1
+    },
+    "speed": {
+      "on": false,
+      "value": 2.0
+    },
+    "nocd": {
+      "on": false,
+      "value": 1
+    },
+    "loot": {
+      "on": false,
+      "value": 1
+    },
+    "stunall": {
+      "on": false,
+      "value": 1
+    }
+  }
+}

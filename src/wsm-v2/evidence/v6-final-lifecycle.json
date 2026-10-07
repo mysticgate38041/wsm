@@ -1,0 +1,202 @@
+{
+  "armed": [
+    {
+      "request": 1791349251314648500,
+      "id": 49,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "GOD armed hero_stats=0x77d987af3000 addr=0x400028fb64b4 slot=18 np=2 rc=0"
+    },
+    {
+      "request": 1791349253311480300,
+      "id": 50,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "SPEED ON hs=0x77d987af3000 get_WalkSpeed@0x40002b88b744/off0 np=2 get_DashSpeed@0x40002b88a850/off0 np=2 get_SoftDashSpeed@0x40002b88b190/off0 np=2"
+    }
+  ],
+  "before": {
+    "god": "fd0f1af8fe6f01a9fa6702a9f85f03a9f65704a9f44f05a9ffc33cd1f30301aa",
+    "get_WalkSpeed": "ffc303d1ed33076deb2b086de923096dfe5300f9fa670ba9f85f0ca9f6570da9",
+    "get_DashSpeed": "ffc304d1ed330b6deb2b0c6de9230d6dfd7b0ea9fa670fa9f85f10a9f65711a9",
+    "get_SoftDashSpeed": "ff4304d1ed33096deb2b0a6de9230b6dfd7b0ca9fa670da9f85f0ea9f6570fa9"
+  },
+  "paused": {
+    "request": 1791349257223431300,
+    "build": "wsm-v6.0.0",
+    "state": "paused",
+    "ready": false,
+    "pid": 5445,
+    "epoch": 4,
+    "faults": 0,
+    "payload": true,
+    "players": 2,
+    "lootCandidates": 0,
+    "lootRequested": 0,
+    "observed": null,
+    "features": {
+      "god": {
+        "on": false,
+        "value": 3.0
+      },
+      "hp": {
+        "on": false,
+        "value": 1.0
+      },
+      "stam": {
+        "on": false,
+        "value": 100.0
+      },
+      "mana": {
+        "on": false,
+        "value": 100.0
+      },
+      "poise": {
+        "on": false,
+        "value": 52.0
+      },
+      "immune": {
+        "on": false,
+        "value": 224.0
+      },
+      "timescale": {
+        "on": false,
+        "value": 1.0
+      },
+      "ohk": {
+        "on": false,
+        "value": 1.0
+      },
+      "dmg": {
+        "on": false,
+        "value": 25.0
+      },
+      "crit": {
+        "on": false,
+        "value": 1.0
+      },
+      "aura": {
+        "on": false,
+        "value": 30.0
+      },
+      "onehp": {
+        "on": false,
+        "value": 1.0
+      },
+      "godmode": {
+        "on": false,
+        "value": 1
+      },
+      "speed": {
+        "on": false,
+        "value": 2.0
+      },
+      "nocd": {
+        "on": false,
+        "value": 1
+      },
+      "loot": {
+        "on": false,
+        "value": 1
+      },
+      "stunall": {
+        "on": false,
+        "value": 1
+      }
+    }
+  },
+  "pausedBytes": {
+    "god": "fd0f1af8fe6f01a9fa6702a9f85f03a9f65704a9f44f05a9ffc33cd1f30301aa",
+    "get_WalkSpeed": "ffc303d1ed33076deb2b086de923096dfe5300f9fa670ba9f85f0ca9f6570da9",
+    "get_DashSpeed": "ffc304d1ed330b6deb2b0c6de9230d6dfd7b0ea9fa670fa9f85f10a9f65711a9",
+    "get_SoftDashSpeed": "ff4304d1ed33096deb2b0a6de9230b6dfd7b0ca9fa670da9f85f0ea9f6570fa9"
+  },
+  "allRestoredOnPause": true,
+  "resume": {
+    "request": 1791349261409901200,
+    "build": "wsm-v6.0.0",
+    "state": "ready",
+    "ready": true,
+    "pid": 5445,
+    "epoch": 5,
+    "faults": 0,
+    "payload": true,
+    "players": 2,
+    "lootCandidates": 0,
+    "lootRequested": 0,
+    "observed": null,
+    "features": {
+      "god": {
+        "on": false,
+        "value": 3.0
+      },
+      "hp": {
+        "on": false,
+        "value": 1.0
+      },
+      "stam": {
+        "on": false,
+        "value": 100.0
+      },
+      "mana": {
+        "on": false,
+        "value": 100.0
+      },
+      "poise": {
+        "on": false,
+        "value": 52.0
+      },
+      "immune": {
+        "on": false,
+        "value": 224.0
+      },
+      "timescale": {
+        "on": false,
+        "value": 1.0
+      },
+      "ohk": {
+        "on": false,
+        "value": 1.0
+      },
+      "dmg": {
+        "on": false,
+        "value": 25.0
+      },
+      "crit": {
+        "on": false,
+        "value": 1.0
+      },
+      "aura": {
+        "on": false,
+        "value": 30.0
+      },
+      "onehp": {
+        "on": false,
+        "value": 1.0
+      },
+      "godmode": {
+        "on": false,
+        "value": 1
+      },
+      "speed": {
+        "on": false,
+        "value": 2.0
+      },
+      "nocd": {
+        "on": false,
+        "value": 1
+      },
+      "loot": {
+        "on": false,
+        "value": 1
+      },
+      "stunall": {
+        "on": false,
+        "value": 1
+      }
+    }
+  },
+  "samePid": true,
+  "epochChanged": true,
+  "allControlsOff": true
+}

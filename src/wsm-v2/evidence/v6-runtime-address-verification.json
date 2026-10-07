@@ -1,0 +1,26 @@
+{
+  "targetBase": "0x400022c00000",
+  "timeStatic": "0x40002ce85f98",
+  "hero": "0x736fde7f3000",
+  "statsClass": "0x7370e284c450",
+  "damageMethod": "0x7370e0d7b9e0",
+  "damageMethodFields": [
+    "0x400028fb64b4",
+    "0x400028fb64b4",
+    "0x4000262ddf90",
+    "0x737107a31c55"
+  ],
+  "metadataCode": {
+    "address": "0x4000262ddf90",
+    "words": [
+      "0xf81c0ffd",
+      "0xa9015ffe",
+      "0xa90257f6",
+      "0xa9034ff4",
+      "0xd10c03ff",
+      "0xaa0103f6",
+      "0xf9400061",
+      "0xaa0203f5"
+    ]
+  }
+}

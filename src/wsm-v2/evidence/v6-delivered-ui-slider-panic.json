@@ -1,0 +1,170 @@
+{
+  "on": {
+    "request": 1791349982772510700,
+    "build": "wsm-v6.0.0",
+    "state": "ready",
+    "ready": true,
+    "pid": 10276,
+    "epoch": 3,
+    "faults": 0,
+    "payload": true,
+    "players": 2,
+    "lootCandidates": -1,
+    "lootRequested": 0,
+    "observed": null,
+    "features": {
+      "god": {
+        "on": false,
+        "value": 3.0
+      },
+      "hp": {
+        "on": false,
+        "value": 1.0
+      },
+      "stam": {
+        "on": false,
+        "value": 100.0
+      },
+      "mana": {
+        "on": false,
+        "value": 100.0
+      },
+      "poise": {
+        "on": false,
+        "value": 52.0
+      },
+      "immune": {
+        "on": false,
+        "value": 224.0
+      },
+      "timescale": {
+        "on": false,
+        "value": 1.0
+      },
+      "ohk": {
+        "on": false,
+        "value": 1.0
+      },
+      "dmg": {
+        "on": false,
+        "value": 10.0
+      },
+      "crit": {
+        "on": false,
+        "value": 1.0
+      },
+      "aura": {
+        "on": false,
+        "value": 20.0
+      },
+      "onehp": {
+        "on": false,
+        "value": 1.0
+      },
+      "godmode": {
+        "on": false,
+        "value": 1
+      },
+      "speed": {
+        "on": true,
+        "value": 3.0
+      },
+      "nocd": {
+        "on": false,
+        "value": 1
+      },
+      "loot": {
+        "on": false,
+        "value": 1
+      },
+      "stunall": {
+        "on": false,
+        "value": 1
+      }
+    }
+  },
+  "afterPanic": {
+    "request": 1791349985341681900,
+    "build": "wsm-v6.0.0",
+    "state": "ready",
+    "ready": true,
+    "pid": 10276,
+    "epoch": 3,
+    "faults": 0,
+    "payload": true,
+    "players": 2,
+    "lootCandidates": -1,
+    "lootRequested": 0,
+    "observed": null,
+    "features": {
+      "god": {
+        "on": false,
+        "value": 3.0
+      },
+      "hp": {
+        "on": false,
+        "value": 1.0
+      },
+      "stam": {
+        "on": false,
+        "value": 100.0
+      },
+      "mana": {
+        "on": false,
+        "value": 100.0
+      },
+      "poise": {
+        "on": false,
+        "value": 52.0
+      },
+      "immune": {
+        "on": false,
+        "value": 224.0
+      },
+      "timescale": {
+        "on": false,
+        "value": 1.0
+      },
+      "ohk": {
+        "on": false,
+        "value": 1.0
+      },
+      "dmg": {
+        "on": false,
+        "value": 10.0
+      },
+      "crit": {
+        "on": false,
+        "value": 1.0
+      },
+      "aura": {
+        "on": false,
+        "value": 20.0
+      },
+      "onehp": {
+        "on": false,
+        "value": 1.0
+      },
+      "godmode": {
+        "on": false,
+        "value": 1
+      },
+      "speed": {
+        "on": false,
+        "value": 3.0
+      },
+      "nocd": {
+        "on": false,
+        "value": 1
+      },
+      "loot": {
+        "on": false,
+        "value": 1
+      },
+      "stunall": {
+        "on": false,
+        "value": 1
+      }
+    }
+  }
+}

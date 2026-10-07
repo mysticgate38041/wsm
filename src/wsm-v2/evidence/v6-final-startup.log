@@ -1,0 +1,86 @@
+--------- beginning of main
+10-07 11:46:50.090  2697  3264 I WSMEngine: CTL[0] @1791348409114446800 feat timescale 1.25 -> {"request":1791348409114446800,"id":10,"state":"accepted"}
+10-07 11:46:51.090  2697  3264 I WSMEngine: CTL[0] @1791348410013915900 result 10 -> {"request":1791348410013915900,"id":10,"epoch":3,"state":"rejected","detail":"ERR not-ready (gameplay dulu)"}
+10-07 11:46:52.090  2697  3264 I WSMEngine: CTL[0] @1791348411032137100 status -> {"request":1791348411032137100,"build":"wsm-v6.0.0","state":"ready","ready":true,"pid":2697,"epoch":3,"faults":0,"payload":true,"players":2,"lootCandidates":-1,"lootRequested":0,"observed":null,"features":{"god":{"on":false,"value":3.000},"hp":{"on":false,"value":1.000},"stam":{"on":false,"value":100.000},"mana":{"on":false,"value":100.000},"poise":{"on":false,"value":52.000},"immune":{"on":false,"value":224.000},"timescale":{"on":false,"value":1.000},"ohk":{"on":false,"value":1.000},"dmg":{"on":false,"value":10.000},"crit":{"on":false,"value":1.000},"aura":{"on":false,"value":20.000},"onehp":{"on":false,"value":1.000},"godmode":{"on":false,"value":1},"speed":{"on":false,"value":2.00},"nocd":{"on":false,"value":1},"loot":{"on":false,"value":1},"stunall":{"on":false,"value":1}}}
+10-07 11:46:53.092  2697  3264 I WSMEngine: CTL[0] @1791348411977786200 feat timescale 0 -> {"request":1791348411977786200,"id":11,"state":"accepted"}
+10-07 11:46:54.092  2697  3264 I WSMEngine: CTL[0] @1791348413160424500 result 11 -> {"request":1791348413160424500,"id":11,"epoch":3,"state":"rejected","detail":"ERR not-ready (gameplay dulu)"}
+10-07 11:46:55.092  2697  3264 I WSMEngine: CTL[0] @1791348414025436900 status -> {"request":1791348414025436900,"build":"wsm-v6.0.0","state":"ready","ready":true,"pid":2697,"epoch":3,"faults":0,"payload":true,"players":2,"lootCandidates":-1,"lootRequested":0,"observed":null,"features":{"god":{"on":false,"value":3.000},"hp":{"on":false,"value":1.000},"stam":{"on":false,"value":100.000},"mana":{"on":false,"value":100.000},"poise":{"on":false,"value":52.000},"immune":{"on":false,"value":224.000},"timescale":{"on":false,"value":1.000},"ohk":{"on":false,"value":1.000},"dmg":{"on":false,"value":10.000},"crit":{"on":false,"value":1.000},"aura":{"on":false,"value":20.000},"onehp":{"on":false,"value":1.000},"godmode":{"on":false,"value":1},"speed":{"on":false,"value":2.00},"nocd":{"on":false,"value":1},"loot":{"on":false,"value":1},"stunall":{"on":false,"value":1}}}
+10-07 11:46:56.094  2697  3264 I WSMEngine: CTL[0] @1791348414937587100 loot 1 -> {"request":1791348414937587100,"id":12,"state":"accepted"}
+10-07 11:46:56.190  2697  3265 I WSMEngine: LOOT: LOOT ON items=0 done=0 st=0x77d985006900 dm=0x77d989702f50 li=0x77d97b949a80
+10-07 11:46:57.095  2697  3264 I WSMEngine: CTL[0] @1791348416079613500 result 12 -> {"request":1791348416079613500,"id":12,"epoch":3,"state":"applied","detail":"LOOT ON items=0 done=0 st=0x77d985006900 dm=0x77d989702f50 li=0x77d97b949a80"}
+10-07 11:46:58.096  2697  3264 I WSMEngine: CTL[0] @1791348416961152600 status -> {"request":1791348416961152600,"build":"wsm-v6.0.0","state":"ready","ready":true,"pid":2697,"epoch":3,"faults":0,"payload":true,"players":2,"lootCandidates":0,"lootRequested":0,"observed":null,"features":{"god":{"on":false,"value":3.000},"hp":{"on":false,"value":1.000},"stam":{"on":false,"value":100.000},"mana":{"on":false,"value":100.000},"poise":{"on":false,"value":52.000},"immune":{"on":false,"value":224.000},"timescale":{"on":false,"value":1.000},"ohk":{"on":false,"value":1.000},"dmg":{"on":false,"value":10.000},"crit":{"on":false,"value":1.000},"aura":{"on":false,"value":20.000},"onehp":{"on":false,"value":1.000},"godmode":{"on":false,"value":1},"speed":{"on":false,"value":2.00},"nocd":{"on":false,"value":1},"loot":{"on":true,"value":1},"stunall":{"on":false,"value":1}}}
+10-07 11:46:59.096  2697  3264 I WSMEngine: CTL[0] @1791348418041778400 loot 0 -> {"request":1791348418041778400,"id":13,"state":"accepted"}
+10-07 11:46:59.197  2697  3265 I WSMEngine: LOOT: LOOT OFF
+10-07 11:47:00.099  2697  3264 I WSMEngine: CTL[0] @1791348419033582500 result 13 -> {"request":1791348419033582500,"id":13,"epoch":3,"state":"applied","detail":"LOOT OFF"}
+10-07 11:47:01.100  2697  3264 I WSMEngine: CTL[0] @1791348419920416700 status -> {"request":1791348419920416700,"build":"wsm-v6.0.0","state":"ready","ready":true,"pid":2697,"epoch":3,"faults":0,"payload":true,"players":2,"lootCandidates":0,"lootRequested":0,"observed":null,"features":{"god":{"on":false,"value":3.000},"hp":{"on":false,"value":1.000},"stam":{"on":false,"value":100.000},"mana":{"on":false,"value":100.000},"poise":{"on":false,"value":52.000},"immune":{"on":false,"value":224.000},"timescale":{"on":false,"value":1.000},"ohk":{"on":false,"value":1.000},"dmg":{"on":false,"value":10.000},"crit":{"on":false,"value":1.000},"aura":{"on":false,"value":20.000},"onehp":{"on":false,"value":1.000},"godmode":{"on":false,"value":1},"speed":{"on":false,"value":2.00},"nocd":{"on":false,"value":1},"loot":{"on":false,"value":1},"stunall":{"on":false,"value":1}}}
+10-07 11:47:02.100  2697  3264 I WSMEngine: CTL[0] @1791348421024518900 tpr 0 0 -> {"request":1791348421024518900,"id":14,"state":"accepted"}
+10-07 11:47:03.101  2697  3264 I WSMEngine: CTL[0] @1791348422001144800 result 14 -> {"request":1791348422001144800,"id":14,"epoch":3,"state":"applied","detail":"TP src=P from=(0.5,0.0) want=(0.5,0.0) now=(0.5,0.0) fault=0 ok=1"}
+10-07 11:47:04.102  2697  3264 I WSMEngine: CTL[0] @1791348423099550700 status -> {"request":1791348423099550700,"build":"wsm-v6.0.0","state":"ready","ready":true,"pid":2697,"epoch":3,"faults":0,"payload":true,"players":2,"lootCandidates":0,"lootRequested":0,"observed":null,"features":{"god":{"on":false,"value":3.000},"hp":{"on":false,"value":1.000},"stam":{"on":false,"value":100.000},"mana":{"on":false,"value":100.000},"poise":{"on":false,"value":52.000},"immune":{"on":false,"value":224.000},"timescale":{"on":false,"value":1.000},"ohk":{"on":false,"value":1.000},"dmg":{"on":false,"value":10.000},"crit":{"on":false,"value":1.000},"aura":{"on":false,"value":20.000},"onehp":{"on":false,"value":1.000},"godmode":{"on":false,"value":1},"speed":{"on":false,"value":2.00},"nocd":{"on":false,"value":1},"loot":{"on":false,"value":1},"stunall":{"on":false,"value":1}}}
+10-07 11:49:24.887  2697  2710 I WSMEngine: WATCH alive: mods=0x0 instance=0x0
+10-07 11:49:57.160  2697  3264 I WSMEngine: CTL[0] @1791348596633618100 panic -> {"request":1791348596633618100,"id":15,"state":"accepted"}
+10-07 11:49:57.283  2697  3888 I WSM-H64 : agent: RESTORE1 slot=0 nr=0
+10-07 11:49:57.287  2697  3888 I WSM-H64 : agent: RESTORE1 slot=1 nr=0
+10-07 11:49:57.293  2697  3888 I WSM-H64 : agent: RESTORE1 slot=2 nr=0
+10-07 11:49:57.297  2697  3888 I WSM-H64 : agent: RESTORE1 slot=3 nr=0
+10-07 11:49:57.303  2697  3888 I WSM-H64 : agent: RESTORE1 slot=4 nr=0
+10-07 11:49:57.310  2697  3888 I WSM-H64 : agent: RESTORE1 slot=5 nr=0
+10-07 11:49:57.316  2697  3888 I WSM-H64 : agent: RESTORE1 slot=6 nr=0
+10-07 11:49:57.319  2697  3888 I WSM-H64 : agent: RESTORE1 slot=7 nr=0
+10-07 11:49:57.326  2697  3888 I WSM-H64 : agent: RESTORE1 slot=8 nr=0
+10-07 11:49:57.332  2697  3888 I WSM-H64 : agent: RESTORE1 slot=9 nr=0
+10-07 11:49:57.335  2697  3888 I WSM-H64 : agent: RESTORE1 slot=10 nr=0
+10-07 11:49:57.342  2697  3888 I WSM-H64 : agent: RESTORE1 slot=11 nr=0
+10-07 11:49:57.348  2697  3888 I WSM-H64 : agent: RESTORE1 slot=12 nr=0
+10-07 11:49:57.351  2697  3888 I WSM-H64 : agent: RESTORE1 slot=13 nr=0
+10-07 11:49:57.358  2697  3888 I WSM-H64 : agent: RESTORE1 slot=14 nr=0
+10-07 11:49:57.364  2697  3888 I WSM-H64 : agent: RESTORE1 slot=15 nr=0
+10-07 11:49:57.367  2697  3888 I WSM-H64 : agent: RESTORE1 slot=16 nr=0
+10-07 11:49:57.374  2697  3888 I WSM-H64 : agent: RESTORE1 slot=17 nr=0
+10-07 11:49:57.377  2697  3888 I WSM-H64 : agent: RESTORE1 slot=18 nr=0
+10-07 11:49:57.384  2697  3888 I WSM-H64 : agent: RESTORE1 slot=19 nr=0
+10-07 11:49:57.387  2697  3888 I WSM-H64 : agent: RESTORE1 slot=20 nr=0
+10-07 11:49:57.394  2697  3888 I WSM-H64 : agent: RESTORE1 slot=21 nr=0
+10-07 11:49:57.398  2697  3888 I WSM-H64 : agent: RESTORE1 slot=22 nr=0
+10-07 11:49:57.405  2697  3888 I WSM-H64 : agent: RESTORE1 slot=23 nr=0
+10-07 11:49:57.411  2697  3888 I WSM-H64 : agent: RESTORE1 slot=24 nr=0
+10-07 11:49:57.415  2697  3888 I WSM-H64 : agent: RESTORE1 slot=25 nr=0
+10-07 11:49:57.419  2697  3888 I WSM-H64 : agent: RESTORE1 slot=26 nr=0
+10-07 11:49:57.426  2697  3888 I WSM-H64 : agent: RESTORE1 slot=27 nr=0
+10-07 11:49:57.432  2697  3888 I WSM-H64 : agent: RESTORE1 slot=28 nr=0
+10-07 11:49:57.436  2697  3888 I WSM-H64 : agent: RESTORE1 slot=29 nr=0
+10-07 11:49:57.442  2697  3888 I WSM-H64 : agent: RESTORE1 slot=30 nr=0
+10-07 11:49:57.449  2697  3888 I WSM-H64 : agent: RESTORE1 slot=31 nr=0
+10-07 11:49:58.161  2697  3264 I WSMEngine: CTL[0] @1791348597208296700 result 15 -> {"request":1791348597208296700,"id":15,"epoch":3,"state":"applied","detail":"OK PANIC restore=complete"}
+10-07 11:50:00.092  5412  5412 I WSM     : [com.kakaogames.gdts] pre-staged payload=203904 B fnv64=c97b1ba87edb9e8d staging=deferred_to_post
+10-07 11:50:00.092  5412  5412 I WSM     : [com.kakaogames.gdts] pre-staged dex=26552 B
+10-07 11:50:00.152  5412  5412 I WSM     : [com.kakaogames.gdts] dex staged 26552 B fd=56
+10-07 11:50:00.152  5412  5412 I WSM     : post staged+signaled pid=5412 chan_fd=58 payload_fd=55
+10-07 11:50:00.152  5412  5420 I WSMEngine: JNI_OnLoad received (build=wsm-v6.0.0 abi=x86_64)
+10-07 11:50:00.152  5412  5420 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/55 handle=0xdf5391023352dc9b jni_ver=0x10006 (payload 203904 B fnv64=c97b1ba87edb9e8d)
+10-07 11:50:00.153  5412  5421 I WSMEngine: ALIVE pid=5412 uid=10075 hello_magic=0x574d5348 hello_proto=3
+10-07 11:50:00.153  5412  5421 I WSMEngine: handshake ack written (proto=3 nonce=14dc1ca51a836019)
+10-07 11:50:00.203  5412  5420 I WSM     : HANDSHAKE_OK engine_pid=5412 engine_uid=10075 state=1 caps=0x0 build=wsm-v6.0.0 abi=x86_64
+10-07 11:50:03.148  5445  5445 I WSM     : [com.kakaogames.gdts] pre-staged payload=203904 B fnv64=c97b1ba87edb9e8d staging=deferred_to_post
+10-07 11:50:03.148  5445  5445 I WSM     : [com.kakaogames.gdts] pre-staged dex=26552 B
+10-07 11:50:03.160  5445  5445 I WSM     : [com.kakaogames.gdts] dex staged 26552 B fd=56
+10-07 11:50:03.160  5445  5445 I WSM     : post staged+signaled pid=5445 chan_fd=58 payload_fd=55
+10-07 11:50:03.162  5445  5452 I WSMEngine: JNI_OnLoad received (build=wsm-v6.0.0 abi=x86_64)
+10-07 11:50:03.162  5445  5452 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/55 handle=0xdc709a57042b61f9 jni_ver=0x10006 (payload 203904 B fnv64=c97b1ba87edb9e8d)
+10-07 11:50:03.162  5445  5458 I WSMEngine: ALIVE pid=5445 uid=10075 hello_magic=0x574d5348 hello_proto=3
+10-07 11:50:03.162  5445  5458 I WSMEngine: handshake ack written (proto=3 nonce=04cc54f8045c0120)
+10-07 11:50:03.212  5445  5452 I WSM     : HANDSHAKE_OK engine_pid=5445 engine_uid=10075 state=1 caps=0x0 build=wsm-v6.0.0 abi=x86_64
+10-07 11:50:04.423  5445  5458 I WSMEngine: probe: fixture class absent or app not ready (expected in game)
+10-07 11:50:05.936  5445  5458 I WSMEngine: il2cpp mapline: 77daa5dae000-77dab0000000 r--p 00000000 08:12 655620                     /data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64/libil2cpp.so
+10-07 11:50:06.945  5445  5458 I WSMEngine: elf parsed at candidate base=0x400022c00000 (#1/1)
+10-07 11:50:18.975  5445  5458 I WSMEngine: WATCH direct-read verify: mods api=0x0 direct=0x77dac59da980 -> skip | inst api=0x0 direct=0x0 -> LOCK
+10-07 11:50:18.975  5445  5458 I WSMEngine: probe done: libil2cpp base=0x400022c00000 elf sym 16/17 miss:il2cpp_method_get_pointer  | dom=0x77dbd42d8fc0 asm=0x77da90280e60 img=0x77da9027e430 cls=0x77da931be6c0 mth=0x77da93a40938 fld=0x77da93a40b78 off=8 sval=0x0 | inst=0x0 smdt=0.0000(has=-1) modsN=-1
+10-07 11:50:18.977  5445  5458 I WSMEngine: WATCH static: mods=0x0 instance=0x0 smdt=0.0000(has=-1) modsN=-1 (t=0s)
+10-07 11:50:18.977  5445  5946 I WSMEngine: CTL thread up (paths=1)
+10-07 11:50:18.981  5445  5947 I WSMEngine: FEAT v6 single owner (settle 2s)
+10-07 11:50:19.010  5445  5452 I WSM     : PROBE stage=2 base=0x400022c00000 :: LIVE base=0x400022c00000 cls=0x77da931be6c0 fld=0x77da93a40b78 off=8 | mods=0x0 instance=0x0 smdt=0.0000(has=-1) modsN=-1 (t=0s)
+10-07 11:50:19.979  5445  5946 I WSMEngine: CTL[0] @1791348597208296700 result 15 -> {"request":1791348597208296700,"state":"expired"}
+10-07 11:50:20.982  5445  5947 I WSMEngine: FEAT thread attached to il2cpp domain
+10-07 11:50:20.983  5445  5947 I WSMEngine: FEAT resolver ready (Stage/CharacterManager/CharacterStatsBehaviour)
+10-07 11:50:24.990  5445  5945 I WSMEngine: MENU dex loaded (wsm.WsmMenu)
+10-07 11:50:24.990  5445  5945 I WSMEngine: MENU native registered
+10-07 11:50:24.997  5445  5945 I WSMEngine: MENU showInActivity called

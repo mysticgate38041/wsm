@@ -1,0 +1,6 @@
+10-07 01:33:20.472  8880  9589 I WSM-H64 : agent thread UP pid=8880
+10-07 01:33:20.514  8880  9589 I WSM-H64 : agent: HOOKINSTALLv2 code=0x4000269a2c54 block=0x40002f9c50c0 patched=2
+10-07 01:33:20.518  8880  9366 I WSMEngine: HOOKCOUNT: HOOKCOUNT secs=200 load=0x7c1210d96401 e=0 code=0x4000269a2c54 nmaps=0 patched=2 | INSTALLED, tunggu 200s...
+10-07 01:36:40.615  8880  9589 I WSM-H64 : agent: HOOKRESTOREv2 nr=2 count=0
+10-07 01:36:40.619  8880  9366 I WSMEngine: HOOKCOUNT done: HOOKCOUNT secs=200 load=0x7c1210d96401 e=0 code=0x4000269a2c54 nmaps=0 patched=2 | INSTALLED, tunggu 200s... | HOTCOUNT=0
+10-07 01:36:40.619  8880  9366 I WSMEngine: CTL[0] hookcount 200 s -> HOOKCOUNT secs=200 load=0x7c1210d96401 e=0 code=0x4000269a2c54 nmaps=0 patched=2 | INSTALLED, tunggu 200s... | HOTCOUNT=0

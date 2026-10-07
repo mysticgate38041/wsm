@@ -1,0 +1,11 @@
+=== G20: WSM v5.0 MODERNIZATION + TELEPORT LIVE — Tue, Oct  6, 2026  9:22:55 PM ===
+engine v5b (stamp wsm-v5.0.0-modern), GT pid 17647, menu v5
+
+TELEPORT (fitur baru dari study API):
+  TP +15m E: from=(1.8,-0.8) want=(16.8,-0.8) now=(16.8,-0.8) fault=0 ok=1
+  TP +15m N: from=(16.8,-0.8) want=(16.8,14.2) now=(16.8,14.2) fault=0 ok=1
+  -> set_Position (plain) resolved; explicit impl tidak match; read-back VERIFIED
+
+v5 additions: teleport 4 arah (menu+cmd tpr/tp), COMBAT PRESET button,
+kcmd (MonsterDeadCommand test), docs (API_MAP_FULL/SCRIPT_HOOKING/COMMANDS),
+hookprobe (methodPointer@+0x10 verified)

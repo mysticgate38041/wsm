@@ -1,0 +1,46 @@
+
+C:\Users\Administrator\Downloads\Mod\gt_dump\out\carve\libil2cpp_reloc_norela.so:	file format elf64-littleaarch64
+
+Disassembly of section il2cpp:
+
+0000000003abc390 <__start_il2cpp>:
+ 8c86d58: fc1e0fe8     	str	d8, [sp, #-0x20]!
+ 8c86d5c: f90007fe     	str	x30, [sp, #0x8]
+ 8c86d60: a9014ff4     	stp	x20, x19, [sp, #0x10]
+ 8c86d64: f000af94     	adrp	x20, 0xa279000
+ 8c86d68: 3964e688     	ldrb	w8, [x20, #0x939]
+ 8c86d6c: aa0003f3     	mov	x19, x0
+ 8c86d70: 370000c8     	tbnz	w8, #0x0, 0x8c86d88 <__start_il2cpp+0x51ca9f8>
+ 8c86d74: f00075e0     	adrp	x0, 0x9b45000
+ 8c86d78: f941fc00     	ldr	x0, [x0, #0x3f8]
+ 8c86d7c: 96b531d0     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 8c86d80: 52800028     	mov	w8, #0x1                // =1
+ 8c86d84: 3924e688     	strb	w8, [x20, #0x939]
+ 8c86d88: 52814980     	mov	w0, #0xa4c              // =2636
+ 8c86d8c: aa1f03e1     	mov	x1, xzr
+ 8c86d90: 97ee7ea3     	bl	0x882681c <__start_il2cpp+0x4d6a48c>
+ 8c86d94: 36000160     	tbz	w0, #0x0, 0x8c86dc0 <__start_il2cpp+0x51caa30>
+ 8c86d98: 52814980     	mov	w0, #0xa4c              // =2636
+ 8c86d9c: aa1f03e1     	mov	x1, xzr
+ 8c86da0: 97ee7ecc     	bl	0x88268d0 <__start_il2cpp+0x4d6a540>
+ 8c86da4: b4000440     	cbz	x0, 0x8c86e2c <__start_il2cpp+0x51caa9c>
+ 8c86da8: aa1303e1     	mov	x1, x19
+ 8c86dac: a9414ff4     	ldp	x20, x19, [sp, #0x10]
+ 8c86db0: f94007fe     	ldr	x30, [sp, #0x8]
+ 8c86db4: aa1f03e2     	mov	x2, xzr
+ 8c86db8: fc4207e8     	ldr	d8, [sp], #0x20
+ 8c86dbc: 17e66e10     	b	0x86225fc <__start_il2cpp+0x4b6626c>
+ 8c86dc0: f9426260     	ldr	x0, [x19, #0x4c0]
+ 8c86dc4: 1e2703e8     	fmov	s8, wzr
+ 8c86dc8: b4000220     	cbz	x0, 0x8c86e0c <__start_il2cpp+0x51caa7c>
+ 8c86dcc: f00075e8     	adrp	x8, 0x9b45000
+ 8c86dd0: f941fd08     	ldr	x8, [x8, #0x3f8]
+ 8c86dd4: f9400009     	ldr	x9, [x0]
+ 8c86dd8: f9400108     	ldr	x8, [x8]
+ 8c86ddc: 3944c12b     	ldrb	w11, [x9, #0x130]
+ 8c86de0: 3944c10a     	ldrb	w10, [x8, #0x130]
+ 8c86de4: 6b0a017f     	cmp	w11, w10
+ 8c86de8: 54000123     	b.lo	0x8c86e0c <__start_il2cpp+0x51caa7c>
+ 8c86dec: f9406529     	ldr	x9, [x9, #0xc8]
+ 8c86df0: 8b0a0d29     	add	x9, x9, x10, lsl #3
+ 8c86df4: f85f8129     	ldur	x9, [x9, #-0x8]

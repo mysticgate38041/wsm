@@ -1,0 +1,4 @@
+10-06 16:58:11.643 I/WSMEngine( 6039): CTL[0] status -> STATUS instance=0x0 modsN=0 feats=[-]
+10-06 16:58:28.639 I/WSMEngine( 6039): FEAT thread attached to il2cpp domain
+10-06 16:58:28.639 I/WSMEngine( 6039): FEAT resolver ready (Stage/CharacterManager/CharacterStatsBehaviour)
+10-06 16:59:30.680 I/WSMEngine( 6039): CTL[0] featdiag -> FEATDIAG resolve=1 stage=0x0 cmgr=0x0 players=0x0 size=-1 obj0=0x0 stats0=0x0 faults=0

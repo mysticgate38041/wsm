@@ -1,0 +1,2 @@
+PASS runtime: FIFO, capacity, panic priority/cancellation, epochs, history, snapshots, 4 concurrent producers / 4000 requests
+PASS patch: 3 aliases, readback, original permissions, invalid range, forced partial failure rollback

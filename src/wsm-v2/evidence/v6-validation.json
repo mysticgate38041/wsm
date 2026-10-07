@@ -1,0 +1,80 @@
+{
+  "build": "wsm-v6.0.0",
+  "status": "RELEASE_CANDIDATE_INSTALLATION_CHECKED",
+  "package": {
+    "sha256": "62711955df5e52d3277f797716308d5b52cfdf3f93ab92cac74cfb9806ddc1fa",
+    "bytes": 184184,
+    "entries": [
+      "META-INF/com/google/android/update-binary",
+      "META-INF/com/google/android/updater-script",
+      "customize.sh",
+      "dex/wsm_menu.dex",
+      "engine/arm64-v8a.so",
+      "engine/x86_64.so",
+      "module.prop",
+      "payload/arm64-v8a.so",
+      "release.json",
+      "skip_mount",
+      "verify.list",
+      "zygisk/arm64-v8a.so",
+      "zygisk/x86_64.so"
+    ],
+    "release": {
+      "abis": [
+        "x86_64",
+        "arm64-v8a"
+      ],
+      "build": "wsm-v6.0.0",
+      "evidence": {
+        "newGameRuntime": "UNVERIFIED_TARGET",
+        "package": "SOURCE_VERIFIED"
+      },
+      "minApi": 26,
+      "ndk": "27.2.12479018",
+      "protocol": 3,
+      "sources": {
+        "jni/Android.mk": "5829a502c0f60b31e211f9b44af61cf494769358ea8edc199339bca80ed53786",
+        "jni/Application.mk": "5a228c966a5633a4d76c679ca24a0b0776f3eb9728af5254d5e0f3136dd11a0e",
+        "jni/engine.cpp": "51d7c49f8e67bc903592c866c741f226952e4815e0c799dc8047918a4163f3f1",
+        "jni/loader.cpp": "491c200d30d6b5a7154ecfe5d3b298577597d921949e764e8df1f7dacf3207bb",
+        "jni/modern_control.inc": "1a561f0af3fd34eaee5832738120cc529d0d813c196ec75ff7df8949e242bac3",
+        "jni/wsm_bus.h": "2d8f0ed2028ee3d6d2c8b4bff3ac88e7078a5f3f5cbb51341fdcf424a962cf9f",
+        "jni/wsm_patch.h": "5f311ecc5c48758b518e0f2a5daa74a33e0e8dd728137e7805b4b96b71c5cab1",
+        "jni/wsm_protocol.h": "c2d28115cd8d6d9c26c063893d9bb98bf858ab221fb9b35d531e92bdd8e15a7c",
+        "jni/wsm_runtime.h": "f0678b88f815b194105c9cc9a18cc50f34647faa1fffcdab7545f95cacb92e8e",
+        "jni/zygisk.hpp": "fc6523882c0f8659b4fcd1e04ffb07d3a948090e5a8c08817af6e2b506a078d0",
+        "menu/ControlState.java": "b16c4c07798d6d610ea149a3691571b1084ff21190e17b480280f5eb4aef17ba",
+        "menu/WsmMenu.java": "e277d348d5cc70d803f9bfff41f40cbcc3652f7c56dea270df9676148c39daf3",
+        "menu/build_menu.sh": "4ffa92784583ebc90933dda38d45f9031399fe7215754d21f2a55c0fdf735d36",
+        "payload/h64.cpp": "67a73e14c11bae3ff8187803420d755ffe713f41b06a4d6064f82ab105cec3ec",
+        "scripts/build.ps1": "643cecd9250adc96ff7f9db9a061767752f1a7b0f519a81a8672641070174241",
+        "scripts/package_release.py": "be2305422d7890705508d2e3f166140681c8a0c4d22976467e0d027b02db9bb8",
+        "scripts/wsmctl.py": "478bef4cbbc908ad4f6106592b743a12a19e3996891d03d2ffeb57088905f477",
+        "tests/ControlStateTest.java": "5527f875d1e54417e7fe12d528a426d0648c3ab5ca4b5cade9cc91ced6a6596f",
+        "tests/device_installer_test.py": "e4dc80ff92235e9cc5be5173edc8aee8336ef99c2f72e19517fc15e9d1d52ceb",
+        "tests/patch_test.cpp": "64647f5769a50c9b593d2a3604f1b0ecc7d2ce6777202824425d3df334dc8183",
+        "tests/runtime_test.cpp": "c53c427a78723226d9ec9c25dc194ff9d8d778134ab7c4145c2d36dd1d594404",
+        "tests/test_release.py": "272b33587d3ddf448c435a70ca8060f9e2e8574de8996f0a023c16f5b9132a9c"
+      },
+      "target": {
+        "package": "com.kakaogames.gdts",
+        "version": "3.54.0"
+      }
+    }
+  },
+  "checks": {
+    "nativeLibraries": 5,
+    "abiAndExports": "PASS",
+    "loadAndRelroAlignment16KiB": "PASS",
+    "javaCompileAndDex": "PASS",
+    "controlState": "PASS",
+    "releaseRegressions": 11,
+    "legacyPreflightRegressions": 36,
+    "androidRuntimeQueueUnit": "PASS: 4 producers / 4000 requests",
+    "androidAliasPatchUnit": "PASS: permissions and rollback"
+  },
+  "targetRuntime": "UNVERIFIED_TARGET",
+  "moduleInstalledByThisTurn": false,
+  "gameTouchedByThisTurn": false,
+  "scope": "Standalone Android units and installer harness only; no module install, game command, or reboot."
+}

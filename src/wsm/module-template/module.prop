@@ -1,0 +1,6 @@
+id=wsm_gt
+name=WS Menu (WSM) — Guardian Tales
+version=v0.1.0-f0-poc
+versionCode=1
+author=worm shadow (untuk He)
+description=Zygisk dual-arch POC: x86_64 loader + ARM64 engine via native bridge. Target process: com.kakaogames.gdts (Guardian Tales 3.54.0). Logcat tags: WSM / WSMEngine.

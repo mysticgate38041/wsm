@@ -1,0 +1,6 @@
+10-06 17:45:00.477 I/WSMEngine(10366): CTL[0] featdiag -> FEATDIAG resolve=1 stage=0x0 cmgr=0x0 players=0x0 size=-1 obj0=0x0 objcls=- statsM=0x0(0) statscls=- opts=0x0(0) faults=0
+10-06 17:45:05.486 I/WSMEngine(10366): MENU dex loaded (wsm.WsmMenu)
+10-06 17:45:05.500 I/WSMEngine(10366): MENU showInActivity called
+10-06 17:45:17.476 I/WSMEngine(10366): FEAT thread attached to il2cpp domain
+10-06 17:45:17.476 I/WSMEngine(10366): FEAT resolver ready (Stage/CharacterManager/CharacterStatsBehaviour)
+10-06 17:45:17.476 I/WSMEngine(10366): FEAT apply v=0 chars=-2

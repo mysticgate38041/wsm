@@ -1,0 +1,88 @@
+{
+  "requested": 47,
+  "statuses": {
+    "authority_unverified": 10,
+    "not_implemented": 16,
+    "partial": 14,
+    "prototype": 2,
+    "target_absent": 5
+  }
+}
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[x86_64] Compile++      : wsm_loader <= loader.cpp
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] Compile++      : wsm_arm64 <= h64.cpp
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[x86_64] Compile++      : wsm_engine <= engine.cpp
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] Compile++      : wsm_loader <= loader.cpp
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] Compile++      : wsm_engine <= engine.cpp
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[x86_64] SharedLibrary  : libwsm_loader.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[x86_64] SharedLibrary  : libwsm_engine.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] SharedLibrary  : libwsm_arm64.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] SharedLibrary  : libwsm_engine.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] SharedLibrary  : libwsm_loader.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[x86_64] Install        : libwsm_engine.so => C:\Users\Administrator\Downloads\GT_cheat_analysis\WSMenu\src\wsm-v2/build/libs/x86_64/libwsm_engine.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[x86_64] Install        : libwsm_loader.so => C:\Users\Administrator\Downloads\GT_cheat_analysis\WSMenu\src\wsm-v2/build/libs/x86_64/libwsm_loader.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] Install        : libwsm_arm64.so => C:\Users\Administrator\Downloads\GT_cheat_analysis\WSMenu\src\wsm-v2/build/libs/arm64-v8a/libwsm_arm64.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] Install        : libwsm_engine.so => C:\Users\Administrator\Downloads\GT_cheat_analysis\WSMenu\src\wsm-v2/build/libs/arm64-v8a/libwsm_engine.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] Install        : libwsm_loader.so => C:\Users\Administrator\Downloads\GT_cheat_analysis\WSMenu\src\wsm-v2/build/libs/arm64-v8a/libwsm_loader.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+warning: [options] bootstrap class path not set in conjunction with -source 8
+Note: C:\Users\Administrator\Downloads\GT_cheat_analysis\WSMenu\src\wsm-v2\menu\WsmMenu.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+1 warning
+PASS ControlState: accepted vs applied, rejection, timeout, stale epoch, fault, authoritative snapshot
+{
+  "package": "C:\\Users\\Administrator\\Downloads\\GT_cheat_analysis\\WSMenu\\src\\wsm-v2\\dist\\wsm-v6.1.0-rc2.zip",
+  "sha256": "91f94f6e416915fb2923f0f1ee2e1024cb25844baac0de07f3e37540d98c4959",
+  "entries": 14,
+  "integrity": "PASS"
+}
+test_changed_source_refuses_packaging (test_release.ReleaseTests.test_changed_source_refuses_packaging) ... ok
+test_complete_release (test_release.ReleaseTests.test_complete_release) ... ok
+test_corrupt_dex_even_with_valid_hash (test_release.ReleaseTests.test_corrupt_dex_even_with_valid_hash) ... ok
+test_deterministic_repack (test_release.ReleaseTests.test_deterministic_repack) ... ok
+test_duplicate_entry (test_release.ReleaseTests.test_duplicate_entry) ... ok
+test_false_feature_completion (test_release.ReleaseTests.test_false_feature_completion) ... ok
+test_incomplete_feature_catalog (test_release.ReleaseTests.test_incomplete_feature_catalog) ... ok
+test_incomplete_manifest (test_release.ReleaseTests.test_incomplete_manifest) ... ok
+test_incorrect_version_code (test_release.ReleaseTests.test_incorrect_version_code) ... ok
+test_incorrect_version_gate (test_release.ReleaseTests.test_incorrect_version_gate) ... ok
+test_missing_guest_payload (test_release.ReleaseTests.test_missing_guest_payload) ... ok
+test_native_tampering (test_release.ReleaseTests.test_native_tampering) ... ok
+test_replaced_design_feature (test_release.ReleaseTests.test_replaced_design_feature) ... ok
+test_unexpected_entry (test_release.ReleaseTests.test_unexpected_entry) ... ok
+test_unproven_runtime_qualification (test_release.ReleaseTests.test_unproven_runtime_qualification) ... ok
+test_wrong_machine_even_with_valid_hash (test_release.ReleaseTests.test_wrong_machine_even_with_valid_hash) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.147s
+
+OK
+WSM 6.1 RC2: native/Java/DEX built and package verified. The 47-feature runtime scope remains incomplete.

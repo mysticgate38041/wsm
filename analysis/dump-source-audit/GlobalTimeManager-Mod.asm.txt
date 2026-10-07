@@ -1,0 +1,46 @@
+
+C:\Users\Administrator\Downloads\Mod\gt_dump\out\carve\libil2cpp_reloc_norela.so:	file format elf64-littleaarch64
+
+Disassembly of section il2cpp:
+
+0000000003abc390 <__start_il2cpp>:
+ 72d6068: fc1d0fe8     	str	d8, [sp, #-0x30]!
+ 72d606c: f90007fe     	str	x30, [sp, #0x8]
+ 72d6070: a90157f6     	stp	x22, x21, [sp, #0x10]
+ 72d6074: a9024ff4     	stp	x20, x19, [sp, #0x20]
+ 72d6078: f0017cb5     	adrp	x21, 0xa26d000
+ 72d607c: f0014816     	adrp	x22, 0x9bd9000
+ 72d6080: 395ffaa8     	ldrb	w8, [x21, #0x7fe]
+ 72d6084: f945dad6     	ldr	x22, [x22, #0xbb0]
+ 72d6088: 2a0203f4     	mov	w20, w2
+ 72d608c: aa0103f3     	mov	x19, x1
+ 72d6090: 4ea01c08     	mov	v8.16b, v0.16b
+ 72d6094: 370002a8     	tbnz	w8, #0x0, 0x72d60e8 <__start_il2cpp+0x3819d58>
+ 72d6098: f0014800     	adrp	x0, 0x9bd9000
+ 72d609c: f945d800     	ldr	x0, [x0, #0xbb0]
+ 72d60a0: 971bf507     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 72d60a4: f0014800     	adrp	x0, 0x9bd9000
+ 72d60a8: f945dc00     	ldr	x0, [x0, #0xbb8]
+ 72d60ac: 971bf504     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 72d60b0: f0014800     	adrp	x0, 0x9bd9000
+ 72d60b4: f945e000     	ldr	x0, [x0, #0xbc0]
+ 72d60b8: 971bf501     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 72d60bc: f0014800     	adrp	x0, 0x9bd9000
+ 72d60c0: f945e400     	ldr	x0, [x0, #0xbc8]
+ 72d60c4: 971bf4fe     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 72d60c8: f0014800     	adrp	x0, 0x9bd9000
+ 72d60cc: f945e800     	ldr	x0, [x0, #0xbd0]
+ 72d60d0: 971bf4fb     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 72d60d4: f0014800     	adrp	x0, 0x9bd9000
+ 72d60d8: f945ec00     	ldr	x0, [x0, #0xbd8]
+ 72d60dc: 971bf4f8     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 72d60e0: 52800028     	mov	w8, #0x1                // =1
+ 72d60e4: 391ffaa8     	strb	w8, [x21, #0x7fe]
+ 72d60e8: f94002c8     	ldr	x8, [x22]
+ 72d60ec: f9405d08     	ldr	x8, [x8, #0xb8]
+ 72d60f0: f9400509     	ldr	x9, [x8, #0x8]
+ 72d60f4: b4000069     	cbz	x9, 0x72d6100 <__start_il2cpp+0x3819d70>
+ 72d60f8: 360001f4     	tbz	w20, #0x0, 0x72d6134 <__start_il2cpp+0x3819da4>
+ 72d60fc: 14000025     	b	0x72d6190 <__start_il2cpp+0x3819e00>
+ 72d6100: f0014808     	adrp	x8, 0x9bd9000
+ 72d6104: f945ed08     	ldr	x8, [x8, #0xbd8]

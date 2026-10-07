@@ -1,0 +1,46 @@
+
+C:\Users\Administrator\Downloads\Mod\gt_dump\out\carve\libil2cpp_reloc_norela.so:	file format elf64-littleaarch64
+
+Disassembly of section il2cpp:
+
+0000000003abc390 <__start_il2cpp>:
+ 8c86ea8: fc1e0fe8     	str	d8, [sp, #-0x20]!
+ 8c86eac: f90007fe     	str	x30, [sp, #0x8]
+ 8c86eb0: a9014ff4     	stp	x20, x19, [sp, #0x10]
+ 8c86eb4: f000af94     	adrp	x20, 0xa279000
+ 8c86eb8: 3964ea88     	ldrb	w8, [x20, #0x93a]
+ 8c86ebc: aa0003f3     	mov	x19, x0
+ 8c86ec0: 37000128     	tbnz	w8, #0x0, 0x8c86ee4 <__start_il2cpp+0x51cab54>
+ 8c86ec4: f00075e0     	adrp	x0, 0x9b45000
+ 8c86ec8: f941fc00     	ldr	x0, [x0, #0x3f8]
+ 8c86ecc: 96b5317c     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 8c86ed0: b00075c0     	adrp	x0, 0x9b3f000 <_ZTISt14overflow_error+0x8>
+ 8c86ed4: f9440800     	ldr	x0, [x0, #0x810]
+ 8c86ed8: 96b53179     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 8c86edc: 52800028     	mov	w8, #0x1                // =1
+ 8c86ee0: 3924ea88     	strb	w8, [x20, #0x93a]
+ 8c86ee4: 52813920     	mov	w0, #0x9c9              // =2505
+ 8c86ee8: aa1f03e1     	mov	x1, xzr
+ 8c86eec: 97ee7e4c     	bl	0x882681c <__start_il2cpp+0x4d6a48c>
+ 8c86ef0: 36000160     	tbz	w0, #0x0, 0x8c86f1c <__start_il2cpp+0x51cab8c>
+ 8c86ef4: 52813920     	mov	w0, #0x9c9              // =2505
+ 8c86ef8: aa1f03e1     	mov	x1, xzr
+ 8c86efc: 97ee7e75     	bl	0x88268d0 <__start_il2cpp+0x4d6a540>
+ 8c86f00: b4000600     	cbz	x0, 0x8c86fc0 <__start_il2cpp+0x51cac30>
+ 8c86f04: aa1303e1     	mov	x1, x19
+ 8c86f08: a9414ff4     	ldp	x20, x19, [sp, #0x10]
+ 8c86f0c: f94007fe     	ldr	x30, [sp, #0x8]
+ 8c86f10: aa1f03e2     	mov	x2, xzr
+ 8c86f14: fc4207e8     	ldr	d8, [sp], #0x20
+ 8c86f18: 17e66db9     	b	0x86225fc <__start_il2cpp+0x4b6626c>
+ 8c86f1c: f9426268     	ldr	x8, [x19, #0x4c0]
+ 8c86f20: b4000128     	cbz	x8, 0x8c86f44 <__start_il2cpp+0x51cabb4>
+ 8c86f24: f00075e9     	adrp	x9, 0x9b45000
+ 8c86f28: f941fd29     	ldr	x9, [x9, #0x3f8]
+ 8c86f2c: f940010a     	ldr	x10, [x8]
+ 8c86f30: f9400129     	ldr	x9, [x9]
+ 8c86f34: 3944c14c     	ldrb	w12, [x10, #0x130]
+ 8c86f38: 3944c12b     	ldrb	w11, [x9, #0x130]
+ 8c86f3c: 6b0b019f     	cmp	w12, w11
+ 8c86f40: 54000062     	b.hs	0x8c86f4c <__start_il2cpp+0x51cabbc>
+ 8c86f44: aa1f03f4     	mov	x20, xzr

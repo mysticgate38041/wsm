@@ -1,0 +1,7 @@
+=== G15: AUTO-KILL (OHK) VERIFIED — Tue, Oct  6, 2026  7:55:19 PM ===
+engine v3.12 sha 27e5c2ebf2c13b87 (76520 B), GT pid 8333
+user: 'musuh di sekitar mati semua, stagenya selesai, bisa lanjut'
+user: 'sudah berfungsi'
+kill chain: stats.Damage + get_DamagedBehaviour().Damage + Die (trap info, notMortal=false)
+targeting: get_Position, skip dummies (999), radius 20m from hero
+FEAT kill hit=3 (one beat, 3 monsters); MLIST idx2/3/4 -> a0:d1:h0

@@ -1,0 +1,13 @@
+10-06 10:01:42.868   402   430 I ActivityManager: Start proc 2527:com.wsm.fixture/u0a76 for next-top-activity {com.wsm.fixture/com.wsm.fixture.MainActivity}
+10-06 10:01:42.870  2527  2527 I WSM     : [com.wsm.fixture] pre-staged payload=12024 B fnv64=8de9fba34ccce4be staging=deferred_to_post
+10-06 10:01:42.878  2527  2527 I com.wsm.fixture: Late-enabling -Xcheck:jni
+10-06 10:01:42.906  2527  2527 I com.wsm.fixture: Using CollectorTypeCC GC.
+10-06 10:01:42.914  2527  2527 I WSM     : post staged+signaled pid=2527 chan_fd=60 payload_fd=59
+10-06 10:01:42.919  2527  2536 I WSMEngine: JNI_OnLoad received (build=wsm-v2.0.0-poc1 abi=x86_64)
+10-06 10:01:42.920  2527  2536 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/59 handle=0xf6231fcdb80e246f jni_ver=0x10006 (payload 12024 B fnv64=8de9fba34ccce4be)
+10-06 10:01:42.920  2527  2541 I WSMEngine: ALIVE pid=2527 uid=10076 hello_magic=0x574d5348 hello_proto=2
+10-06 10:01:42.920  2527  2541 I WSMEngine: handshake ack written (proto=2 nonce=923b00311314bdb2)
+10-06 10:01:42.970  2527  2536 I WSM     : HANDSHAKE_OK engine_pid=2527 engine_uid=10076 state=1 caps=0x0 build=wsm-v2.0.0-poc1 abi=x86_64
+10-06 10:01:43.135  2527  2527 I WSMFixture: activity created pid=2527
+10-06 10:01:43.171  2527  2541 I WSMFixture: ENGINE CALLBACK: wsm-v2.0.0-poc1 pid=2527
+10-06 10:01:43.171  2527  2541 I WSMEngine: probe: fixture callback delivered (2-way JNI OK)

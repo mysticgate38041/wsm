@@ -1,0 +1,9 @@
+{
+  "permission": "USER_AUTHORIZED_INSTALL_REBOOT_AND_RUNTIME_VALIDATION",
+  "backup": "C:\\Users\\Administrator\\Downloads\\GT_cheat_analysis\\WSMenu\\src\\wsm-v2\\evidence\\backups\\wsm-before-v6-20261007-040732.tar",
+  "backupSha256": "6722daff03c5f2e0a723e566e44841a2f2b5199d30180818371648c21ce63955",
+  "packageSha256": "62711955df5e52d3277f797716308d5b52cfdf3f93ab92cac74cfb9806ddc1fa",
+  "temporarilyDisabled": "guardiantales_nifuji",
+  "providerUnchanged": "zygisksu",
+  "installOutput": "- Device is system-as-root\n***************************\n WS Menu (WSM) 6 \n by worm shadow (untuk He) \n***************************\n*******************\n Powered by Magisk \n*******************\n- Extracting module files\n- WSM v6.0.0 / x86_64 / integrity PASS\n- Enable a compatible Zygisk provider and reboot once.\n- Target: com.kakaogames.gdts, version 3.54.0 only.\n- Profiles are manual; controls begin OFF.\n- Disable other GT injection modules before testing WSM.\n- Runtime diagnostics: WSM / WSMEngine / WSM-H64.\n- Done"
+}

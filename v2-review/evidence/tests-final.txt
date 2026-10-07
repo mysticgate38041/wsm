@@ -1,0 +1,41 @@
+test_adb_garbage_ignored (test_preflight.CommandTests.test_adb_garbage_ignored) ... ok
+test_binary_mutations_do_not_crash_parser (test_preflight.CommandTests.test_binary_mutations_do_not_crash_parser) ... ok
+test_cli_reports_blocker_and_refuses_overwrite (test_preflight.CommandTests.test_cli_reports_blocker_and_refuses_overwrite) ... ok
+test_command_missing (test_preflight.CommandTests.test_command_missing) ... ok
+test_command_nonzero (test_preflight.CommandTests.test_command_nonzero) ... ok
+test_command_success (test_preflight.CommandTests.test_command_success) ... ok
+test_command_timeout (test_preflight.CommandTests.test_command_timeout) ... ok
+test_empty_adb_list (test_preflight.CommandTests.test_empty_adb_list) ... ok
+test_partial_project_hashes_actual_files (test_preflight.CommandTests.test_partial_project_hashes_actual_files) ... ok
+test_parses_device_states_without_claiming_game_support (test_preflight.DeviceTests.test_parses_device_states_without_claiming_game_support) ... ok
+test_4k_alignment_rejected_by_16k_gate (test_preflight.ElfBoundaryTests.test_4k_alignment_rejected_by_16k_gate) ... ok
+test_64k_alignment_accepted (test_preflight.ElfBoundaryTests.test_64k_alignment_accepted) ... ok
+test_bad_magic (test_preflight.ElfBoundaryTests.test_bad_magic) ... ok
+test_big_endian_rejected (test_preflight.ElfBoundaryTests.test_big_endian_rejected) ... ok
+test_elf32_rejected (test_preflight.ElfBoundaryTests.test_elf32_rejected) ... ok
+test_file_size_exceeds_file (test_preflight.ElfBoundaryTests.test_file_size_exceeds_file) ... ok
+test_file_size_exceeds_memory (test_preflight.ElfBoundaryTests.test_file_size_exceeds_memory) ... ok
+test_incongruent_virtual_address (test_preflight.ElfBoundaryTests.test_incongruent_virtual_address) ... ok
+test_invalid_header_size (test_preflight.ElfBoundaryTests.test_invalid_header_size) ... ok
+test_invalid_program_size (test_preflight.ElfBoundaryTests.test_invalid_program_size) ... ok
+test_no_load_segments (test_preflight.ElfBoundaryTests.test_no_load_segments) ... ok
+test_no_program_headers (test_preflight.ElfBoundaryTests.test_no_program_headers) ... ok
+test_non_power_two_alignment (test_preflight.ElfBoundaryTests.test_non_power_two_alignment) ... ok
+test_not_shared_library (test_preflight.ElfBoundaryTests.test_not_shared_library) ... ok
+test_program_offset_outside_file (test_preflight.ElfBoundaryTests.test_program_offset_outside_file) ... ok
+test_read_write_segment_accepted (test_preflight.ElfBoundaryTests.test_read_write_segment_accepted) ... ok
+test_truncated_header (test_preflight.ElfBoundaryTests.test_truncated_header) ... ok
+test_truncated_program_headers (test_preflight.ElfBoundaryTests.test_truncated_program_headers) ... ok
+test_unknown_abi_cannot_pass_with_none (test_preflight.ElfBoundaryTests.test_unknown_abi_cannot_pass_with_none) ... ok
+test_virtual_address_range_cannot_wrap_64_bits (test_preflight.ElfBoundaryTests.test_virtual_address_range_cannot_wrap_64_bits) ... ok
+test_writable_executable_segment (test_preflight.ElfBoundaryTests.test_writable_executable_segment) ... ok
+test_wrong_abi (test_preflight.ElfBoundaryTests.test_wrong_abi) ... ok
+test_x86_64 (test_preflight.ElfBoundaryTests.test_x86_64) ... ok
+test_zero_alignment (test_preflight.ElfBoundaryTests.test_zero_alignment) ... ok
+test_accepts_aligned_arm64_shared_library (test_preflight.ElfTests.test_accepts_aligned_arm64_shared_library) ... ok
+test_missing_environment_returns_blockers_without_creating_target (test_preflight.ReportTests.test_missing_environment_returns_blockers_without_creating_target) ... ok
+
+----------------------------------------------------------------------
+Ran 36 tests in 0.341s
+
+OK

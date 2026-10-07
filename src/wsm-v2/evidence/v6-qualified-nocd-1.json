@@ -1,0 +1,7 @@
+{
+  "request": 1791348151071446400,
+  "id": 6,
+  "epoch": 3,
+  "state": "rejected",
+  "detail": "NOCD ON CanTriggerSuper@0x40002b84e0d0 np=-10 CanTriggerExt@0x4000292b7ee4 np=-10 CooltimeLeft=0@0x40002b638320 np=-10"
+}

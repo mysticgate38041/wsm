@@ -1,0 +1,15 @@
+=== G21: AUDIT MENYELURUH + BATERAI RUNTIME — Tue, Oct  6, 2026  9:44:28 PM ===
+engine v5.1 (audit fixes: dedupe continue, __thread buffers, tp clamp), GT pid 20281
+
+FIX: A01 dedupe break->continue | A02 8x __thread buffer | A03 tp clamp 4000m
+BATERAI:
+  status/diag/hookprobe/mlist  -> OK (faults=0)
+  tpr 5 5 -> from=(0.8,-2.7) now=(5.8,2.3) ok=1 fault=0
+  onehp ON/OFF -> OK chars=2 (hit=0 karena hero 51m dari target = radius aura, by design)
+  stun ON/OFF  -> OK (hit=0 radius sama)
+  kcmd -> mdc=0x0 fInfo=1 FAULT (guard tangkap; jalur command resmi = [F], dipark)
+  sweep -> MSWEEP targets=13 fault=0; mlist sesudah: 13 musuh a2 -> a0:d1:h0 SEMUA MATI
+  panic -> OK; status final clean
+  fault total=2 (1 kcmd + 1 historis); game SELAMAT = guard layer terbukti
+
+Sweep terbukti = sapu SELURUH stage (13 target) tanpa radius, fault 0.

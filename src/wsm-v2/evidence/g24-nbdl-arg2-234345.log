@@ -1,0 +1,6 @@
+10-06 23:42:20.964  4403  4974 I WSMEngine: CTL thread up (paths=3)
+10-06 23:42:21.973  4403  4974 I WSMEngine: CTL[0] nbdl 1 -> NBDL ext=1 |1 dl=no e=2 fd=-1 ext=no e=2
+10-06 23:43:25.998  4403  4974 I WSMEngine: CTL[0] nbdl /data/data/com.kakaogames.gdts/files/libh64.so 1 -> NBDL ext=1 |/data/data/com.kakaogames.gdts/files/libh64.so 1 dl=no e=2 fd=-1 ext=no e=2
+10-06 23:43:31.002  4403  4974 I WSMEngine: CTL[0] nbdl /data/data/com.kakaogames.gdts/files/nj64.so 1 -> NBDL ext=1 |/data/data/com.kakaogames.gdts/files/nj64.so 1 dl=no e=2 fd=-1 ext=no e=2
+10-06 23:43:36.006  4403  4974 I WSMEngine: CTL[0] nbdl /storage/emulated/0/Android/data/com.kakaogames.gdts/files/libh64.so 1 -> NBDL ext=1 |/storage/emulated/0/Android/data/com.kakaogames.gdts/files/libh64.so 1 dl=no e=2 fd=-1 ext=no e=2
+10-06 23:43:41.008  4403  4974 I WSMEngine: CTL[0] nbdl 1 -> NBDL ext=1 |1 dl=no e=2 fd=-1 ext=no e=2

@@ -1,0 +1,282 @@
+[
+  {
+    "command": "feat god 1",
+    "result": {
+      "request": 1791349052096082600,
+      "id": 17,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=god ON value=3.00 players=2"
+    }
+  },
+  {
+    "command": "feat god 0",
+    "result": {
+      "request": 1791349054135773200,
+      "id": 18,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=god OFF value=3.00 players=2"
+    }
+  },
+  {
+    "command": "feat hp 1",
+    "result": {
+      "request": 1791349057214375900,
+      "id": 19,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=hp ON value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat hp 0",
+    "result": {
+      "request": 1791349059204545800,
+      "id": 20,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=hp OFF value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat stam 1",
+    "result": {
+      "request": 1791349062065185800,
+      "id": 21,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=stam ON value=100.00 players=2"
+    }
+  },
+  {
+    "command": "feat stam 0",
+    "result": {
+      "request": 1791349064252419800,
+      "id": 22,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=stam OFF value=100.00 players=2"
+    }
+  },
+  {
+    "command": "feat mana 1",
+    "result": {
+      "request": 1791349067079306500,
+      "id": 23,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=mana ON value=100.00 players=2"
+    }
+  },
+  {
+    "command": "feat mana 0",
+    "result": {
+      "request": 1791349069079460700,
+      "id": 24,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=mana OFF value=100.00 players=2"
+    }
+  },
+  {
+    "command": "feat poise 1",
+    "result": {
+      "request": 1791349072140907000,
+      "id": 25,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=poise ON value=52.00 players=2"
+    }
+  },
+  {
+    "command": "feat poise 0",
+    "result": {
+      "request": 1791349074104990900,
+      "id": 26,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=poise OFF value=52.00 players=2"
+    }
+  },
+  {
+    "command": "feat immune 1",
+    "result": {
+      "request": 1791349077160853300,
+      "id": 27,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=immune ON value=224.00 players=2"
+    }
+  },
+  {
+    "command": "feat immune 0",
+    "result": {
+      "request": 1791349079127769000,
+      "id": 28,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=immune OFF value=224.00 players=2"
+    }
+  },
+  {
+    "command": "feat dmg 25",
+    "result": {
+      "request": 1791349082284657300,
+      "id": 29,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=dmg ON value=25.00 players=2"
+    }
+  },
+  {
+    "command": "feat dmg 0",
+    "result": {
+      "request": 1791349084160532800,
+      "id": 30,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=dmg OFF value=25.00 players=2"
+    }
+  },
+  {
+    "command": "feat aura 30",
+    "result": {
+      "request": 1791349087249985100,
+      "id": 31,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=aura ON value=30.00 players=2"
+    }
+  },
+  {
+    "command": "feat aura 0",
+    "result": {
+      "request": 1791349089251870500,
+      "id": 32,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=aura OFF value=30.00 players=2"
+    }
+  },
+  {
+    "command": "feat crit 1",
+    "result": {
+      "request": 1791349092107899600,
+      "id": 33,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=crit ON value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat crit 0",
+    "result": {
+      "request": 1791349094285002500,
+      "id": 34,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=crit OFF value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat ohk 1",
+    "result": {
+      "request": 1791349097180567200,
+      "id": 35,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=ohk ON value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat ohk 0",
+    "result": {
+      "request": 1791349099132404900,
+      "id": 36,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=ohk OFF value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat onehp 1",
+    "result": {
+      "request": 1791349102186726000,
+      "id": 37,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=onehp ON value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat onehp 0",
+    "result": {
+      "request": 1791349104175310900,
+      "id": 38,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK feat=onehp OFF value=1.00 players=2"
+    }
+  },
+  {
+    "command": "feat timescale 1.25",
+    "result": {
+      "request": 1791349107117812800,
+      "id": 39,
+      "epoch": 3,
+      "state": "rejected",
+      "detail": "ERR timescale unavailable: GlobalTimeManager instance/API absent"
+    }
+  },
+  {
+    "command": "feat timescale 0",
+    "result": {
+      "request": 1791349109121926200,
+      "id": 40,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK timescale already OFF"
+    }
+  },
+  {
+    "command": "loot 1",
+    "result": {
+      "request": 1791349112200353400,
+      "id": 41,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "LOOT ON items=0 done=0 st=0x77d98cc9e6c0 dm=0x77d980ab5370 li=0x77d97eafec60"
+    }
+  },
+  {
+    "command": "loot 0",
+    "result": {
+      "request": 1791349114218088000,
+      "id": 42,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "LOOT OFF"
+    }
+  },
+  {
+    "command": "sweep",
+    "result": {
+      "request": 1791349116256987900,
+      "id": 43,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "MSWEEP mode=9 targets=12 fault=0"
+    }
+  },
+  {
+    "command": "panic",
+    "result": {
+      "request": 1791349118161180300,
+      "id": 44,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK PANIC restore=complete"
+    }
+  }
+]

@@ -1,0 +1,5 @@
+10-06 14:48:41.709 I/WSMEngine( 7679): INVOKE get_Instance -> 0x795ca0ff75a0 match_static=1
+10-06 14:48:41.709 I/WSMEngine( 7679): WATCH static: mods=0x795c94f0b3c0 instance=0x795ca0ff75a0 smdt=0.0000(has=0) modsN=0 (t=952s)
+10-06 14:48:49.709 I/WSMEngine( 7679): WATCH guard: 1 faulted call(s) skipped (total=1, t=960s)
+10-06 14:48:49.709 I/WSMEngine( 7679): WATCH alive: mods=0x795c94f0b3c0 instance=0x795ca0ff75a0
+10-06 14:52:49.716 I/WSMEngine( 7679): WATCH alive: mods=0x795c94f0b3c0 instance=0x795ca0ff75a0

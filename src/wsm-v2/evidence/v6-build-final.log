@@ -1,0 +1,53 @@
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] Compile++      : wsm_engine <= engine.cpp
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[x86_64] Compile++      : wsm_engine <= engine.cpp
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] Install        : libwsm_loader.so => C:\Users\Administrator\Downloads\GT_cheat_analysis\WSMenu\src\wsm-v2/build/libs/arm64-v8a/libwsm_loader.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[x86_64] Install        : libwsm_loader.so => C:\Users\Administrator\Downloads\GT_cheat_analysis\WSMenu\src\wsm-v2/build/libs/x86_64/libwsm_loader.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] Install        : libwsm_arm64.so => C:\Users\Administrator\Downloads\GT_cheat_analysis\WSMenu\src\wsm-v2/build/libs/arm64-v8a/libwsm_arm64.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[x86_64] SharedLibrary  : libwsm_engine.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[x86_64] Install        : libwsm_engine.so => C:\Users\Administrator\Downloads\GT_cheat_analysis\WSMenu\src\wsm-v2/build/libs/x86_64/libwsm_engine.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] SharedLibrary  : libwsm_engine.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+make: Entering directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+[arm64-v8a] Install        : libwsm_engine.so => C:\Users\Administrator\Downloads\GT_cheat_analysis\WSMenu\src\wsm-v2/build/libs/arm64-v8a/libwsm_engine.so
+make: Leaving directory 'C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2'
+warning: [options] bootstrap class path not set in conjunction with -source 8
+1 warning
+PASS ControlState: accepted vs applied, rejection, timeout, stale epoch, fault, authoritative snapshot
+{
+  "package": "C:\\Users\\Administrator\\Downloads\\GT_cheat_analysis\\WSMenu\\src\\wsm-v2\\dist\\wsm-v6.0.0.zip",
+  "sha256": "32527547e3c5328fefcfd44a219c7922a2f3ac4ecfd058a11d4b7b818a9d1f5f",
+  "entries": 13,
+  "integrity": "PASS"
+}
+test_changed_source_refuses_packaging (test_release.ReleaseTests.test_changed_source_refuses_packaging) ... ok
+test_complete_release (test_release.ReleaseTests.test_complete_release) ... ok
+test_corrupt_dex_even_with_valid_hash (test_release.ReleaseTests.test_corrupt_dex_even_with_valid_hash) ... ok
+test_deterministic_repack (test_release.ReleaseTests.test_deterministic_repack) ... ok
+test_duplicate_entry (test_release.ReleaseTests.test_duplicate_entry) ... ok
+test_incomplete_manifest (test_release.ReleaseTests.test_incomplete_manifest) ... ok
+test_incorrect_version_gate (test_release.ReleaseTests.test_incorrect_version_gate) ... ok
+test_missing_guest_payload (test_release.ReleaseTests.test_missing_guest_payload) ... ok
+test_native_tampering (test_release.ReleaseTests.test_native_tampering) ... ok
+test_unexpected_entry (test_release.ReleaseTests.test_unexpected_entry) ... ok
+test_wrong_machine_even_with_valid_hash (test_release.ReleaseTests.test_wrong_machine_even_with_valid_hash) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.194s
+
+OK
+WSM 6: five native libraries verified, Java/DEX built, state tests PASS, deterministic ZIP verified.

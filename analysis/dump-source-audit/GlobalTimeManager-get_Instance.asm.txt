@@ -1,0 +1,46 @@
+
+C:\Users\Administrator\Downloads\Mod\gt_dump\out\carve\libil2cpp_reloc_norela.so:	file format elf64-littleaarch64
+
+Disassembly of section il2cpp:
+
+0000000003abc390 <__start_il2cpp>:
+ 72d5fe8: f81e0ffe     	str	x30, [sp, #-0x20]!
+ 72d5fec: a9014ff4     	stp	x20, x19, [sp, #0x10]
+ 72d5ff0: 90017cd3     	adrp	x19, 0xa26d000
+ 72d5ff4: 90014834     	adrp	x20, 0x9bd9000
+ 72d5ff8: 395ff668     	ldrb	w8, [x19, #0x7fd]
+ 72d5ffc: f945da94     	ldr	x20, [x20, #0xbb0]
+ 72d6000: 370000c8     	tbnz	w8, #0x0, 0x72d6018 <__start_il2cpp+0x3819c88>
+ 72d6004: f0014800     	adrp	x0, 0x9bd9000
+ 72d6008: f945d800     	ldr	x0, [x0, #0xbb0]
+ 72d600c: 971bf52c     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 72d6010: 52800028     	mov	w8, #0x1                // =1
+ 72d6014: 391ff668     	strb	w8, [x19, #0x7fd]
+ 72d6018: f9400280     	ldr	x0, [x20]
+ 72d601c: f9405c08     	ldr	x8, [x0, #0xb8]
+ 72d6020: f9400108     	ldr	x8, [x8]
+ 72d6024: b5000168     	cbnz	x8, 0x72d6050 <__start_il2cpp+0x3819cc0>
+ 72d6028: 971bf5ac     	bl	0x39d36d8 <CloseNLSocket+0x710>
+ 72d602c: aa1f03e1     	mov	x1, xzr
+ 72d6030: aa0003f3     	mov	x19, x0
+ 72d6034: 97a71760     	bl	0x5c9bdb4 <__start_il2cpp+0x21dfa24>
+ 72d6038: f9400288     	ldr	x8, [x20]
+ 72d603c: f9405d08     	ldr	x8, [x8, #0xb8]
+ 72d6040: f9000113     	str	x19, [x8]
+ 72d6044: f9400288     	ldr	x8, [x20]
+ 72d6048: f9405d08     	ldr	x8, [x8, #0xb8]
+ 72d604c: f9400108     	ldr	x8, [x8]
+ 72d6050: a9414ff4     	ldp	x20, x19, [sp, #0x10]
+ 72d6054: aa0803e0     	mov	x0, x8
+ 72d6058: f84207fe     	ldr	x30, [sp], #0x20
+ 72d605c: d65f03c0     	ret
+ 72d6060: aa1f03e1     	mov	x1, xzr
+ 72d6064: 17a71754     	b	0x5c9bdb4 <__start_il2cpp+0x21dfa24>
+ 72d6068: fc1d0fe8     	str	d8, [sp, #-0x30]!
+ 72d606c: f90007fe     	str	x30, [sp, #0x8]
+ 72d6070: a90157f6     	stp	x22, x21, [sp, #0x10]
+ 72d6074: a9024ff4     	stp	x20, x19, [sp, #0x20]
+ 72d6078: f0017cb5     	adrp	x21, 0xa26d000
+ 72d607c: f0014816     	adrp	x22, 0x9bd9000
+ 72d6080: 395ffaa8     	ldrb	w8, [x21, #0x7fe]
+ 72d6084: f945dad6     	ldr	x22, [x22, #0xbb0]

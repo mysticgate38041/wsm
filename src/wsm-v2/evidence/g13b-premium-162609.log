@@ -1,0 +1,8 @@
+10-06 16:25:31.789 I/WSMEngine( 3673): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:25:37.804 I/WSMEngine( 3673): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:25:43.834 I/WSMEngine( 3673): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:25:49.868 I/WSMEngine( 3673): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:25:55.900 I/WSMEngine( 3673): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:26:01.916 I/WSMEngine( 3673): MENU exec: status -> STATUS instance=0x0 modsN=0
+10-06 16:26:07.271 I/WSMEngine( 3673): MENU exec: feat god 0 -> PENDING feat=god (hook belum tersedia)
+10-06 16:26:07.934 I/WSMEngine( 3673): MENU exec: status -> STATUS instance=0x0 modsN=0

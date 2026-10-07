@@ -1,0 +1,28 @@
+10-06 10:58:16.054  2448  2448 I WSM     : [com.kakaogames.gdts] pre-staged payload=12608 B fnv64=50fc078c6eb579a7 staging=deferred_to_post
+10-06 10:58:16.109  2448  2448 I WSM     : post staged+signaled pid=2448 chan_fd=57 payload_fd=56
+10-06 10:58:16.113  2448  2457 I WSMEngine: JNI_OnLoad received (build=wsm-v2.0.0-poc1 abi=x86_64)
+10-06 10:58:16.113  2448  2457 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/56 handle=0xa5d43eb9323d7c1 jni_ver=0x10006 (payload 12608 B fnv64=50fc078c6eb579a7)
+10-06 10:58:16.114  2448  2460 I WSMEngine: ALIVE pid=2448 uid=10075 hello_magic=0x574d5348 hello_proto=2
+10-06 10:58:16.114  2448  2460 I WSMEngine: handshake ack written (proto=2 nonce=15daa6f4aff9a458)
+10-06 10:58:16.166  2448  2457 I WSM     : HANDSHAKE_OK engine_pid=2448 engine_uid=10075 state=1 caps=0x0 build=wsm-v2.0.0-poc1 abi=x86_64
+10-06 10:58:48.340  2501  2501 I WSM     : [com.kakaogames.gdts] pre-staged payload=12608 B fnv64=50fc078c6eb579a7 staging=deferred_to_post
+10-06 10:58:48.358  2501  2501 I WSM     : post staged+signaled pid=2501 chan_fd=57 payload_fd=56
+10-06 10:58:48.361  2501  2509 I WSMEngine: JNI_OnLoad received (build=wsm-v2.0.0-poc1 abi=x86_64)
+10-06 10:58:48.362  2501  2509 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/56 handle=0x1baee697902b4e21 jni_ver=0x10006 (payload 12608 B fnv64=50fc078c6eb579a7)
+10-06 10:58:48.362  2501  2514 I WSMEngine: ALIVE pid=2501 uid=10075 hello_magic=0x574d5348 hello_proto=2
+10-06 10:58:48.362  2501  2514 I WSMEngine: handshake ack written (proto=2 nonce=674eabcf094be1ec)
+10-06 10:58:48.412  2501  2509 I WSM     : HANDSHAKE_OK engine_pid=2501 engine_uid=10075 state=1 caps=0x0 build=wsm-v2.0.0-poc1 abi=x86_64
+10-06 10:59:20.670  2546  2546 I WSM     : [com.kakaogames.gdts] pre-staged payload=12608 B fnv64=50fc078c6eb579a7 staging=deferred_to_post
+10-06 10:59:20.688  2546  2546 I WSM     : post staged+signaled pid=2546 chan_fd=57 payload_fd=56
+10-06 10:59:20.689  2546  2553 I WSMEngine: JNI_OnLoad received (build=wsm-v2.0.0-poc1 abi=x86_64)
+10-06 10:59:20.689  2546  2553 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/56 handle=0x6074577a90932b79 jni_ver=0x10006 (payload 12608 B fnv64=50fc078c6eb579a7)
+10-06 10:59:20.691  2546  2561 I WSMEngine: ALIVE pid=2546 uid=10075 hello_magic=0x574d5348 hello_proto=2
+10-06 10:59:20.691  2546  2561 I WSMEngine: handshake ack written (proto=2 nonce=2933d8c0f10bbe1e)
+10-06 10:59:20.740  2546  2553 I WSM     : HANDSHAKE_OK engine_pid=2546 engine_uid=10075 state=1 caps=0x0 build=wsm-v2.0.0-poc1 abi=x86_64
+10-06 10:59:53.401  2608  2608 I WSM     : [com.kakaogames.gdts] pre-staged payload=12608 B fnv64=50fc078c6eb579a7 staging=deferred_to_post
+10-06 10:59:53.413  2608  2608 I WSM     : post staged+signaled pid=2608 chan_fd=57 payload_fd=56
+10-06 10:59:53.415  2608  2617 I WSMEngine: JNI_OnLoad received (build=wsm-v2.0.0-poc1 abi=x86_64)
+10-06 10:59:53.415  2608  2617 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/56 handle=0xabd46a5423f731c9 jni_ver=0x10006 (payload 12608 B fnv64=50fc078c6eb579a7)
+10-06 10:59:53.415  2608  2622 I WSMEngine: ALIVE pid=2608 uid=10075 hello_magic=0x574d5348 hello_proto=2
+10-06 10:59:53.415  2608  2622 I WSMEngine: handshake ack written (proto=2 nonce=92dc1fc7d2d4d108)
+10-06 10:59:53.465  2608  2617 I WSM     : HANDSHAKE_OK engine_pid=2608 engine_uid=10075 state=1 caps=0x0 build=wsm-v2.0.0-poc1 abi=x86_64

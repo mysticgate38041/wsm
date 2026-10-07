@@ -1,0 +1,26 @@
+=== BUILD payload v2 Wed, Oct  7, 2026 12:02:43 AM ===
+-rw-r--r-- 1 Administrator 197121 7112 Oct  7 00:02 libh64v2.so
+--- ELF check ---
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  0x0000000000000001 (NEEDED)       Shared library: [liblog.so]
+  0x0000000000000001 (NEEDED)       Shared library: [libdl.so]
+  0x0000000000000001 (NEEDED)       Shared library: [libm.so]
+  0x0000000000000001 (NEEDED)       Shared library: [libc.so]
+
+=== DEPLOY ===
+libh64v2.so: 1 file pushed, 0 skipped. 4.6 MB/s (7112 bytes in 0.001s)
+-rw-r--r-- 1 root root 7112 2026-10-07 00:02 /data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64/libh64y.so
+DEPLOYED
+=== PID check ===
+PID=[5575]
+=== NBDL libh64y.so (payload v2!) ===
+NBDL ext=1 fext=1 init=1 |/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64/libh64y.so fd=201 dl=no e22 ad=no e22 bA=no e0 bB=OK e0
+=== WITNESS FILE ===
+H64-ALIVE v2 arch=aarch64 base=0x400030380000 pid=5575 t=1791306177
+=== LOGCAT WSM-H64 ===
+10-07 00:02:57.892  5575  6092 I WSM-H64 : ctor v2: H64 mapped + executing arch=aarch64 base=0x400030380000 pid=5575
+10-07 00:02:57.894  5575  6092 I WSM-H64 : witness written base=0x400030380000
+10-07 00:02:57.894  5575  6092 I WSMEngine: CTL[0] nbdl /data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64/libh64y.so -> NBDL ext=1 fext=1 init=1 |/data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64/libh64y.so fd=201 dl=no e22 ad=no e22 bA=no e0 bB=OK e0
+=== DONE Wed, Oct  7, 2026 12:03:03 AM ===

@@ -1,0 +1,14 @@
+=== G16: v4.0 BIG INTEGRATION + AUTO-KILL WORKS — Tue, Oct  6, 2026  8:29:09 PM ===
+engine v4.0d/e: sha-swapped, GT pid 10558 (v4.0d) cleared-verified
+USER: 'udah work bro' — One-Hit Kill from menu works on visible monsters (a2 fix)
+
+Feature battery (engine-side):
+- OHK sweep: VERIFIED live (FEAT kill hit=N; mlist 0-8 -> a0:d1:h0)
+- aggro: toggles clean (feats=[aggro])
+- stunall: engine runs (FEAT stun hit=0 on empty radius), no faults
+- onehp: BUG found (only ran when ohk on) -> fixed v4.0e (ohk||onehp gate)
+- sweep cmd: wired (msweep 9, dummy-filtered)
+
+Root cause of earlier 'nothing works': visible monsters = ActiveState 2 (Visible),
+sweep only accepted act==3 (dummies at 999 are a3!). Fix: accept act 2|3 + position filter.
+Menu v4.0: honest labels [LIVE]/[UJI]/[SERVER]/[RISET], new cards (aura/dmg/onehp/crit/stunall/sweep/aggro)

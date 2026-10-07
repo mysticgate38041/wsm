@@ -1,0 +1,2454 @@
+{
+  "schema": 1,
+  "requested": 47,
+  "completed": 0,
+  "acceptance": "All original semantics require measured target runtime acceptance; static matches and applied ACKs do not establish gameplay effect.",
+  "designSha256": "38b6bb9053bc0377626f3aceb7c803b49e66d65fad9397cd56ea1711852950fe",
+  "apiSha256": "e2cf014a597b73e7f2fd744499aea8aef2eb9a642b69ac9f978d109ec3c450e2",
+  "features": [
+    {
+      "id": "god",
+      "name": "God Mode / Invincibility",
+      "desc": "Kebal terhadap segala bentuk serangan dan kerusakan lingkungan.",
+      "key": "F1",
+      "category": "stat",
+      "backendId": "god",
+      "status": "partial",
+      "reason": "Opsi Immortal/Invincible; semua sumber damage dan lingkungan belum terukur.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "AddCharacterStatsOption",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "AddCharacterStatsOption",
+              "declaration": "public void AddCharacterStatsOption(CharacterStatsOptions op) { }",
+              "rva": 147373760,
+              "line": 153916
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "RemoveCharacterStatsOption",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "RemoveCharacterStatsOption",
+              "declaration": "public void RemoveCharacterStatsOption(CharacterStatsOptions op) { }",
+              "rva": 147373928,
+              "line": 153919
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "hp",
+      "name": "Infinite HP / Health",
+      "desc": "Darah tidak pernah berkurang atau selalu otomatis terisi penuh.",
+      "key": "F2",
+      "category": "stat",
+      "backendId": "hp",
+      "status": "partial",
+      "reason": "Opsi Immortal; belum mengisi HP penuh seperti desain.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_Hp",
+          "matchCount": 8,
+          "matches": [
+            {
+              "type": "GuildWarHpSpawnInfo.SpawnInfo",
+              "name": "get_Hp",
+              "declaration": "public float get_Hp() { }",
+              "rva": 106204964,
+              "line": 279357
+            },
+            {
+              "type": "GuildWarHpSpawnOption.GuildWarHpSpawnOptionData",
+              "name": "get_Hp",
+              "declaration": "public double get_Hp() { }",
+              "rva": 106256656,
+              "line": 280240
+            },
+            {
+              "type": "Oak.IWeaponStatOption",
+              "name": "get_Hp",
+              "declaration": "public abstract float get_Hp();",
+              "rva": -1,
+              "line": 317134
+            },
+            {
+              "type": "Oak.KamazonLandMonster",
+              "name": "get_Hp",
+              "declaration": "public int get_Hp() { }",
+              "rva": 110195852,
+              "line": 362617
+            },
+            {
+              "type": "Oak.WeaponDamageReductionOption",
+              "name": "get_Hp",
+              "declaration": "public float get_Hp() { }",
+              "rva": 111523192,
+              "line": 393740
+            },
+            {
+              "type": "Oak.WeaponDefenseUpOption",
+              "name": "get_Hp",
+              "declaration": "public float get_Hp() { }",
+              "rva": 111524548,
+              "line": 393805
+            },
+            {
+              "type": "Oak.WeaponElementalUpOption",
+              "name": "get_Hp",
+              "declaration": "public float get_Hp() { }",
+              "rva": 111525920,
+              "line": 393871
+            },
+            {
+              "type": "Oak.WeaponHpUpOption",
+              "name": "get_Hp",
+              "declaration": "public float get_Hp() { }",
+              "rva": 111527544,
+              "line": 393935
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "set_Hp",
+          "matchCount": 3,
+          "matches": [
+            {
+              "type": "GuildWarHpSpawnInfo.SpawnInfo",
+              "name": "set_Hp",
+              "declaration": "public void set_Hp(float value) { }",
+              "rva": 106204972,
+              "line": 279361
+            },
+            {
+              "type": "GuildWarHpSpawnOption.GuildWarHpSpawnOptionData",
+              "name": "set_Hp",
+              "declaration": "private void set_Hp(double value) { }",
+              "rva": 106256664,
+              "line": 280244
+            },
+            {
+              "type": "Oak.KamazonLandMonster",
+              "name": "set_Hp",
+              "declaration": "public void set_Hp(int value) { }",
+              "rva": 110195860,
+              "line": 362621
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "get_MaxHpWoMod",
+          "matchCount": 2,
+          "matches": [
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "get_MaxHpWoMod",
+              "declaration": "public override int get_MaxHpWoMod() { }",
+              "rva": 147350976,
+              "line": 153722
+            },
+            {
+              "type": "Oak.FieldObjectStatsBehaviour",
+              "name": "get_MaxHpWoMod",
+              "declaration": "public virtual int get_MaxHpWoMod() { }",
+              "rva": 104526908,
+              "line": 249559
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "stam",
+      "name": "Infinite Stamina",
+      "desc": "Stamina tidak habis saat berlari, menghindar, atau menyerang.",
+      "key": "F3",
+      "category": "stat",
+      "backendId": "stam",
+      "status": "partial",
+      "reason": "Refill periodik, bukan bukti stamina tidak pernah berkurang.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "set_Stamina",
+          "matchCount": 3,
+          "matches": [
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "set_Stamina",
+              "declaration": "public void set_Stamina(float value) { }",
+              "rva": 147365808,
+              "line": 153844
+            },
+            {
+              "type": "Oak.FishingToolSpec",
+              "name": "set_Stamina",
+              "declaration": "private void set_Stamina(ObscuredInt value) { }",
+              "rva": 108095784,
+              "line": 321248
+            },
+            {
+              "type": "Oak.HeavenHoldFarmFishSpec",
+              "name": "set_Stamina",
+              "declaration": "public void set_Stamina(int value) { }",
+              "rva": 106503388,
+              "line": 286785
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "mana",
+      "name": "Infinite Mana / MP / Energy",
+      "desc": "Penggunaan sihir atau kemampuan khusus tanpa batas.",
+      "key": "F4",
+      "category": "stat",
+      "backendId": "mana",
+      "status": "partial",
+      "reason": "Refill periodik, semua jenis resource belum terukur.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "set_Mana",
+          "matchCount": 3,
+          "matches": [
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "set_Mana",
+              "declaration": "public virtual void set_Mana(float value) { }",
+              "rva": 147367272,
+              "line": 153858
+            },
+            {
+              "type": "Oak.MsChromeCharacterStatsBehaviour",
+              "name": "set_Mana",
+              "declaration": "public override void set_Mana(float value) { }",
+              "rva": 147572120,
+              "line": 156695
+            },
+            {
+              "type": "Oak.PixyStatusInfo",
+              "name": "set_Mana",
+              "declaration": "public void set_Mana(int value) { }",
+              "rva": 111781384,
+              "line": 397466
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "poise",
+      "name": "Infinite Poise / Super Armor",
+      "desc": "Tidak pernah mengalami stagger, jatuh, atau terlempar.",
+      "key": "F5",
+      "category": "stat",
+      "backendId": "poise",
+      "status": "partial",
+      "reason": "Opsi anti knockback/stun/knockdown; efek setiap status belum terukur.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "AddCharacterStatsOption",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "AddCharacterStatsOption",
+              "declaration": "public void AddCharacterStatsOption(CharacterStatsOptions op) { }",
+              "rva": 147373760,
+              "line": 153916
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "cd",
+      "name": "No Cooldown",
+      "desc": "Skill, sihir, dan item dapat digunakan tanpa jeda.",
+      "key": "F6",
+      "category": "stat",
+      "backendId": "nocd",
+      "status": "partial",
+      "reason": "Tiga gate skill dipatch; cakupan semua skill/item belum terbukti.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "CanTriggerSuperBattleAction",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.CharacterBehaviour",
+              "name": "CanTriggerSuperBattleAction",
+              "declaration": "public bool CanTriggerSuperBattleAction(ITriggerBattleAction superAction) { }",
+              "rva": 147120336,
+              "line": 150713
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "CanTriggerBattleAction",
+          "matchCount": 2,
+          "matches": [
+            {
+              "type": "Oak.FieldObjectActionExtensions",
+              "name": "CanTriggerBattleAction",
+              "declaration": "public static bool CanTriggerBattleAction(FieldObjectAction action, FieldObjectAction allowAction = 0) { }",
+              "rva": 107807268,
+              "line": 312937
+            },
+            {
+              "type": "Oak.ICharacterBehaviourExtensions",
+              "name": "CanTriggerBattleAction",
+              "declaration": "public static bool CanTriggerBattleAction(ICharacterBehaviour behaviour) { }",
+              "rva": 107708132,
+              "line": 310752
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "Oak.IMythBattleAction.get_CooltimeLeft",
+          "matchCount": 2,
+          "matches": [
+            {
+              "type": "Oak.CharacterToolConnect.GraphMythBattleAction",
+              "name": "Oak.IMythBattleAction.get_CooltimeLeft",
+              "declaration": "private float Oak.IMythBattleAction.get_CooltimeLeft() { }",
+              "rva": 125885756,
+              "line": 670591
+            },
+            {
+              "type": "Oak.MythBattleAction",
+              "name": "Oak.IMythBattleAction.get_CooltimeLeft",
+              "declaration": "private float Oak.IMythBattleAction.get_CooltimeLeft() { }",
+              "rva": 144933664,
+              "line": 112166
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "ult",
+      "name": "Instant Ultimate / Max Rage",
+      "desc": "Mengisi penuh indikator serangan pamungkas secara instan.",
+      "key": "F7",
+      "category": "stat",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "Mana refill belum membuktikan ultimate/rage instan; meter dan kontrak target perlu ditentukan.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_ManaFill",
+          "matchCount": 2,
+          "matches": [
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "get_ManaFill",
+              "declaration": "public virtual float get_ManaFill() { }",
+              "rva": 147367752,
+              "line": 153861
+            },
+            {
+              "type": "Oak.MsChromeCharacterStatsBehaviour",
+              "name": "get_ManaFill",
+              "declaration": "public override float get_ManaFill() { }",
+              "rva": 147573136,
+              "line": 156698
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "SetUltimateBtnActiveState",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.UI.XMDefense",
+              "name": "SetUltimateBtnActiveState",
+              "declaration": "public void SetUltimateBtnActiveState(bool isActive) { }",
+              "rva": 140204228,
+              "line": 1049371
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "immune",
+      "name": "Status Effect Immunity",
+      "desc": "Kebal racun, api, beku, kutukan, dan stun.",
+      "key": "F8",
+      "category": "stat",
+      "backendId": "immune",
+      "status": "partial",
+      "reason": "Mask opsi karakter; cakupan semua status desain belum terbukti.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "AddCharacterStatsOption",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "AddCharacterStatsOption",
+              "declaration": "public void AddCharacterStatsOption(CharacterStatsOptions op) { }",
+              "rva": 147373760,
+              "line": 153916
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "ohk",
+      "name": "One-Hit Kill",
+      "desc": "Membunuh musuh atau bos dengan satu serangan.",
+      "key": "NUM1",
+      "category": "combat",
+      "backendId": "ohk",
+      "status": "partial",
+      "reason": "Auto-kill pulse radius, bukan setiap hit senjata; boss/immune belum terukur.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "Damage",
+          "matchCount": 26,
+          "matches": [
+            {
+              "type": "Oak.BossHelicopterDamagedBehaviour",
+              "name": "Damage",
+              "declaration": "public bool Damage(DamageInfo damage) { }",
+              "rva": 147055644,
+              "line": 149999
+            },
+            {
+              "type": "Oak.CharacterDamagedBehaviour",
+              "name": "Damage",
+              "declaration": "protected virtual bool Damage(DamageInfo damageInfo) { }",
+              "rva": 147187696,
+              "line": 151410
+            },
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public override void Damage(DamageInfo damageInfo) { }",
+              "rva": 147374788,
+              "line": 153910
+            },
+            {
+              "type": "Oak.DuelItemBoxDamagedBehaviour",
+              "name": "Damage",
+              "declaration": "public bool Damage(DamageInfo damage) { }",
+              "rva": 103005084,
+              "line": 211267
+            },
+            {
+              "type": "Oak.FieldObjectStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public virtual void Damage(DamageInfo damageInfo) { }",
+              "rva": 104559512,
+              "line": 249724
+            },
+            {
+              "type": "Oak.FieldUICharacterStats",
+              "name": "Damage",
+              "declaration": "public void Damage(float hp, float shield) { }",
+              "rva": 104685704,
+              "line": 251142
+            },
+            {
+              "type": "Oak.GuildCastleScarecrowDamagedBehaviour",
+              "name": "Damage",
+              "declaration": "public override bool Damage(DamageInfo damage) { }",
+              "rva": 105912104,
+              "line": 273806
+            },
+            {
+              "type": "Oak.GuildPunchKingStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public override void Damage(DamageInfo damageInfo) { }",
+              "rva": 106345368,
+              "line": 283095
+            },
+            {
+              "type": "Oak.GuildRaid2BossStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public override void Damage(DamageInfo damageInfo) { }",
+              "rva": 106367808,
+              "line": 283513
+            },
+            {
+              "type": "Oak.GuildWarCastleCoreStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public override void Damage(DamageInfo damageInfo) { }",
+              "rva": 106009356,
+              "line": 276417
+            },
+            {
+              "type": "Oak.GuildWarInfiniteHpDamagedBehaviour",
+              "name": "Damage",
+              "declaration": "public override bool Damage(DamageInfo damage) { }",
+              "rva": 106013096,
+              "line": 276471
+            },
+            {
+              "type": "Oak.GuildWarSiegeTankStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public override void Damage(DamageInfo damageInfo) { }",
+              "rva": 106016348,
+              "line": 276531
+            }
+          ],
+          "truncated": true
+        }
+      ]
+    },
+    {
+      "id": "dmg",
+      "name": "Damage Multiplier",
+      "desc": "Mengalikan kerusakan fisik atau magis.",
+      "key": "NUM2",
+      "control": "slider",
+      "min": 2,
+      "max": 9999,
+      "unit": "×",
+      "def": 10,
+      "log": true,
+      "category": "combat",
+      "backendId": "dmg",
+      "status": "partial",
+      "reason": "Power khusus pulse 1–99 ×100.000; bukan multiplier semua serangan 2–9999.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_AttackDamageMultiplier",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "get_AttackDamageMultiplier",
+              "declaration": "protected ObscuredFloat get_AttackDamageMultiplier() { }",
+              "rva": 147352432,
+              "line": 153757
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "crit",
+      "name": "100% Critical Hit Rate",
+      "desc": "Setiap serangan yang mendarat selalu kritikal.",
+      "key": "NUM3",
+      "category": "combat",
+      "backendId": "crit",
+      "status": "partial",
+      "reason": "Flag critical hanya pada DamageInfo pulse, bukan semua hit.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_CriticalChanceWoMult",
+          "matchCount": 3,
+          "matches": [
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "get_CriticalChanceWoMult",
+              "declaration": "public virtual float get_CriticalChanceWoMult() { }",
+              "rva": 147353256,
+              "line": 153763
+            },
+            {
+              "type": "Oak.KamazonSemiSummonableCharacterStatsBehaviour",
+              "name": "get_CriticalChanceWoMult",
+              "declaration": "public override float get_CriticalChanceWoMult() { }",
+              "rva": 108330716,
+              "line": 323888
+            },
+            {
+              "type": "Oak.SummonableCharacterStatsBehaviour",
+              "name": "get_CriticalChanceWoMult",
+              "declaration": "public override float get_CriticalChanceWoMult() { }",
+              "rva": 147617628,
+              "line": 157395
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "critdmg",
+      "name": "Maximum Critical Damage",
+      "desc": "Pengganda kritikal diatur ke batas tertinggi.",
+      "key": "NUM4",
+      "category": "combat",
+      "backendId": "critdmg",
+      "status": "prototype",
+      "reason": "Getter hero ×1–5, slot 26, relokasi ADR/ADRP; efek damage belum diuji pada game.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_CriticalMultiplierScale",
+          "matchCount": 28,
+          "matches": [
+            {
+              "type": "Oak.BattleCountHpScaleOption",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public float get_CriticalMultiplierScale() { }",
+              "rva": 111442048,
+              "line": 391186
+            },
+            {
+              "type": "Oak.BattleCountTotalAttackScaleOption",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public float get_CriticalMultiplierScale() { }",
+              "rva": 111445520,
+              "line": 391296
+            },
+            {
+              "type": "Oak.BuffStats",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public float get_CriticalMultiplierScale() { }",
+              "rva": 107676372,
+              "line": 310218
+            },
+            {
+              "type": "Oak.CharacterOptionStats",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public float get_CriticalMultiplierScale() { }",
+              "rva": 110990248,
+              "line": 382599
+            },
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public virtual float get_CriticalMultiplierScale() { }",
+              "rva": 147352920,
+              "line": 153754
+            },
+            {
+              "type": "Oak.CriticalChanceUpOption",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public float get_CriticalMultiplierScale() { }",
+              "rva": 111448696,
+              "line": 391399
+            },
+            {
+              "type": "Oak.CriticalMultiplierScaleUpOption",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public float get_CriticalMultiplierScale() { }",
+              "rva": 111450372,
+              "line": 391478
+            },
+            {
+              "type": "Oak.CriticalResistanceUpOption",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public float get_CriticalMultiplierScale() { }",
+              "rva": 111453164,
+              "line": 391563
+            },
+            {
+              "type": "Oak.CursedArtifactAttackScaleOption",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public float get_CriticalMultiplierScale() { }",
+              "rva": 111455284,
+              "line": 391643
+            },
+            {
+              "type": "Oak.CursedArtifactCriticalMultiplierOption",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public float get_CriticalMultiplierScale() { }",
+              "rva": 111458496,
+              "line": 391728
+            },
+            {
+              "type": "Oak.CursedArtifactDefenseScaleOption",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public float get_CriticalMultiplierScale() { }",
+              "rva": 111462288,
+              "line": 391817
+            },
+            {
+              "type": "Oak.CursedArtifactManaRegenScaleOption",
+              "name": "get_CriticalMultiplierScale",
+              "declaration": "public float get_CriticalMultiplierScale() { }",
+              "rva": 111465856,
+              "line": 391906
+            }
+          ],
+          "truncated": true
+        }
+      ]
+    },
+    {
+      "id": "dura",
+      "name": "Infinite Durability",
+      "desc": "Senjata dan armor tidak pernah rusak atau tumpul.",
+      "category": "combat",
+      "backendId": null,
+      "status": "target_absent",
+      "reason": "Durability ditemukan pada GuildMeteor; tidak ditemukan kontrak durability senjata/armor.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_Durability",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.GuildMeteorMeteorSpec",
+              "name": "get_Durability",
+              "declaration": "public int get_Durability() { }",
+              "rva": 113631544,
+              "line": 450169
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "set_Durability",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.GuildMeteorMeteorSpec",
+              "name": "set_Durability",
+              "declaration": "public void set_Durability(int value) { }",
+              "rva": 113631552,
+              "line": 450173
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "gbreak",
+      "name": "Always Guard Break",
+      "desc": "Menghancurkan perisai atau posture musuh dalam satu serangan.",
+      "category": "combat",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "Belum ada kontrak guard/posture yang membuktikan satu-hit break.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "GuardBreak",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "ammo",
+      "name": "Infinite Ammo",
+      "desc": "Peluru, anak panah, dan senjata lempar tidak berkurang.",
+      "key": "NUM5",
+      "category": "combat",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "MagazineSize/MaxBullet ditemukan; reload, konsumsi per action dan ownership hero belum dibuktikan.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_MagazineSize",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.WeaponSpec",
+              "name": "get_MagazineSize",
+              "declaration": "public ObscuredInt get_MagazineSize() { }",
+              "rva": 108072816,
+              "line": 319688
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "get_MaxBullet",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.DesertelfHunterCharacterStatsBehaviour",
+              "name": "get_MaxBullet",
+              "declaration": "public int get_MaxBullet() { }",
+              "rva": 147476928,
+              "line": 155231
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "set_MaxBullet",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.DesertelfHunterCharacterStatsBehaviour",
+              "name": "set_MaxBullet",
+              "declaration": "public void set_MaxBullet(int value) { }",
+              "rva": 147477036,
+              "line": 155234
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "parry",
+      "name": "Auto-Dodge / Perfect Parry",
+      "desc": "Hindaran atau tangkisan sempurna dalam milidetik.",
+      "key": "NUM6",
+      "category": "combat",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "ActivateDodge tersedia untuk FugitiveCharacterController; timing/parry universal belum dibuktikan.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "ActivateDodge",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.FugitiveCharacterController",
+              "name": "ActivateDodge",
+              "declaration": "public void ActivateDodge(int targetWaypointIndex) { }",
+              "rva": 100775228,
+              "line": 171859
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "aspd",
+      "name": "Attack Speed Modifier",
+      "desc": "Mempercepat ayunan dan memotong jeda animasi.",
+      "control": "slider",
+      "min": 1,
+      "max": 5,
+      "step": 0.1,
+      "unit": "×",
+      "def": 1.5,
+      "category": "combat",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "Speed gerak tidak mengubah attack speed; kontrak animasi belum tersedia.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_AttackSpeed",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "reach",
+      "name": "Extended Hitbox / Reach",
+      "desc": "Memperbesar area tabrakan senjata.",
+      "control": "slider",
+      "min": 1,
+      "max": 30,
+      "step": 0.5,
+      "unit": "m",
+      "def": 4,
+      "category": "combat",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "ScaleHitbox memerlukan nama hitbox, ownership dan restore; belum dibuktikan untuk serangan hero.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "ScaleHitbox",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.Character",
+              "name": "ScaleHitbox",
+              "declaration": "public void ScaleHitbox(string name, Vector3 scale, float duration) { }",
+              "rva": 147027260,
+              "line": 149598
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "RemoveScaleHitbox",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.Character",
+              "name": "RemoveScaleHitbox",
+              "declaration": "public void RemoveScaleHitbox(string name, float duration) { }",
+              "rva": 147027436,
+              "line": 149601
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "gold",
+      "name": "Infinite Gold / Currency",
+      "desc": "Mata uang utama permainan tidak terbatas.",
+      "key": "CTRL+G",
+      "category": "eco",
+      "backendId": null,
+      "status": "authority_unverified",
+      "reason": "Tidak ada kontrak server atau bukti transaksi persisten; perubahan tampilan bukan infinite gold.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_Gold",
+          "matchCount": 6,
+          "matches": [
+            {
+              "type": "Oak.AwakeningNodeOpenRequirements",
+              "name": "get_Gold",
+              "declaration": "public int get_Gold() { }",
+              "rva": 135271100,
+              "line": 73331
+            },
+            {
+              "type": "Oak.InnLastHarvestTime",
+              "name": "get_Gold",
+              "declaration": "public long get_Gold() { }",
+              "rva": 124309652,
+              "line": 638852
+            },
+            {
+              "type": "Oak.ItemContext",
+              "name": "get_Gold",
+              "declaration": "public Nullable<int> get_Gold() { }",
+              "rva": 108007828,
+              "line": 318208
+            },
+            {
+              "type": "Oak.PassClaimed",
+              "name": "get_Gold",
+              "declaration": "public int get_Gold() { }",
+              "rva": 124263836,
+              "line": 637441
+            },
+            {
+              "type": "Oak.UI.AwakeningsState",
+              "name": "get_Gold",
+              "declaration": "public ObscuredInt get_Gold() { }",
+              "rva": 128154060,
+              "line": 729581
+            },
+            {
+              "type": "Oak.User",
+              "name": "get_Gold",
+              "declaration": "public int get_Gold() { }",
+              "rva": 112006836,
+              "line": 402089
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "set_Gold",
+          "matchCount": 5,
+          "matches": [
+            {
+              "type": "Oak.AwakeningNodeOpenRequirements",
+              "name": "set_Gold",
+              "declaration": "private void set_Gold(int value) { }",
+              "rva": 135271108,
+              "line": 73335
+            },
+            {
+              "type": "Oak.InnLastHarvestTime",
+              "name": "set_Gold",
+              "declaration": "public void set_Gold(long value) { }",
+              "rva": 124309660,
+              "line": 638856
+            },
+            {
+              "type": "Oak.ItemContext",
+              "name": "set_Gold",
+              "declaration": "public void set_Gold(Nullable<int> value) { }",
+              "rva": 108007908,
+              "line": 318211
+            },
+            {
+              "type": "Oak.PassClaimed",
+              "name": "set_Gold",
+              "declaration": "public void set_Gold(int value) { }",
+              "rva": 124263844,
+              "line": 637445
+            },
+            {
+              "type": "Oak.UI.AwakeningsState",
+              "name": "set_Gold",
+              "declaration": "private void set_Gold(ObscuredInt value) { }",
+              "rva": 128154080,
+              "line": 729585
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "gem",
+      "name": "Infinite Premium Currency",
+      "desc": "Kristal, gem, atau koin khusus tidak terbatas.",
+      "category": "eco",
+      "backendId": null,
+      "status": "authority_unverified",
+      "reason": "Tidak ada kontrak server atau bukti transaksi persisten untuk premium currency.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_Gem",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.KamazonLandDifficultySpec",
+              "name": "get_Gem",
+              "declaration": "public int get_Gem() { }",
+              "rva": 113919996,
+              "line": 458041
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "set_Gem",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.KamazonLandDifficultySpec",
+              "name": "set_Gem",
+              "declaration": "public void set_Gem(int value) { }",
+              "rva": 113920004,
+              "line": 458045
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "items",
+      "name": "Infinite Items / Consumables",
+      "desc": "Ramuan, buff, dan item lempar tidak berkurang.",
+      "category": "eco",
+      "backendId": null,
+      "status": "authority_unverified",
+      "reason": "Ownership, konsumsi dan persistensi inventori belum dibuktikan.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "ConsumeItem",
+          "matchCount": 3,
+          "matches": [
+            {
+              "type": "Oak.StageEventControllerSubStageMerchant",
+              "name": "ConsumeItem",
+              "declaration": "private void ConsumeItem(DropItem di) { }",
+              "rva": 122927300,
+              "line": 609069
+            },
+            {
+              "type": "Oak.UI.UITheaterBackground",
+              "name": "ConsumeItem",
+              "declaration": "private IEnumerator ConsumeItem(CustomSprite item, TheaterCharacter consumer, string itemName) { }",
+              "rva": 127919128,
+              "line": 722632
+            },
+            {
+              "type": "ScreenPlay.DropItemModule",
+              "name": "ConsumeItem",
+              "declaration": "public void ConsumeItem(string instanceName) { }",
+              "rva": 99167996,
+              "line": 2021309
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "craft",
+      "name": "Zero Material Crafting",
+      "desc": "Membuat senjata, zirah, dan ramuan tanpa bahan baku.",
+      "category": "eco",
+      "backendId": null,
+      "status": "authority_unverified",
+      "reason": "Validasi material/transaksi crafting belum tersedia.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "Craft",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "unlockeq",
+      "name": "Unlock All Weapons & Equipment",
+      "desc": "Membuka seluruh senjata, zirah, dan aksesori.",
+      "category": "eco",
+      "backendId": null,
+      "status": "authority_unverified",
+      "reason": "Ownership perlengkapan dan transaksi unlock belum dibuktikan.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "UnlockEquipment",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "upg",
+      "name": "Max Upgrade Level",
+      "desc": "Perlengkapan langsung ke tingkat tertinggi.",
+      "category": "eco",
+      "backendId": null,
+      "status": "authority_unverified",
+      "reason": "Kontrak upgrade, biaya dan persistensi belum dibuktikan.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "Upgrade",
+          "matchCount": 9,
+          "matches": [
+            {
+              "type": "System.Configuration.ApplicationSettingsBase",
+              "name": "Upgrade",
+              "declaration": "public virtual void Upgrade() { }",
+              "rva": 151726632,
+              "line": 1802882
+            },
+            {
+              "type": "System.Configuration.IApplicationSettingsProvider",
+              "name": "Upgrade",
+              "declaration": "public abstract void Upgrade(SettingsContext context, SettingsPropertyCollection properties);",
+              "rva": -1,
+              "line": 1801485
+            },
+            {
+              "type": "System.Configuration.LocalFileSettingsProvider",
+              "name": "Upgrade",
+              "declaration": "public void Upgrade(SettingsContext context, SettingsPropertyCollection properties) { }",
+              "rva": 151731452,
+              "line": 1803364
+            },
+            {
+              "type": "TweenLetters.AnimationProperties",
+              "name": "Upgrade",
+              "declaration": "public void Upgrade() { }",
+              "rva": 98530960,
+              "line": 1969074
+            },
+            {
+              "type": "UIAtlas",
+              "name": "Upgrade",
+              "declaration": "private bool Upgrade() { }",
+              "rva": 98589680,
+              "line": 1970765
+            },
+            {
+              "type": "UIButtonKeys",
+              "name": "Upgrade",
+              "declaration": "public void Upgrade() { }",
+              "rva": 98132532,
+              "line": 1961822
+            },
+            {
+              "type": "UIProgressBar",
+              "name": "Upgrade",
+              "declaration": "protected virtual void Upgrade() { }",
+              "rva": 98226508,
+              "line": 1963726
+            },
+            {
+              "type": "UIScrollBar",
+              "name": "Upgrade",
+              "declaration": "protected override void Upgrade() { }",
+              "rva": 98233964,
+              "line": 1963842
+            },
+            {
+              "type": "UISlider",
+              "name": "Upgrade",
+              "declaration": "protected override void Upgrade() { }",
+              "rva": 98252836,
+              "line": 1964173
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "weight",
+      "name": "Unlimited Capacity",
+      "desc": "Tas inventori tanpa batasan beban.",
+      "category": "eco",
+      "backendId": null,
+      "status": "target_absent",
+      "reason": "Tidak ditemukan mekanik kapasitas beban yang sesuai desain; jumlah slot berbeda dari berat.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_MaxWeight",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "loot",
+      "name": "Auto-Loot / Vacuum",
+      "desc": "Mengisap item, material, dan koin di sekitar.",
+      "control": "slider",
+      "min": 5,
+      "max": 200,
+      "unit": "m",
+      "def": 25,
+      "category": "eco",
+      "backendId": "loot",
+      "status": "partial",
+      "reason": "Permintaan consume tanpa radius 5–200m; kandidat terakhir 0, penerimaan item belum terukur.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "FindAndSetConsumeTarget",
+          "matchCount": 4,
+          "matches": [
+            {
+              "type": "Oak.DropGold",
+              "name": "FindAndSetConsumeTarget",
+              "declaration": "public void FindAndSetConsumeTarget() { }",
+              "rva": 103540716,
+              "line": 223821
+            },
+            {
+              "type": "Oak.DropItem",
+              "name": "FindAndSetConsumeTarget",
+              "declaration": "public void FindAndSetConsumeTarget() { }",
+              "rva": 103555968,
+              "line": 224158
+            },
+            {
+              "type": "Oak.DropRecovery",
+              "name": "FindAndSetConsumeTarget",
+              "declaration": "public void FindAndSetConsumeTarget() { }",
+              "rva": 103607288,
+              "line": 225019
+            },
+            {
+              "type": "Oak.QuestDropItem",
+              "name": "FindAndSetConsumeTarget",
+              "declaration": "public void FindAndSetConsumeTarget() { }",
+              "rva": 112116308,
+              "line": 404187
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "set_AutoConsumeOnDropped",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.DropItem",
+              "name": "set_AutoConsumeOnDropped",
+              "declaration": "public void set_AutoConsumeOnDropped(bool value) { }",
+              "rva": 103548200,
+              "line": 224044
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "set_PickFlyDistance",
+          "matchCount": 3,
+          "matches": [
+            {
+              "type": "Oak.DropGold",
+              "name": "set_PickFlyDistance",
+              "declaration": "public void set_PickFlyDistance(float value) { }",
+              "rva": 103538332,
+              "line": 223800
+            },
+            {
+              "type": "Oak.DropItem",
+              "name": "set_PickFlyDistance",
+              "declaration": "public void set_PickFlyDistance(float value) { }",
+              "rva": 103548236,
+              "line": 224060
+            },
+            {
+              "type": "Oak.DropRecovery",
+              "name": "set_PickFlyDistance",
+              "declaration": "public void set_PickFlyDistance(float value) { }",
+              "rva": 103601696,
+              "line": 224986
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "exp",
+      "name": "EXP Multiplier",
+      "desc": "Perolehan pengalaman berkali-kali lipat.",
+      "control": "slider",
+      "min": 1,
+      "max": 100,
+      "unit": "×",
+      "def": 5,
+      "category": "prog",
+      "backendId": null,
+      "status": "authority_unverified",
+      "reason": "Kontrak reward EXP dan persistensi leveling belum tersedia.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "AddExp",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.FieldObjectStatsBehaviour",
+              "name": "AddExp",
+              "declaration": "public void AddExp(int amount) { }",
+              "rva": 104554368,
+              "line": 249709
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "sp",
+      "name": "Infinite Skill / Attribute Points",
+      "desc": "Poin skill tree dan atribut tanpa batas.",
+      "category": "prog",
+      "backendId": null,
+      "status": "target_absent",
+      "reason": "Awakening/tree ditemukan; belum ada kontrak poin skill/atribut tak terbatas yang sesuai desain.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_SkillPoint",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        },
+        {
+          "selector": "set_SkillPoint",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "skills",
+      "name": "Unlock All Skills",
+      "desc": "Membuka seluruh cabang kemampuan dan perk.",
+      "category": "prog",
+      "backendId": null,
+      "status": "authority_unverified",
+      "reason": "Kontrak unlock kemampuan dan persistensi belum dibuktikan.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "UnlockSkill",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "mastery",
+      "name": "Max Weapon Mastery",
+      "desc": "Kemahiran senjata otomatis maksimal.",
+      "category": "prog",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "Mekanik weapon mastery desain belum dipetakan ke target.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_WeaponMastery",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "rep",
+      "name": "Max Reputation / Faction Rank",
+      "desc": "Reputasi faksi langsung di level tertinggi.",
+      "category": "prog",
+      "backendId": null,
+      "status": "target_absent",
+      "reason": "Tidak ditemukan kontrak reputation/faction rank yang sesuai desain.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_Reputation",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        },
+        {
+          "selector": "set_Reputation",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "speed",
+      "name": "Super Speed",
+      "desc": "Mengatur kecepatan gerak berlari atau berjalan.",
+      "key": "SHIFT+S",
+      "control": "slider",
+      "min": 1,
+      "max": 10,
+      "step": 0.1,
+      "unit": "×",
+      "def": 2,
+      "category": "world",
+      "backendId": "speed",
+      "status": "partial",
+      "reason": "Walk/dash/soft-dash hero ×1–5; desain ×1–10. Pengukuran terdahulu sekitar ×2,09 hanya baseline.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_WalkSpeed",
+          "matchCount": 2,
+          "matches": [
+            {
+              "type": "Oak.CharacterSpec",
+              "name": "get_WalkSpeed",
+              "declaration": "public ObscuredFloat get_WalkSpeed() { }",
+              "rva": 101344020,
+              "line": 180474
+            },
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "get_WalkSpeed",
+              "declaration": "public float get_WalkSpeed() { }",
+              "rva": 147371844,
+              "line": 153886
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "get_DashSpeed",
+          "matchCount": 3,
+          "matches": [
+            {
+              "type": "CharacterTool.PlayDash",
+              "name": "get_DashSpeed",
+              "declaration": "public ValueInput get_DashSpeed() { }",
+              "rva": 62462596,
+              "line": 1941177
+            },
+            {
+              "type": "Oak.CharacterSpec",
+              "name": "get_DashSpeed",
+              "declaration": "public ObscuredFloat get_DashSpeed() { }",
+              "rva": 101344068,
+              "line": 180482
+            },
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "get_DashSpeed",
+              "declaration": "public float get_DashSpeed() { }",
+              "rva": 147368016,
+              "line": 153880
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "get_SoftDashSpeed",
+          "matchCount": 2,
+          "matches": [
+            {
+              "type": "Oak.CharacterSpec",
+              "name": "get_SoftDashSpeed",
+              "declaration": "public ObscuredFloat get_SoftDashSpeed() { }",
+              "rva": 101344212,
+              "line": 180506
+            },
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "get_SoftDashSpeed",
+              "declaration": "public float get_SoftDashSpeed() { }",
+              "rva": 147370384,
+              "line": 153883
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "noclip",
+      "name": "No-Clip Mode",
+      "desc": "Menembus dinding, pintu terkunci, dan batas peta.",
+      "key": "SHIFT+N",
+      "category": "world",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "Teleport relatif tidak sama dengan no-clip; collision/restore belum dipetakan.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_Collider",
+          "matchCount": 4,
+          "matches": [
+            {
+              "type": "Oak.FieldUIButtonWidget",
+              "name": "get_Collider",
+              "declaration": "public BoxCollider2D get_Collider() { }",
+              "rva": 104647468,
+              "line": 250668
+            },
+            {
+              "type": "Oak.TheaterInteractObject",
+              "name": "get_Collider",
+              "declaration": "public BoxCollider get_Collider() { }",
+              "rva": 123777724,
+              "line": 622965
+            },
+            {
+              "type": "Tilemaps.Tile",
+              "name": "get_Collider",
+              "declaration": "public BoxCollider get_Collider() { }",
+              "rva": 130572296,
+              "line": 60617
+            },
+            {
+              "type": "UnityEngine.ContactPair",
+              "name": "get_Collider",
+              "declaration": "public Collider get_Collider() { }",
+              "rva": 156326436,
+              "line": 2187717
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "fly",
+      "name": "Infinite Jump / Fly Mode",
+      "desc": "Melompat di udara atau terbang bebas.",
+      "key": "SHIFT+F",
+      "category": "world",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "API Jump ada; belum ada loop terbang/air-jump dan restore fisika yang teruji.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "Jump",
+          "matchCount": 13,
+          "matches": [
+            {
+              "type": "BossGeneralChargeBattleAction.GroggyState",
+              "name": "Jump",
+              "declaration": "private void Jump() { }",
+              "rva": 142993480,
+              "line": 83061
+            },
+            {
+              "type": "Oak.Character",
+              "name": "Jump",
+              "declaration": "public void Jump(float height, float duration, bool allowAdd = False) { }",
+              "rva": 147031208,
+              "line": 149628
+            },
+            {
+              "type": "Oak.CharacterKnockBackState",
+              "name": "Jump",
+              "declaration": "private void Jump() { }",
+              "rva": 147296000,
+              "line": 152703
+            },
+            {
+              "type": "Oak.HeavenholdTheatre",
+              "name": "Jump",
+              "declaration": "private IEnumerator Jump(string characterName, float height, float duration, Action callback) { }",
+              "rva": 107316740,
+              "line": 304763
+            },
+            {
+              "type": "Oak.JumpCalculator",
+              "name": "Jump",
+              "declaration": "public void Jump(float height, float duration, bool allowAdd = False) { }",
+              "rva": 108123680,
+              "line": 322327
+            },
+            {
+              "type": "Oak.JumpCalculator",
+              "name": "Jump",
+              "declaration": "public void Jump(float height, float duration, float aerialTime, bool allowAdd = False) { }",
+              "rva": 108123964,
+              "line": 322331
+            },
+            {
+              "type": "Oak.LobbyVillageTheatre",
+              "name": "Jump",
+              "declaration": "private IEnumerator Jump(string characterName, float height, float duration, Action callback) { }",
+              "rva": 109485412,
+              "line": 346428
+            },
+            {
+              "type": "Oak.OneActPlay",
+              "name": "Jump",
+              "declaration": "protected IEnumerator Jump(Transform mover, float height, float duration) { }",
+              "rva": 110818264,
+              "line": 377886
+            },
+            {
+              "type": "Oak.SpineController",
+              "name": "Jump",
+              "declaration": "public void Jump(float height, float duration, bool allowAdd = False) { }",
+              "rva": 114597728,
+              "line": 490620
+            },
+            {
+              "type": "Oak.SpineController",
+              "name": "Jump",
+              "declaration": "public void Jump(float height, float duration, float aerialTime, bool allowAdd = False) { }",
+              "rva": 114597868,
+              "line": 490624
+            },
+            {
+              "type": "Oak.TheaterCharacter",
+              "name": "Jump",
+              "declaration": "public IEnumerator Jump(int count, float height, float duration) { }",
+              "rva": 123772988,
+              "line": 622867
+            },
+            {
+              "type": "Oak.TimelineController",
+              "name": "Jump",
+              "declaration": "public void Jump(double time) { }",
+              "rva": 123796896,
+              "line": 623610
+            }
+          ],
+          "truncated": true
+        }
+      ]
+    },
+    {
+      "id": "fall",
+      "name": "Disable Fall Damage",
+      "desc": "Meniadakan kerusakan jatuh dari ketinggian.",
+      "category": "world",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "Damage guard belum membuktikan semua fall/environment damage.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "FallDamage",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "quest",
+      "name": "Ignore Quest Requirements",
+      "desc": "Membuka pintu dan tugas tanpa memicu alur cerita.",
+      "category": "world",
+      "backendId": null,
+      "status": "authority_unverified",
+      "reason": "Kontrak quest/door/script dan persistensi belum tersedia.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "CompleteQuest",
+          "matchCount": 2,
+          "matches": [
+            {
+              "type": "Oak.LuaQuestEventControllerNew",
+              "name": "CompleteQuest",
+              "declaration": "public IEnumerator CompleteQuest(int grade, bool runCompleteUI = True, bool runFameAlignment = True, bool returnControl = True, bool runChapterEndUI = True, List<int> undisplayReward, StageCustom stageCustom) { }",
+              "rva": 112097568,
+              "line": 403869
+            },
+            {
+              "type": "Oak.QuestEventControllerSectionedTemplate",
+              "name": "CompleteQuest",
+              "declaration": "public IEnumerator CompleteQuest(int grade, bool runCompleteUI = True, bool runFameAlignment = True, bool returnControl = True, bool runChapterEndUI = True, List<int> undisplayReward, StageCustom stageCustom) { }",
+              "rva": 117850840,
+              "line": 535458
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "lootesp",
+      "name": "Loot / Item ESP",
+      "desc": "Nama, jarak, dan warna kelangkaan item menembus dinding.",
+      "key": "ALT+1",
+      "category": "esp",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "List drop saja belum menyediakan projection, rarity dan overlay ESP teruji.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_DropManager",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.Stage",
+              "name": "get_DropManager",
+              "declaration": "public DropManager get_DropManager() { }",
+              "rva": 112918468,
+              "line": 422593
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "enemyesp",
+      "name": "Enemy ESP / Chams",
+      "desc": "Siluet, kerangka, atau posisi musuh di balik tembok.",
+      "key": "ALT+2",
+      "category": "esp",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "List musuh ada; projection/chams, lifetime dan overlay belum diimplementasikan.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "GetAllMonsters",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.CharacterManager",
+              "name": "GetAllMonsters",
+              "declaration": "public List<ICharacter> GetAllMonsters() { }",
+              "rva": 101331468,
+              "line": 179814
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "freecam",
+      "name": "Freecam / Unlocked Camera",
+      "desc": "Lepas kamera dan jelajahi peta secara bebas.",
+      "key": "ALT+3",
+      "category": "esp",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "StageCamera memiliki API kamera; ownership, update Unity dan restore belum diuji.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "get_Camera",
+          "matchCount": 7,
+          "matches": [
+            {
+              "type": "DrawLineSystem",
+              "name": "get_Camera",
+              "declaration": "public Camera get_Camera() { }",
+              "rva": 62754424,
+              "line": 2207609
+            },
+            {
+              "type": "Oak.CameraFovOffset",
+              "name": "get_Camera",
+              "declaration": "public Camera get_Camera() { }",
+              "rva": 146918872,
+              "line": 146552
+            },
+            {
+              "type": "Oak.OneActPlay",
+              "name": "get_Camera",
+              "declaration": "public static Camera get_Camera() { }",
+              "rva": 110808620,
+              "line": 377736
+            },
+            {
+              "type": "Oak.StageCamera",
+              "name": "get_Camera",
+              "declaration": "public Camera get_Camera() { }",
+              "rva": 114657592,
+              "line": 491905
+            },
+            {
+              "type": "Oak.UI.TowerMapTRPG",
+              "name": "get_Camera",
+              "declaration": "public Camera get_Camera() { }",
+              "rva": 127825492,
+              "line": 719332
+            },
+            {
+              "type": "Oak.UI.UIBackgroundCamSize",
+              "name": "get_Camera",
+              "declaration": "private Camera get_Camera() { }",
+              "rva": 127862904,
+              "line": 719554
+            },
+            {
+              "type": "RenderHeads.Media.AVProVideo.UpdateMultiPassStereo",
+              "name": "get_Camera",
+              "declaration": "public Camera get_Camera() { }",
+              "rva": 62090440,
+              "line": 2089314
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "get_LookAtPosition",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.StageCamera",
+              "name": "get_LookAtPosition",
+              "declaration": "public Vector3 get_LookAtPosition() { }",
+              "rva": 114657512,
+              "line": 491902
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "fov",
+      "name": "Custom FOV",
+      "desc": "Jarak pandang melebihi batas asli game.",
+      "control": "slider",
+      "min": 60,
+      "max": 150,
+      "unit": "°",
+      "def": 90,
+      "category": "esp",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "Ukuran kamera stage tidak membuktikan FOV perspektif 60–150 derajat.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "OverrideDefaultCameraSize",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.StageCamera",
+              "name": "OverrideDefaultCameraSize",
+              "declaration": "public void OverrideDefaultCameraSize(float size) { }",
+              "rva": 114665864,
+              "line": 491976
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "ResetDefaultCameraSize",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.StageCamera",
+              "name": "ResetDefaultCameraSize",
+              "declaration": "public void ResetDefaultCameraSize() { }",
+              "rva": 114665956,
+              "line": 491979
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "get_FieldOfView",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.CameraFovOffset",
+              "name": "get_FieldOfView",
+              "declaration": "public float get_FieldOfView() { }",
+              "rva": 146919108,
+              "line": 146561
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "dumb",
+      "name": "Dumb AI / Enemies Don't Attack",
+      "desc": "Musuh dan bos hanya berdiam diri.",
+      "category": "ai",
+      "backendId": "stunall",
+      "status": "partial",
+      "reason": "Gate pemilihan battle action AI; belum membuktikan semua boss tidak menyerang.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "PickNTriggerBattleAction",
+          "matchCount": 2,
+          "matches": [
+            {
+              "type": "Oak.BattleAIAssassinState",
+              "name": "PickNTriggerBattleAction",
+              "declaration": "protected bool PickNTriggerBattleAction() { }",
+              "rva": 99576700,
+              "line": 159001
+            },
+            {
+              "type": "Oak.MonsterBattleAIState",
+              "name": "PickNTriggerBattleAction",
+              "declaration": "protected bool PickNTriggerBattleAction() { }",
+              "rva": 100267484,
+              "line": 167133
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "aggro",
+      "name": "Invisible / Ignore Aggro",
+      "desc": "Tidak terdeteksi musuh, bahkan dari dekat.",
+      "category": "ai",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "ResetAggro lama belum membuktikan tidak terdeteksi; jalur publik tetap dinonaktifkan.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "GetBattleFor",
+          "matchCount": 3,
+          "matches": [
+            {
+              "type": "Oak.BattleManager",
+              "name": "GetBattleFor",
+              "declaration": "public BattleInstance GetBattleFor(IFieldObject character, bool ignoreDeadState = False) { }",
+              "rva": 146221392,
+              "line": 130433
+            },
+            {
+              "type": "Oak.BattleManager",
+              "name": "GetBattleFor",
+              "declaration": "public BattleInstance GetBattleFor(Party party, bool ignoreDeadState = False) { }",
+              "rva": 146215552,
+              "line": 130440
+            },
+            {
+              "type": "Oak.BattleManager",
+              "name": "GetBattleFor",
+              "declaration": "public BattleInstance GetBattleFor(IList<ICharacter> characters) { }",
+              "rva": 146221840,
+              "line": 130444
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "ResetAggro",
+          "matchCount": 2,
+          "matches": [
+            {
+              "type": "Oak.BattleInstance",
+              "name": "ResetAggro",
+              "declaration": "public void ResetAggro(IFieldObject subject, IFieldObject target) { }",
+              "rva": 146189700,
+              "line": 130090
+            },
+            {
+              "type": "Oak.BattleInstance",
+              "name": "ResetAggro",
+              "declaration": "public void ResetAggro(IFieldObject character) { }",
+              "rva": 146190376,
+              "line": 130094
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "freeze",
+      "name": "Freeze Enemies",
+      "desc": "Menghentikan seluruh animasi musuh di tempat.",
+      "key": "CTRL+F",
+      "category": "ai",
+      "backendId": null,
+      "status": "not_implemented",
+      "reason": "Gate attack AI tidak menghentikan seluruh animasi; kontrak animasi enemy-only belum tersedia.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "PickNTriggerBattleAction",
+          "matchCount": 2,
+          "matches": [
+            {
+              "type": "Oak.BattleAIAssassinState",
+              "name": "PickNTriggerBattleAction",
+              "declaration": "protected bool PickNTriggerBattleAction() { }",
+              "rva": 99576700,
+              "line": 159001
+            },
+            {
+              "type": "Oak.MonsterBattleAIState",
+              "name": "PickNTriggerBattleAction",
+              "declaration": "protected bool PickNTriggerBattleAction() { }",
+              "rva": 100267484,
+              "line": 167133
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "onehp",
+      "name": "Drain Enemy Health / 1 HP",
+      "desc": "Darah musuh sekitar menjadi 1 poin.",
+      "category": "ai",
+      "backendId": "onehp",
+      "status": "partial",
+      "reason": "Ledger pulse per-scene, prioritas OHK; hasil semua tipe musuh belum terukur.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "Damage",
+          "matchCount": 26,
+          "matches": [
+            {
+              "type": "Oak.BossHelicopterDamagedBehaviour",
+              "name": "Damage",
+              "declaration": "public bool Damage(DamageInfo damage) { }",
+              "rva": 147055644,
+              "line": 149999
+            },
+            {
+              "type": "Oak.CharacterDamagedBehaviour",
+              "name": "Damage",
+              "declaration": "protected virtual bool Damage(DamageInfo damageInfo) { }",
+              "rva": 147187696,
+              "line": 151410
+            },
+            {
+              "type": "Oak.CharacterStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public override void Damage(DamageInfo damageInfo) { }",
+              "rva": 147374788,
+              "line": 153910
+            },
+            {
+              "type": "Oak.DuelItemBoxDamagedBehaviour",
+              "name": "Damage",
+              "declaration": "public bool Damage(DamageInfo damage) { }",
+              "rva": 103005084,
+              "line": 211267
+            },
+            {
+              "type": "Oak.FieldObjectStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public virtual void Damage(DamageInfo damageInfo) { }",
+              "rva": 104559512,
+              "line": 249724
+            },
+            {
+              "type": "Oak.FieldUICharacterStats",
+              "name": "Damage",
+              "declaration": "public void Damage(float hp, float shield) { }",
+              "rva": 104685704,
+              "line": 251142
+            },
+            {
+              "type": "Oak.GuildCastleScarecrowDamagedBehaviour",
+              "name": "Damage",
+              "declaration": "public override bool Damage(DamageInfo damage) { }",
+              "rva": 105912104,
+              "line": 273806
+            },
+            {
+              "type": "Oak.GuildPunchKingStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public override void Damage(DamageInfo damageInfo) { }",
+              "rva": 106345368,
+              "line": 283095
+            },
+            {
+              "type": "Oak.GuildRaid2BossStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public override void Damage(DamageInfo damageInfo) { }",
+              "rva": 106367808,
+              "line": 283513
+            },
+            {
+              "type": "Oak.GuildWarCastleCoreStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public override void Damage(DamageInfo damageInfo) { }",
+              "rva": 106009356,
+              "line": 276417
+            },
+            {
+              "type": "Oak.GuildWarInfiniteHpDamagedBehaviour",
+              "name": "Damage",
+              "declaration": "public override bool Damage(DamageInfo damage) { }",
+              "rva": 106013096,
+              "line": 276471
+            },
+            {
+              "type": "Oak.GuildWarSiegeTankStatsBehaviour",
+              "name": "Damage",
+              "declaration": "public override void Damage(DamageInfo damageInfo) { }",
+              "rva": 106016348,
+              "line": 276531
+            }
+          ],
+          "truncated": true
+        },
+        {
+          "selector": "get_Hp",
+          "matchCount": 8,
+          "matches": [
+            {
+              "type": "GuildWarHpSpawnInfo.SpawnInfo",
+              "name": "get_Hp",
+              "declaration": "public float get_Hp() { }",
+              "rva": 106204964,
+              "line": 279357
+            },
+            {
+              "type": "GuildWarHpSpawnOption.GuildWarHpSpawnOptionData",
+              "name": "get_Hp",
+              "declaration": "public double get_Hp() { }",
+              "rva": 106256656,
+              "line": 280240
+            },
+            {
+              "type": "Oak.IWeaponStatOption",
+              "name": "get_Hp",
+              "declaration": "public abstract float get_Hp();",
+              "rva": -1,
+              "line": 317134
+            },
+            {
+              "type": "Oak.KamazonLandMonster",
+              "name": "get_Hp",
+              "declaration": "public int get_Hp() { }",
+              "rva": 110195852,
+              "line": 362617
+            },
+            {
+              "type": "Oak.WeaponDamageReductionOption",
+              "name": "get_Hp",
+              "declaration": "public float get_Hp() { }",
+              "rva": 111523192,
+              "line": 393740
+            },
+            {
+              "type": "Oak.WeaponDefenseUpOption",
+              "name": "get_Hp",
+              "declaration": "public float get_Hp() { }",
+              "rva": 111524548,
+              "line": 393805
+            },
+            {
+              "type": "Oak.WeaponElementalUpOption",
+              "name": "get_Hp",
+              "declaration": "public float get_Hp() { }",
+              "rva": 111525920,
+              "line": 393871
+            },
+            {
+              "type": "Oak.WeaponHpUpOption",
+              "name": "get_Hp",
+              "declaration": "public float get_Hp() { }",
+              "rva": 111527544,
+              "line": 393935
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "drop",
+      "name": "100% Drop Rate",
+      "desc": "Selalu menjatuhkan item kelangkaan tertinggi.",
+      "category": "ai",
+      "backendId": null,
+      "status": "authority_unverified",
+      "reason": "Kontrak RNG reward dan rarity/persistensi belum tersedia.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "DropItem",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "Oak.UI.UITheaterBackground",
+              "name": "DropItem",
+              "declaration": "private IEnumerator DropItem(CustomSprite item, Vector3 startPos, Vector3 targetPos, float duration) { }",
+              "rva": 127918808,
+              "line": 722628
+            }
+          ],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "steal",
+      "name": "Always Steal Success",
+      "desc": "Peluang mencuri selalu 100% berhasil.",
+      "category": "ai",
+      "backendId": null,
+      "status": "target_absent",
+      "reason": "Temuan steal berasal dari skrip naratif; tidak membuktikan mekanik peluang mencuri.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "Steal",
+          "matchCount": 0,
+          "matches": [],
+          "truncated": false
+        }
+      ]
+    },
+    {
+      "id": "timescale",
+      "name": "Time Scale / Game Speed",
+      "desc": "Slow motion atau fast forward seluruh dunia.",
+      "key": "CTRL+T",
+      "control": "slider",
+      "min": 0.1,
+      "max": 5,
+      "step": 0.05,
+      "unit": "×",
+      "def": 1,
+      "category": "sys",
+      "backendId": "timescale",
+      "status": "prototype",
+      "reason": "Mod/Unmod milik wsm + resolver instance; versi baru belum diuji pada game.",
+      "runtimeAcceptance": "UNVERIFIED",
+      "evidence": [
+        {
+          "selector": "Mod",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "GlobalTimeManager",
+              "name": "Mod",
+              "declaration": "public void Mod(float mod, string key, bool allowRedundant = True) { }",
+              "rva": 120414312,
+              "line": 8894
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "Unmod",
+          "matchCount": 1,
+          "matches": [
+            {
+              "type": "GlobalTimeManager",
+              "name": "Unmod",
+              "declaration": "public void Unmod(string key) { }",
+              "rva": 120414780,
+              "line": 8897
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "selector": "get_Instance",
+          "matchCount": 980,
+          "matches": [
+            {
+              "type": "ADXGDPRManager",
+              "name": "get_Instance",
+              "declaration": "public static ADXGDPRManager get_Instance() { }",
+              "rva": 61824412,
+              "line": 2161509
+            },
+            {
+              "type": "AdxSDK",
+              "name": "get_Instance",
+              "declaration": "public static AdxSDK get_Instance() { }",
+              "rva": 61825024,
+              "line": 2161593
+            },
+            {
+              "type": "AdxUnityPlugin.Android.AdxSdkClient",
+              "name": "get_Instance",
+              "declaration": "public static AdxSdkClient get_Instance() { }",
+              "rva": 61825316,
+              "line": 2163512
+            },
+            {
+              "type": "AdxUnityPlugin.iOS.AdxSdkClient",
+              "name": "get_Instance",
+              "declaration": "public static AdxSdkClient get_Instance() { }",
+              "rva": 61849340,
+              "line": 2162202
+            },
+            {
+              "type": "AreaHealBattleAction.IdleState",
+              "name": "get_Instance",
+              "declaration": "public static AreaHealBattleAction.IdleState get_Instance() { }",
+              "rva": 136185584,
+              "line": 74110
+            },
+            {
+              "type": "AwakeningTreeEditor.EditorMessageSystem",
+              "name": "get_Instance",
+              "declaration": "public static EditorMessageSystem get_Instance() { }",
+              "rva": 62173092,
+              "line": 2206337
+            },
+            {
+              "type": "Backtrace.Unity.BacktraceClient",
+              "name": "get_Instance",
+              "declaration": "public static BacktraceClient get_Instance() { }",
+              "rva": 62178560,
+              "line": 2076867
+            },
+            {
+              "type": "Backtrace.Unity.BacktraceDatabase",
+              "name": "get_Instance",
+              "declaration": "public static BacktraceDatabase get_Instance() { }",
+              "rva": 62202748,
+              "line": 2077138
+            },
+            {
+              "type": "BattleAIBossWormBodyState.DelaySubState",
+              "name": "get_Instance",
+              "declaration": "public static BattleAIBossWormBodyState.DelaySubState get_Instance() { }",
+              "rva": 99872600,
+              "line": 161974
+            },
+            {
+              "type": "BattleAIBossWormBodyState.UsingBattleActionState",
+              "name": "get_Instance",
+              "declaration": "public static BattleAIBossWormBodyState.UsingBattleActionState get_Instance() { }",
+              "rva": 99872236,
+              "line": 161945
+            },
+            {
+              "type": "BillboardYAxisRotator",
+              "name": "get_Instance",
+              "declaration": "public static BillboardYAxisRotator get_Instance() { }",
+              "rva": 99372736,
+              "line": 5270
+            },
+            {
+              "type": "BossGeneralChargeBattleAction.IdleState",
+              "name": "get_Instance",
+              "declaration": "public static BossGeneralChargeBattleAction.IdleState get_Instance() { }",
+              "rva": 142978844,
+              "line": 82901
+            }
+          ],
+          "truncated": true
+        }
+      ]
+    }
+  ],
+  "originalDump": {
+    "root": "C:\\Users\\Administrator\\Downloads\\Mod\\gt_dump",
+    "target": {
+      "package_name": "com.kakaogames.gdts",
+      "version_name": "3.54.0",
+      "version_code": "423",
+      "min_sdk_version": "24",
+      "target_sdk_version": "36"
+    },
+    "auditSha256": "9f13ba22fc9dbc1cb6aa9119e48f4fa95c59f72c3ca665f55cc8ce76cc67d8bb",
+    "provenancePass": 155,
+    "inputs": 155,
+    "criticalGetter": [
+      {
+        "id": 28803,
+        "type_id": 2660,
+        "name": "get_CriticalMultiplierScale",
+        "return_type": "float",
+        "modifiers": "public virtual",
+        "argc": 0,
+        "rva": 147352920,
+        "file_offset": 147336536,
+        "va": 147352920,
+        "slot": 23,
+        "line": 153754,
+        "address_line": 153753,
+        "declaration": "public virtual float get_CriticalMultiplierScale() { }",
+        "attributes": "[]",
+        "owner": "Oak.CharacterStatsBehaviour",
+        "fileOffsetVerified": 147336536,
+        "rawFileOffset": 147336536,
+        "first16": "e80f1efcfe0700f9f44f01a994af00f0",
+        "originalCodeMatches": true,
+        "addressInstructionPositions": [
+          3
+        ],
+        "disassembly": "Oak_CharacterStatsBehaviour-get_CriticalMultiplierScale.asm.txt"
+      }
+    ]
+  }
+}

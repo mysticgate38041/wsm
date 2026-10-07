@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "collected_at": "2026-10-06T08:56:17.188318+07:00",
+  "scope": "READ_ONLY_HOST_PREFLIGHT",
+  "status": "BLOCKED",
+  "runtime_status": "NOT_TESTED",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.7 (main, Sep  1 2026, 14:17:30) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "paths": {
+    "project": "C:\\Users\\Administrator\\Downloads\\GT_cheat_analysis\\WSMenu\\src\\wsm-v2",
+    "ndk": "D:\\Android\\ndk\\android-ndk-r27c",
+    "adb": "C:\\LDPlayer\\LDPlayer14\\adb.exe"
+  },
+  "source_files": [
+    {
+      "path": "jni/loader.cpp",
+      "bytes": 14697,
+      "sha256": "fbf0b59660bc94c1580e2fad9d2564c69f315152c2841bb79dde0e41cf18cf82"
+    },
+    {
+      "path": "jni/engine.cpp",
+      "bytes": 10777,
+      "sha256": "9cb37c105aad15d422b3f53409bdb12f0e355fe7d911f76917a9944da5f080c5"
+    },
+    {
+      "path": "jni/zygisk.hpp",
+      "bytes": 15712,
+      "sha256": "fc6523882c0f8659b4fcd1e04ffb07d3a948090e5a8c08817af6e2b506a078d0"
+    },
+    {
+      "path": "jni/Android.mk",
+      "bytes": 633,
+      "sha256": "ba3306019ae8ad6a43054a28786a54a46510b1b030023bd8fab7a682a3905f34"
+    },
+    {
+      "path": "jni/Application.mk",
+      "bytes": 193,
+      "sha256": "5a228c966a5633a4d76c679ca24a0b0776f3eb9728af5254d5e0f3136dd11a0e"
+    },
+    {
+      "path": "scripts/build.ps1",
+      "bytes": 6214,
+      "sha256": "73bd6c67fa951fce5dad8bc47b54c110877508864cb961cf279c0b3f292c6bb7"
+    }
+  ],
+  "libraries": [
+    {
+      "status": "PASS",
+      "scope": "ELF_HEADER_AND_LOAD_SEGMENTS_ONLY",
+      "abi": "arm64-v8a",
+      "load_segments": 3,
+      "errors": [],
+      "path": "C:\\Users\\Administrator\\Downloads\\GT_cheat_analysis\\WSMenu\\src\\wsm-v2\\build\\libs\\arm64-v8a\\libwsm_loader.so",
+      "bytes": 14448,
+      "sha256": "6db9d9301ce7671e883cd6208556a6b9dc66e8e130101a98c1b1c50a8e010b6f"
+    },
+    {
+      "status": "PASS",
+      "scope": "ELF_HEADER_AND_LOAD_SEGMENTS_ONLY",
+      "abi": "arm64-v8a",
+      "load_segments": 3,
+      "errors": [],
+      "path": "C:\\Users\\Administrator\\Downloads\\GT_cheat_analysis\\WSMenu\\src\\wsm-v2\\build\\libs\\arm64-v8a\\libwsm_engine.so",
+      "bytes": 14096,
+      "sha256": "afab9abb8e3fd489f9aaadf810667fb6b296a23243d6de4bcb032d12f426b861"
+    },
+    {
+      "status": "PASS",
+      "scope": "ELF_HEADER_AND_LOAD_SEGMENTS_ONLY",
+      "abi": "x86_64",
+      "load_segments": 3,
+      "errors": [],
+      "path": "C:\\Users\\Administrator\\Downloads\\GT_cheat_analysis\\WSMenu\\src\\wsm-v2\\build\\libs\\x86_64\\libwsm_loader.so",
+      "bytes": 14736,
+      "sha256": "f9b98009cf654ffb2a7120a7d9304bfe3003f473f2cea8ace268e2f7804496f3"
+    },
+    {
+      "status": "PASS",
+      "scope": "ELF_HEADER_AND_LOAD_SEGMENTS_ONLY",
+      "abi": "x86_64",
+      "load_segments": 3,
+      "errors": [],
+      "path": "C:\\Users\\Administrator\\Downloads\\GT_cheat_analysis\\WSMenu\\src\\wsm-v2\\build\\libs\\x86_64\\libwsm_engine.so",
+      "bytes": 12024,
+      "sha256": "2d400a9344a12edffef81ead473aaba64e842f13c71e25dda0157366e640460a"
+    }
+  ],
+  "devices": [],
+  "commands": [
+    {
+      "command": [
+        "D:\\Android\\ndk\\android-ndk-r27c\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe",
+        "--version"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": "Android (12470979, based on r522817c) clang version 18.0.3 (https://android.googlesource.com/toolchain/llvm-project d8003a456d14a3deb8054cdaa529ffbf02d9b262)\nTarget: x86_64-w64-windows-gnu\nThread model: posix\nInstalledDir: D:/Android/ndk/android-ndk-r27c/toolchains/llvm/prebuilt/windows-x86_64/bin\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\Android\\ndk\\android-ndk-r27c\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\llvm-readelf.exe",
+        "--version"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": "LLVM (http://llvm.org/):\n  LLVM version 18.0.3\n  Optimized build.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\LDPlayer\\LDPlayer14\\adb.exe",
+        "devices",
+        "-l"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "stdout": "List of devices attached\n\n",
+      "stderr": ""
+    }
+  ],
+  "blockers": [
+    "NO_READY_DEVICE"
+  ],
+  "limitations": [
+    "Does not validate Android module execution",
+    "ELF check does not validate symbol semantics or relocation correctness",
+    "Device attachment does not establish app or bridge compatibility",
+    "ADB may start its host daemon; no device-changing commands are issued"
+  ],
+  "ndk_properties": "Pkg.Desc = Android NDK\nPkg.Revision = 27.2.12479018\nPkg.BaseRevision = 27.2.12479018\nPkg.ReleaseName = r27c\n"
+}

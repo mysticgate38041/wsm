@@ -1,0 +1,17 @@
+[
+  {
+    "test": "runtime",
+    "output": "PASS runtime: FIFO, capacity, panic priority/cancellation, epochs, history, snapshots, 4 concurrent producers / 4000 requests",
+    "exit": 0
+  },
+  {
+    "test": "patch",
+    "output": "PASS branch: imm26 bounds/alignment, near allocation, atomic 4-byte patch, adjacent bytes unchanged\nPASS patch: 3 aliases, readback, original permissions, invalid range, forced partial failure rollback",
+    "exit": 0
+  },
+  {
+    "test": "binding",
+    "output": "PASS binding: full parameter/return/static contract, ambiguity, generic, enumeration cap, type-name ownership, versionCode identity",
+    "exit": 0
+  }
+]

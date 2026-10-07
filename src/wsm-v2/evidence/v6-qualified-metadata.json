@@ -1,0 +1,21 @@
+{
+  "pid": 2697,
+  "engineBias": "0x77db2c5c5000",
+  "g_method_flags": "0x4000265cc824",
+  "g_target_base": "0x400022c00000",
+  "ctl_klass": "0x77da931be6c0",
+  "ctl_mi_mod": "0x77da93a40990",
+  "ctl_mi_mod.method": "6860ed29004000006860ed2900400000c8e82f2600400000bd5ebf2ada770000c0e61b93da77000070c4b42c00400000f80aa493da77000048a7462bda7700000000000000000000e603000686000000",
+  "ctl_mi_mod.code": "0x400029ed6068",
+  "ctl_mi_unmod": "0x77da93a409e8",
+  "ctl_mi_unmod.method": "3c62ed29004000003c62ed2900400000144e3a2600400000c15ebf2ada770000c0e61b93da77000070c4b42c00400000100ba493da7700006ca7462bda7700000000000000000000e703000686000000",
+  "ctl_mi_unmod.code": "0x400029ed623c",
+  "g_scene_hero": "0x0",
+  "g_cls_stats": "0x77da9284c450",
+  "g_m_fos_applydmg": "0x77da90d7b9e0",
+  "g_m_fos_applydmg.method": "b464fb2800400000b464fb280040000090df2d2600400000d55fc32ada770000a0728490da770000f0a8ac2c0040000098c1d790da770000c4d85f2bda77000000000000000000000db7000684000000",
+  "g_m_fos_applydmg.code": "0x400028fb64b4",
+  "g_m_cb_cantsuper": "0x0",
+  "g_m_cext_cantrig": "0x0",
+  "ctl_instance": "0x0"
+}

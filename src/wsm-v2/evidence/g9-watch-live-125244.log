@@ -1,0 +1,5 @@
+10-06 12:48:42.579 I/WSMEngine( 4825): elf parsed at candidate base=0x400023200000 (#1/1)
+10-06 12:50:50.689 I/WSMEngine( 4825): probe done: libil2cpp base=0x400023200000 elf sym 11/12 miss:il2cpp_method_get_pointer  | dom=0x795ee2572fc0 asm=0x795da0280e60 img=0x795da027e430 cls=0x795da31be6c0 mth=0x795da3a40938 fld=0x795da3a40b78 off=8 sval=0x0
+10-06 12:50:50.689 I/WSMEngine( 4825): WATCH static: mods=0x0 instance=0x0 (t=0s)
+10-06 12:50:50.827 I/WSM     ( 4825): PROBE stage=2 base=0x400023200000 :: LIVE base=0x400023200000 cls=0x795da31be6c0 fld=0x795da3a40b78 off=8 | mods=0x0 instance=0x0 (t=0s)
+10-06 12:52:26.562 I/WSMEngine( 4825): WATCH static: mods=0x795caae75330 instance=0x795c9a779a40 (t=96s)

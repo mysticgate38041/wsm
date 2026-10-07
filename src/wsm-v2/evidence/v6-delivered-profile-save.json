@@ -1,0 +1,70 @@
+{
+  "god": {
+    "on": false,
+    "value": 1
+  },
+  "hp": {
+    "on": false,
+    "value": 1
+  },
+  "stam": {
+    "on": false,
+    "value": 1
+  },
+  "mana": {
+    "on": false,
+    "value": 1
+  },
+  "poise": {
+    "on": false,
+    "value": 1
+  },
+  "immune": {
+    "on": false,
+    "value": 1
+  },
+  "godmode": {
+    "on": false,
+    "value": 1
+  },
+  "ohk": {
+    "on": false,
+    "value": 1
+  },
+  "onehp": {
+    "on": false,
+    "value": 1
+  },
+  "aura": {
+    "on": false,
+    "value": 20
+  },
+  "dmg": {
+    "on": false,
+    "value": 10
+  },
+  "crit": {
+    "on": false,
+    "value": 1
+  },
+  "nocd": {
+    "on": false,
+    "value": 1
+  },
+  "stunall": {
+    "on": false,
+    "value": 1
+  },
+  "speed": {
+    "on": false,
+    "value": 2
+  },
+  "loot": {
+    "on": false,
+    "value": 1
+  },
+  "timescale": {
+    "on": false,
+    "value": 1
+  }
+}

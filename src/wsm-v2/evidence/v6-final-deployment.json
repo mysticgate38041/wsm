@@ -1,0 +1,19 @@
+{
+  "zipSha256": "9dadb12ae7288a9c351c318173ece83564c6fb07c5d2f748400ef41e97d98d22",
+  "bytes": 187993,
+  "installOutput": "- Device is system-as-root\r\n***************************\r\n WS Menu (WSM) 6 \r\n by worm shadow (untuk He) \r\n***************************\r\n*******************\r\n Powered by Magisk \r\n*******************\r\n- Extracting module files\r\n- WSM v6.0.0 / x86_64 / integrity PASS\r\n- Enable a compatible Zygisk provider and reboot once.\r\n- Target: com.kakaogames.gdts, version 3.54.0 only.\r\n- Profiles are manual; controls begin OFF.\r\n- Disable other GT injection modules before testing WSM.\r\n- Runtime diagnostics: WSM / WSMEngine / WSM-H64.\r\n- Done",
+  "activeFilesMatch": {
+    "dex/wsm_menu.dex": true,
+    "engine/arm64-v8a.so": true,
+    "engine/x86_64.so": true,
+    "module.prop": true,
+    "payload/arm64-v8a.so": true,
+    "release.json": true,
+    "skip_mount": true,
+    "verify.list": true,
+    "zygisk/arm64-v8a.so": true,
+    "zygisk/x86_64.so": true
+  },
+  "reload": "unchanged loader verified; target stopped; atomic replacement of process-opened files; staged Magisk update matches active files",
+  "reboot": "same loader previously verified across reboot; latest engine/helper qualified by target cold restart"
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "command": "feat timescale 1.25",
+    "result": {
+      "request": 1791348410013915900,
+      "id": 10,
+      "epoch": 3,
+      "state": "rejected",
+      "detail": "ERR not-ready (gameplay dulu)"
+    }
+  },
+  {
+    "command": "feat timescale 0",
+    "result": {
+      "request": 1791348413160424500,
+      "id": 11,
+      "epoch": 3,
+      "state": "rejected",
+      "detail": "ERR not-ready (gameplay dulu)"
+    }
+  },
+  {
+    "command": "loot 1",
+    "result": {
+      "request": 1791348416079613500,
+      "id": 12,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "LOOT ON items=0 done=0 st=0x77d985006900 dm=0x77d989702f50 li=0x77d97b949a80"
+    }
+  },
+  {
+    "command": "loot 0",
+    "result": {
+      "request": 1791348419033582500,
+      "id": 13,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "LOOT OFF"
+    }
+  },
+  {
+    "command": "tpr 0 0",
+    "result": {
+      "request": 1791348422001144800,
+      "id": 14,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "TP src=P from=(0.5,0.0) want=(0.5,0.0) now=(0.5,0.0) fault=0 ok=1"
+    }
+  }
+]

@@ -1,0 +1,73 @@
+{
+  "scope": "INSTALLER_UNIT_ONLY_NO_MODULE_INSTALLED",
+  "serial": "emulator-5554",
+  "temporaryDeviceDirectory": "/data/local/tmp/wsm-installer-unit-1791345778382822100",
+  "cases": [
+    {
+      "case": "x86_64",
+      "expected": 0,
+      "exit": 0,
+      "pass": true,
+      "output": "- WSM v6.0.0 / x86_64 / integrity PASS\n- Enable a compatible Zygisk provider and reboot once.\n- Target: com.kakaogames.gdts, version 3.54.0 only.\n- Profiles are manual; controls begin OFF.\n- Disable other GT injection modules before testing WSM.\n- Runtime diagnostics: WSM / WSMEngine / WSM-H64.",
+      "stderr": ""
+    },
+    {
+      "case": "arm64",
+      "expected": 0,
+      "exit": 0,
+      "pass": true,
+      "output": "- WSM v6.0.0 / arm64-v8a / integrity PASS\n- Enable a compatible Zygisk provider and reboot once.\n- Target: com.kakaogames.gdts, version 3.54.0 only.\n- Profiles are manual; controls begin OFF.\n- Disable other GT injection modules before testing WSM.\n- Runtime diagnostics: WSM / WSMEngine / WSM-H64.",
+      "stderr": ""
+    },
+    {
+      "case": "old_api",
+      "expected": 91,
+      "exit": 91,
+      "pass": true,
+      "output": "ABORT: WSM requires Android 8 / API 26 or newer.",
+      "stderr": ""
+    },
+    {
+      "case": "unsupported_abi",
+      "expected": 91,
+      "exit": 91,
+      "pass": true,
+      "output": "ABORT: Unsupported ABI: arm. WSM ships x86_64 and arm64-v8a.",
+      "stderr": ""
+    },
+    {
+      "case": "recovery",
+      "expected": 91,
+      "exit": 91,
+      "pass": true,
+      "output": "ABORT: Install through a module manager in booted Android.",
+      "stderr": ""
+    },
+    {
+      "case": "old_magisk",
+      "expected": 91,
+      "exit": 91,
+      "pass": true,
+      "output": "ABORT: Zygisk API v4 requires Magisk 26+.",
+      "stderr": ""
+    },
+    {
+      "case": "invalid_api",
+      "expected": 91,
+      "exit": 91,
+      "pass": true,
+      "output": "ABORT: Invalid Android API.",
+      "stderr": ""
+    },
+    {
+      "case": "tampered_hash",
+      "expected": 91,
+      "exit": 91,
+      "pass": true,
+      "output": "ABORT: Module integrity check failed.",
+      "stderr": ""
+    }
+  ],
+  "passed": 8,
+  "total": 8
+}

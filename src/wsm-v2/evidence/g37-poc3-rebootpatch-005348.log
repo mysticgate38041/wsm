@@ -1,0 +1,10 @@
+10-07 00:52:36.168  2482  2988 I WSM-H64 : ctor v4: arch=aarch64 pid=2482 bus=0x7c12172646c0
+10-07 00:52:36.184  2482  2988 I WSM-H64 : agent spawned
+10-07 00:52:36.198  2482  3012 I WSM-H64 : agent thread UP pid=2482
+10-07 00:52:36.207  2482  3012 I WSM-H64 : agent: read64 [0x7c12172648c0]=0x5eedf00dcafebabe
+10-07 00:52:36.210  2482  3012 I WSM-H64 : agent: write64 [0x7c12172648c8]=0xb0baf00ddeadbeef
+10-07 00:52:36.215  2482  3012 I WSM-H64 : agent: read64 [0x400022c00000]=0x10102464c457f
+10-07 00:52:36.740  2482  3012 I WSM-H64 : agent: v4 magic=0x64c0de victim=0x11111111 | mc hits m=0 v=0 regions=3
+10-07 00:52:36.743  2482  2988 I WSMEngine: POC3 done: POC3 load=0x7c1210d94801 e=0 | A:rd=0x5eedf00dcafebabe(OK) | B:wr=OK | C:elf=0x10102464c457f vs x86=0x10102464c457f(MATCH) | D:old=0x72a00c8052981bc0 ret1=0x64c0de nm=3 nv=3 | E:victim old=0xd65f03c052800ee0 firstcall=0x11111111 | MC: hitm=0 hitv=0 regions=3 first=0x0
+10-07 00:52:36.743  2482  2988 I WSMEngine: POC3 DBG p=0x0 base=0x0 F=0x0 | m0=0x0/o0x0/s0x0 m1=0x0/o0x0 m2=0x0/o0x0 m3=0x0/o0x0
+10-07 00:52:36.743  2482  2988 I WSMEngine: CTL[0] nbpoc3 -> POC3 load=0x7c1210d94801 e=0 | A:rd=0x5eedf00dcafebabe(OK) | B:wr=OK | C:elf=0x10102464c457f vs x86=0x10102464c457f(MATCH) | D:old=0x72a00c8052981bc0 ret1=0x64c0de nm=3 nv=3 | E:victim old=0xd65f03c052800ee0 firstcall=0x11111111 | MC: hitm=0 hitv=0 regions=3 first=0x0

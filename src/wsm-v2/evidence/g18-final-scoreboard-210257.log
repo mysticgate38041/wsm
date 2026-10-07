@@ -1,0 +1,12 @@
+=== G18: FINAL SCOREBOARD — Tue, Oct  6, 2026  9:02:57 PM ===
+engine v4.0h + menu final (label jujur)
+
+WORK/DONE (verified user):
+  god/hp/stam/mana/poise/immune (statoptions) | timescale | OHK auto-sweep (a2+a3)
+  onehp (standalone) | sweep/Bersihkan Stage (targets=13 fault=0, user 'work bro')
+PARTIAL: stunall = gemetar visual, gerak tidak terkunci ('musuh gemetaran tapi bisa nyeret')
+NOT-SUPPORTED (jujur): aggro (GetBattleFor=null di stage field, fBm/fBi=0), eco/prog [SERVER]
+RISET: speed/noclip/fly/ESP/crit
+
+Arsitektur final: engine thread-only apply, deferral menu (feat/panic/sweep), 3-lapis guard
+(ptr_ok + GUARDED per-call + BEAT guard per-loop), hot-swap engine+dex per spawn.

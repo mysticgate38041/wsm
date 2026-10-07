@@ -1,0 +1,72 @@
+[
+  {
+    "feature": "nocd",
+    "targets": {
+      "CanTriggerSuper": "0x40002b84e0d0",
+      "CanTriggerExt": "0x4000292b7ee4",
+      "CooltimeLeft=0": "0x40002b638320"
+    },
+    "before": {
+      "CanTriggerSuper": "e80f1dfcfe5701a9f44f02a955b100f0a8925f39f30301aaf40300aae8010037",
+      "CanTriggerExt": "fe57bea9f44f01a994dd01d0882a4e39f30300aa0803003700a6019000ac42f9",
+      "CooltimeLeft=0": "ffc300d1fe4f02a9f30300aa000c8752e1031faa3ab9f79740010036000c8752"
+    },
+    "on": {
+      "request": 1791349171201118000,
+      "id": 45,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "NOCD ON CanTriggerSuper@0x40002b84e0d0 np=2 CanTriggerExt@0x4000292b7ee4 np=2 CooltimeLeft=0@0x40002b638320 np=2"
+    },
+    "patched": {
+      "CanTriggerSuper": "ccc71715fe5701a9f44f02a955b100f0a8925f39f30301aaf40300aae8010037",
+      "CanTriggerExt": "4730ae15f44f01a994dd01d0882a4e39f30300aa0803003700a6019000ac42f9",
+      "CooltimeLeft=0": "383f2015fe4f02a9f30300aa000c8752e1031faa3ab9f79740010036000c8752"
+    },
+    "off": {
+      "request": 1791349173313938700,
+      "id": 46,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK NOCD OFF (nr=2/2/2)"
+    },
+    "after": {
+      "CanTriggerSuper": "e80f1dfcfe5701a9f44f02a955b100f0a8925f39f30301aaf40300aae8010037",
+      "CanTriggerExt": "fe57bea9f44f01a994dd01d0882a4e39f30300aa0803003700a6019000ac42f9",
+      "CooltimeLeft=0": "ffc300d1fe4f02a9f30300aa000c8752e1031faa3ab9f79740010036000c8752"
+    },
+    "allSingleInstruction": true,
+    "allRestored": true
+  },
+  {
+    "feature": "freeze",
+    "targets": {
+      "PickNTriggerBattleAction": "0x400028b9f5dc"
+    },
+    "before": {
+      "PickNTriggerBattleAction": "fe4fbfa9f30300aa406e8a52e1031faa8c1ca29420010036406e8a52e1031faa"
+    },
+    "on": {
+      "request": 1791349175274785600,
+      "id": 47,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "STUNALL ON freeze=2 mon=-1 done=0"
+    },
+    "patched": {
+      "PickNTriggerBattleAction": "89b2ca15f30300aa406e8a52e1031faa8c1ca29420010036406e8a52e1031faa"
+    },
+    "off": {
+      "request": 1791349177190480400,
+      "id": 48,
+      "epoch": 3,
+      "state": "applied",
+      "detail": "OK STUNALL OFF (nr=2)"
+    },
+    "after": {
+      "PickNTriggerBattleAction": "fe4fbfa9f30300aa406e8a52e1031faa8c1ca29420010036406e8a52e1031faa"
+    },
+    "allSingleInstruction": true,
+    "allRestored": true
+  }
+]

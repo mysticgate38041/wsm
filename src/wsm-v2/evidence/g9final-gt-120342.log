@@ -1,0 +1,19 @@
+10-06 12:00:39.632  2455  2455 I WSM     : [com.kakaogames.gdts] pre-staged payload=17464 B fnv64=bb3dcc28f3f43e2e staging=deferred_to_post
+10-06 12:00:39.705  2455  2455 I WSM     : post staged+signaled pid=2455 chan_fd=57 payload_fd=56
+10-06 12:00:39.708  2455  2465 I WSMEngine: JNI_OnLoad received (build=wsm-v2.0.0-poc1 abi=x86_64)
+10-06 12:00:39.708  2455  2465 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/56 handle=0x5b5feea382747abf jni_ver=0x10006 (payload 17464 B fnv64=bb3dcc28f3f43e2e)
+10-06 12:00:39.708  2455  2473 I WSMEngine: ALIVE pid=2455 uid=10075 hello_magic=0x574d5348 hello_proto=2
+10-06 12:00:39.708  2455  2473 I WSMEngine: handshake ack written (proto=2 nonce=5e1265f466549a9e)
+10-06 12:00:39.758  2455  2465 I WSM     : HANDSHAKE_OK engine_pid=2455 engine_uid=10075 state=1 caps=0x0 build=wsm-v2.0.0-poc1 abi=x86_64
+10-06 12:01:07.883  2510  2510 I WSM     : [com.kakaogames.gdts] pre-staged payload=17464 B fnv64=bb3dcc28f3f43e2e staging=deferred_to_post
+10-06 12:01:07.922  2510  2510 I WSM     : post staged+signaled pid=2510 chan_fd=57 payload_fd=56
+10-06 12:01:07.924  2510  2518 I WSMEngine: JNI_OnLoad received (build=wsm-v2.0.0-poc1 abi=x86_64)
+10-06 12:01:07.924  2510  2518 I WSM     : ENGINE_DLOPEN ok /proc/self/fd/56 handle=0x8faa9318e6d65537 jni_ver=0x10006 (payload 17464 B fnv64=bb3dcc28f3f43e2e)
+10-06 12:01:07.924  2510  2526 I WSMEngine: ALIVE pid=2510 uid=10075 hello_magic=0x574d5348 hello_proto=2
+10-06 12:01:07.924  2510  2526 I WSMEngine: handshake ack written (proto=2 nonce=8300aaf4ef2f7881)
+10-06 12:01:07.974  2510  2518 I WSM     : HANDSHAKE_OK engine_pid=2510 engine_uid=10075 state=1 caps=0x0 build=wsm-v2.0.0-poc1 abi=x86_64
+10-06 12:01:08.926  2510  2526 I WSMEngine: probe: fixture class absent or app not ready (expected in game)
+10-06 12:01:09.941  2510  2526 I WSMEngine: il2cpp mapline: 721fe5dae000-721ff0000000 r--p 00000000 08:12 655620                     /data/app/~~MEJXipe6MJTSfhDhSGmJ_Q==/com.kakaogames.gdts-VSP1KOCPWBeik-Q5R4Zc2g==/lib/arm64/libil2cpp.so
+10-06 12:01:10.957  2510  2526 I WSMEngine: elf parsed at candidate base=0x400022c00000 (#1/1)
+10-06 12:02:08.345  2510  2526 I WSMEngine: probe done: libil2cpp base=0x400022c00000 elf sym 11/12 miss:il2cpp_method_get_pointer  | dom=0x722109617fc0 asm=0x721fc0280e60 img=0x721fc027e430 cls=0x721fc31be6c0 mth=0x721fc3a40938 fld=0x721fc3a40b78 off=8 sval=0x0
+10-06 12:02:08.571  2510  2518 I WSM     : PROBE stage=2 base=0x400022c00000 :: libil2cpp base=0x400022c00000 elf sym 11/12 miss:il2cpp_method_get_pointer  | dom=0x722109617fc0 asm=0x721fc0280e60 img=0x721fc027e430 cls=0x721fc31be6c0 mth=0x721fc3a40938 fld=0x721fc3a40b78 off=8 sval=0x0

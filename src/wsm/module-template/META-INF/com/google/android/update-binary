@@ -1,0 +1,13 @@
+#!/system/bin/sh
+# Magisk's app replaces this file with its official module installer.
+# This fallback is for the standard Magisk environment only.
+umask 022
+OUTFD=$2
+ZIPFILE=$3
+export OUTFD ZIPFILE
+if [ ! -f /data/adb/magisk/util_functions.sh ]; then
+  echo "Install this ZIP using a compatible module manager in booted Android."
+  exit 1
+fi
+. /data/adb/magisk/util_functions.sh
+install_module

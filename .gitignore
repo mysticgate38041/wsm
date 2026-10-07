@@ -1,0 +1,32 @@
+# Reproducible outputs and local tools
+**/build/
+**/dist/
+**/node_modules/
+**/__pycache__/
+*.pyc
+*.class
+*.so
+*.dex
+*.o
+*.a
+*.apk
+*.idsig
+*.zip
+*.zip.sha256
+*.tmp
+*.keystore
+*.jks
+*.p12
+*.pem
+*.key
+.env
+.env.*
+!.env.example
+.agents/
+.codex/
+.publish/
+# External game API dataset and embedded checkout: retain evidence snapshot instead
+/analysis/gt354-api/
+/premium_menu_design/.figma/
+# Historical source/binary backup; history is documented in the evidence reports
+/src/wsm-v2/evidence/finalization-20261007-162612/baseline/

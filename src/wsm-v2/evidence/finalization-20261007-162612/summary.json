@@ -1,0 +1,34 @@
+{
+  "build": "wsm-v6.1.0-rc1",
+  "requested": 47,
+  "qualification": "INCOMPLETE_47_FEATURE_SCOPE",
+  "statuses": {
+    "authority_unverified": 10,
+    "not_implemented": 16,
+    "partial": 14,
+    "prototype": 2,
+    "target_absent": 5
+  },
+  "zipSha256": "cc4794f9ea130b22529285a516ce2930097deeb5c3ca02236c6bc3e758edbdb4",
+  "androidUnits": [
+    {
+      "test": "runtime",
+      "output": "PASS runtime: FIFO, capacity, panic priority/cancellation, epochs, history, snapshots, 4 concurrent producers / 4000 requests",
+      "exit": 0
+    },
+    {
+      "test": "patch",
+      "output": "PASS branch: imm26 bounds/alignment, near allocation, atomic 4-byte patch, adjacent bytes unchanged\nPASS patch: 3 aliases, readback, original permissions, invalid range, forced partial failure rollback",
+      "exit": 0
+    },
+    {
+      "test": "binding",
+      "output": "PASS binding: full parameter/return/static contract, ambiguity, generic, enumeration cap, type-name ownership, versionCode identity",
+      "exit": 0
+    }
+  ],
+  "installerPassed": 8,
+  "packageTests": 16,
+  "gameDeployment": false,
+  "newGameRuntime": "UNVERIFIED_TARGET"
+}

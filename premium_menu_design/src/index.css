@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --color-ink: #121110;
+  --color-panel: #1a1917;
+  --color-raise: #22211e;
+  --color-line: #2f2d29;
+  --color-bone: #ece6da;
+  --color-dim: #8f887b;
+  --color-amber: #ffb000;
+  --color-alert: #ff5a36;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+}
+
+input[type='range'] {
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-line);
+}
+input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #121110;
+  border: 2px solid var(--color-amber);
+  box-shadow: 0 0 0 4px rgba(255,176,0,0.15), 0 0 16px rgba(255,176,0,0.6);
+  cursor: pointer;
+}
+input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #121110;
+  border: 2px solid var(--color-amber);
+}
+
+@keyframes drift { from { background-position: 0 0; } to { background-position: 48px 48px; } }
+@keyframes sweep { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(236,230,218,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236,230,218,0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: drift 12s linear infinite;
+}
+.scanline { animation: sweep 7s linear infinite; }
+.glass {
+  background: linear-gradient(180deg, rgba(34,33,30,0.72), rgba(22,21,19,0.72));
+  backdrop-filter: blur(18px) saturate(140%);
+}
+.hairline { position: relative; }
+.hairline::before {
+  content: ''; position: absolute; inset: 0; padding: 1px; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(140deg, rgba(255,176,0,0.45), rgba(236,230,218,0.08) 35%, rgba(236,230,218,0.04) 70%, rgba(255,176,0,0.25));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: #2f2d29; border-radius: 3px; }
+::-webkit-scrollbar-track { background: transparent; }

@@ -1,0 +1,9 @@
+=== G22: WSM v6.0 — STUN LOCK TOTAL (dari RE murni, nol tes bertahap) — Tue, Oct  6, 2026  9:59:07 PM ===
+engine 41457dbf…, menu 8ebfb585…, GT pid 23116
+
+Jalur: StunCommand.Create(target, duration=3.0, superStun=true) -> Execute(CommandTypes=0)
+  = command RESMI game sendiri (ditemukan via dump-grep: StunCommand, StunEvent, CharacterStunState)
+  fallback: damage-info stun lama (kalau StunCommand tak resolve)
+Bonus: stun pulse kini independen dari OHK/onehp (bisa kombo lock + 1hp)
+
+Status: [UJI] — menunggu konfirmasi visual He (musuh beku total = fitur tembus)

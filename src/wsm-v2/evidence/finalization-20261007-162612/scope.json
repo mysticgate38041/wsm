@@ -1,0 +1,19 @@
+{
+  "requested_features": 47,
+  "scope": "All features from premium_menu_design/src/data.ts; preserve every requested feature and do not mislabel unavailable/backend-missing features as working.",
+  "baseline": "wsm-v6.0.0",
+  "baseline_backup_files": [
+    "jni/engine.cpp",
+    "jni/modern_control.inc",
+    "menu/WsmMenu.java",
+    "menu/ControlState.java",
+    "tests/ControlStateTest.java",
+    "scripts/package_release.py",
+    "scripts/build.ps1",
+    "jni/wsm_protocol.h",
+    "module-template/module.prop",
+    "dist/wsm-v6.0.0.zip",
+    "dist/wsm-v6.0.0.zip.sha256",
+    "build/build-receipt.json"
+  ]
+}

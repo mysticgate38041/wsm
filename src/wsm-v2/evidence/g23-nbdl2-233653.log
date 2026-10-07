@@ -1,0 +1,10 @@
+10-06 23:36:10.619  2392  2392 I WSMEngine: MENU exec: status -> STATUS instance=0x0 modsN=0 feats=[-]
+10-06 23:36:16.656  2392  2392 I WSMEngine: MENU exec: status -> STATUS instance=0x0 modsN=0 feats=[-]
+10-06 23:36:22.669  2392  2392 I WSMEngine: MENU exec: status -> STATUS instance=0x0 modsN=0 feats=[-]
+10-06 23:36:28.702  2392  2392 I WSMEngine: MENU exec: status -> STATUS instance=0x0 modsN=0 feats=[-]
+10-06 23:36:34.709  2392  2392 I WSMEngine: MENU exec: status -> STATUS instance=0x0 modsN=0 feats=[-]
+10-06 23:36:40.721  2392  2392 I WSMEngine: MENU exec: status -> STATUS instance=0x0 modsN=0 feats=[-]
+10-06 23:36:43.768  2392  3014 I WSMEngine: CTL[0] nbdl1 -> NBDL ext=1 |[0] dl=no e=13 ext=no e=13 |[1] dl=no e=13 ext=no e=13 |[2] dl=no e=13 ext=no e=13
+10-06 23:36:46.736  2392  2392 I WSMEngine: MENU exec: status -> STATUS instance=0x0 modsN=0 feats=[-]
+10-06 23:36:48.770  2392  3014 I WSMEngine: CTL[0] nbdl2 -> NBDL ext=1 |[0] dl=no e=13 ext=no e=13 |[1] dl=no e=13 ext=no e=13 |[2] dl=no e=13 ext=no e=13
+10-06 23:36:52.759  2392  2392 I WSMEngine: MENU exec: status -> STATUS instance=0x0 modsN=0 feats=[-]

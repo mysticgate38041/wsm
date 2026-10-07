@@ -1,0 +1,14 @@
+=== G17: SWEEP (Bersihkan Stage) + ONEPHP VERIFIED — Tue, Oct  6, 2026  8:58:28 PM ===
+engine v4.0h, GT pid 14732
+
+USER: 'musuh sisa 1 hp berfungsi' (v4.0e standalone fix OK)
+USER: 'work bro' (sweep visual confirm)
+
+SWEEP log: MSWEEP mode=9 targets=13 fault=0
+MLIST after: idx3-15 -> a0:d1:h0 (all dead); idx0-2 a0:d0 = not-yet-spawned (correctly skipped)
+
+Root cause sweep targets=0 before v4.0h: msweep act filter still act==3 only (5th site missed)
+Fix: accept act 2|3 + real-position filter (dummy 999 skip)
+
+Status akhir fitur: god/hp/stam/mana/poise/immune/timescale= LIVE | ohk/onehp/sweep = WORK
+| stun = pending final | aggro = [BELUM] (no battle instance in field) | eco/prog = [SERVER]

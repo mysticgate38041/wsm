@@ -1,0 +1,11 @@
+=== G23: INVESTIGASI STUN LOCK — DITUTUP (crash-proven) — Tue, Oct  6, 2026 10:19:18 PM ===
+
+v6.0 StunCommand: create+execute OK (f=0) -> NO-OP (tak ada efek)
+v6.1 OnEvent: 1 fault (managed exception) -> dibuang
+v6.1/6.2 state injection (CTL thread): probe f=0,0,0 -> GT CRASH
+v6.3 UI-thread state injection (menu stunui 800ms): GT CRASH (langsung saat dinyalakan)
+
+KESIMPULAN: state-machine karakter = butuh konteks internal game; manipulasi eksternal
+(thread apa pun) = crash. Stun = tetap jalur legacy (animation/gemetar) [SEBAGIAN].
+g_stun_vec default=3 (legacy-safe). stunprobe/stunui/stunvec = alat riset (JANGAN dipakai sembarangan).
+Rollback v6.4 deployed (menu kembali ke toggle stun biasa).

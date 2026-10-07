@@ -1,0 +1,46 @@
+
+C:\Users\Administrator\Downloads\Mod\gt_dump\out\carve\libil2cpp_reloc_norela.so:	file format elf64-littleaarch64
+
+Disassembly of section il2cpp:
+
+0000000003abc390 <__start_il2cpp>:
+ 8c8b744: d103c3ff     	sub	sp, sp, #0xf0
+ 8c8b748: 6d0733ed     	stp	d13, d12, [sp, #0x70]
+ 8c8b74c: 6d082beb     	stp	d11, d10, [sp, #0x80]
+ 8c8b750: 6d0923e9     	stp	d9, d8, [sp, #0x90]
+ 8c8b754: f90053fe     	str	x30, [sp, #0xa0]
+ 8c8b758: a90b67fa     	stp	x26, x25, [sp, #0xb0]
+ 8c8b75c: a90c5ff8     	stp	x24, x23, [sp, #0xc0]
+ 8c8b760: a90d57f6     	stp	x22, x21, [sp, #0xd0]
+ 8c8b764: a90e4ff4     	stp	x20, x19, [sp, #0xe0]
+ 8c8b768: d000af74     	adrp	x20, 0xa279000
+ 8c8b76c: 39653a88     	ldrb	w8, [x20, #0x94e]
+ 8c8b770: aa0003f3     	mov	x19, x0
+ 8c8b774: 37000248     	tbnz	w8, #0x0, 0x8c8b7bc <__start_il2cpp+0x51cf42c>
+ 8c8b778: d00075c0     	adrp	x0, 0x9b45000
+ 8c8b77c: f940c800     	ldr	x0, [x0, #0x190]
+ 8c8b780: 96b51f4f     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 8c8b784: b00075c0     	adrp	x0, 0x9b44000
+ 8c8b788: f9475000     	ldr	x0, [x0, #0xea0]
+ 8c8b78c: 96b51f4c     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 8c8b790: f00075c0     	adrp	x0, 0x9b46000
+ 8c8b794: f9448400     	ldr	x0, [x0, #0x908]
+ 8c8b798: 96b51f49     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 8c8b79c: f00075c0     	adrp	x0, 0x9b46000
+ 8c8b7a0: f9448800     	ldr	x0, [x0, #0x910]
+ 8c8b7a4: 96b51f46     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 8c8b7a8: f0007cc0     	adrp	x0, 0x9c26000
+ 8c8b7ac: f947a800     	ldr	x0, [x0, #0xf50]
+ 8c8b7b0: 96b51f43     	bl	0x39d34bc <CloseNLSocket+0x4f4>
+ 8c8b7b4: 52800028     	mov	w8, #0x1                // =1
+ 8c8b7b8: 39253a88     	strb	w8, [x20, #0x94e]
+ 8c8b7bc: 52866200     	mov	w0, #0x3310             // =13072
+ 8c8b7c0: aa1f03e1     	mov	x1, xzr
+ 8c8b7c4: 97ee6c16     	bl	0x882681c <__start_il2cpp+0x4d6a48c>
+ 8c8b7c8: 36000120     	tbz	w0, #0x0, 0x8c8b7ec <__start_il2cpp+0x51cf45c>
+ 8c8b7cc: 52866200     	mov	w0, #0x3310             // =13072
+ 8c8b7d0: aa1f03e1     	mov	x1, xzr
+ 8c8b7d4: 97ee6c3f     	bl	0x88268d0 <__start_il2cpp+0x4d6a540>
+ 8c8b7d8: b40026e0     	cbz	x0, 0x8c8bcb4 <__start_il2cpp+0x51cf924>
+ 8c8b7dc: aa1303e1     	mov	x1, x19
+ 8c8b7e0: aa1f03e2     	mov	x2, xzr

@@ -1,0 +1,24 @@
+{
+  "target": "0x400028fb64b4",
+  "before": "fd0f1af8fe6f01a9fa6702a9f85f03a9f65704a9f44f05a9ffc33cd1f30301aa",
+  "on": {
+    "request": 1791348903197832900,
+    "id": 2,
+    "epoch": 3,
+    "state": "applied",
+    "detail": "GOD armed hero_stats=0x77d987af3000 addr=0x400028fb64b4 slot=18 np=2 rc=0"
+  },
+  "patched": "d376b915fe6f01a9fa6702a9f85f03a9f65704a9f44f05a9ffc33cd1f30301aa",
+  "trampoline": "0x40002fe14000",
+  "trampolineMap": "40002fe14000-40002fe15000 r--p 00000000 00:00 0 ",
+  "off": {
+    "request": 1791348905112644000,
+    "id": 3,
+    "epoch": 3,
+    "state": "applied",
+    "detail": "OK GOD OFF (nr=2)"
+  },
+  "after": "fd0f1af8fe6f01a9fa6702a9f85f03a9f65704a9f44f05a9ffc33cd1f30301aa",
+  "changedSingleInstruction": true,
+  "restored": true
+}

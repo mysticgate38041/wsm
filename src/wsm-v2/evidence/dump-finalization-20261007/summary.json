@@ -1,0 +1,37 @@
+{
+  "build": "wsm-v6.1.0-rc2",
+  "zipSha256": "0a6ee1a3b1897197a26519c9a387c1556116166ab3a32b0c6cb16dc94f75ab94",
+  "sourceRoot": "C:\\Users\\Administrator\\Downloads\\Mod\\gt_dump",
+  "files": 55924,
+  "bytes": 7130490825,
+  "provenancePass": 155,
+  "gameplayLua": 9,
+  "nativePrefixesMatch": 11,
+  "androidUnits": [
+    {
+      "test": "runtime",
+      "exit": 0,
+      "output": "PASS runtime: FIFO, capacity, panic priority/cancellation, epochs, history, snapshots, 4 concurrent producers / 4000 requests"
+    },
+    {
+      "test": "patch",
+      "exit": 0,
+      "output": "PASS branch: imm26 bounds/alignment, near allocation, atomic 4-byte patch, adjacent bytes unchanged\nPASS patch: 3 aliases, readback, original permissions, invalid range, forced partial failure rollback"
+    },
+    {
+      "test": "binding",
+      "exit": 0,
+      "output": "PASS binding: full parameter/return/static contract, ambiguity, generic, enumeration cap, type-name ownership, versionCode identity"
+    },
+    {
+      "test": "reloc",
+      "exit": 0,
+      "output": "PASS relocation: ADR/ADRP target conservation, signed boundaries, registers, roundtrip, actual GT critical prologue, unsafe literals/branches, atomic refusal"
+    }
+  ],
+  "arm64SyntheticInstrumentation": "PASS",
+  "installerPassed": 8,
+  "packageTests": 16,
+  "gameDeployment": false,
+  "qualification": "INCOMPLETE_47_FEATURE_SCOPE"
+}

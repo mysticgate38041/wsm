@@ -1,0 +1,22 @@
+{
+  "root": {
+    "exit": 0,
+    "out": "uid=0(root) gid=0(root) groups=0(root) context=u:r:magisk:s0\n31000",
+    "err": ""
+  },
+  "modules": {
+    "exit": 0,
+    "out": "MODULE=guardiantales_nifuji\nSTATE=enabled\nid=guardiantales_nifuji\n\nname=Guardian Tales\n\nversion=1.0\n\nversionCode=100\n\nMODULE=rezygisk\nSTATE=disabled\nid=rezygisk\nname=ReZygisk\nversion=v1.0.0 (515-333d423-release)\nversionCode=515\nMODULE=wsm_gt\nSTATE=enabled\nid=wsm_gt\nname=WS Menu (WSM) v2\nversion=v2.0.0-poc1\nversionCode=2\nMODULE=zn_magisk_compat\nSTATE=disabled\nREMOVE=pending\nid=zn_magisk_compat\nname={ZN Magisk Compat}\nversion=generated\nversionCode=1\nMODULE=zygisk_modmenu_guardian_tales_stable\nSTATE=disabled\nid=zygisk_modmenu_guardian_tales_stable\nname=Guardian Tales Mod Menu Auto Update Stable Version\nversion=1.0\nversionCode=1\nMODULE=zygisksu\nSTATE=enabled\nid=zygisksu\nname=Zygisk Next\nversion=1.5.0 (843-5217106-release)\nversionCode=843",
+    "err": ""
+  },
+  "pending": {
+    "exit": 0,
+    "out": "",
+    "err": ""
+  },
+  "game": {
+    "exit": 0,
+    "out": "versionName=3.54.0\n22243\n34",
+    "err": ""
+  }
+}

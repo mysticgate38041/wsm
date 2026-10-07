@@ -1,0 +1,10 @@
+{
+  "serial": "emulator-5554",
+  "utc": "2026-10-07T03:55:07Z",
+  "runtimeVerdict": "NOT_INFERRED_FROM_LOGS",
+  "api": "34",
+  "abis": "x86_64,arm64-v8a,x86,armeabi-v7a,armeabi",
+  "package": "versionCode=423 minSdk=24 targetSdk=36\n    versionName=3.54.0",
+  "process": "22243",
+  "logs": "--------- beginning of main\n10-07 10:54:59.893 22243 22243 I WSMEngine: MENU exec: status -> STATUS instance=0x0 modsN=0 feats=[-]\n10-07 10:55:05.901 22243 22243 I WSMEngine: MENU exec: status -> STATUS instance=0x0 modsN=0 feats=[-]"
+}
