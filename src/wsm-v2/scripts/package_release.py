@@ -1,6 +1,6 @@
 """Deterministic module packaging; refuse stale/incomplete inputs."""
 from pathlib import Path
-import hashlib,json,struct,sys,zipfile,zlib
+import hashlib,json,posixpath,stat,struct,sys,zipfile,zlib
 
 ROOT=Path(__file__).resolve().parents[1]
 STAMP="wsm-v6.1.0-rc2"
@@ -12,10 +12,18 @@ ENTRIES={"zygisk/x86_64.so":"build/libs/x86_64/libwsm_loader.so",
          "payload/arm64-v8a.so":"build/libs/arm64-v8a/libwsm_arm64.so",
          "dex/wsm_menu.dex":"menu/wsm_menu.dex"}
 def sha(data):return hashlib.sha256(data).hexdigest()
+def safe_zip_path(name):
+    if not name or "\\" in name or name.startswith("/"):return False
+    normalized=posixpath.normpath(name)
+    return normalized==name and normalized not in {"", ".", ".."} and not normalized.startswith("../")
 def verify(path):
     with zipfile.ZipFile(path) as z:
         if z.testzip():raise ValueError("ZIP CRC failure")
         names=z.namelist()
+        for info in z.infolist():
+            if not safe_zip_path(info.filename):raise ValueError("unsafe zip path: "+info.filename)
+            mode=(info.external_attr>>16) & 0o170000
+            if mode==stat.S_IFLNK:raise ValueError("symlink zip entry: "+info.filename)
         if len(names)!=len(set(names)):raise ValueError("duplicate entries")
         expected=set(ENTRIES)|{"module.prop","customize.sh","skip_mount","META-INF/com/google/android/update-binary","META-INF/com/google/android/updater-script","release.json","verify.list","features/feature_catalog.json"}
         if set(names)!=expected:raise ValueError("missing or unexpected module entries")
