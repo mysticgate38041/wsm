@@ -46,6 +46,20 @@ class ReleaseTests(unittest.TestCase):
                 warnings.simplefilter("ignore")
                 with zipfile.ZipFile(path,"a") as z:z.writestr("module.prop",self.entries["module.prop"])
             with self.assertRaises(ValueError):pkg.verify(path)
+    def test_symlink_entry_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="wsm-release-") as folder:
+            path=Path(folder)/"module.zip"
+            with zipfile.ZipFile(path,"w") as z:
+                for n,d in self.entries.items():
+                    if n=="module.prop":
+                        info=zipfile.ZipInfo("module.prop")
+                        info.external_attr=(0o120777 << 16)
+                        z.writestr(info,d)
+                    else:z.writestr(n,d)
+            with self.assertRaises(ValueError):pkg.verify(path)
+    def test_path_traversal_entry_rejected(self):
+        def edit(e):e["../module.prop"]=e.pop("module.prop")
+        self.modified(edit,True)
     def test_unexpected_entry(self):self.modified(lambda e:e.__setitem__("extra",b"x"))
     def test_incomplete_manifest(self):self.modified(lambda e:e.__setitem__("verify.list",b""))
     def test_wrong_machine_even_with_valid_hash(self):
