@@ -1,12 +1,12 @@
 # WSM — WS Menu
 
-Proyek modul Android untuk Guardian Tales, dengan loader Zygisk, engine native, helper ARM64, menu Java/DEX di dalam proses, serta transport command dan diagnostik. Implementasi aktif berada di [`src/wsm-v2`](src/wsm-v2). Repo GitHub ini bersifat **private**.
+Proyek modul Android untuk Guardian Tales, dengan loader Zygisk, engine native, helper ARM64, menu Java/DEX di dalam proses, serta transport command dan diagnostik. Implementasi aktif berada di [`src/wsm-v2`](src/wsm-v2). Repo GitHub ini bersifat **publik**.
 
 **Rilis: `v6.2.0-rc1` (prerelease), module versionCode `60201`. Target exact: `com.kakaogames.gdts`, `versionName=3.54.0`, `versionCode=423`, Android API ≥26; ABI x86_64 dan arm64-v8a.** Build dan unit test terverifikasi tidak menyatakan seluruh efek gameplay sudah teruji. Migrasi modular dijelaskan pada [arsitektur v3 yang dikoreksi](docs/ARCHITECTURE_V3.md) dan [release notes RC1](docs/RELEASE_v6.2.0_rc1.md). Perbaikan crash RC3 tetap dicatat pada [laporan historis](docs/CRASH_REPAIR_RC3.md); bukti RC2/baseline 6.0.0 tetap merupakan riwayat terpisah.
 
 ## Status keseluruhan
 
-Status verifikasi 8 Oktober 2026: paket terpasang terbaru berhash `ae0dcb92…`, dan 18 kontrol lolos pengiriman ON/OFF. Pemulihan opsi/PANIC diuji langsung; God/Opsi dan HP Protection memiliki observasi efek terbatas. Pulse damage, Freeze AI dan beberapa efek lain **belum memenuhi kualifikasi penuh**. Lihat [laporan gameplay lokal](.publish/WSM_GAMEPLAY_REPORT_20261008.md).
+Status verifikasi 8 Oktober 2026: paket lokal yang diuji berhash `ae0dcb92…`, dan 18 kontrol lolos pengiriman ON/OFF. Pemulihan opsi/PANIC diuji langsung; God/Opsi dan HP Protection memiliki observasi efek terbatas. Pulse damage, Freeze AI dan beberapa efek lain **belum memenuhi kualifikasi penuh**. Lihat [laporan runtime 8 Oktober](docs/RUNTIME_REPORT_20261008.md).
 
 Desain asli berisi **47 fitur**. Semuanya tercatat dalam katalog, tetapi **31 belum memiliki backend aktif**. Menu menyediakan 18 kontrol native: 16 terkait desain, ditambah Damage Guard dan Radius Pulse. Tidak ada tombol ON palsu untuk fitur yang belum diimplementasikan. Pulse Power (`feat dmg`) dan Critical Pulse (`feat crit`) memakai pipeline UnityMain yang bertipe lengkap: power 1–99 menjadi damage tetap ×100.000, sedangkan critical mengatur kedua flag `critical` dan `noCritical`. Masing-masing dapat memulai pulse periodik; ONEHP menekan kedua modifier dan OHK tetap berprioritas. ACK ON menunjukkan konfigurasi armed; efek gameplay masih memerlukan pengukuran baseline/ON/OFF.
 
@@ -95,7 +95,7 @@ Hasil: `src/wsm-v2/dist/wsm-v6.2.0-rc1.zip` dan `.zip.sha256`. Build memeriksa l
 
 GitHub Actions berjalan untuk push `main`, pull request ke `main`, tag `v*`, serta dispatch manual. Job Ubuntu mengonfigurasi CMake, menjalankan dua belas fixture native dengan CTest, serta package rejection tests. Matrix Windows membangun dua ABI dengan backend `ndk-build` dan CMake, memvalidasi snapshot katalog, lalu mengunggah ZIP/checksum/provenance sebagai artifact 30 hari. Fixture Android dikompilasi; eksekusinya pada perangkat merupakan tahap tersendiri.
 
-Job release hanya berjalan pada tag, setelah native-tests dan seluruh matrix build lulus. Tag harus cocok dengan stamp `v6.2.0-rc1`; ZIP dan checksum diverifikasi lagi sebelum GitHub prerelease dibuat. Aset publikasi diambil dari build `ndk-build`. Tidak ada publikasi, pemasangan ke perangkat atau remote CI yang dijalankan hanya dengan mengubah workflow ini.
+Job release hanya berjalan pada tag, setelah native-tests dan seluruh matrix build lulus. Tag harus cocok dengan stamp `v6.2.0-rc1`; ZIP dan checksum diverifikasi lagi sebelum GitHub prerelease dibuat. Aset publikasi diambil dari build `ndk-build`. CD memverifikasi source, receipt binary dan provenance terhadap commit/tag/run yang sama; pemasangan dan pengujian perangkat dilakukan terpisah.
 
 Actions dipatok pada commit SHA resmi. Token default `contents: read`; hanya job publish mendapat `contents: write`. Tidak dibutuhkan PAT tambahan atau secret deployment. Checkout tidak menyimpan credential. Workflow merilis binary yang dibangun CI, disertai `ci-build-provenance.json` berisi commit, run, toolchain dan receipt. Release existing tidak di-clobber; retry dengan aset yang sudah ada akan gagal agar binary tidak tertimpa diam-diam.
 
@@ -103,7 +103,7 @@ Detail trigger, pin, prosedur tag, retry dan rollback: [CI/CD](docs/CI_CD.md). P
 
 ## Instalasi, operasi dan pemulihan
 
-1. Unduh ZIP dan checksum dari release private, lalu cocokkan SHA-256 dengan `Get-FileHash -Algorithm SHA256`.
+1. Unduh ZIP dan checksum dari [GitHub Releases](https://github.com/mysticgate38041/wsm/releases), lalu cocokkan SHA-256 dengan `Get-FileHash -Algorithm SHA256`.
 2. Cocokkan package/versi/code target dan ABI. Installer membutuhkan Android API ≥26, bootmode dan Magisk ≥26 untuk jalur Zygisk API v4; provider alternatif perlu kualifikasi tersendiri.
 3. Cadangkan modul lama `wsm_gt`, pasang ZIP memakai pengelola modul, aktifkan provider Zygisk dan reboot secara manual.
 4. Buka gameplay dan tunggu `ready`. Semua kontrol mulai OFF; profil tidak diterapkan otomatis. Uji kontrol satu per satu, kemudian OFF/PANIC, background/resume, ganti stage/hero dan cold start.
@@ -113,7 +113,7 @@ Command dan diagnostik lengkap: [COMMANDS_V6](src/wsm-v2/docs/COMMANDS_V6.md). T
 
 ## Validasi perangkat dan tindak lanjut
 
-Build RC1 final lulus untuk backend ndk-build dan CMake: lima ELF + DEX, Java state, 35 package tests dan sembilan catalog tests. Sebelas fixture native untuk setiap ABI telah dieksekusi pada LDPlayer dan seluruh 22 lulus; delapan kasus installer harness terisolasi juga lulus tanpa memasang modul. ARM64 memakai translation pada kernel x86_64 dengan page size 4 KiB. Perangkat ARM64 fisik, runtime 16 KiB, native bridge/gameplay dan performa belum dikualifikasi. Log dan digest build final dicatat pada laporan lokal `.publish/V3_MIGRATION_REPORT_20261008.md`; hasil remote CI dan target gameplay hanya boleh dinyatakan terverifikasi jika bukti eksekusi tersedia.
+Migrasi awal lulus build ndk-build/CMake, 35 package tests, sembilan catalog tests, 22 eksekusi fixture Android dan delapan kasus installer terisolasi. Pengujian lokal berikutnya menambahkan fixture restoration dan perbaikan ABI; hasilnya dicatat terpisah dalam [laporan runtime](docs/RUNTIME_REPORT_20261008.md). Suite saat rilis berisi 54 package tests (termasuk pemeriksaan paket Android hasil build), sembilan catalog tests dan 12 fixture native. Hasil commit/tag tersedia pada [GitHub Actions](https://github.com/mysticgate38041/wsm/actions/workflows/wsm.yml); aset rilis berasal dari run tag. Hardware ARM64 fisik, runtime 16 KiB, performa dan kualifikasi penuh efek gameplay masih belum terbukti.
 
 RC2 sebelum publikasi diuji pada LDPlayer API 34: empat unit Android PASS, delapan kasus installer harness PASS, Java/DEX/package PASS, serta emitter ARM64 sintetis PASS melalui native bridge. APK probe menggunakan produksi `branch_selftest`, berada di proses terisolasi dan sudah dihapus. Bukti ini tidak menguji efek RC2 pada game atau ARM64 fisik. Checksum pada laporan historis merupakan build lokal saat itu; checksum aset yang diterbitkan harus diambil dari release dan provenance CI terbaru.
 

@@ -10,6 +10,7 @@ def main():
     p.add_argument("--diagnostics",action="store_true");p.add_argument("--output",type=Path)
     p.add_argument("command",nargs="*",default=[]);a=p.parse_args()
     if not re.fullmatch(r"[A-Za-z0-9_./-]+",a.su):p.error("invalid su path")
+    if not re.fullmatch(r"[A-Za-z0-9._:-]+",a.serial):p.error("invalid adb serial")
     if not 1<=a.timeout<=180:p.error("timeout must be 1..180 seconds")
     prefix=[a.adb,"-s",a.serial]
     def adb(args,data=None):
@@ -21,12 +22,13 @@ def main():
         return adb(["shell",command],data)
     def request(command):
         token=time.time_ns()
-        write="umask 077; [ ! -L "+CMD+" ] || exit 1; cat > "+CMD+" && chown \"$(stat -c '%u:%g' /data/user/0/com.kakaogames.gdts)\" "+CMD+" && chmod 0600 "+CMD
+        cmd_q=shlex.quote(CMD);ack_q=shlex.quote(ACK)
+        write="umask 077; [ ! -L "+cmd_q+" ] || exit 1; cat > "+cmd_q+" && chown \"$(stat -c '%u:%g' /data/user/0/com.kakaogames.gdts)\" "+cmd_q+" && chmod 0600 "+cmd_q
         shell(write,True,"@"+str(token)+" "+command+"\n")
         deadline=time.monotonic()+a.timeout
         while time.monotonic()<deadline:
             try:
-                reply=json.loads(shell("cat "+ACK,True))
+                reply=json.loads(shell("cat "+ack_q,True))
                 if reply.get("request")==token:return reply
             except (ValueError,RuntimeError):pass
             time.sleep(.15)

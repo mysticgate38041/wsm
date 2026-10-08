@@ -7,7 +7,9 @@ Android alignment/dependencies are also verified by build.ps1.
 from pathlib import Path
 import hashlib
 import json
+import posixpath
 import re
+import stat
 import struct
 import sys
 import zipfile
@@ -173,8 +175,21 @@ def check_source_manifest(sources):
             raise ValueError("invalid source hash: " + name)
 
 
+def safe_zip_path(name):
+    if not name or "\\" in name or name.startswith("/"):
+        return False
+    normalized = posixpath.normpath(name)
+    return normalized == name and normalized not in {"", ".", ".."} and not normalized.startswith("../")
+
+
 def verify(path):
     with zipfile.ZipFile(path) as archive:
+        for info in archive.infolist():
+            if not safe_zip_path(info.filename):
+                raise ValueError("unsafe zip path: " + info.filename)
+            mode = (info.external_attr >> 16) & 0o170000
+            if mode == stat.S_IFLNK:
+                raise ValueError("symlink zip entry: " + info.filename)
         if archive.testzip():
             raise ValueError("ZIP CRC failure")
         names = archive.namelist()

@@ -247,6 +247,21 @@ class PackageFixtureTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "duplicate entries"):
             pkg.verify(path)
 
+    def test_symlink_entry_rejected(self):
+        path = self.root / "symlink.zip"
+        with zipfile.ZipFile(path, "w") as archive:
+            for name, data in self.entries.items():
+                entry = zipfile.ZipInfo(name)
+                if name == "module.prop":
+                    entry.create_system = 3
+                    entry.external_attr = 0o120777 << 16
+                archive.writestr(entry, data)
+        with self.assertRaisesRegex(ValueError, "symlink zip entry"):
+            pkg.verify(path)
+
+    def test_path_traversal_entry_rejected(self):
+        self.modified(lambda entries: entries.__setitem__("../module.prop", entries.pop("module.prop")), True)
+
     def test_unexpected_entry(self):
         self.modified(lambda entries: entries.__setitem__("extra", b"x"))
 

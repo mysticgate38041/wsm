@@ -85,7 +85,7 @@ jobs:
           $receipt = Get-Content -Raw src/wsm-v2/build/build-receipt.json | ConvertFrom-Json -AsHashtable
           $record = @{ commit=$env:GITHUB_SHA; ref=$env:GITHUB_REF; runId=$env:GITHUB_RUN_ID; runAttempt=$env:GITHUB_RUN_ATTEMPT; nativeBuildBackend='${{ matrix.backend }}'; qualification='INCOMPLETE_47_FEATURE_SCOPE'; dumpReaudited=$false; gameRuntimeExecuted=$false; androidFixturesExecuted=$false; ndk='27.2.12479018'; java=17; receipt=$receipt }
           $record | ConvertTo-Json -Depth 10 | Set-Content -Encoding utf8 src/wsm-v2/dist/ci-build-provenance.json
-          @('## WSM 6.2 RC1 build verified', '', '- Five ELF binaries, Java state tests, DEX and package rejection checks passed.', '- Eleven Android native fixtures compiled for both ABIs; their execution requires an Android device.', '- Portable native fixture execution is recorded in the native-tests job.', '- Original dump and game runtime remain unverified; the 47-feature scope remains incomplete.') | Add-Content $env:GITHUB_STEP_SUMMARY
+          @('## WSM 6.2 RC1 build verified', '', '- Five ELF binaries, Java state tests, DEX and package rejection checks passed.', '- Twelve Android native fixtures compiled for both ABIs; their execution requires an Android device.', '- Portable native fixture execution is recorded in the native-tests job.', '- Original dump and game runtime remain unverified; the 47-feature scope remains incomplete.') | Add-Content $env:GITHUB_STEP_SUMMARY
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: wsm-release-candidate-${{ matrix.backend }}
@@ -97,7 +97,7 @@ jobs:
           retention-days: 30
 
   release:
-    name: Publish verified private prerelease
+    name: Publish verified prerelease
     if: startsWith(github.ref, 'refs/tags/v')
     needs: [native-tests, android-build]
     runs-on: ubuntu-24.04
@@ -119,6 +119,26 @@ jobs:
           test "$GITHUB_REF_NAME" = v6.2.0-rc1
           python3 -B src/wsm-v2/scripts/package_release.py src/wsm-v2/dist/wsm-v6.2.0-rc1.zip
           (cd src/wsm-v2/dist && sha256sum --check wsm-v6.2.0-rc1.zip.sha256)
+          WSM_REQUIRE_RELEASE=1 python3 -B -X utf8 -m unittest discover -s src/wsm-v2/tests -p test_release.py
+          python3 -B - <<'PY'
+          import hashlib, json, os, pathlib, zipfile
+          dist = pathlib.Path('src/wsm-v2/dist')
+          provenance = json.loads((dist / 'ci-build-provenance.json').read_text(encoding='utf-8-sig'))
+          if (provenance['commit'] != os.environ['GITHUB_SHA'] or
+                  provenance['ref'] != os.environ['GITHUB_REF'] or
+                  provenance['runId'] != os.environ['GITHUB_RUN_ID'] or
+                  provenance['nativeBuildBackend'] != 'ndk-build'):
+              raise SystemExit('CI provenance does not match this tag, commit, run and backend')
+          with zipfile.ZipFile(dist / 'wsm-v6.2.0-rc1.zip') as archive:
+              release = json.loads(archive.read('release.json'))
+              receipt = provenance['receipt']
+              if receipt['sources'] != release['sources'] or receipt['build'] != release['build']:
+                  raise SystemExit('CI receipt does not match packaged sources and build')
+              for name, digest in receipt['binaries'].items():
+                  if hashlib.sha256(archive.read(name)).hexdigest() != digest:
+                      raise SystemExit('CI binary receipt mismatch: ' + name)
+          print('Tag, commit, source and binary provenance: PASS')
+          PY
       - name: Publish RC1 assets
         env:
           GH_TOKEN: ${{ github.token }}
