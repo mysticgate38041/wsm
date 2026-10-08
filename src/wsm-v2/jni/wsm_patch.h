@@ -11,13 +11,13 @@
 #define WSM_PATCH_PROTECT mprotect
 #endif
 // Permission-preserving alias transaction; caller owns patch serialization.
-[[maybe_unused]] static bool wsm_patch_readable(uintptr_t address, size_t len) {
+[[maybe_unused]] static bool wsm_patch_readable(uintptr_t address, size_t len, const char *mapname) {
     FILE *file = fopen("/proc/self/maps", "r");
     if (!file) return false;
     char line[512]; bool found = false;
     while (fgets(line, sizeof line, file)) {
         unsigned long long start = 0, end = 0; char perms[8] = {};
-        if (strstr(line, "libil2cpp.so") && sscanf(line, "%llx-%llx %7s", &start, &end, perms) == 3 &&
+        if (strstr(line, mapname) && sscanf(line, "%llx-%llx %7s", &start, &end, perms) == 3 &&
             perms[0] == 'r' && address >= start && address < end && len <= end - address) { found = true; break; }
     }
     fclose(file); return found;

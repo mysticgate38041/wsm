@@ -15,6 +15,16 @@ static int test_protect(void *p,size_t size,int prot) {
 #define WSM_PATCH_PROTECT test_protect
 #include "../jni/wsm_patch.h"
 #include "../jni/wsm_arm64_branch.h"
+static int observed_permissions(void *map) {
+    FILE *f=fopen("/proc/self/maps","r");assert(f);char line[512];int protection=-1;
+    while(fgets(line,sizeof line,f)) {
+        unsigned long long start,end;char flags[8];
+        if(sscanf(line,"%llx-%llx %7s",&start,&end,flags)==3 && (uintptr_t)map>=start && (uintptr_t)map<end) {
+            protection=(flags[0]=='r'?PROT_READ:0)|(flags[1]=='w'?PROT_WRITE:0)|(flags[2]=='x'?PROT_EXEC:0);break;
+        }
+    }
+    fclose(f);assert(protection>=0);return protection;
+}
 int main() {
     uint32_t branch=0;
     assert(wsm_arm64_branch(0x10000000,0x18000000-4,branch)&&branch==0x15ffffff);
@@ -33,6 +43,13 @@ int main() {
     assert(pwrite(fd,original,16,64)==16);
     void *maps[3];int perms[3]={PROT_READ|PROT_EXEC,PROT_READ,PROT_READ|PROT_WRITE};
     for(int i=0;i<3;++i){maps[i]=mmap(nullptr,ps,perms[i],MAP_PRIVATE,fd,0);assert(maps[i]!=MAP_FAILED);}
+    int original_protection[3];
+    for(int i=0;i<3;++i) {
+        original_protection[i]=observed_permissions(maps[i]);
+        assert(original_protection[i]&PROT_READ);
+        assert(bool(original_protection[i]&PROT_WRITE)==bool(perms[i]&PROT_WRITE));
+        if(original_protection[i]!=perms[i]) printf("INFO requested protection=%d, observed=%d\n",perms[i],original_protection[i]);
+    }
     uintptr_t code=(uintptr_t)maps[0]+64;
     assert(patch_aliases("wsm-patch-unit-",code,replacement,0)==-1);
     assert(patch_aliases("wsm-patch-unit-",1,replacement,16)==-1);
@@ -49,11 +66,9 @@ int main() {
     assert(patch_aliases("wsm-patch-unit-",code,replacement,16)==-4);
     fail_at=0;
     for(auto map:maps)assert(memcmp((char *)map+64,original,16)==0);
-    FILE *f=fopen("/proc/self/maps","r");assert(f);char line[512];int checked=0;
-    while(fgets(line,sizeof line,f)){unsigned long long start,end;char p[8];
-        if(sscanf(line,"%llx-%llx %7s",&start,&end,p)!=3)continue;
-        for(int i=0;i<3;++i)if(start==(uintptr_t)maps[i]){assert(p[0]=='r');assert((p[1]=='w')==bool(perms[i]&PROT_WRITE));assert((p[2]=='x')==bool(perms[i]&PROT_EXEC));++checked;}}
-    fclose(f);assert(checked==3);
+    // Restore the actual baseline kernel mapping, which translators may expose
+    // differently from requested guest PROT_EXEC. Never skip permission checks.
+    for(int i=0;i<3;++i) assert(observed_permissions(maps[i])==original_protection[i]);
     for(auto map:maps)munmap(map,ps);close(fd);assert(unlink(filename)==0);
     puts("PASS branch: imm26 bounds/alignment, near allocation, atomic 4-byte patch, adjacent bytes unchanged");
     puts("PASS patch: 3 aliases, readback, original permissions, invalid range, forced partial failure rollback");

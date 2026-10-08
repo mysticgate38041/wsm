@@ -1,20 +1,32 @@
-# Build, CI/CD dan publikasi WSM RC2
+# Build, CI/CD dan publikasi WSM 6.2.0 RC1
+
+Workflow `.github/workflows/wsm.yml` membangun source modular untuk rilis `v6.2.0-rc1` (module versionCode `60201`). Build lokal, native fixture, remote CI dan gameplay merupakan bukti berbeda; satu jenis hasil tidak otomatis memenuhi jenis lain.
 
 ## Workflow dan checks
 
-File: `.github/workflows/wsm.yml`, nama **WSM CI and Release**.
-
-| Job | Runner | Checks / hasil |
+| Job | Runner | Checks / hasil yang dikonfigurasi |
 |---|---|---|
-| `native-tests` | Ubuntu 24.04 | Compile/execute Runtime, Patch, Binding, Reloc; fail-fast per executable |
-| `android-build` | Windows 2022 | NDK exact; snapshot generation/diff; sembilan catalog tests; lima ELF; Java/DEX; empat executable Android; receipt; 16 package tests; artifact |
-| `release` | Ubuntu 24.04 | Membutuhkan kedua job sukses; hanya tag; guard exact RC2; verify ZIP/checksum; private prerelease dan tiga aset |
+| `native-tests` | Ubuntu 24.04 | CMake/Ninja compile dan CTest execute sebelas fixture POSIX; package rejection/source receipt tests |
+| `android-build` | Windows 2022, matrix ndk-build/CMake | NDK exact, snapshot generation/diff, catalog tests, lima ELF + DEX, Java state, sebelas fixture Android per ABI, receipt, package tests dan artifact |
+| `release` | Ubuntu 24.04 | Membutuhkan native-tests dan seluruh matrix sukses; exact tag guard, verifikasi ZIP/checksum, private prerelease dan tiga aset dari ndk-build |
 
-Native host tests menguji algoritma, queue/race, binding contracts, patch alias/rollback dan relokasi. Host test bukan eksekusi ARM64 instruction stream. ARM64 emitter, native bridge, UI Android, installer dan gameplay harus diuji dengan perangkat/fixture yang sesuai. Bukti manual tersimpan secara terpisah di `src/wsm-v2/evidence`.
+Fixture native: runtime, patch, binding, reloc, sweep, flags, resolver, dispatcher, worker, pool dan bus_event. Host execution menguji algoritma/kontrak, bukan menjalankan instruction stream ARM64 atau pipeline Unity/game. Android build mengompilasi 22 executable fixture untuk dua ABI; execution memerlukan runtime Android yang sesuai dan dicatat tersendiri. Gameplay, UI Android, native bridge, installer dan ARM64 fisik memerlukan qualification terpisah.
+
+Trigger berlaku untuk push `main`, pull request ke `main`, tag `v*` dan `workflow_dispatch`. Dispatch main membangun tanpa publish. Menambahkan workflow atau lulus build lokal tidak berarti GitHub Actions sudah dijalankan.
 
 ## Pin dan dependensi
 
-| Action | Commit yang diperiksa dari repo resmi |
+| Input | Kontrak |
+|---|---|
+| NDK | r27c, exact `27.2.12479018`; source.properties diperiksa |
+| Android native | API 26, ABI x86_64/arm64-v8a, STL `c++_static` |
+| Java/DEX | JDK 17, platform 34, build-tools 34.0.0, DEX min API 26 |
+| Python | ≥3.10 lokal; setup-python 3.12 pada CI |
+| CMake/Ninja | CMake ≥3.22; CI memasang SDK CMake 3.22.1, lokal migrasi memakai CMake 3.31.8/Ninja 1.12.1 |
+| Zygisk | API v4 header exact SHA-256 pada build.ps1; notice tetap dipertahankan |
+| ELF | Entry/export exact, tanpa libc++_shared/TEXTREL, LOAD/RELRO alignment 16 KiB |
+
+| Action | Commit yang dipakai workflow |
 |---|---|
 | actions/checkout v5 | `fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09` |
 | actions/setup-java v5 | `b6effb05e454b25005698d916606bdc6ffcbf961` |
@@ -22,39 +34,74 @@ Native host tests menguji algoritma, queue/race, binding contracts, patch alias/
 | actions/upload-artifact v4 | `ea165f8d65b6e75b540449e92b4886f43607fa02` |
 | actions/download-artifact v5 | `634f93cb2916e3fdff6788551b99b062d0335ce0` |
 
-JDK major 17 dan Python minor 3.12 berasal dari action setup. NDK `27.2.12479018`, platform 34/build-tools 34.0.0 exact. Pin action diperoleh dari ref resmi pada saat publikasi; upgrade perlu review dan rerun. Runner image serta patch JDK/Python dapat berubah sehingga reproducibility tidak berarti checksum lintas semua environment selalu identik. Referensi resmi: [Checkout](https://github.com/actions/checkout), [Setup Java](https://github.com/actions/setup-java), [Setup Python](https://github.com/actions/setup-python), [Artifacts](https://github.com/actions/upload-artifact).
+Pin action dan toolchain adalah input source saat ini. Runner image serta patch JDK/Python dapat berubah; reproducibility tidak menjamin checksum sama lintas environment. Upgrade pin perlu review dan rerun. Sumber action resmi: [Checkout](https://github.com/actions/checkout), [Setup Java](https://github.com/actions/setup-java), [Setup Python](https://github.com/actions/setup-python), [Artifacts](https://github.com/actions/upload-artifact).
+
+## Build lokal dan portable units
+
+ndk-build tetap default. Contoh PowerShell:
+
+```powershell
+& ./src/wsm-v2/scripts/build.ps1 -Ndk 'C:/Android/ndk/27.2.12479018' `
+  -Jdk 'C:/tools/jdk-17' -Sdk 'C:/Android/sdk' `
+  -Python 'C:/tools/python/python.exe' -Jobs 2 -CatalogSnapshot
+
+& ./src/wsm-v2/scripts/build.ps1 -Ndk 'C:/Android/ndk/27.2.12479018' `
+  -Jdk 'C:/tools/jdk-17' -Sdk 'C:/Android/sdk' `
+  -Python 'C:/tools/python/python.exe' -Jobs 2 -CatalogSnapshot `
+  -NativeBuild CMake -CMake 'C:/tools/cmake/bin/cmake.exe' `
+  -Ninja 'C:/tools/ninja.exe'
+```
+
+Dua backend menjalankan gate package yang sama. CMake output ABI disalin ke lokasi package standar; receipt dibentuk dari binary/source yang baru diperiksa. Hasil final adalah `src/wsm-v2/dist/wsm-v6.2.0-rc1.zip` dan `.zip.sha256`. Keluaran build juga menyertakan fixture di `build/fixtures/x86_64` serta `build/fixtures/arm64-v8a`.
+
+Untuk POSIX/Linux dengan compiler yang tersedia:
+
+```bash
+cmake -S src/wsm-v2/jni -B src/wsm-v2/build/host-tests -G Ninja \
+  -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Release
+cmake --build src/wsm-v2/build/host-tests --parallel 2
+ctest --test-dir src/wsm-v2/build/host-tests --output-on-failure
+```
+
+CMake host sengaja menolak Windows karena fixture memakai API POSIX. Android cross-compile merupakan jalur yang berbeda; executable tidak bisa dijalankan langsung sebagai program Windows. Fixture Android boleh dijalankan pada perangkat/emulator terisolasi tanpa memasang modul aktif ke game; ABI dan execution log harus dicocokkan dengan binary hash.
+
+## Snapshot provenance dan receipt
+
+CI memakai `-CatalogSnapshot`. Snapshot diperiksa terhadap hash/scalar desain asli, 47 ID berurutan, status/reason/backend, selector evidence dan qualification UNVERIFIED. Mode ini tidak membuka SQLite atau mengaudit ulang dump eksternal. Generator default memerlukan SQLite lokal `analysis/gt354-api/catalog-final/guardian_tales_354.sqlite` dengan mode read-only dan mencatat hash input aktual.
+
+Checkpoint/receipt mencakup source modular, termasuk source assembly, include fragment dan CMakeLists. Missing required input, receipt yang tidak cocok, atau perubahan source setelah checkpoint menyebabkan gate gagal. Release JSON dan manifest per-entry tidak menggantikan qualification gameplay. `ci-build-provenance.json` mencatat commit/ref/run, backend, toolchain dan receipt; boolean runtime/dump yang belum dijalankan tetap false.
 
 ## Prosedur rilis
 
-1. Pastikan main memiliki katalog/generated sources konsisten dan seluruh checks lulus.
-2. Review status qualification, notes, target package/version/code, versionCode module, stamp engine/helper/package, paths artifact dan tag guard. Semua harus menyatakan versi yang sama.
-3. Buat tag annotated pada commit yang disetujui dan push tag. Rilis RC2 menggunakan `v6.1.0-rc2`.
-4. Tunggu kedua job build/test dan publish sukses. CD membuat prerelease; aset tidak diambil dari direktori lokal yang tidak memiliki receipt.
-5. Periksa visibility repo private, prerelease flag, commit tag, tiga aset dan checksum. Unduh aset dan jalankan package verifier; simpan run URL serta checksum di receipt publikasi.
+1. Pastikan generated source/snapshot konsisten dan seluruh checks untuk commit kandidat selesai.
+2. Review qualification, notes, exact target identity, module versionCode, stamp engine/helper/package, artifact path dan tag guard. Semuanya harus menyatakan versi yang sama.
+3. Buat tag annotated pada commit yang disetujui dan push tag `v6.2.0-rc1`.
+4. Tunggu native-tests, seluruh matrix Android dan release job sukses. Aset release diambil dari artifact `wsm-release-candidate-ndk-build`; backend CMake tetap menjadi gate build tersendiri.
+5. Cocokkan repo visibility, prerelease flag, tag commit, ZIP/checksum/provenance dan digest hasil unduhan. Catat run URL/digest dalam receipt publikasi.
 
 ```powershell
-git tag -a v6.1.0-rc2 -m 'WSM 6.1.0 RC2 — verified build, incomplete 47-feature scope'
-git push origin v6.1.0-rc2
+git tag -a v6.2.0-rc1 -m 'WSM 6.2.0 RC1 — modular build, incomplete 47-feature scope'
+git push origin v6.2.0-rc1
 gh run list --repo mysticgate38041/wsm --workflow wsm.yml
-gh release view v6.1.0-rc2 --repo mysticgate38041/wsm
+gh release view v6.2.0-rc1 --repo mysticgate38041/wsm
 ```
 
-Trigger `workflow_dispatch` pada main memvalidasi build tanpa publish. Workflow khusus RC2 menolak tag lain sampai semua input rilis diperbarui. Tidak ada deploy/reboot otomatis ke perangkat Android. CD pada proyek ini berarti pengiriman ZIP ke GitHub Release, bukan pemasangan ke game.
+Command di atas adalah prosedur publikasi untuk commit yang telah disetujui, bukan tindakan yang dijalankan oleh migrasi lokal. Workflow menolak tag lain sampai stamp, metadata, tests, paths dan notes diperbarui secara konsisten. Notes aktif berada di [RELEASE_v6.2.0_rc1.md](RELEASE_v6.2.0_rc1.md). CD mengirim aset GitHub Release; workflow tidak memasang modul, menjalankan game atau me-reboot perangkat.
 
-## Izin, artifacts dan retry
+## Izin, artifact dan retry
 
-Token hanya dapat membaca contents pada kedua job build. Publish job mendapat contents-write. Action download hanya memakai artifact dari run yang sama. Tidak ada token akun, debug keystore atau dump mentah di repo. Artifact CI disimpan 30 hari; aset release tetap mengikuti penyimpanan release GitHub.
+Token default `contents: read`; hanya job release memakai `contents: write`. Checkout tidak menyimpan credential. Tidak dibutuhkan PAT tambahan, dump mentah atau kunci debug lokal. Artifact ditahan 30 hari dan action download mengambil artifact dari run yang sama.
 
-Timeout host 10 menit, Android 35 menit, release 10 menit. Run main/PR yang digantikan dapat dibatalkan; run tag tidak dibatalkan otomatis. Jika source/toolchain gagal, perbaiki commit dan ulangi checks sebelum tag. Jangan menandai check sukses secara manual untuk melewati gate.
+Timeout native-tests 10 menit, setiap matrix Android 35 menit, release 10 menit. Main/PR superseded dapat dibatalkan; tag run tidak dibatalkan otomatis. Failed gate diperbaiki pada source/toolchain dan diulang; tidak dilewati dengan menandai check sukses secara manual.
 
-Jika release sudah ada, workflow mencoba upload tanpa `--clobber`; file bernama sama tidak diganti. Kegagalan publish setelah sebagian aset terkirim perlu diperiksa: cocokkan digest lalu unggah hanya aset yang hilang. Untuk perubahan binary/source setelah tag diterbitkan, buat versi/tag baru, bukan menulis ulang release lama. `gh release delete`, force-push atau penghapusan tag bukan bagian otomatis workflow.
+Upload release existing tidak memakai `--clobber`. Jika publish hanya mengirim sebagian aset, cocokkan digest lalu unggah aset yang belum ada. Perubahan source/binary setelah release memerlukan versi/tag baru; tidak ada penghapusan release, force-push atau penulisan ulang tag otomatis.
 
-## Snapshot provenance dan dump eksternal
+## Hasil migrasi dan riwayat
 
-CI membangun dengan `-CatalogSnapshot`. Snapshot diperiksa terhadap hash dan seluruh scalar desain asli, 47 ID berurutan, status/reason/backend, selector evidence dan gate UNVERIFIED. Snapshot tidak mengakses SQLite, tidak memverifikasi ulang isi external dump, dan tidak menganggap evidence yang tersimpan sebagai acceptance gameplay.
+Build final backend ndk-build dan CMake lulus gate lima ELF + DEX dan Java state. Sebanyak 35 package regression tests serta sembilan catalog tests lulus. Sebelas fixture native per ABI dieksekusi pada LDPlayer: x86_64 11/11 dan arm64-v8a melalui translation 11/11 lulus, total 22/22. Kernel host fixture adalah x86_64 dengan page size 4 KiB. Installer harness terisolasi lulus 8/8 tanpa memasang modul.
 
-Untuk meregenerasi evidence dari dump asli, sediakan SQLite di path yang didokumentasikan, jalankan generator default, review JSON/Java/header, rerun build/checks dan commit hasilnya. Hash API dan audit pada JSON menautkan snapshot ke input lokal; inventaris serta 155 provenance checks berada di `analysis/dump-source-audit`.
+Fixture patch ARM64 translation membandingkan permission sesudah restoration dengan permission aktual sebelum patch; requested RX dapat teramati sebagai R di lingkungan ini. Hasil ini menguji kontrak restoration data/permission aktual dan tidak membuktikan eksekusi trampoline ARM64 pada hardware fisik atau behavior perangkat ARM64 fisik/16 KiB.
 
-## Release bytes dan riwayat validasi
+Digest dan receipt final dicatat di `.publish/V3_MIGRATION_REPORT_20261008.md`. ZIP NDK canonical berukuran 470.267 byte dengan SHA-256 `c4a59c8abe207647a6a826f904c5829e834225fbecb9e74c53824d3ad4372470`. Source final dan fixture binary memiliki hash evidence terpisah. Tidak ada remote CI, publikasi, pemasangan modul aktif, target gameplay atau pengukuran CPU/RAM/latency pada sesi ini.
 
-ZIP memiliki manifest per-entry serta release.json source hashes. `ci-build-provenance.json` menambahkan commit, ref, run ID/attempt, toolchain dan binary receipt. File `.sha256` mencocokkan ZIP yang diterbitkan. Log lokal lama merekam checksum sebelum penambahan CI/snapshot mode; nilainya tidak harus sama dengan binary CI terbaru. Tidak ada perubahan backend gameplay dalam pekerjaan publikasi ini; perubahan source terbatas pada build portability, generator/qualification tests, temporary path test, dan line-ending canonicalization.
+Dokumen [RC3 crash repair](CRASH_REPAIR_RC3.md) dan release lama menyimpan hasil serta keterbatasan saat itu. Checksum lama bukan checksum binary RC1. Katalog tetap `completed=0` dan `INCOMPLETE_47_FEATURE_SCOPE`; metadata/API, compilation, native fixtures dan ACK tidak membuktikan seluruh efek desain pada target game.

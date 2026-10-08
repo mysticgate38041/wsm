@@ -10,7 +10,7 @@ session="wsm-installer-unit-"+str(time.time_ns());remote="/data/local/tmp/"+sess
 results=[]
 with tempfile.TemporaryDirectory(prefix="wsm-installer-") as folder:
     stage=Path(folder)/session;stage.mkdir()
-    with zipfile.ZipFile(project/"dist/wsm-v6.1.0-rc2.zip") as z:
+    with zipfile.ZipFile(project/"dist/wsm-v6.2.0-rc1.zip") as z:
         for n in z.namelist():
             if not n.startswith("META-INF/"):
                 path=stage/n;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(z.read(n))

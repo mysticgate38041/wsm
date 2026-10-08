@@ -38,13 +38,13 @@ public final class WsmMenu {
         f("ohk","Auto-Kill Pulse","Damage pipeline di dalam radius","Pertempuran"),
         f("onehp","Enemy 1 HP","Ledger per-scene; OHK punya prioritas","Pertempuran"),
         s("aura","Radius Pulse","Meter dari hero","Pertempuran",5,40,1,20),
-        s("dmg","Pulse Power","Nilai ×100.000 khusus pulse","Pertempuran",1,99,1,10),
-        f("crit","Critical Pulse","Flag critical di DamageInfo","Pertempuran"),
+        s("dmg","Pulse Power [eksperimental]","ON memulai pulse berkala: nilai ×100.000; ONEHP menonaktifkan modifier","Pertempuran",1,99,1,10),
+        f("crit","Critical Pulse [eksperimental]","ON memulai pulse 1 juta (atau Pulse Power); hasil hit belum terukur","Pertempuran"),
         s("critdmg","Critical Damage Scale [eksperimental]","Getter hero ×1–5; hasil hit belum terukur","Pertempuran",1,5,.25f,2),
         f("nocd","Cooldown Gates [eksperimental]","Tiga patch; semua wajib berhasil","Pertempuran"),
         f("stunall","Freeze AI [eksperimental]","Gate AI; StunCommand lama dihentikan","Pertempuran"),
         s("speed","Movement Scale [eksperimental]","Walk / dash / soft-dash hero","Dunia",1,5,.25f,2),
-        f("loot","Auto-Loot [eksperimental]","Permintaan consume; diagnostik kandidat","Dunia"),
+        f("loot","Auto-Loot [eksperimental]","OFF stop permintaan baru; pickup yang sudah diminta tidak dibatalkan","Dunia"),
         s("timescale","Time Scale","OFF menghapus modifier wsm saja","Dunia",.1f,5,.05f,1)
     };
     static Application app; static SharedPreferences prefs;
@@ -81,7 +81,7 @@ public final class WsmMenu {
         detach();owner=new WeakReference<Activity>(a);exec("__activity resumed");
         int sw=a.getResources().getDisplayMetrics().widthPixels,sh=a.getResources().getDisplayMetrics().heightPixels;
         root=col(a);root.setPadding(dp(10),dp(8),dp(10),dp(8));root.setBackground(bg(BG,LINE));
-        LinearLayout head=row(a);TextView title=text(a,"Ω WSM 6.1 RC2",18,TEXT);title.setTypeface(Typeface.MONOSPACE);
+        LinearLayout head=row(a);TextView title=text(a,"Ω WSM 6.2 RC1",18,TEXT);title.setTypeface(Typeface.MONOSPACE);
         head.addView(title,new LinearLayout.LayoutParams(0,-2,1));head.addView(button(a,"PANIC",new Runnable(){public void run(){execute("panic",null,false);}}));
         head.addView(button(a,"−",new Runnable(){public void run(){collapse();}}));root.addView(head);drag(head,root);
         status=text(a,"Menunggu sesi…",12,AMBER);root.addView(status);

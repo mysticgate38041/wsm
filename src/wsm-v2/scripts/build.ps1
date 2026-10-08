@@ -4,6 +4,9 @@ param(
     [string]$Sdk = 'C:\wsmbuild\sdk',
     [string]$Python = 'C:\Users\Administrator\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe',
     [ValidateRange(1, 16)][int]$Jobs = 2,
+    [ValidateSet('ndk-build', 'CMake')][string]$NativeBuild = 'ndk-build',
+    [string]$CMake = 'cmake',
+    [string]$Ninja = 'ninja',
     [switch]$CatalogSnapshot
 )
 $ErrorActionPreference = 'Stop'
@@ -15,19 +18,38 @@ $readelf = Join-Path $ndkRoot 'toolchains/llvm/prebuilt/windows-x86_64/bin/llvm-
 $ndkBuild = Join-Path $ndkRoot 'ndk-build.cmd'
 $androidJar = Join-Path $Sdk 'platforms/android-34/android.jar'
 $d8Jar = Join-Path $Sdk 'build-tools/34.0.0/lib/d8.jar'
-foreach ($tool in @($readelf,$ndkBuild,$androidJar,$d8Jar,$Python,(Join-Path $javaRoot 'bin/javac.exe'))) {
+foreach ($tool in @($readelf,$ndkBuild,$androidJar,$d8Jar,$Python,(Join-Path $javaRoot 'bin/javac.exe'),(Join-Path $javaRoot 'bin/java.exe'))) {
     if (-not (Test-Path -LiteralPath $tool -PathType Leaf)) { throw "Required tool missing: $tool" }
 }
 if ((Get-Content -Raw -LiteralPath (Join-Path $ndkRoot 'source.properties')) -notmatch 'Pkg\.Revision\s*=\s*27\.2\.12479018(?:\s|$)') { throw 'Pinned NDK 27.2.12479018 required.' }
 if ((Get-FileHash -LiteralPath (Join-Path $project 'jni/zygisk.hpp')).Hash -ne 'FC6523882C0F8659B4FCD1E04FFB07D3A948090E5A8C08817AF6E2B506A078D0') { throw 'Pinned Zygisk header differs.' }
+if ($NativeBuild -eq 'CMake') {
+    $cmakeExe = (Get-Command $CMake -ErrorAction Stop).Source
+    $ninjaExe = (Get-Command $Ninja -ErrorAction Stop).Source
+}
 $catalogArgs = @()
 if ($CatalogSnapshot) { $catalogArgs += '--snapshot' }
 & $Python '-B' '-X' 'utf8' (Join-Path $project 'scripts/build_feature_catalog.py') @catalogArgs
 if ($LASTEXITCODE) { throw '47-feature catalog generation failed.' }
 & $Python '-B' '-X' 'utf8' (Join-Path $project 'scripts/package_release.py') '--checkpoint'
 if ($LASTEXITCODE) { throw 'Source checkpoint failed.' }
-& $ndkBuild '-C' $project "-j$Jobs" "NDK_OUT=$project/build/obj" "NDK_LIBS_OUT=$project/build/libs"
-if ($LASTEXITCODE) { throw 'Native build failed.' }
+if ($NativeBuild -eq 'ndk-build') {
+    & $ndkBuild '-C' $project "-j$Jobs" 'APP_ABI=x86_64 arm64-v8a' "NDK_OUT=$project/build/obj" "NDK_LIBS_OUT=$project/build/libs"
+    if ($LASTEXITCODE) { throw 'Native ndk-build failed.' }
+} else {
+    foreach ($abi in @('x86_64','arm64-v8a')) {
+        $cmakeOut = Join-Path $project "build/cmake-$abi"
+        & $cmakeExe '-S' (Join-Path $project 'jni') '-B' $cmakeOut '-G' 'Ninja' "-DCMAKE_MAKE_PROGRAM=$ninjaExe" "-DCMAKE_TOOLCHAIN_FILE=$ndkRoot/build/cmake/android.toolchain.cmake" "-DANDROID_ABI=$abi" '-DANDROID_PLATFORM=android-26' '-DANDROID_STL=c++_static' '-DCMAKE_BUILD_TYPE=Release'
+        if ($LASTEXITCODE) { throw "Native CMake configure failed: $abi" }
+        & $cmakeExe '--build' $cmakeOut '--parallel' "$Jobs"
+        if ($LASTEXITCODE) { throw "Native CMake build failed: $abi" }
+        $abiOut = Join-Path $project "build/libs/$abi"
+        New-Item -ItemType Directory -Force -Path $abiOut | Out-Null
+        foreach ($library in @('libwsm_loader.so','libwsm_engine.so') + $(if ($abi -eq 'arm64-v8a') { @('libwsm_arm64.so') } else { @() })) {
+            Copy-Item -LiteralPath (Join-Path $cmakeOut "libs/$abi/$library") -Destination (Join-Path $abiOut $library) -Force
+        }
+    }
+}
 $binaries = @(
     @('x86_64/libwsm_loader.so','X86-64','zygisk_module_entry'),
     @('arm64-v8a/libwsm_loader.so','AArch64','zygisk_module_entry'),
@@ -54,6 +76,8 @@ foreach ($binary in $binaries) {
     $dynamic = (& $readelf '--dynamic' $file) -join "`n"
     if ($LASTEXITCODE -or $dynamic -match 'libc\+\+_shared\.so|\(TEXTREL\)') { throw "Unexpected runtime dependency: $file" }
 }
+& $Python '-B' '-X' 'utf8' (Join-Path $project 'scripts/package_release.py') '--check-native'
+if ($LASTEXITCODE) { throw 'Native exported ABI validation failed.' }
 $out = Join-Path $project ('build/menu-' + [Guid]::NewGuid().ToString('N'))
 $classes = Join-Path $out 'classes'
 New-Item -ItemType Directory -Force -Path $classes | Out-Null
@@ -68,15 +92,39 @@ Copy-Item -LiteralPath (Join-Path $out 'classes.dex') -Destination (Join-Path $p
 if ($LASTEXITCODE) { throw 'ControlState test compilation failed.' }
 & (Join-Path $javaRoot 'bin/java.exe') '-cp' $classes 'ControlStateTest'
 if ($LASTEXITCODE) { throw 'ControlState test failed.' }
-$testCompiler = Join-Path $ndkRoot 'toolchains/llvm/prebuilt/windows-x86_64/bin/x86_64-linux-android26-clang++.cmd'
-foreach ($unit in @('runtime','patch','binding','reloc')) {
-    & $testCompiler '-std=c++17' '-O2' '-Wall' '-Wextra' '-Werror' '-fno-exceptions' '-fno-rtti' '-static-libstdc++' '-pthread' (Join-Path $project "tests/$($unit)_test.cpp") '-o' (Join-Path $project "build/wsm-$unit-test")
-    if ($LASTEXITCODE) { throw "Android unit binary failed: $unit" }
+$fixtureAbis = @(@('x86_64','x86_64-linux-android26-clang++.cmd'),@('arm64-v8a','aarch64-linux-android26-clang++.cmd'))
+$testModules = @{
+    binding = @('il2cpp_resolver.cpp')
+    flags = @('feature_flags.cpp')
+    resolver = @('il2cpp_resolver.cpp','aob_scanner.cpp','hybrid_resolver.cpp')
+    dispatcher = @('dispatcher.cpp')
+    worker = @('payload_worker.cpp')
+    pool = @('trampoline_pool.cpp')
+}
+foreach ($fixtureAbi in $fixtureAbis) {
+    $testCompiler = Join-Path $ndkRoot "toolchains/llvm/prebuilt/windows-x86_64/bin/$($fixtureAbi[1])"
+    $fixtureOut = Join-Path $project "build/fixtures/$($fixtureAbi[0])"
+    New-Item -ItemType Directory -Force -Path $fixtureOut | Out-Null
+foreach ($unit in @('runtime','patch','binding','reloc','sweep','flags','resolver','dispatcher','worker','pool','bus_event','restore')) {
+    $unitSources = @((Join-Path $project "tests/$($unit)_test.cpp"))
+    if ($testModules.ContainsKey($unit)) { $unitSources += @($testModules[$unit] | ForEach-Object { Join-Path $project "jni/$_" }) }
+    & $testCompiler '-std=c++17' '-O2' '-Wall' '-Wextra' '-Werror' '-fno-exceptions' '-fno-rtti' '-static-libstdc++' '-pthread' @unitSources '-ldl' '-o' (Join-Path $fixtureOut "wsm-$unit-test")
+    if ($LASTEXITCODE) { throw "Android fixture binary compilation failed: $unit" }
+}
+    if ($fixtureAbi[0] -eq 'x86_64') {
+        Get-ChildItem -LiteralPath $fixtureOut -File | Copy-Item -Destination (Join-Path $project 'build') -Force
+    }
 }
 & $Python '-B' '-X' 'utf8' (Join-Path $project 'scripts/package_release.py') '--record-build'
 if ($LASTEXITCODE) { throw 'Build receipt failed.' }
 & $Python '-B' '-X' 'utf8' (Join-Path $project 'scripts/package_release.py')
 if ($LASTEXITCODE) { throw 'Release packaging failed.' }
-& $Python '-B' '-X' 'utf8' '-m' 'unittest' 'discover' '-s' (Join-Path $project 'tests') '-p' 'test_release.py' '-v'
-if ($LASTEXITCODE) { throw 'Release regression tests failed.' }
-Write-Host 'WSM 6.1 RC2: native/Java/DEX built and package verified. The 47-feature runtime scope remains incomplete.'
+$priorRequireRelease = $env:WSM_REQUIRE_RELEASE
+try {
+    $env:WSM_REQUIRE_RELEASE = '1'
+    & $Python '-B' '-X' 'utf8' '-m' 'unittest' 'discover' '-s' (Join-Path $project 'tests') '-p' 'test_release.py' '-v'
+    if ($LASTEXITCODE) { throw 'Release regression tests failed.' }
+} finally {
+    $env:WSM_REQUIRE_RELEASE = $priorRequireRelease
+}
+Write-Host 'WSM 6.2 RC1: native/Java/DEX built and package verified; twelve Android fixtures compiled for both ABIs. Target runtime and the 47-feature scope remain unverified.'

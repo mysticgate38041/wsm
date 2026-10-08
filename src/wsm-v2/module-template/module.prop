@@ -1,6 +1,6 @@
 id=wsm_gt
 name=WS Menu (WSM) 6
-version=v6.1.0-rc2
-versionCode=60102
+version=v6.2.0-rc1
+versionCode=60201
 author=worm shadow (untuk He)
 description=Guardian Tales 3.54.0: dual-ABI Zygisk loader, in-memory menu and ARM64 helper, bounded asynchronous controls, explicit profiles, scene/session gates and diagnostics. New target runtime qualification required.

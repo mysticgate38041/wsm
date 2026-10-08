@@ -13,9 +13,12 @@
 #include <android/log.h>
 #include <stdlib.h>
 #include "../jni/wsm_bus.h"
+#include "../jni/shared_bus_event.h"
+#include "../jni/trampoline_pool.h"
 #include "../jni/wsm_protocol.h"
 #include "../jni/wsm_arm64_branch.h"
 #include "../jni/wsm_arm64_reloc.h"
+#include "../jni/wsm_sweep.h"
 
 #define LOG_TAG "WSM-H64"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
@@ -35,8 +38,6 @@ extern "C" __attribute__((visibility("default"))) int h64_magic(void); /* fwd (d
 extern "C" __attribute__((visibility("default"))) int h64_victim(void); /* korban ke-2 (belum pernah dipanggil) */
 
 volatile uint32_t g_hotcount = 0;      /* POC-4: counter yg di-increment via trampoline game */
-static uint32_t g_orig_hook[6] = {};   /* orig 24 bytes utk restore */
-static uintptr_t g_hook_code = 0;
 
 /* --- POC-5: page-guard watchpoint — jebakan SIGSEGV di field HP monster --- */
 #include <signal.h>
@@ -91,7 +92,7 @@ static void guard_install_once(void) {
 
 /* --- POC-4 helpers v3: MULTI-SLOT absolute-jump hooks --- */
 static int patch_aliases(const char *mapname, uintptr_t code, const uint32_t *bytes, int len); /* fwd */
-static bool wsm_patch_readable(uintptr_t address, size_t len);
+static bool wsm_patch_readable(uintptr_t address, size_t len, const char *mapname);
 static int restore_hook(int slot, const char *mapname);
 #define NSLOT WSM_HOOK_SLOTS
 static uint32_t g_hook_orig[NSLOT][4] = {};
@@ -99,24 +100,29 @@ static uint32_t *g_hookblock[NSLOT] = {};
 static uintptr_t g_hook_code2[NSLOT] = {};
 static uint32_t g_patch_word[NSLOT] = {};
 static size_t g_patch_len[NSLOT] = {};
-static unsigned g_retained_pages = 0;
+
 // Linker-owned, page-isolated BSS survives native-bridge address reservations.
 // Every published page remains immutable until process exit.
 alignas(16384) static uint8_t g_owned_trampolines[512][16384];
+static bool pool_reachable(uintptr_t from,uintptr_t to){uint32_t branch;return wsm_arm64_branch(from,to,branch);}
+static void *pool_allocate(uintptr_t target){void *p=wsm_near_page(target);return p==MAP_FAILED?nullptr:p;}
+static bool pool_seal(void *page,size_t length){return mprotect(page,length,PROT_READ|PROT_EXEC)==0;}
+static wsm::TrampolinePool &trampoline_pool(){
+    static wsm::TrampolinePool pool(g_owned_trampolines,16384,512,
+        static_cast<size_t>(sysconf(_SC_PAGESIZE)),pool_allocate,pool_seal);return pool;
+}
 static uintptr_t g_hook_orig_addr[NSLOT] = {};  /* v28: alamat pemilik orig tiap slot */
 volatile uint32_t g_hotcount_arr[NSLOT] = {};
 
 // Serialize installs on the agent. Restore an owned slot before reuse and retain
 // each published RX page until process exit, including after a successful OFF.
-static int install_prepare(int slot, uintptr_t code) {
-    if (slot < 0 || slot >= NSLOT || !code || !wsm_patch_readable(code,16)) return -1;
-    if (g_hook_code2[slot] && restore_hook(slot,"libil2cpp.so") < 0) return -11;
-    if (g_retained_pages >= 512) return -12;
-    if ((size_t)sysconf(_SC_PAGESIZE)>16384) return -10;
-    void *page=g_owned_trampolines[g_retained_pages];uint32_t candidate_branch=0;
-    if(!wsm_arm64_branch(code,(uintptr_t)page,candidate_branch))page=wsm_near_page(code);
-    if (page==MAP_FAILED) return -10;
-    ++g_retained_pages; // Retain old RX trampolines until process exit; another thread may still execute them.
+static int install_prepare(int slot, uintptr_t code, const char *mapname="libil2cpp.so") {
+    if (slot < 0 || slot >= NSLOT || !code || !wsm_patch_readable(code,16,mapname)) return -1;
+    if (g_hook_code2[slot] && restore_hook(slot,mapname) < 0) return -11;
+    if(trampoline_pool().retained()>=512) return -12;
+    if((size_t)sysconf(_SC_PAGESIZE)>16384) return -10;
+    void *page=trampoline_pool().reserve(code,pool_reachable);
+    if(!page) return -10;
     g_hookblock[slot]=(uint32_t *)page;
     uint32_t current[4]; memcpy(current,(void *)code,16);
     if (current[0]==0x58000051u && current[1]==0xD61F0220u) return -2;
@@ -127,8 +133,7 @@ static int install_prepare(int slot, uintptr_t code) {
 static int publish_block(int slot,const char *mapname,uintptr_t code,size_t words) {
     uint32_t branch=0;
     if (!wsm_arm64_branch(code,(uintptr_t)g_hookblock[slot],branch)) return -10;
-    __builtin___clear_cache((char *)g_hookblock[slot],(char *)(g_hookblock[slot]+words));
-    if (mprotect(g_hookblock[slot],(size_t)sysconf(_SC_PAGESIZE),PROT_READ|PROT_EXEC)) return -13;
+    if(words>SIZE_MAX/sizeof(uint32_t) || !trampoline_pool().seal(g_hookblock[slot],words*sizeof(uint32_t))) return -13;
     g_hook_code2[slot]=code;g_patch_word[slot]=branch;g_patch_len[slot]=4;
     return patch_aliases(mapname,code,&branch,4);
 }
@@ -212,7 +217,7 @@ static int install_hook(int slot, const char *mapname, uintptr_t code) {
 }
 static int restore_hook(int slot, const char *mapname) {
     if (slot < 0 || slot >= NSLOT || !g_hook_code2[slot]) return 0;
-    if (!wsm_patch_readable(g_hook_code2[slot],g_patch_len[slot])) return -11;
+    if (!wsm_patch_readable(g_hook_code2[slot],g_patch_len[slot],mapname)) return -11;
     if (g_patch_len[slot]==4 && *(volatile uint32_t *)g_hook_code2[slot]!=g_patch_word[slot] &&
         *(volatile uint32_t *)g_hook_code2[slot]!=g_hook_orig[slot][0]) return -11;
     int n = patch_aliases(mapname, g_hook_code2[slot], g_hook_orig[slot], (int)g_patch_len[slot]);
@@ -224,6 +229,52 @@ static int restore_hook(int slot, const char *mapname) {
 }
 #define WSM_PATCH_LOG LOGI
 #include "../jni/wsm_patch.h"
+
+// ExecuteTasks is a static void callback owned by Unity. Preserve its original
+// implementation and run scene work only after it returns on UnityMain.
+static void (*g_main_original)(void *) = nullptr;
+static __thread bool g_main_reentrant = false;
+static void main_dispatch(void *method) {
+    auto original = __atomic_load_n(&g_main_original, __ATOMIC_ACQUIRE);
+    if (original) original(method);
+    if (!g_bus || g_main_reentrant) return;
+    char thread[16]{};
+    if (pthread_getname_np(pthread_self(), thread, sizeof thread) || strcmp(thread, "UnityMain")) return;
+    g_bus[WSM_MAIN_TID] = (uint64_t)gettid();
+    const uint64_t ticket = __atomic_load_n(&g_bus[WSM_MAIN_REQUEST], __ATOMIC_ACQUIRE);
+    if (!ticket || ticket == __atomic_load_n(&g_bus[WSM_MAIN_ACK], __ATOMIC_ACQUIRE)) return;
+    uint64_t pending=(uint64_t)wsm::SweepState::Pending;
+    if(!__atomic_compare_exchange_n(&g_bus[WSM_MAIN_STATE],&pending,
+        (uint64_t)wsm::SweepState::Running,false,__ATOMIC_ACQ_REL,__ATOMIC_ACQUIRE))return;
+    g_main_reentrant = true;
+    const auto *api = (const wsm::SweepApi *)(uintptr_t)g_bus[WSM_MAIN_API];
+    wsm::SweepResult result{wsm::SweepState::Failed, 0, 0};
+    if (api) result = wsm::run_sweep(*api, (void *)(uintptr_t)g_bus[WSM_MAIN_STAGE],
+                                   &g_bus[WSM_MAIN_ALLOWED], ticket);
+    g_bus[WSM_MAIN_APPLIED] = result.applied; g_bus[WSM_MAIN_SKIPPED] = result.skipped;
+    __atomic_store_n(&g_bus[WSM_MAIN_STATE], (uint64_t)result.state, __ATOMIC_RELEASE);
+    __atomic_store_n(&g_bus[WSM_MAIN_ACK], ticket, __ATOMIC_RELEASE);
+    g_main_reentrant = false;
+}
+static int install_main_dispatch(uintptr_t code, const char *library="libil2cpp.so") {
+    constexpr int slot = WSM_HOOK_SLOTS - 1;
+    if (g_bus[WSM_MAIN_HOOKED]) return g_hook_code2[slot] == code ? 1 : -1;
+    int rc = install_prepare(slot, code, library);
+    if (rc) return rc;
+    uint32_t *b = g_hookblock[slot];
+    // A four-byte branch replaces ONE instruction; relocate only that word.
+    // Copying the first sixteen bytes would include ExecuteTasks' TBNZ.
+    if (!wsm_arm64_relocate_word(g_hook_orig[slot][0], code, (uintptr_t)(b+8), b[8]) ||
+        !wsm_arm64_branch((uintptr_t)(b+9), code+4, b[9])) return -9;
+    b[0]=0x58000090u; b[1]=0xD61F0200u; // ldr x16, b[4]; br x16
+    b[2]=b[3]=0xD503201Fu;
+    const uintptr_t callback=(uintptr_t)&main_dispatch;
+    b[4]=(uint32_t)callback;b[5]=(uint32_t)((uint64_t)callback>>32);
+    __atomic_store_n(&g_main_original, reinterpret_cast<void (*)(void *)>(b+8), __ATOMIC_RELEASE);
+    rc=publish_block(slot,library,code,10);
+    if(rc>0)__atomic_store_n(&g_bus[WSM_MAIN_HOOKED],1ULL,__ATOMIC_RELEASE);
+    return rc;
+}
 
 static int build_scaled_getter(uint32_t *B,uint32_t foff,uint32_t fbits,uintptr_t hs) {
                         uint32_t ldr_s0 = 0xBD400000u | (((foff >> 2) & 0xFFFu) << 10);
@@ -337,6 +388,7 @@ static void *h64_agent(void *arg) {
     g_bus[11] = H64_THREAD_MAGIC;
     LOGI("agent thread UP pid=%d", (int)getpid());
     for (;;) {
+        const uint32_t generation=wsm::bus_generation(g_bus);
         __atomic_add_fetch(&g_bus[10], 1ULL, __ATOMIC_RELEASE); /* heartbeat */
         uint64_t cmd = __atomic_load_n(&g_bus[0], __ATOMIC_ACQUIRE);
         if (cmd) { g_bus[68] = (uint64_t)(int64_t)-1; g_bus[69] = 0; }
@@ -611,14 +663,23 @@ static void *h64_agent(void *arg) {
             }
             g_bus[1] = 5;
             __atomic_store_n(&g_bus[0], 0ULL, __ATOMIC_RELEASE);
+        } else if (cmd == 19) { // install main-thread mailbox, no scene mutation here
+            int rc=install_main_dispatch((uintptr_t)g_bus[60]);
+            g_bus[68]=rc<0?(uint64_t)(int64_t)rc:0;g_bus[69]=rc>0?(uint64_t)rc:0;
+            __atomic_store_n(&g_bus[0],0ULL,__ATOMIC_RELEASE);
         } else if (cmd == 9) { /* exit */
             g_bus[1] = 4;
             __atomic_store_n(&g_bus[0], 0ULL, __ATOMIC_RELEASE);
+            __atomic_store_n(&g_bus[9],tok,__ATOMIC_RELEASE);wsm::notify_bus(g_bus);
             LOGI("agent: exit");
             break;
         }
-        if (cmd) __atomic_store_n(&g_bus[9], tok, __ATOMIC_RELEASE); /* v31: ack token hanya setelah command selesai */
-        usleep(3000);
+        // Unknown commands terminate with an error instead of spinning forever.
+        if(cmd && __atomic_load_n(&g_bus[0],__ATOMIC_ACQUIRE)==cmd) {
+            g_bus[68]=(uint64_t)(int64_t)-22;__atomic_store_n(&g_bus[0],0ULL,__ATOMIC_RELEASE);
+        }
+        if (cmd) { __atomic_store_n(&g_bus[9],tok,__ATOMIC_RELEASE);wsm::notify_bus(g_bus); }
+        else wsm::wait_bus(g_bus,generation,1000);
     }
     return nullptr;
 }

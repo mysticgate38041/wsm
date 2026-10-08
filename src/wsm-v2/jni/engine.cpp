@@ -35,7 +35,14 @@
 #include "wsm_feature_catalog.h"
 #include "wsm_arm64_reloc.h"
 #include "wsm_runtime.h"
+#include "dispatcher.h"
+#include "feature_flags.h"
+#include "payload_worker.h"
+#include "hybrid_resolver.h"
+#include "shared_bus_event.h"
 #include "wsm_bus.h"
+#include "wsm_sweep.h"
+#include "wsm_restore.h"
 
 #define ELOGI(...) __android_log_print(ANDROID_LOG_INFO, "WSMEngine", __VA_ARGS__)
 
@@ -53,7 +60,12 @@ JavaVM *g_vm = nullptr;
 int g_init_guard = 0;
 int g_menu_dex_fd = -1;
 wsm::Runtime g_runtime;
+wsm::FeatureFlags g_feature_flags;
+uint64_t g_control_epoch=1; // owner-observed epoch; advances only after reset/scene transition
 int g_identity_ok = 0, g_foreground = 0;
+pthread_mutex_t g_identity_mutex=PTHREAD_MUTEX_INITIALIZER;
+char g_observed_package[80]{},g_observed_version[48]{};
+uint64_t g_observed_version_code=0;
 bool g_session_fault = false, g_godmode_on = false;
 uint64_t g_scene_hero = 0, g_scene_stage = 0, g_target_base = 0, g_time_static = 0;
 uint64_t g_method_flags = 0;
@@ -61,11 +73,17 @@ wsm::BindingApi g_binding_api{};
 float g_speed_value = 2.0f;
 bool g_bus_unhealthy = false;
 bool g_timescale_owned = false;
+bool g_restoration_pending = false;
+uint64_t g_option_lifetime = 1;
 static void modern_tick();
 static void modern_reset(char *, size_t);
 static void modern_commands();
 static void modern_publish();
 static void modern_request(const char *, char *, size_t, uint64_t = 0);
+static void main_sweep_cancel();
+static bool main_sweep_start(const wsm::Command &, char *, size_t);
+static bool main_sweep_pending();
+static void main_sweep_poll();
 
 
 const char *const kSymbols[] = {
@@ -287,12 +305,19 @@ static __thread sigjmp_buf g_beat_jmp;
 static __thread volatile sig_atomic_t g_beat_guard = 0;
 volatile sig_atomic_t g_guard_faults = 0;
 static struct sigaction g_previous_segv{};
+static __thread unsigned g_guest_call_depth = 0;
+struct GuestCallScope {
+    GuestCallScope() { ++g_guest_call_depth; }
+    ~GuestCallScope() { --g_guest_call_depth; }
+};
 volatile uintptr_t g_fault_pcs[16] = {};
 volatile int g_fault_pc_idx = 0;
 volatile uintptr_t g_fault_last_addr = 0;
 
 void elf_segv_handler(int sig, siginfo_t *si, void *uctx) {
-    if (g_elf_guard || g_beat_guard) {
+    // Never jump across Houdini / managed frames. Translator state and managed
+    // locks cannot be unwound by a host siglongjmp.
+    if (!g_guest_call_depth && (g_elf_guard || g_beat_guard)) {
         g_guard_faults++;
         uintptr_t pc = 0;
 #if defined(__aarch64__)
@@ -319,14 +344,16 @@ void elf_segv_handler(int sig, siginfo_t *si, void *uctx) {
 /* v3.5: handler installed ONCE (per-window sigaction churn raced across threads)
    and the jump target is THREAD-LOCAL — a fault can only ever resume the SAME
    thread's guarded window, never another thread's stack (menu-UI crash lesson). */
-static void guard_install_once() {
-    static volatile int done = 0;
-    if (__atomic_test_and_set(&done, __ATOMIC_SEQ_CST)) return;
+static void guard_install() {
     struct sigaction sa{};
     sa.sa_sigaction = elf_segv_handler;
     sigemptyset(&sa.sa_mask);
     sa.sa_flags = SA_SIGINFO | SA_NODEFER;
     sigaction(SIGSEGV, &sa, &g_previous_segv);
+}
+static void guard_install_once() {
+    static pthread_once_t once = PTHREAD_ONCE_INIT;
+    pthread_once(&once, guard_install);
 }
 
 /* Wrap any risky native/il2cpp call: on SIGSEGV the call is abandoned and
@@ -437,23 +464,43 @@ static uint64_t method_code(void *method) {
     GUARDED_BEGIN(); memcpy(&code,method,sizeof code); GUARDED_END(); return code;
 }
 static void *strict_binding(void *klass, const wsm::Binding &wanted) {
-    wsm::BindingResult result{nullptr, wsm::BindingState::Unavailable, 0};
-    GUARDED_BEGIN(); result = wsm::resolve_binding(g_binding_api, klass, wanted); GUARDED_END();
-    return result.state == wsm::BindingState::Found ? result.method : nullptr;
+    // Identity was observed by the menu from PackageManager; no changed-version
+    // or signature-only native fallback is admitted by the production path.
+    if (!__atomic_load_n(&g_identity_ok, __ATOMIC_ACQUIRE)) return nullptr;
+    wsm::HybridResult result{};
+    const auto identity=wsm::supported_identity();
+    char package[80],version[48];uint64_t code;
+    pthread_mutex_lock(&g_identity_mutex);
+    memcpy(package,g_observed_package,sizeof package);memcpy(version,g_observed_version,sizeof version);
+    code=g_observed_version_code;pthread_mutex_unlock(&g_identity_mutex);
+    const wsm::IdentityContract observed{package,version,code};
+    GUARDED_BEGIN(); { GuestCallScope scope;
+        result=wsm::resolve_hybrid(g_binding_api,klass,wanted,identity,observed);
+    } GUARDED_END();
+    return result.qualified ? result.method_info.value : nullptr;
 }
+static void *ctl_guest_invoke(void *m,void *o,void **a,void **e){GuestCallScope scope;return reinterpret_cast<void *(*)(void *,void *,void **,void **)>(ctl_fn_invoke)(m,o,a,e);}
+static void *ctl_guest_string(const char *s){GuestCallScope scope;return reinterpret_cast<void *(*)(const char *)>(ctl_fn_strnew)(s);}
 void ctl_ts_apply(float val, char *ack, size_t cap) {
     if(val<=0.001f && !g_timescale_owned){snprintf(ack,cap,"OK timescale already OFF");return;}
+    // Bootstrap precedes menu identity reporting. Resolve typed metadata lazily
+    // from the feature owner and retry after identity becomes verified.
+    if(ctl_klass) {
+        if(!ctl_mi_instance) ctl_mi_instance=strict_binding(ctl_klass,{"get_Instance","GlobalTimeManager",{nullptr,nullptr,nullptr},0,true});
+        if(!ctl_mi_mod) ctl_mi_mod=strict_binding(ctl_klass,{"Mod","System.Void",{"System.Single","System.String","System.Boolean"},3,false});
+        if(!ctl_mi_unmod) ctl_mi_unmod=strict_binding(ctl_klass,{"Unmod","System.Void",{"System.String",nullptr,nullptr},1,false});
+    }
     typedef void *(*fn_inv_t5)(void *, void *, void **, void **);
     typedef void *(*fn_sn_t5)(const char *);
     fn_inv_t5 inv = nullptr;
     fn_sn_t5 sn = nullptr;
-    memcpy(&inv, &ctl_fn_invoke, sizeof inv);
-    memcpy(&sn, &ctl_fn_strnew, sizeof sn);
+    inv=ctl_fn_invoke?ctl_guest_invoke:nullptr;
+    sn=ctl_fn_strnew?ctl_guest_string:nullptr;
     // Query the public field API only when a ready-scene command needs it.
     if(ctl_fn_fsgv && ctl_f_inst) {
         typedef void(*GetStatic)(void *,void *);GetStatic get=nullptr;
         memcpy(&get,&ctl_fn_fsgv,sizeof get);void *instance=nullptr;
-        GUARDED_BEGIN();get(ctl_f_inst,&instance);GUARDED_END();ctl_instance=instance;
+        GUARDED_BEGIN();{GuestCallScope scope;get(ctl_f_inst,&instance);}GUARDED_END();ctl_instance=instance;
     }
     const bool is_static = method_static(ctl_mi_mod) && method_static(ctl_mi_unmod);
     if (!is_static && ctl_mi_instance && inv) {
@@ -471,9 +518,11 @@ void ctl_ts_apply(float val, char *ack, size_t cap) {
     if (!s) { snprintf(ack, cap, "ERR strnew"); return; }
     if (val <= 0.001f) {
         void *exc0 = nullptr; void *args0[1] = { s };
+        const sig_atomic_t faults = g_guard_faults;
         GUARDED_BEGIN(); (void) inv(ctl_mi_unmod, receiver, args0, &exc0); GUARDED_END();
-        if(!exc0)g_timescale_owned=false;
-        snprintf(ack, cap, "%s timescale OFF", exc0 ? "ERR" : "OK"); return;
+        const bool removed = !exc0 && faults == g_guard_faults;
+        if(removed)g_timescale_owned=false;
+        snprintf(ack, cap, "%s timescale OFF owned=%d", removed ? "OK" : "ERR", g_timescale_owned ? 1 : 0); return;
     }
     bool allow = true;
     void *args[3] = { &val, s, &allow };
@@ -508,20 +557,25 @@ FeatSlot g_feats[FEAT_COUNT] = {
     {"immune", FK_OPTION, 224.0f, false}, /* NoAilment: NoDown(32)|NoArial(64)|NoPoison(128) */
     {"timescale", FK_TIMESCALE, 1.0f, false},
     {"ohk", FK_OHK, 1.0f, false},         /* pulse: InstantKillDamage to monsters */
-    {"dmg", FK_DMG, 10.0f, false},        /* pulse modifier (multiplier) */
+    {"dmg", FK_DMG, 10.0f, false},        /* periodic fixed damage: value x 100,000 */
     {"crit", FK_CRIT, 1.0f, false},       /* pulse critical flag */
     {"stunall", FK_STUN, 1.0f, false},    /* pulse stun (factor/result/duration) */
     {"aura", FK_AURA, 20.0f, false},      /* kill/stun sweep radius in metres */
     {"onehp", FK_ONEHP, 1.0f, false},     /* drop monsters to exactly 1 HP */
     {"aggro", FK_AGGRO, 1.0f, false},     /* reset enemy aggro each beat */
 };
-struct OwnedOptions { void *stats; uint32_t bits; };
+using OwnedOptions = wsm::OptionOwnership;
 OwnedOptions g_owned_options[64]{};
+struct OptionGcApi {
+    uint32_t (*pin)(void *, bool);
+    void *(*target)(uint32_t);
+    void (*release)(uint32_t);
+};
+OptionGcApi g_option_gc{};
 void *g_m_getoptions = nullptr;
 volatile int g_feat_version = 0;
 volatile int g_feat_applied_version = -1;
 volatile int g_last_char_count = -1;
-volatile int g_menu_ctx = 0;      /* 1 = called from the game UI thread (menu tap) */
 volatile int g_pending_ts = -1;   /* >=0 -> ticker applies timescale out-of-band */
 volatile float g_pending_ts_val = 0.0f;
 uint64_t g_img = 0, g_dom = 0;
@@ -639,7 +693,6 @@ void *g_cls_sev = nullptr, *g_m_sev_create = nullptr;
 volatile int g_last_pulse_skip = 0;
 volatile int g_scratch_reset = 0; /* set when onehp toggled: clears the scratch ledger */
 volatile int g_stun_vec = 3; /* pulse stun vector: 3=legacy dmg = SAFE default (vec1 state=CRASH, verified) */
-void *g_scratched[64] = {};
 int g_scratched_n = 0; /* feat-thread only */
 volatile int g_pulse_src = 0; /* 0 = trap factory (proven), 1 = Lua factory */
 volatile int g_pending_sweep = 0;
@@ -650,11 +703,16 @@ typedef void *(*fn_cgf_t2)(void *, const char *);
 typedef void *(*fn_cfn_t2)(void *, const char *, const char *);
 typedef void (*fn_fgv_t2)(void *, void *, void *);
 
-fn_inv_t2 feat_inv() { fn_inv_t2 f = nullptr; memcpy(&f, &g_finv, sizeof f); return f; }
-fn_cgm_t2 feat_cgm() { fn_cgm_t2 f = nullptr; memcpy(&f, &g_cgm, sizeof f); return f; }
-fn_cgf_t2 feat_cgf() { fn_cgf_t2 f = nullptr; memcpy(&f, &g_cgf, sizeof f); return f; }
-fn_cfn_t2 feat_cfn() { fn_cfn_t2 f = nullptr; memcpy(&f, &g_cfn, sizeof f); return f; }
-fn_fgv_t2 feat_fgv() { fn_fgv_t2 f = nullptr; memcpy(&f, &g_fgv2, sizeof f); return f; }
+static void *guest_invoke(void *m,void *o,void **a,void **e) { GuestCallScope scope; return reinterpret_cast<fn_inv_t2>(g_finv)(m,o,a,e); }
+static void *guest_cgm(void *k,const char *n,int c) { GuestCallScope scope; return reinterpret_cast<fn_cgm_t2>(g_cgm)(k,n,c); }
+static void *guest_cgf(void *k,const char *n) { GuestCallScope scope; return reinterpret_cast<fn_cgf_t2>(g_cgf)(k,n); }
+static void *guest_cfn(void *i,const char *ns,const char *n) { GuestCallScope scope; return reinterpret_cast<fn_cfn_t2>(g_cfn)(i,ns,n); }
+static void guest_fgv(void *o,void *f,void *v) { GuestCallScope scope; reinterpret_cast<fn_fgv_t2>(g_fgv2)(o,f,v); }
+fn_inv_t2 feat_inv() { return g_finv ? guest_invoke : nullptr; }
+fn_cgm_t2 feat_cgm() { return g_cgm ? guest_cgm : nullptr; }
+fn_cgf_t2 feat_cgf() { return g_cgf ? guest_cgf : nullptr; }
+fn_cfn_t2 feat_cfn() { return g_cfn ? guest_cfn : nullptr; }
+fn_fgv_t2 feat_fgv() { return g_fgv2 ? guest_fgv : nullptr; }
 
 uint32_t feat_want_mask(bool *stam, bool *mana) {
     uint32_t m = 0;
@@ -671,7 +729,7 @@ uint32_t feat_want_mask(bool *stam, bool *mana) {
 }
 
 bool feat_resolve() {
-    if (g_m_addopt && g_m_remopt && g_m_setstam && g_m_setmana &&
+    if (g_m_addopt && g_m_remopt && g_m_getoptions && g_m_setstam && g_m_setmana &&
         g_m_stage_inst && g_m_cm_players && g_m_stage_getcm && g_m_char_getstats) {
         return true;
     }
@@ -768,11 +826,107 @@ bool feat_resolve() {
         fn_attach_t2 af = nullptr;
         memcpy(&af, &g_attach, sizeof af);
         GUARDED_BEGIN();
-        af(reinterpret_cast<void *>(g_dom));
+        {GuestCallScope scope;af(reinterpret_cast<void *>(g_dom));}
         GUARDED_END();
     }
-    return g_m_addopt && g_m_remopt && g_m_setstam && g_m_setmana &&
+    return g_m_addopt && g_m_remopt && g_m_getoptions && g_m_setstam && g_m_setmana &&
            g_m_stage_inst && g_m_cm_players && g_m_stage_getcm && g_m_char_getstats;
+}
+
+struct OptionAccess { fn_inv_t2 inv; void *live[64]; int count; };
+static uint32_t option_pin(void *, void *object, bool pinned) {
+    if (!__atomic_load_n(&g_identity_ok,__ATOMIC_ACQUIRE) || !g_option_gc.pin || !pinned) return 0;
+    const sig_atomic_t faults = g_guard_faults; uint32_t handle = 0;
+    GUARDED_BEGIN(); {GuestCallScope scope;handle=g_option_gc.pin(object,true);} GUARDED_END();
+    return faults == g_guard_faults ? handle : 0;
+}
+static void *option_target(void *, uint32_t handle) {
+    if (!__atomic_load_n(&g_identity_ok,__ATOMIC_ACQUIRE) || !g_option_gc.target || !handle) return nullptr;
+    const sig_atomic_t faults = g_guard_faults; void *target = nullptr;
+    GUARDED_BEGIN(); {GuestCallScope scope;target=g_option_gc.target(handle);} GUARDED_END();
+    return faults == g_guard_faults ? target : nullptr;
+}
+static bool option_release(void *, uint32_t handle) {
+    if (!__atomic_load_n(&g_identity_ok,__ATOMIC_ACQUIRE) || !g_option_gc.release || !handle) return false;
+    const sig_atomic_t faults = g_guard_faults;
+    GUARDED_BEGIN(); {GuestCallScope scope;g_option_gc.release(handle);} GUARDED_END();
+    return faults == g_guard_faults;
+}
+static bool option_is_live(void *context, void *stats) {
+    if (!__atomic_load_n(&g_identity_ok, __ATOMIC_ACQUIRE)) return false;
+    const auto &access = *static_cast<OptionAccess *>(context);
+    for (int i = 0; i < access.count; ++i) if (access.live[i] == stats) return true;
+    return false;
+}
+static bool option_read(void *context, void *stats, uint32_t *value) {
+    if (!option_is_live(context, stats) || !g_m_getoptions) return false;
+    const auto &access = *static_cast<OptionAccess *>(context);
+    const sig_atomic_t faults = g_guard_faults;
+    void *exc = nullptr, *box = nullptr;
+    GUARDED_BEGIN(); box = access.inv(g_m_getoptions, stats, nullptr, &exc); GUARDED_END();
+    if (exc || !ptr_ok(box) || faults != g_guard_faults) return false;
+    GUARDED_BEGIN(); memcpy(value, static_cast<uint8_t *>(box) + 0x10, 4); GUARDED_END();
+    return faults == g_guard_faults;
+}
+static bool option_remove(void *context, void *stats, uint32_t bits) {
+    if (!option_is_live(context, stats) || !g_m_remopt) return false;
+    const auto &access = *static_cast<OptionAccess *>(context);
+    const sig_atomic_t faults = g_guard_faults;
+    int mask = static_cast<int>(bits); void *args[1] = { &mask }, *exc = nullptr;
+    GUARDED_BEGIN(); (void)access.inv(g_m_remopt, stats, args, &exc); GUARDED_END();
+    return !exc && faults == g_guard_faults;
+}
+static wsm::OptionRestoreApi option_api(OptionAccess &access) {
+    return {&access,option_is_live,option_read,option_remove,option_pin,option_target,option_release};
+}
+static wsm::OptionRestoreReport feat_restore_options() {
+    if (!wsm::owned_option_objects(g_owned_options, 64)) return {};
+    OptionAccess access{};
+    const auto api = option_api(access);
+    bool eligible = false;
+    for (const auto &owner : g_owned_options)
+        eligible = eligible || (owner.handle && !owner.uncertain && owner.lifetime == g_option_lifetime);
+    // Missing identity/scene or a previous scene's leases never authorizes a call
+    // through raw ledger pointers. Preserve them as unresolved ownership.
+    bool trusted = eligible && __atomic_load_n(&g_identity_ok, __ATOMIC_ACQUIRE) &&
+        g_scene_stage && g_m_stage_inst && g_m_stage_getcm && g_m_cm_players &&
+        g_m_char_getstats && g_m_getoptions && g_m_remopt;
+    access.inv = feat_inv();
+    trusted = trusted && access.inv;
+    if (trusted) {
+        const sig_atomic_t faults = g_guard_faults;
+        void *exc = nullptr, *stage = nullptr, *manager = nullptr, *list = nullptr;
+        GUARDED_BEGIN(); stage = access.inv(g_m_stage_inst, nullptr, nullptr, &exc); GUARDED_END();
+        trusted = !exc && ptr_ok(stage) && reinterpret_cast<uint64_t>(stage) == g_scene_stage && faults == g_guard_faults;
+        if (trusted) {
+            exc = nullptr;
+            GUARDED_BEGIN(); manager = access.inv(g_m_stage_getcm, stage, nullptr, &exc); GUARDED_END();
+            trusted = !exc && ptr_ok(manager) && faults == g_guard_faults;
+        }
+        if (trusted) {
+            exc = nullptr;
+            GUARDED_BEGIN(); list = access.inv(g_m_cm_players, manager, nullptr, &exc); GUARDED_END();
+            trusted = !exc && ptr_ok(list) && faults == g_guard_faults;
+        }
+        int32_t size = 0; void **items = nullptr;
+        if (trusted) {
+            GUARDED_BEGIN();
+            memcpy(&size, static_cast<uint8_t *>(list) + 0x18, 4);
+            memcpy(&items, static_cast<uint8_t *>(list) + 0x10, 8);
+            GUARDED_END();
+            trusted = size >= 0 && size <= 64 && (size == 0 || ptr_ok(items)) && faults == g_guard_faults;
+        }
+        for (int32_t i = 0; trusted && i < size; ++i) {
+            void *object = nullptr, *stats = nullptr;
+            GUARDED_BEGIN(); memcpy(&object, reinterpret_cast<uint8_t *>(items) + 0x20 + static_cast<size_t>(i) * 8, 8); GUARDED_END();
+            if (!ptr_ok(object) || faults != g_guard_faults) continue;
+            exc = nullptr;
+            GUARDED_BEGIN(); stats = access.inv(g_m_char_getstats, object, nullptr, &exc); GUARDED_END();
+            if (!exc && ptr_ok(stats) && faults == g_guard_faults) access.live[access.count++] = stats;
+        }
+        trusted = trusted && faults == g_guard_faults;
+    }
+    return wsm::restore_options(g_owned_options, 64, g_option_lifetime, trusted, api);
 }
 
 /* mode 0 = add-only tick; mode 1 = full (add + remove diff); skip_opts=1 = stam/mana only.
@@ -791,25 +945,28 @@ int feat_apply(int mode, int skip_opts) {
     GUARDED_BEGIN();
     stage = inv(g_m_stage_inst, nullptr, nullptr, &exc);
     GUARDED_END();
-    if (!ptr_ok(stage)) return -2;
+    if (exc || !ptr_ok(stage) || reinterpret_cast<uint64_t>(stage) != g_scene_stage) return -2;
     void *cmgr = nullptr;
     if (g_m_stage_getcm) {
+        exc = nullptr;
         GUARDED_BEGIN();
         cmgr = inv(g_m_stage_getcm, stage, nullptr, &exc);
         GUARDED_END();
     }
-    if (!ptr_ok(cmgr)) return -3;
+    if (exc || !ptr_ok(cmgr)) return -3;
     void *lst = nullptr;
+    exc = nullptr;
     GUARDED_BEGIN();
     lst = inv(g_m_cm_players, cmgr, nullptr, &exc);
     GUARDED_END();
-    if (!ptr_ok(lst)) return -5;
+    if (exc || !ptr_ok(lst)) return -5;
     int32_t size = 0;
     memcpy(&size, reinterpret_cast<const uint8_t *>(lst) + 0x18, 4);
     void **items = nullptr;
     memcpy(&items, reinterpret_cast<const uint8_t *>(lst) + 0x10, 8);
     if (size < 0 || size > 64 || !ptr_ok(items)) return -6;
     int applied = 0;
+    bool failed = false;
     for (int32_t i = 0; i < size; i++) {
         void *obj = nullptr;
         /* il2cpp array data starts at +0x20 (klass@0, monitor@8, bounds@0x10, len@0x18) */
@@ -819,49 +976,78 @@ int feat_apply(int mode, int skip_opts) {
         void *stats = nullptr;
         /* method-only path: the raw field read faults on this build (field_get_type) — dropped */
         if (g_m_char_getstats) {
+            exc = nullptr;
             GUARDED_BEGIN();
             stats = inv(g_m_char_getstats, obj, nullptr, &exc);
             GUARDED_END();
         }
+        if (exc) { failed = true; continue; }
         if (!ptr_ok(stats)) continue;
         if (!skip_opts) {
+            OptionAccess access{}; access.inv = inv; access.live[0] = stats; access.count = 1;
+            const auto api = option_api(access);
             OwnedOptions *owned = nullptr;
-            for (auto &entry : g_owned_options) if (entry.stats == stats) { owned = &entry; break; }
-            if (!owned) for (auto &entry : g_owned_options) if (!entry.stats) { entry.stats = stats; owned = &entry; break; }
-            if (!owned || !g_m_getoptions) continue;
-            void *box = nullptr;
-            GUARDED_BEGIN(); box = inv(g_m_getoptions, stats, nullptr, &exc); GUARDED_END();
-            if (!ptr_ok(box) || exc) continue;
-            uint32_t current = 0;
-            GUARDED_BEGIN(); memcpy(&current, (uint8_t *)box + 0x10, 4); GUARDED_END();
-            uint32_t remove = owned->bits & ~want;
-            uint32_t add = want & ~current;
-            if (remove) { int mask = (int)remove; void *a[1] = { &mask };
-                GUARDED_BEGIN(); (void) inv(g_m_remopt, stats, a, &exc); GUARDED_END();
-                if (!exc) owned->bits &= ~remove;
+            for (auto &entry : g_owned_options) if (entry.handle && entry.lifetime == g_option_lifetime && !entry.uncertain) {
+                if (wsm::option_lease_target(entry,api) == stats) { owned = &entry; break; }
             }
-            if (add) { int mask = (int)add; void *a[1] = { &mask };
-                GUARDED_BEGIN(); (void) inv(g_m_addopt, stats, a, &exc); GUARDED_END();
-                if (!exc) owned->bits |= add;
+            if (wsm::uncertain_option_objects(g_owned_options,64)) { failed = true; break; }
+            if (want || owned) {
+                if (owned && owned->lifetime != g_option_lifetime) { failed = true; continue; }
+                if (!owned) for (auto &entry : g_owned_options) if (!entry.handle && !entry.bits && !entry.uncertain) {
+                    owned = &entry; break;
+                }
+                if (!owned || !g_m_getoptions) { failed = true; continue; }
+                const auto cleanup = wsm::restore_options(owned, 1, g_option_lifetime, true, api, want);
+                if (!cleanup.complete()) { failed = true; continue; }
+                if (want) {
+                if (!owned->handle && !wsm::acquire_option_lease(*owned,stats,g_option_lifetime,api)) { failed = true; continue; }
+                uint32_t current = 0;
+                void *target = wsm::option_lease_target(*owned,api);
+                if (!target || !option_read(&access,target,&current)) { failed = true; continue; }
+                const uint32_t add = want & ~current;
+                if (add) {
+                    if (!wsm::prepare_option_add(*owned,current,add)) { failed = true; continue; }
+                    int mask = static_cast<int>(add); void *a[1] = { &mask };
+                    const sig_atomic_t faults = g_guard_faults; exc = nullptr;
+                    target = wsm::option_lease_target(*owned,api);
+                    if (!target || !option_is_live(&access,target)) { failed = true; continue; }
+                    GUARDED_BEGIN(); (void)inv(g_m_addopt, target, a, &exc); GUARDED_END();
+                    uint32_t after = 0;
+                    if (exc || faults != g_guard_faults) { failed = true; continue; }
+                    target = wsm::option_lease_target(*owned,api);
+                    if (!target || !option_read(&access,target,&after) ||
+                        !wsm::confirm_option_add(*owned,current,want,after)) { failed = true; continue; }
+                }
+                if (!owned->bits && !wsm::release_clean_option_lease(*owned,api)) { failed = true; continue; }
+                }
             }
         }
         if (stam) {
             float sv = g_feats[FEAT_STAM].value;
             void *a[1] = { &sv };
+            exc = nullptr;
             GUARDED_BEGIN();
             (void) inv(g_m_setstam, stats, a, &exc);
             GUARDED_END();
+            if (exc) { failed = true; continue; }
         }
         if (mana) {
             float sv = g_feats[FEAT_MANA].value;
             void *a[1] = { &sv };
+            exc = nullptr;
             GUARDED_BEGIN();
             (void) inv(g_m_setmana, stats, a, &exc);
             GUARDED_END();
+            if (exc) { failed = true; continue; }
         }
         applied++;
     }
-    return applied;
+    if (mode == 1 && !skip_opts) for (const auto &owner : g_owned_options)
+        if (owner.bits & ~want) failed = true; // Missing live owners cannot count as an OFF success.
+    if (wsm::uncertain_option_objects(g_owned_options,64)) {
+        g_restoration_pending = true; g_session_fault = true; failed = true;
+    }
+    return failed ? -7 : applied;
 }
 
 /* light char-count probe (ticker's spawn detection) */
@@ -1508,131 +1694,13 @@ void feat_mdmg(int idx, int mode, char *out, size_t cap) {
         snprintf(out, cap, "MDMG idx=%d no-stats", idx);
         return;
     }
-    /* trap info build (1M damage, mortal) */
-    void *exc = nullptr;
-    void *boxed = nullptr;
-    if (g_m_gtd) {
-        int dm = 1000000;
-        void *a2[2] = {&mon, &dm};
-        GUARDED_BEGIN();
-        boxed = inv(g_m_gtd, nullptr, a2, &exc);
-        GUARDED_END();
-    }
-    if (!ptr_ok(boxed)) {
-        snprintf(out, cap, "MDMG idx=%d no-info", idx);
-        return;
-    }
-    static __thread uint8_t mbuf[0x300];
-    memcpy(mbuf, reinterpret_cast<const uint8_t *>(boxed) + 0x10, 0x2F8);
-    if (g_m_dis_notmortal) {
-        bool nb = false;
-        void *a1[1] = {&nb};
-        GUARDED_BEGIN();
-        (void) inv(g_m_dis_notmortal, mbuf, a1, &exc);
-        GUARDED_END();
-    }
-    /* db + combo */
-    void *db = nullptr;
-    if (g_m_char_getovdb) {
-        GUARDED_BEGIN();
-        db = inv(g_m_char_getovdb, mon, nullptr, &exc);
-        GUARDED_END();
-    }
-    if (!ptr_ok(db) && g_m_char_getdb) {
-        GUARDED_BEGIN();
-        db = inv(g_m_char_getdb, mon, nullptr, &exc);
-        GUARDED_END();
-    }
-    sig_atomic_t f0 = g_guard_faults;
-    void *a1b[1] = {mbuf};
-    GUARDED_BEGIN();
-    (void) inv(g_m_damage, mstats, a1b, &exc);
-    GUARDED_END();
-    sig_atomic_t f1 = g_guard_faults;
-    int r = -1;
-    if (ptr_ok(db)) {
-        if (mode == 6) {
-            if (g_m_mdb_die) {
-                GUARDED_BEGIN();
-                (void) inv(g_m_mdb_die, db, a1b, &exc);
-                GUARDED_END();
-                r = 99;
-            }
-        } else if (g_m_mdb_damage) {
-            void *rb = nullptr;
-            GUARDED_BEGIN();
-            rb = inv(g_m_mdb_damage, db, a1b, &exc);
-            GUARDED_END();
-            if (ptr_ok(rb)) {
-                uint8_t b = 0;
-                memcpy(&b, reinterpret_cast<const uint8_t *>(rb) + 0x10, 1);
-                r = b;
-            }
-        }
-        if (mode == 9 && g_m_mdb_die) {
-            GUARDED_BEGIN();
-            (void) inv(g_m_mdb_die, db, a1b, &exc);
-            GUARDED_END();
-            r = 99;
-        }
-    }
-    sig_atomic_t f2 = g_guard_faults;
-    /* read back */
-    void *st2 = nullptr;
-    int act2 = -1, dead2 = -1, hp1 = -1;
-    feat_mstat(mon, st2, act2, dead2, hp1);
-    int pos = -1;
-    /* is it still at the same index? */
-    if (feat_mobj(items, idx) == mon) pos = idx;
-    snprintf(out, cap,
-             "MDMG idx=%d mode=%d mon=0x%llx act=%d dead0=%d hp0=%d r=%d | ri=%d act2=%d dead2=%d "
-             "hp1=%d fStats=%d fCall=%d",
-             idx, mode, static_cast<unsigned long long>(reinterpret_cast<uintptr_t>(mon)), act,
-             dead, hp0, r, pos, act2, dead2, hp1, static_cast<int>(f1 - f0),
-             static_cast<int>(f2 - f1));
+    snprintf(out, cap, "ERR worker damage retired; use correlated UnityMain sweep");
 }
 
 /* apply the winning combo once to EVERY active alive monster */
 void feat_msweep(int mode, char *out, size_t cap) {
-    if (!feat_resolve()) {
-        snprintf(out, cap, "MSWEEP resolve=0");
-        return;
-    }
-    fn_inv_t2 inv = nullptr;
-    void *lst = nullptr;
-    int32_t size = 0;
-    void **items = nullptr;
-    feat_mopen(inv, lst, size, items);
-    if (!inv || size <= 0) {
-        snprintf(out, cap, "MSWEEP no-list");
-        return;
-    }
-    void *hero = nullptr;
-    sig_atomic_t f0 = g_guard_faults;
-    int done = 0;
-    for (int32_t i = 0; i < size; i++) {
-        void *m = feat_mobj(items, i);
-        if (!m) continue;
-        void *st = nullptr;
-        int act = -1, dead = -1, hp = -1;
-        feat_mstat(m, st, act, dead, hp);
-        if ((act != 3 && act != 2) || dead != 0) continue;
-        {
-            float p[3];
-            feat_getpos(m, p);
-            if (fabsf(p[0]) > 900.0f || fabsf(p[2]) > 900.0f) continue;
-        }
-        {
-            char one[512];
-            feat_mdmg(i, mode, one, sizeof one);
-            (void) one;
-        }
-        done++;
-    }
-    (void) hero;
-    sig_atomic_t f1 = g_guard_faults;
-    snprintf(out, cap, "MSWEEP mode=%d targets=%d fault=%d", mode, done,
-             static_cast<int>(f1 - f0));
+    (void)mode;
+    snprintf(out, cap, "ERR worker sweep retired; use correlated UnityMain sweep");
 }
 
 void feat_getpos(void *obj, float out[3]) {
@@ -1793,165 +1861,8 @@ void feat_mnear(int mode, char *out, size_t cap) {
 
 /* full kill combo on one monster: trap info (1M, mortal) -> stats.Damage -> db.Damage -> db.Die.
    verified visually: on-screen monster 3 -> 2 -> 0 on 2026-10-06. */
-int feat_combo(void *mon, void *mstats) {
-    if (!ptr_ok(mon) || !ptr_ok(mstats) || !g_m_gtd) return -1;
-    fn_inv_t2 inv = feat_inv();
-    void *exc = nullptr;
-    void *boxed = nullptr;
-    int dm = static_cast<int>((g_feats[FEAT_DMG].on ? g_feats[FEAT_DMG].value : 1.0f) * 100000.0f);
-    if (dm < 100000) dm = 100000;
-    if (dm > 9999999) dm = 9999999;
-    void *a2[2] = {&mon, &dm};
-    GUARDED_BEGIN();
-    boxed = inv(g_m_gtd, nullptr, a2, &exc);
-    GUARDED_END();
-    if (!ptr_ok(boxed)) return -2;
-    static __thread uint8_t cbuf[0x300];
-    memcpy(cbuf, reinterpret_cast<const uint8_t *>(boxed) + 0x10, 0x2F8);
-    if (g_m_dis_notmortal) {
-        bool nb = false;
-        void *a1[1] = {&nb};
-        GUARDED_BEGIN();
-        (void) inv(g_m_dis_notmortal, cbuf, a1, &exc);
-        GUARDED_END();
-    }
-    if (g_feats[FEAT_CRIT].on && g_m_dis_crit) {
-        bool cb = true;
-        void *a1[1] = {&cb};
-        GUARDED_BEGIN();
-        (void) inv(g_m_dis_crit, cbuf, a1, &exc);
-        GUARDED_END();
-    }
-    void *a1b[1] = {cbuf};
-    GUARDED_BEGIN();
-    (void) inv(g_m_damage, mstats, a1b, &exc);
-    GUARDED_END();
-    void *db = nullptr;
-    if (g_m_char_getovdb) {
-        GUARDED_BEGIN();
-        db = inv(g_m_char_getovdb, mon, nullptr, &exc);
-        GUARDED_END();
-    }
-    if (!ptr_ok(db) && g_m_char_getdb) {
-        GUARDED_BEGIN();
-        db = inv(g_m_char_getdb, mon, nullptr, &exc);
-        GUARDED_END();
-    }
-    if (ptr_ok(db)) {
-        if (g_m_mdb_damage) {
-            GUARDED_BEGIN();
-            (void) inv(g_m_mdb_damage, db, a1b, &exc);
-            GUARDED_END();
-        }
-        if (g_m_mdb_die) {
-            GUARDED_BEGIN();
-            (void) inv(g_m_mdb_die, db, a1b, &exc);
-            GUARDED_END();
-        }
-    }
-    return 0;
-}
 
 /* v3.12 one-hit-kill sweep: combo on every real (non-dummy) monster within 20 m of hero */
-int feat_pulse_kill() {
-    if (!feat_resolve()) return -1;
-    fn_inv_t2 inv = nullptr;
-    void *lst = nullptr;
-    int32_t size = 0;
-    void **items = nullptr;
-    feat_mopen(inv, lst, size, items);
-    if (!inv || size <= 0) return -2;
-    /* hero pos */
-    float h_[3] = {0, 0, 0};
-    {
-        void *exc = nullptr;
-        void *stage = nullptr;
-        GUARDED_BEGIN();
-        stage = inv(g_m_stage_inst, nullptr, nullptr, &exc);
-        GUARDED_END();
-        if (ptr_ok(stage) && g_m_stage_getcm) {
-            void *cmgr = nullptr;
-            GUARDED_BEGIN();
-            cmgr = inv(g_m_stage_getcm, stage, nullptr, &exc);
-            GUARDED_END();
-            if (ptr_ok(cmgr) && g_m_cm_players) {
-                void *plist = nullptr;
-                GUARDED_BEGIN();
-                plist = inv(g_m_cm_players, cmgr, nullptr, &exc);
-                GUARDED_END();
-                if (ptr_ok(plist)) {
-                    int32_t ps = 0;
-                    memcpy(&ps, reinterpret_cast<const uint8_t *>(plist) + 0x18, 4);
-                    void **pit = nullptr;
-                    memcpy(&pit, reinterpret_cast<const uint8_t *>(plist) + 0x10, 8);
-                    if (ps > 0 && ps <= 64 && ptr_ok(pit)) {
-                        void *hero = nullptr;
-                        memcpy(&hero, reinterpret_cast<const uint8_t *>(pit) + 0x20, 8);
-                        if (ptr_ok(hero)) feat_getpos(hero, h_);
-                    }
-                }
-            }
-        }
-    }
-    int hit = 0;
-    float R = g_feats[FEAT_AURA].on ? g_feats[FEAT_AURA].value : 20.0f;
-    if (R < 5.0f) R = 5.0f;
-    if (R > 60.0f) R = 60.0f;
-    const float r2 = R * R;
-    const bool onehp = g_feats[FEAT_ONEHP].on && !g_feats[FEAT_OHK].on;
-    for (int32_t i = 0; i < size; i++) {
-        void *m = feat_mobj(items, i);
-        if (!m) continue;
-        void *st = nullptr;
-        int act = -1, dead = -1, hp = -1;
-        feat_mstat(m, st, act, dead, hp);
-        if ((act != 3 && act != 2) || dead != 0) continue;
-        float p[3];
-        feat_getpos(m, p);
-        /* skip placeholder/dummy entities parked far outside the map */
-        if (fabsf(p[0]) > 900.0f || fabsf(p[2]) > 900.0f) continue;
-        float dx = p[0] - h_[0], dz = p[2] - h_[2];
-        if (dx * dx + dz * dz > r2) continue;
-        if (onehp) {
-            /* ONE-SHOT per toggle: scratch each monster at most once until the
-               toggle is reset — prevents repeated application (overkill/death). */
-            if (g_scratch_reset) {
-                g_scratch_reset = 0;
-                g_scratched_n = 0;
-            }
-            bool seen = false;
-            for (int k = 0; k < g_scratched_n; k++) {
-                if (g_scratched[k] == m) {
-                    seen = true;
-                    break;
-                }
-            }
-            if (seen) continue;
-            if (g_scratched_n < 64) g_scratched[g_scratched_n++] = m;
-            if (hp <= 1 || !g_m_gtd || !ptr_ok(st)) continue;
-            void *exc = nullptr;
-            void *boxed = nullptr;
-            int dmg = hp - 1;
-            void *a2[2] = {&m, &dmg};
-            GUARDED_BEGIN();
-            boxed = inv(g_m_gtd, nullptr, a2, &exc);
-            GUARDED_END();
-            if (ptr_ok(boxed)) {
-                static __thread uint8_t hbuf[0x300];
-                memcpy(hbuf, reinterpret_cast<const uint8_t *>(boxed) + 0x10, 0x2F8);
-                void *a1b[1] = {hbuf};
-                GUARDED_BEGIN();
-                (void) inv(g_m_damage, st, a1b, &exc);
-                GUARDED_END();
-                hit++;
-            }
-            continue;
-        }
-        (void) feat_combo(m, st);
-        hit++;
-    }
-    return hit;
-}
 
 /* stun sweep: tiny damage + stun flags on real monsters within radius (no kills) */
 int feat_pulse_stun() {
@@ -2490,6 +2401,17 @@ void feat_nbdl(char *out, size_t cap, const char *arg) {
 
 /* POC-2: x86→arm64 via NativeBridgeGetTrampoline + bus data roundtrip (arm64→x86). */
 static uint64_t g_h64_bus[WSM_BUS_WORDS];
+static wsm::SweepApi g_main_sweep_api{};
+static void *g_main_execute = nullptr;
+static void *g_main_pipeline = nullptr;
+static void *(*g_domain_assembly_open)(void *,const char *) = nullptr;
+static void *(*g_assembly_image)(void *) = nullptr;
+static wsm::Command g_main_sweep_command{};
+static wsm::Command g_main_reset_command{};
+static uint64_t g_main_sweep_ticket = 0;
+static uint64_t g_main_sweep_started = 0;
+static bool g_main_sweep_background = false;
+static bool g_main_sweep_timedout = false;
 void feat_nbpoc2(char *out, size_t cap) {
     typedef void *(*fn_ext2_t)(const char *, int, void *, const void *);
     /* reset bus + publikasikan pointer utk ctor arm64 (baca dari file) */
@@ -2545,7 +2467,7 @@ void feat_nbpoc2(char *out, size_t cap) {
           (unsigned long long)g_h64_bus[11]);
     /* cmd ping */
     g_h64_bus[1] = 0;
-    g_h64_bus[0] = 1;
+    wsm::send_bus_command(g_h64_bus,1);
     for (int i = 0; i < 200 && g_h64_bus[1] != 2; i++) usleep(5000);
     used += snprintf(out + used, cap - used, " ping=%d pid=%llu m=0x%llx",
                      (int)g_h64_bus[1], (unsigned long long)g_h64_bus[2],
@@ -2554,7 +2476,7 @@ void feat_nbpoc2(char *out, size_t cap) {
     g_h64_bus[4] = 6;
     g_h64_bus[5] = 7;
     g_h64_bus[1] = 0;
-    g_h64_bus[0] = 2;
+    wsm::send_bus_command(g_h64_bus,2);
     for (int i = 0; i < 200 && g_h64_bus[1] != 3; i++) usleep(5000);
     used += snprintf(out + used, cap - used, " mul=%llu hb2=%llu",
                      (unsigned long long)g_h64_bus[6], (unsigned long long)g_h64_bus[10]);
@@ -2607,7 +2529,7 @@ void feat_nbpoc3(char *out, size_t cap) {
     if (!hb) { used += snprintf(out + used, cap - used, " THREAD_DOWN"); return; }
     /* A: agent READ64 of our nonce */
     g_poc3_nonce = 0x5EEDF00DCAFEBABEULL;
-    g_h64_bus[1] = 0; g_h64_bus[4] = (uint64_t)(uintptr_t)&g_poc3_nonce; g_h64_bus[0] = 3;
+    g_h64_bus[1] = 0; g_h64_bus[4] = (uint64_t)(uintptr_t)&g_poc3_nonce; wsm::send_bus_command(g_h64_bus,3);
     for (int i = 0; i < 200 && g_h64_bus[1] != 3; i++) usleep(5000);
     used += snprintf(out + used, cap - used, " | A:rd=0x%llx%s",
                      (unsigned long long)g_h64_bus[6],
@@ -2615,7 +2537,7 @@ void feat_nbpoc3(char *out, size_t cap) {
     /* B: agent WRITE64 into our scratch */
     g_poc3_target = 0;
     g_h64_bus[1] = 0; g_h64_bus[4] = (uint64_t)(uintptr_t)&g_poc3_target;
-    g_h64_bus[5] = 0xB0BAF00DDEADBEEFULL; g_h64_bus[0] = 4;
+    g_h64_bus[5] = 0xB0BAF00DDEADBEEFULL; wsm::send_bus_command(g_h64_bus,4);
     for (int i = 0; i < 200 && g_h64_bus[1] != 3; i++) usleep(5000);
     used += snprintf(out + used, cap - used, " | B:wr=%s", 
                      g_poc3_target == 0xB0BAF00DDEADBEEFULL ? "OK" : "BAD");
@@ -2634,7 +2556,7 @@ void feat_nbpoc3(char *out, size_t cap) {
             }
             fclose(mf);
         }
-        g_h64_bus[1] = 0; g_h64_bus[4] = base; g_h64_bus[0] = 3;
+        g_h64_bus[1] = 0; g_h64_bus[4] = base; wsm::send_bus_command(g_h64_bus,3);
         for (int i = 0; i < 200 && g_h64_bus[1] != 3; i++) usleep(5000);
         uint64_t direct = base ? *(volatile uint64_t *)(uintptr_t)base : 0;
         used += snprintf(out + used, cap - used, " | C:elf=0x%llx vs x86=0x%llx%s",
@@ -2642,7 +2564,7 @@ void feat_nbpoc3(char *out, size_t cap) {
                          (g_h64_bus[6] == direct && direct != 0) ? "(MATCH)" : "(DIFF)");
     }
     /* D: PATCHSELF — live arm64 code patch + call + restore */
-    g_h64_bus[1] = 0; g_h64_bus[0] = 5;
+    g_h64_bus[1] = 0; wsm::send_bus_command(g_h64_bus,5);
     for (int i = 0; i < 1200 && g_h64_bus[1] != 3; i++) usleep(5000);
     used += snprintf(out + used, cap - used,
                      " | D:old=0x%llx ret1=0x%llx nm=%lld nv=%lld"
@@ -2763,14 +2685,14 @@ void feat_hookcount(char *out, size_t cap, const char *arg) {
     used += snprintf(out + used, cap - used, " code=0x%llx", (unsigned long long)code);
     g_h64_bus[1] = 0;
     g_h64_bus[60] = code;
-    g_h64_bus[0] = 6;
+    wsm::send_bus_command(g_h64_bus,6);
     for (int i = 0; i < 400 && g_h64_bus[1] != 5; i++) usleep(5000);
     used += snprintf(out + used, cap - used, " nmaps=%lld patched=%lld | INSTALLED, tunggu %ds...",
                      (long long)g_h64_bus[68], (long long)g_h64_bus[69], secs);
     ELOGI("HOOKCOUNT: %s", out);
     for (int t = 0; t < secs; t++) sleep(1); /* interrupt-proof */
     g_h64_bus[1] = 0;
-    g_h64_bus[0] = 7;
+    wsm::send_bus_command(g_h64_bus,7);
     for (int i = 0; i < 400 && g_h64_bus[1] != 6; i++) usleep(5000);
     used += snprintf(out + used, cap - used, " | HOTCOUNT=%llu", (unsigned long long)g_h64_bus[70]);
     ELOGI("HOOKCOUNT done: %s", out);
@@ -2816,7 +2738,7 @@ void feat_hookself(char *out, size_t cap) {
     for (int i = 0; i < 400 && !hb; i++) { usleep(5000); hb = g_h64_bus[10]; }
     if (!hb) { snprintf(out, cap, "HOOKSELF THREAD_DOWN"); return; }
     g_h64_bus[1] = 0;
-    g_h64_bus[0] = 8;
+    wsm::send_bus_command(g_h64_bus,8);
     for (int i = 0; i < 400 && g_h64_bus[1] != 7; i++) usleep(5000);
     snprintf(out, cap, "HOOKSELF count=%llu (harap 3) sum=0x%llx restored=0x%llx np=%lld",
              (unsigned long long)g_h64_bus[71], (unsigned long long)g_h64_bus[72],
@@ -2868,7 +2790,7 @@ static int hook_install_slot(int slot, void *mi, unsigned long long *code_out) {
     g_h64_bus[1] = 0;
     g_h64_bus[59] = (uint64_t)slot;
     g_h64_bus[60] = code;
-    g_h64_bus[0] = 6;
+    wsm::send_bus_command(g_h64_bus,6);
     for (int i = 0; i < 400 && g_h64_bus[1] != 5; i++) usleep(5000);
     int rc = (int)(int64_t)g_h64_bus[68];
     int np = (int)g_h64_bus[69];
@@ -2880,7 +2802,7 @@ static int hook_install_abs(int slot, unsigned long long addr) {
     g_h64_bus[1] = 0;
     g_h64_bus[59] = (uint64_t)slot;
     g_h64_bus[60] = addr;
-    g_h64_bus[0] = 6;
+    wsm::send_bus_command(g_h64_bus,6);
     for (int i = 0; i < 400 && g_h64_bus[1] != 5; i++) usleep(5000);
     int rc = (int)(int64_t)g_h64_bus[68];
     int np = (int)g_h64_bus[69];
@@ -3051,7 +2973,7 @@ void feat_hookall(char *out, size_t cap, const char *arg) {
     ELOGI("HOOKALL: %s", out);
     for (int t = 0; t < secs; t++) sleep(1);
     g_h64_bus[1] = 0;
-    g_h64_bus[0] = 7;
+    wsm::send_bus_command(g_h64_bus,7);
     for (int i = 0; i < 400 && g_h64_bus[1] != 6; i++) usleep(5000);
     used += snprintf(out + used, cap - used, " | c=[");
     for (int s = 0; s < NHOOKT; s++)
@@ -3418,7 +3340,7 @@ void feat_guardhp(char *out, size_t cap) {
     unsigned long long addr = (unsigned long long)(uintptr_t)st + 0x5C;
     g_h64_bus[1] = 0;
     g_h64_bus[80] = addr;
-    g_h64_bus[0] = 12;
+    wsm::send_bus_command(g_h64_bus,12);
     for (int i = 0; i < 400 && g_h64_bus[1] != 5; i++) usleep(5000);
     snprintf(out, cap, "GUARD armed st=0x%llx hp_field=0x%llx", (unsigned long long)(uintptr_t)st, addr);
     ELOGI("GUARDHP: %s", out);
@@ -3427,7 +3349,7 @@ void feat_guardhp(char *out, size_t cap) {
 void feat_guardread(char *out, size_t cap) {
     if (!g_h64_handle || !g_h64_bus[10]) { snprintf(out, cap, "GUARDREAD no-payload"); return; }
     g_h64_bus[1] = 0;
-    g_h64_bus[0] = 14;
+    wsm::send_bus_command(g_h64_bus,14);
     for (int i = 0; i < 200 && g_h64_bus[1] != 8; i++) usleep(5000);
     snprintf(out, cap, "GUARDREAD hits=%llu pc=0x%llx lr=0x%llx x0=0x%llx addr=0x%llx",
              (unsigned long long)g_h64_bus[81], (unsigned long long)g_h64_bus[82],
@@ -3439,7 +3361,7 @@ void feat_guardread(char *out, size_t cap) {
 void feat_guardoff(char *out, size_t cap) {
     if (!g_h64_handle || !g_h64_bus[10]) { snprintf(out, cap, "GUARDOFF no-payload"); return; }
     g_h64_bus[1] = 0;
-    g_h64_bus[0] = 13;
+    wsm::send_bus_command(g_h64_bus,13);
     for (int i = 0; i < 200 && g_h64_bus[1] != 5; i++) usleep(5000);
     snprintf(out, cap, "GUARDOFF done");
 }
@@ -3487,7 +3409,7 @@ void feat_hookverify(char *out, size_t cap) {
     g_h64_bus[60] = code;
     g_h64_bus[61] = 0x52800020u;
     g_h64_bus[62] = 0xD65F03C0u;
-    g_h64_bus[0] = 11;
+    wsm::send_bus_command(g_h64_bus,11);
     for (int i = 0; i < 400 && g_h64_bus[1] != 5; i++) usleep(5000);
     int np = (int)g_h64_bus[69];
     /* panggil post */
@@ -3496,7 +3418,7 @@ void feat_hookverify(char *out, size_t cap) {
     feat_mstat(mon, st2, act2, dead1, hp2);
     /* restore semua slot */
     g_h64_bus[1] = 0;
-    g_h64_bus[0] = 7;
+    wsm::send_bus_command(g_h64_bus,7);
     for (int i = 0; i < 400 && g_h64_bus[1] != 6; i++) usleep(5000);
     int act3 = -1, dead2 = -1, hp3 = -1;
     void *st3 = nullptr;
@@ -3529,7 +3451,7 @@ void feat_hookabs(char *out, size_t cap, const char *arg) {
     g_h64_bus[1] = 0;
     g_h64_bus[59] = (uint64_t)slot;
     g_h64_bus[60] = addr;
-    g_h64_bus[0] = 6;
+    wsm::send_bus_command(g_h64_bus,6);
     for (int i = 0; i < 400 && g_h64_bus[1] != 5; i++) usleep(5000);
     snprintf(out, cap, "HAB slot=%d addr=0x%llx np=%lld rc=%lld", slot, addr,
              (long long)g_h64_bus[69], (long long)(int64_t)g_h64_bus[68]);
@@ -3552,10 +3474,144 @@ static bool bus_done(uint64_t t) {
     const uint64_t deadline = now_ms() + 4000;
     while (now_ms() < deadline) {
         if (__atomic_load_n(&g_h64_bus[9], __ATOMIC_ACQUIRE) == t) return true;
-        usleep(5000);
+        const uint32_t generation=wsm::bus_generation(g_h64_bus);
+        if(__atomic_load_n(&g_h64_bus[9],__ATOMIC_ACQUIRE)==t) return true;
+        const uint64_t now=now_ms();if(now>=deadline) break;
+        wsm::wait_bus(g_h64_bus,generation,static_cast<int>((deadline-now)>1000?1000:deadline-now));
     }
     g_bus_unhealthy = true; // Quarantine a timed-out channel; never overwrite an in-flight request.
     return false;
+}
+static bool main_sweep_pending() { return g_main_sweep_command.id != 0; }
+static void main_sweep_cancel() {
+    __atomic_store_n(&g_h64_bus[WSM_MAIN_ALLOWED], 0ULL, __ATOMIC_RELEASE);
+}
+static bool main_pulse_configure(bool damage, float value, char *out, size_t cap) {
+    FeatSlot &slot=g_feats[damage?FEAT_DMG:FEAT_CRIT];
+    if(value==0){slot.on=false;snprintf(out,cap,"OK %s OFF",slot.id);return true;}
+    int checked_damage=0;
+    if((damage&&!wsm::pulse_power_damage(value,checked_damage))||(!damage&&value!=1)) {
+        snprintf(out,cap,"ERR invalid pulse value");return false;
+    }
+    // Validate the complete signatures before committing flags. No RVA fallback
+    // and no legacy nullable modifier: Power is the factory's Int32 damage.
+    if(!feat_resolve() ||
+       !strict_binding(g_cls_dinfo,{"GenerateTrapDamage","Oak.DamageInfo",{"Oak.ICharacter","System.Int32",nullptr},2,true}) ||
+       !strict_binding(g_cls_dinfo,{"set_notMortal","System.Void",{"System.Boolean",nullptr,nullptr},1,false}) ||
+       (!damage &&
+        (!strict_binding(g_cls_dinfo,{"set_critical","System.Void",{"System.Boolean",nullptr,nullptr},1,false}) ||
+         !strict_binding(g_cls_dinfo,{"set_noCritical","System.Void",{"System.Boolean",nullptr,nullptr},1,false})))) {
+        snprintf(out,cap,"ERR exact pulse binding unavailable; previous state retained");return false;
+    }
+    if(damage)slot.value=value;
+    slot.on=true;
+    snprintf(out,cap,"OK %s armed for periodic pulse; gameplay effect unverified",slot.id);return true;
+}
+static bool main_sweep_start(const wsm::Command &command, char *out, size_t cap) {
+    if (main_sweep_pending() || !feat_resolve() || !g_main_sweep_api.unbox ||
+        !g_main_sweep_api.pin || !g_main_sweep_api.target || !g_main_sweep_api.release) {
+        snprintf(out,cap,"ERR main-thread backend unavailable or busy");return false;
+    }
+    if (!g_main_pipeline) {
+        fn_cfn_t2 cfn=feat_cfn();
+        void *klass=cfn((void *)(uintptr_t)g_img,"Oak","DamageCommandUtil");
+        g_main_pipeline=strict_binding(klass,{"OnExecute","System.Void",{"Oak.CommandTypes","Oak.DamageInfo",nullptr},2,true});
+    }
+    if (!g_main_execute && g_domain_assembly_open && g_assembly_image) {
+        GuestCallScope scope;
+        void *assembly=g_domain_assembly_open((void *)(uintptr_t)g_dom,"UnityEngine.CoreModule");
+        if(assembly){void *image=g_assembly_image(assembly);void *klass=feat_cfn()(image,"UnityEngine","UnitySynchronizationContext");
+            void *method=strict_binding(klass,{"ExecuteTasks","System.Void",{nullptr,nullptr,nullptr},0,true});
+            if(method)memcpy(&g_main_execute,method,8);
+        }
+    }
+    if(!g_main_execute || !g_main_pipeline || !g_m_gtd || !g_m_dis_notmortal || !hook_ensure_payload()) {
+        snprintf(out,cap,"ERR missing verified Unity callback or normal damage pipeline");return false;
+    }
+    if(!__atomic_load_n(&g_h64_bus[WSM_MAIN_HOOKED],__ATOMIC_ACQUIRE)) {
+        uint64_t token=bus_arm();if(!token){snprintf(out,cap,"ERR payload busy");return false;}
+        g_h64_bus[60]=(uint64_t)(uintptr_t)g_main_execute;
+        wsm::send_bus_command(g_h64_bus,19ULL);
+        if(!bus_done(token)||(int64_t)g_h64_bus[68]<0||!g_h64_bus[WSM_MAIN_HOOKED]) {
+            snprintf(out,cap,"ERR Unity callback installation failed");return false;
+        }
+    }
+    // Build privately, then publish once. No writes to the shared API until the
+    // previous ticket is acknowledged, including a Running timeout.
+    wsm::SweepApi snapshot=g_main_sweep_api;
+    snapshot.invoke=reinterpret_cast<fn_inv_t2>(g_finv);
+    snapshot.stage=g_m_stage_inst;snapshot.manager=g_m_stage_getcm;
+    snapshot.monsters=g_m_cm_monsters;snapshot.active=g_m_char_getas;
+    snapshot.stats=g_m_char_getstats;snapshot.dead=g_m_stats_isdead;
+    snapshot.factory=strict_binding(g_cls_dinfo,{"GenerateTrapDamage","Oak.DamageInfo",{"Oak.ICharacter","System.Int32",nullptr},2,true});
+    snapshot.not_mortal=strict_binding(g_cls_dinfo,{"set_notMortal","System.Void",{"System.Boolean",nullptr,nullptr},1,false});
+    snapshot.pipeline=g_main_pipeline;
+    snapshot.players=g_m_cm_players;snapshot.position=g_m_char_getpos;
+    snapshot.hp=g_m_stats_gethp;
+    snapshot.radius=g_main_sweep_background?(g_feats[FEAT_AURA].on?g_feats[FEAT_AURA].value:20.0f):0;
+    wsm::PulsePolicy policy{};
+    if(!wsm::pulse_policy(g_main_sweep_background,g_feats[FEAT_OHK].on,g_feats[FEAT_ONEHP].on,
+                          g_feats[FEAT_DMG].on,g_feats[FEAT_DMG].value,g_feats[FEAT_CRIT].on,policy)) {
+        snprintf(out,cap,"ERR invalid periodic pulse policy");return false;
+    }
+    snapshot.one_hp=policy.one_hp;snapshot.pulse_damage=policy.damage;snapshot.critical=policy.critical;
+    snapshot.set_critical=policy.critical?strict_binding(g_cls_dinfo,{"set_critical","System.Void",{"System.Boolean",nullptr,nullptr},1,false}):nullptr;
+    snapshot.set_no_critical=policy.critical?strict_binding(g_cls_dinfo,{"set_noCritical","System.Void",{"System.Boolean",nullptr,nullptr},1,false}):nullptr;
+    snapshot.probe_only=strcmp(command.text,"selftest")==0;
+    if(!snapshot.ready()){snprintf(out,cap,"ERR incomplete sweep API");return false;}
+    g_main_sweep_api=snapshot;
+    uint64_t ticket=++g_main_sweep_ticket;if(!ticket)ticket=++g_main_sweep_ticket;
+    g_main_sweep_command=command;g_main_sweep_started=now_ms();g_main_sweep_timedout=false;
+    g_h64_bus[WSM_MAIN_STAGE]=g_scene_stage;
+    g_h64_bus[WSM_MAIN_API]=(uint64_t)(uintptr_t)&g_main_sweep_api;
+    g_h64_bus[WSM_MAIN_APPLIED]=g_h64_bus[WSM_MAIN_SKIPPED]=0;
+    __atomic_store_n(&g_h64_bus[WSM_MAIN_STATE],(uint64_t)wsm::SweepState::Pending,__ATOMIC_RELEASE);
+    __atomic_store_n(&g_h64_bus[WSM_MAIN_ALLOWED],ticket,__ATOMIC_RELEASE);
+    __atomic_store_n(&g_h64_bus[WSM_MAIN_REQUEST],ticket,__ATOMIC_RELEASE);
+    snprintf(out,cap,"QUEUED sweep on UnityMain");return true;
+}
+static void main_sweep_poll() {
+    if(!main_sweep_pending())return;
+    if(!__atomic_load_n(&g_foreground,__ATOMIC_ACQUIRE))main_sweep_cancel();
+    const uint64_t ack=__atomic_load_n(&g_h64_bus[WSM_MAIN_ACK],__ATOMIC_ACQUIRE);
+    if(ack==g_main_sweep_ticket) {
+        const auto state=(wsm::SweepState)__atomic_load_n(&g_h64_bus[WSM_MAIN_STATE],__ATOMIC_ACQUIRE);
+        const auto outcome=state==wsm::SweepState::Applied?wsm::Outcome::Applied:
+            state==wsm::SweepState::Stale?wsm::Outcome::Stale:wsm::Outcome::Rejected;
+        char detail[256];snprintf(detail,sizeof detail,"MSWEEP mainTid=%llu targets=%llu skipped=%llu state=%llu",
+            (unsigned long long)g_h64_bus[WSM_MAIN_TID],(unsigned long long)g_h64_bus[WSM_MAIN_APPLIED],
+            (unsigned long long)g_h64_bus[WSM_MAIN_SKIPPED],(unsigned long long)state);
+        if(!g_main_sweep_background&&!g_main_sweep_timedout)g_runtime.complete(g_main_sweep_command,outcome,detail);
+        const bool failed=state==wsm::SweepState::Failed;
+        if(failed){g_session_fault=true;main_sweep_cancel();}
+        ELOGI("%s",detail);
+        g_main_sweep_command={};
+        g_main_sweep_background=false;
+        if(failed){char reset[512];modern_reset(reset,sizeof reset);}
+        if(g_main_reset_command.id){char reset[512];modern_reset(reset,sizeof reset);
+            g_runtime.complete(g_main_reset_command,strncmp(reset,"OK ",3)?wsm::Outcome::Fault:wsm::Outcome::Applied,reset);
+            g_main_reset_command={};}
+        return;
+    }
+    if(now_ms()-g_main_sweep_started>5000) {
+        main_sweep_cancel();
+        uint64_t pending=(uint64_t)wsm::SweepState::Pending;
+        if(__atomic_compare_exchange_n(&g_h64_bus[WSM_MAIN_STATE],&pending,
+            (uint64_t)wsm::SweepState::Cancelled,false,__ATOMIC_ACQ_REL,__ATOMIC_ACQUIRE)) {
+            // Callback must claim Pending atomically before reading request data.
+            if(!g_main_sweep_background)g_runtime.complete(g_main_sweep_command,wsm::Outcome::Rejected,"UnityMain callback unavailable; sweep cancelled");
+            g_session_fault=true; // No mailbox reuse after an unacknowledged cancellation.
+            g_main_sweep_command={};
+            g_main_sweep_background=false;
+            if(g_main_reset_command.id){g_runtime.complete(g_main_reset_command,wsm::Outcome::Fault,"callback did not acknowledge; restart target");g_main_reset_command={};}
+        }
+        // Running requests retain API storage until their callback acknowledges.
+        else if(pending==(uint64_t)wsm::SweepState::Running&&!g_main_sweep_timedout){
+            g_main_sweep_timedout=true;g_session_fault=true;
+            if(!g_main_sweep_background)g_runtime.complete(g_main_sweep_command,wsm::Outcome::Fault,"UnityMain execution timed out; cancellation requested, mailbox retained until acknowledgement");
+            ELOGI("UnityMain execution timed out; retaining in-flight API storage");
+        }
+    }
 }
 static volatile int g_speed_on = 0, g_nocd_on = 0, g_loot_on = 0, g_stunall_on = 0;
 static bool g_critdmg_on = false;
@@ -3637,7 +3693,7 @@ static int v30_mkblk(int slot, unsigned long long code, int style, uint32_t off,
     g_h64_bus[63] = (uint64_t)fbits;
     g_h64_bus[88] = (uint64_t)hs;
     uint64_t pre_ack = g_h64_bus[9];
-    __atomic_store_n(&g_h64_bus[0], 18ULL, __ATOMIC_RELEASE);
+    wsm::send_bus_command(g_h64_bus,18ULL);
     bool ok = bus_done(tok);
     int rc2 = (int)(int64_t)g_h64_bus[68];
     int np2 = (int)g_h64_bus[69];
@@ -3655,7 +3711,7 @@ static int v30_restore1(int slot) {
     uint64_t tok = bus_arm();
     if (!tok) return -99;
     g_h64_bus[59] = (uint64_t)slot;
-    __atomic_store_n(&g_h64_bus[0], 17ULL, __ATOMIC_RELEASE);
+    wsm::send_bus_command(g_h64_bus,17ULL);
     if (!bus_done(tok)) return -99;
     int rc = (int)(int64_t)g_h64_bus[68];
     if (rc < 0) g_bus_unhealthy = true; // Never claim OFF when restoration failed.
@@ -3672,7 +3728,10 @@ static bool getter_prologue_supported(uint64_t code) {
 void feat_speed(char *out, size_t cap, const char *arg) {
     const char *a = arg ? arg : "";
     while (*a == ' ') a++;
-    if (strncmp(a, "off", 3) == 0 || strncmp(a, "0", 1) == 0) {
+    float multiplier=2;
+    const bool off=strcmp(a,"off")==0;
+    if(!off && strcmp(a,"on")!=0 && !wsm::slider_value(a,1,5,multiplier)) {snprintf(out,cap,"ERR SPEED invalid range");return;}
+    if (off || multiplier==0) {
         int n1 = v30_restore1(20), n2 = v30_restore1(21), n3 = v30_restore1(22);
         bool ok = n1 >= 0 && n2 >= 0 && n3 >= 0;
         if (ok) g_speed_on = 0;
@@ -3690,8 +3749,6 @@ void feat_speed(char *out, size_t cap, const char *arg) {
     }
     unsigned long long hs = engine_find_hero_stats();
     if (!hs) { snprintf(out, cap, "ERR SPEED hero unavailable"); return; }
-    float multiplier = strtof(a, nullptr);
-    if (!wsm::finite_range(multiplier, 1, 5)) multiplier = 2;
     uint32_t multiplier_bits; memcpy(&multiplier_bits, &multiplier, 4);
     size_t used = snprintf(out, cap, "SPEED ON hs=0x%llx", hs);
     int okc = 0;
@@ -3843,7 +3900,7 @@ void feat_loot(char *out, size_t cap, const char *arg) {
     while (*a == ' ') a++;
     if (strncmp(a, "off", 3) == 0 || strncmp(a, "0", 1) == 0) {
         g_loot_on = 0;
-        snprintf(out, cap, "LOOT OFF");
+        snprintf(out, cap, "OK LOOT OFF future_requests=stopped prior_requests=not_cancelled");
         ELOGI("LOOT: %s", out);
         return;
     }
@@ -3964,7 +4021,7 @@ void feat_godoff(char *out, size_t cap) {
 void feat_hookread2(char *out, size_t cap) {
     if (!g_h64_handle || !g_h64_bus[10]) { snprintf(out, cap, "HR2 no-payload"); return; }
     uint64_t tok = bus_arm();
-    g_h64_bus[0] = 10;
+    wsm::send_bus_command(g_h64_bus,10);
     (void)bus_done(tok);
     size_t used = 0;
     used += snprintf(out + used, cap - used, "HR2[");
@@ -4076,7 +4133,7 @@ void feat_godmode(char *out, size_t cap, const char *arg) {
     g_h64_bus[59] = 18; /* v28: SLOT BARU — jangan sentuh slot autohook (13): hindari rebind poison */
     g_h64_bus[60] = addr;
     g_h64_bus[88] = (uint64_t)(uintptr_t)hs;
-    __atomic_store_n(&g_h64_bus[0], 15ULL, __ATOMIC_RELEASE);
+    wsm::send_bus_command(g_h64_bus,15ULL);
     if (!bus_done(tok)) { snprintf(out, cap, "GOD TIMEOUT"); ELOGI("GODMODE: %s", out); return; }
     if ((int64_t)g_h64_bus[68]==-5 || (int64_t)g_h64_bus[68]==-11) g_bus_unhealthy=true;
     snprintf(out, cap, "GOD armed hero_stats=0x%llx addr=0x%llx slot=18 np=%lld rc=%lld",
@@ -4088,7 +4145,7 @@ void feat_godmode(char *out, size_t cap, const char *arg) {
 void feat_hookread(char *out, size_t cap) {
     if (!g_h64_handle || !g_h64_bus[10]) { snprintf(out, cap, "HOOKREAD no-payload"); return; }
     g_h64_bus[1] = 0;
-    g_h64_bus[0] = 10;
+    wsm::send_bus_command(g_h64_bus,10);
     for (int i = 0; i < 200 && g_h64_bus[1] != 8; i++) usleep(5000);
     size_t used = 0;
     used += snprintf(out + used, cap - used, "HOOKREAD[");
@@ -4596,7 +4653,7 @@ void *feat_thread(void *) {
         fn_attach_t3 af = nullptr;
         memcpy(&af, &g_attach, sizeof af);
         GUARDED_BEGIN();
-        af(reinterpret_cast<void *>(g_dom));
+        {GuestCallScope scope;af(reinterpret_cast<void *>(g_dom));}
         GUARDED_END();
         ELOGI("FEAT thread attached to il2cpp domain");
     } else {
@@ -4613,7 +4670,7 @@ void *feat_thread(void *) {
             ready_logged = true;
         }
         modern_tick();
-        if (g_scene_hero && !g_session_fault && now_ms() >= feature_due && __atomic_load_n(&g_foreground, __ATOMIC_ACQUIRE)) {
+        if (g_scene_hero && !main_sweep_pending() && !g_session_fault && now_ms() >= feature_due && __atomic_load_n(&g_foreground, __ATOMIC_ACQUIRE)) {
         feature_due = now_ms() + 900;
         BEAT_BEGIN();
         int ver = g_feat_version;
@@ -4634,13 +4691,6 @@ void *feat_thread(void *) {
             if (stam || mana) {
                 (void) feat_apply(0, 1);
             }
-            if (g_feats[FEAT_OHK].on || g_feats[FEAT_ONEHP].on) {
-                int h = feat_pulse_kill();
-                static int plog2 = 0;
-                if (++plog2 % 15 == 1) {
-                    ELOGI("FEAT kill hit=%d ohk=%d", h, g_feats[FEAT_OHK].on ? 1 : 0);
-                }
-            }
             if (g_feats[FEAT_STUN].on) {
                 int h = feat_pulse_stun();
                 static int plog = 0;
@@ -4655,14 +4705,10 @@ void *feat_thread(void *) {
                     ELOGI("FEAT aggro n=%d", an);
                 }
             }
-            if (g_pending_sweep) {
-                g_pending_sweep = 0;
-                char stmp[256];
-                feat_msweep(9, stmp, sizeof stmp);
-                ELOGI("FEAT sweep -> %s", stmp);
-            }
+            g_pending_sweep = 0; // Retired worker-thread damage route.
             static int beat = 0;
-            if (++beat >= 6) { /* ~5.4 s: detect new characters entering the stage */
+            bool enabled=false;for(int i=0;i<FEAT_COUNT;++i)enabled=enabled||g_feats[i].on;
+            if (enabled && ++beat >= 6) { /* Detect new players only while options are active. */
                 beat = 0;
                 int c = feat_count();
                 if (c >= 0 && c != g_last_char_count) {
@@ -4672,6 +4718,11 @@ void *feat_thread(void *) {
             }
         }
         BEAT_END();
+            if (g_feats[FEAT_OHK].on || g_feats[FEAT_ONEHP].on || g_feats[FEAT_DMG].on || g_feats[FEAT_CRIT].on) {
+                wsm::Command pulse{};pulse.id=UINT64_MAX;pulse.epoch=g_runtime.epoch();
+                char detail[256];g_main_sweep_background=true;
+                if(!main_sweep_start(pulse,detail,sizeof detail)){g_main_sweep_background=false;g_session_fault=true;ELOGI("periodic damage suspended: %s",detail);}
+            }
         }
         modern_publish();
         if (g_guard_faults != last_faults) {
@@ -4685,7 +4736,13 @@ void *feat_thread(void *) {
             BEAT_BEGIN(); modern_reset(reset, sizeof reset); BEAT_END();
             last_faults = g_guard_faults;
         }
-        usleep(250 * 1000);
+        bool active=g_godmode_on||g_speed_on||g_nocd_on||g_loot_on||g_stunall_on||g_critdmg_on;
+        for(int i=0;i<FEAT_COUNT;++i) active=active||g_feats[i].on;
+        const wsm::WorkerState schedule{
+            __atomic_load_n(&g_foreground,__ATOMIC_ACQUIRE)!=0,active,
+            main_sweep_pending(),g_session_fault,feature_due};
+        g_runtime.wait_for_work(wsm::WorkerSchedule::timeout(now_ms(),schedule));
+        if(g_runtime.stopping()) break;
     }
     return nullptr;
 }
@@ -4695,8 +4752,8 @@ void ctl_exec(const char *raw, char *ack, size_t cap) {
     typedef void *(*fn_sn_t)(const char *);
     fn_inv_t inv = nullptr;
     fn_sn_t sn = nullptr;
-    memcpy(&inv, &ctl_fn_invoke, sizeof inv);
-    memcpy(&sn, &ctl_fn_strnew, sizeof sn);
+    inv=ctl_fn_invoke?ctl_guest_invoke:nullptr;
+    sn=ctl_fn_strnew?ctl_guest_string:nullptr;
     float val = 0.0f;
     char key[64] = {};
 
@@ -4786,20 +4843,25 @@ void ctl_exec(const char *raw, char *ack, size_t cap) {
         return;
     }
     if (strcmp(raw, "panic") == 0) {
-        const bool had_timescale=g_feats[FEAT_TIMESCALE].on || g_timescale_owned;
+        const bool had_timescale=g_timescale_owned;
         for (int i = 0; i < FEAT_COUNT; ++i) g_feats[i].on = false;
         g_speed_on = g_nocd_on = g_loot_on = g_stunall_on = 0;
         g_critdmg_on = false;
-        bool restored = true;
-        if (g_h64_handle) for (int slot = 0; slot < WSM_HOOK_SLOTS; ++slot) {
-            if (v30_restore1(slot) < 0) { restored = false; break; }
+        bool hooks_ok = true, time_ok = true;
+        main_sweep_cancel();
+        if (g_h64_handle) for (int slot = 0; slot < WSM_HOOK_SLOTS-1; ++slot) {
+            if (v30_restore1(slot) < 0) hooks_ok = false;
         }
+        const auto options = feat_restore_options();
         if (__atomic_load_n(&g_identity_ok, __ATOMIC_ACQUIRE)) {
-            (void) feat_apply(1, 0);
-            if(had_timescale){char tmp[256];ctl_ts_apply(0,tmp,sizeof tmp);if(strncmp(tmp,"OK ",3))restored=false;}
-        }
+            if(had_timescale){char tmp[256];ctl_ts_apply(0,tmp,sizeof tmp);time_ok=strncmp(tmp,"OK ",3)==0;}
+        } else if(had_timescale) time_ok=false;
+        const bool restored = wsm::restoration_complete(options, hooks_ok, time_ok, g_timescale_owned);
+        g_restoration_pending = !restored;
         ++g_feat_version; g_feat_applied_version = g_feat_version;
-        snprintf(ack, cap, "%s PANIC restore=%s", restored ? "OK" : "ERR", restored ? "complete" : "failed; restart target");
+        snprintf(ack, cap, "%s PANIC restore=%s options_residual=%u bits=0x%x option_failures=%u option_uncertain=%u time_owned=%d hooks=%s loot=future_requests_stopped; prior_requests_not_cancelled",
+            restored ? "OK" : "ERR", restored ? "complete" : "incomplete; restart target", options.residual_objects,
+            options.residual_bits, options.failed, options.uncertain_objects, g_timescale_owned ? 1 : 0, hooks_ok ? "restored" : "uncertain");
         return;
     }
     if (strncmp(raw, "tpr ", 4) == 0) {
@@ -4956,12 +5018,7 @@ void ctl_exec(const char *raw, char *ack, size_t cap) {
         return;
     }
     if (strncmp(raw, "sweep", 5) == 0) {
-        if (g_menu_ctx) {
-            g_pending_sweep = 1;
-            snprintf(ack, cap, "QUEUED sweep (engine <=1s)");
-        } else {
-            feat_msweep(9, ack, cap);
-        }
+        snprintf(ack, cap, "ERR sweep requires correlated main-thread dispatcher");
         return;
     }
     if (strncmp(raw, "kill1", 5) == 0) {
@@ -5113,15 +5170,21 @@ jstring menu_exec(JNIEnv *env, jclass, jstring cmd) {
     const char *c = cmd ? env->GetStringUTFChars(cmd, nullptr) : nullptr;
     if (!c) return env->NewStringUTF("{\"state\":\"rejected\"}");
     if (strncmp(c, "__identity ", 11) == 0) {
-        char package[80], version[48], tail; unsigned long long code = 0;
+        char package[80]{}, version[48]{}, tail; unsigned long long code = 0;
         bool valid = sscanf(c + 11, "%79s %47s %llu %c", package, version, &code, &tail) == 3 &&
             wsm::identity_matches(package, version, code);
-        __atomic_store_n(&g_identity_ok, valid ? 1 : 0, __ATOMIC_RELEASE);
+        pthread_mutex_lock(&g_identity_mutex);
+        memcpy(g_observed_package,package,sizeof package);memcpy(g_observed_version,version,sizeof version);
+        g_observed_version_code=code;pthread_mutex_unlock(&g_identity_mutex);
+        const bool previously_valid=__atomic_exchange_n(&g_identity_ok,valid?1:0,__ATOMIC_ACQ_REL)!=0;
+        if(previously_valid&&!valid){main_sweep_cancel();uint64_t seq;g_runtime.submit("panic",seq);}
+        g_runtime.notify();
         snprintf(ack, sizeof ack, "{\"state\":\"%s\"}", valid ? "applied" : "rejected");
     } else if (strncmp(c, "__activity ", 11) == 0) {
         bool resumed = strcmp(c + 11, "resumed") == 0;
         __atomic_store_n(&g_foreground, resumed ? 1 : 0, __ATOMIC_RELEASE);
-        if (!resumed) { uint64_t seq; g_runtime.submit("panic", seq); }
+        g_runtime.notify();
+        if (!resumed) { main_sweep_cancel();uint64_t seq; g_runtime.submit("panic", seq); }
         snprintf(ack, sizeof ack, "{\"state\":\"applied\"}");
     } else modern_request(c, ack, sizeof ack);
     env->ReleaseStringUTFChars(cmd, c);
@@ -5302,27 +5365,18 @@ void *menu_thread(void *arg) {
 }
 
 bool safe_elf_parse(uint64_t base, ElfSyms *out) {
-    struct sigaction sa{}, old{};
-    sa.sa_sigaction = elf_segv_handler;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = SA_SIGINFO | SA_NODEFER;
-    sigaction(SIGSEGV, &sa, &old);
+    guard_install_once();
     g_elf_guard = 1;
     bool ok = false;
     if (sigsetjmp(g_elf_jmp, 1) == 0) {
         ok = elf_parse(base, out);
     }
     g_elf_guard = 0;
-    sigaction(SIGSEGV, &old, nullptr);
     return ok;
 }
 
 bool safe_elf_lookup(const ElfSyms &e, const char *want, uint64_t *addr_out) {
-    struct sigaction sa{}, old{};
-    sa.sa_sigaction = elf_segv_handler;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = SA_SIGINFO | SA_NODEFER;
-    sigaction(SIGSEGV, &sa, &old);
+    guard_install_once();
     g_elf_guard = 1;
     bool ok = false;
     *addr_out = 0;
@@ -5330,7 +5384,6 @@ bool safe_elf_lookup(const ElfSyms &e, const char *want, uint64_t *addr_out) {
         ok = elf_lookup(e, want, addr_out);
     }
     g_elf_guard = 0;
-    sigaction(SIGSEGV, &old, nullptr);
     return ok;
 }
 
@@ -5540,6 +5593,13 @@ void *engine_thread(void *) {
         bind_api("il2cpp_free", g_binding_api.release);
         bind_api("il2cpp_method_is_generic", g_binding_api.generic);
         bind_api("il2cpp_method_is_inflated", g_binding_api.inflated);
+        bind_api("il2cpp_object_unbox",g_main_sweep_api.unbox);
+        bind_api("il2cpp_gchandle_new",g_main_sweep_api.pin);
+        bind_api("il2cpp_gchandle_get_target",g_main_sweep_api.target);
+        bind_api("il2cpp_gchandle_free",g_main_sweep_api.release);
+        g_option_gc = {g_main_sweep_api.pin,g_main_sweep_api.target,g_main_sweep_api.release};
+        bind_api("il2cpp_domain_assembly_open",g_domain_assembly_open);
+        bind_api("il2cpp_assembly_get_image",g_assembly_image);
         ELOGI("BIND full-signature API ready=%d", g_binding_api.ready());
     }
     g_target_base = parsed ? base : 0; // Use the ELF-validated load bias, not a transient first alias.
@@ -5665,9 +5725,6 @@ void *engine_thread(void *) {
                 g_clsname = reinterpret_cast<void *>(sym_addr[15]);
                 g_img = q_img;
                 if (cgm) {
-                    ctl_mi_instance = strict_binding(klass, {"get_Instance", "GlobalTimeManager", {nullptr, nullptr, nullptr}, 0, true});
-                    ctl_mi_mod = strict_binding(klass, {"Mod", "System.Void", {"System.Single", "System.String", "System.Boolean"}, 3, false});
-                    ctl_mi_unmod = strict_binding(klass, {"Unmod", "System.Void", {"System.String", nullptr, nullptr}, 1, false});
                     ctl_mi_setmax = cgm(klass, "SetMaximumDeltaTime", 1);
                     ctl_mi_resetmax = cgm(klass, "ResetMaximumDeltaTime", 0);
                     ctl_mi_clear = cgm(klass, "Clear", 0);
