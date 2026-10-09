@@ -30,4 +30,3 @@ public final class MenuSnapshot {
         activeCount=active;pendingCount=Math.max(pending,pendingRequests);
     }
 }
-
