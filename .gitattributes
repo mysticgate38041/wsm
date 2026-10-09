@@ -8,3 +8,5 @@
 # Preserve recorded evidence bytes and their historical hashes.
 src/wsm-v2/evidence/** -text
 analysis/dump-source-audit/** -text
+docs/history/modernization-v2/evidence/** -text whitespace=cr-at-eol
+docs/history/v2-review/evidence/** -text whitespace=cr-at-eol

@@ -1,9 +1,10 @@
 # API_MAP_FULL — Peta Lengkap API Guardian Tales (internal)
 
 > **ARSIP SESI LAMA — bukan katalog lengkap atau attestation WSM6.** Peta 3.54.0
-> yang diindeks dan diverifikasi dari metadata berada di
-> [laporan statis baru](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/analysis/gt354-api/REPORT.md).
-> Label `[V]` di bawah mengacu sesi lama; gunakan RELEASE_VALIDATION.md untuk bukti WSM6.
+> yang diindeks dan diverifikasi dari metadata dirujuk pada evidence lokal
+> `analysis/gt354-api/REPORT.md` (path dari root repositori; tidak dilacak Git dan tidak tersedia dalam clone).
+> Lihat [audit dump yang dilacak Git](ORIGINAL_DUMP_AUDIT.md) dan [README repositori](../../../README.md) untuk navigasi lebih lanjut.
+> Label `[V]` di bawah mengacu sesi lama; gunakan [RELEASE_VALIDATION.md](RELEASE_VALIDATION.md) untuk bukti WSM6.
 > Koreksi wrapper: `_s_set_*` adalah setter, bukan static method. Static wrappers
 > dapat bernama `_m_*_xlua_st_`. Keberadaan detector/API tidak membuktikan perilaku aktif atau invisibility.
 

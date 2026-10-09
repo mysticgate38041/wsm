@@ -30,3 +30,8 @@
 /premium_menu_design/.figma/
 # Historical source/binary backup; history is documented in the evidence reports
 /src/wsm-v2/evidence/finalization-20261007-162612/baseline/
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini

@@ -1,5 +1,7 @@
 # WSM v3 yang dikoreksi — 6.2.0 RC1
 
+> Catatan migrasi v6.2. Perubahan runtime/menu berikutnya dijelaskan dalam [modernisasi v6.3](MODERNIZATION_V6_3.md); [indeks dokumentasi](README.md) menunjukkan panduan terkini.
+
 Dokumen ini menjelaskan implementasi migrasi WSM 6.2.0 RC1 (`wsm-v6.2.0-rc1`, module versionCode `60201`). Target tetap exact: package `com.kakaogames.gdts`, versionName `3.54.0`, versionCode `423`, minimum Android API 26, ABI `x86_64` dan `arm64-v8a`. Proposal “WSM v3 — Full Architecture” dipakai sebagai masukan desain; klaim dan potongan kode di dalamnya bukan hasil pengujian implementasi ini.
 
 ## Peta source aktif
