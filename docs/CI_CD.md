@@ -1,6 +1,6 @@
 # Build, CI/CD dan publikasi WSM 6.3.0 RC1
 
-Workflow `.github/workflows/wsm.yml` membangun source modular untuk rilis `v6.3.0-rc1` (module versionCode `60201`). Build lokal, native fixture, remote CI dan gameplay merupakan bukti berbeda; satu jenis hasil tidak otomatis memenuhi jenis lain.
+Workflow `.github/workflows/wsm.yml` membangun source modular untuk rilis `v6.3.0-rc1` (module versionCode `60301`). Build lokal, native fixture, remote CI dan gameplay merupakan bukti berbeda; satu jenis hasil tidak otomatis memenuhi jenis lain.
 
 ## Workflow dan checks
 

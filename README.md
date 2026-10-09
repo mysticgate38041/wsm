@@ -34,7 +34,7 @@ Desain asli berisi **47 fitur**. Semuanya tercatat dalam katalog, tetapi **31 be
 | `src/wsm` | POC lama; bukan jalur release aktif |
 | `src/fixture` | Aplikasi fixture terisolasi; kunci debug dibuat secara lokal |
 | `premium_menu_design` | Referensi React untuk desain 47 fitur; bukan engine Android |
-| `modernization-v2`, `v2-review`, `re` | Review, preflight dan catatan reverse engineering historis |
+| `docs/history` | Arsip sesi historis: peta sistem, pelajaran, resume, dossier, studi komparatif, review/preflight v2 dan catatan RE — bukan instruksi aktif |
 | `analysis/dump-source-audit` | Inventaris dump, provenance, native disassembly dan audit Lua/API |
 | `docs/context` | Konteks gabungan tiga root sumber awal |
 | `.github/workflows/wsm.yml` | CI build/test dan CD release berbasis tag |

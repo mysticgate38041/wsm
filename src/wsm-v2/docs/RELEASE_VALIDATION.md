@@ -17,7 +17,7 @@ Target lokal: `emulator-5554`, LDPlayer 14, Android API 34, proses host x86_64 d
 | Java/JDK17, D8 API26, DEX header/SHA1/Adler32 | PASS | Build + package verifier |
 | UI accepted/applied, rejection, timeout, stale epoch, fault | PASS | `tests/ControlStateTest.java` |
 | 11 regresi paket: tamper/duplicate/missing/ABI/version/DEX, stale sources, deterministic repack | PASS | `tests/test_release.py`, log build |
-| 36 preflight lama termasuk 1.000 mutasi ELF parser | PASS | `v2-review/tests/test_preflight.py` |
+| 36 preflight lama termasuk 1.000 mutasi ELF parser | PASS | `docs/history/v2-review/tests/test_preflight.py` |
 | Antrean/PANIC/epoch/history/snapshot, 4 produsen / 4.000 requests pada Android | PASS | `evidence/v6-android-branch-tests.txt` |
 | 3 alias mmap, readback/proteksi/rollback partial failure | PASS | `evidence/v6-android-branch-tests.txt` |
 | Branch imm26/alignment, near allocation, atomic 4-byte write, adjacent bytes | PASS | `evidence/v6-android-branch-tests.txt` |
