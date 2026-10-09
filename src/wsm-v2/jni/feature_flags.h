@@ -45,7 +45,10 @@ public:
     FeatureFlags &operator=(const FeatureFlags &) = delete;
     // Fixed controls use their actual engine values (e.g. god=3, poise=52).
     // Slider values must be finite and in their existing production range.
-    // Enabled observations require a ready lifecycle and matching epoch.
+    // Observations preserve configuration; read/update APIs gate execution readiness.
+    // Validate the entire observation before changing any member. One revision
+    // denotes one complete lifecycle + feature transaction.
+    bool publish_observation(uint64_t epoch, bool ready, const FeatureValue (&values)[FeatureCount]);
     bool update(FeatureIndex index, bool enabled, float value, uint64_t expected_epoch);
     bool update(const char *id, bool enabled, float value, uint64_t expected_epoch);
     // Older epochs are rejected. Advancing lifecycle resets cached controls.

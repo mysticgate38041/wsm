@@ -16,9 +16,10 @@ import zipfile
 import zlib
 
 ROOT = Path(__file__).resolve().parents[1]
-STAMP = "wsm-v6.2.0-rc1"
-MODULE_VERSION = "v6.2.0-rc1"
-MODULE_VERSION_CODE = 60201
+BUILD_MANIFEST = json.loads((ROOT / "scripts/build_manifest.json").read_text(encoding="utf-8"))
+STAMP = BUILD_MANIFEST["release"]["stamp"]
+MODULE_VERSION = BUILD_MANIFEST["release"]["version"]
+MODULE_VERSION_CODE = BUILD_MANIFEST["release"]["versionCode"]
 NDK_REVISION = "27.2.12479018"
 TARGET = {"package": "com.kakaogames.gdts", "version": "3.54.0", "versionCode": 423}
 QUALIFICATION = "INCOMPLETE_47_FEATURE_SCOPE"
@@ -44,6 +45,10 @@ TEMPLATE_ENTRIES = {
     "META-INF/com/google/android/update-binary", "META-INF/com/google/android/updater-script",
 }
 REQUIRED_SOURCES = {
+    "scripts/build_manifest.json", "scripts/generate_build_config.py", "scripts/build_menu.py",
+    "jni/build_sources.mk", "jni/build_sources.cmake", "jni/wsm_version.h",
+    "jni/runtime_snapshot.h", "jni/runtime_status.h", "tests/status_test.cpp",
+    "jni/bootstrap_progress.h", "tests/bootstrap_test.cpp",
     "jni/Android.mk", "jni/Application.mk", "jni/CMakeLists.txt", "jni/module.cpp",
     "jni/engine.cpp", "jni/il2cpp_resolver.cpp", "jni/aob_scanner.cpp",
     "jni/hybrid_resolver.cpp", "jni/feature_flags.cpp", "jni/dispatcher.cpp",

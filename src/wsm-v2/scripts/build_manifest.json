@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "release": {
+    "version": "v6.3.0-rc1",
+    "versionCode": 60301,
+    "stamp": "wsm-v6.3.0-rc1"
+  },
+  "engineSources": [
+    "engine.cpp",
+    "il2cpp_resolver.cpp",
+    "aob_scanner.cpp",
+    "hybrid_resolver.cpp",
+    "feature_flags.cpp",
+    "dispatcher.cpp",
+    "payload_worker.cpp"
+  ],
+  "fixtures": {
+    "runtime": [],
+    "patch": [],
+    "binding": [
+      "il2cpp_resolver.cpp"
+    ],
+    "reloc": [],
+    "sweep": [],
+    "flags": [
+      "feature_flags.cpp"
+    ],
+    "resolver": [
+      "il2cpp_resolver.cpp",
+      "aob_scanner.cpp",
+      "hybrid_resolver.cpp"
+    ],
+    "dispatcher": [
+      "dispatcher.cpp"
+    ],
+    "worker": [
+      "payload_worker.cpp"
+    ],
+    "pool": [
+      "trampoline_pool.cpp"
+    ],
+    "bus_event": [],
+    "restore": [],
+    "status": [
+      "feature_flags.cpp"
+    ],
+    "bootstrap": []
+  }
+}

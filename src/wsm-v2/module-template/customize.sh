@@ -17,7 +17,7 @@ done
 command -v sha256sum >/dev/null 2>&1 || abort "sha256sum required for integrity verification."
 (cd "$MODPATH" && sed '/  META-INF\//d' verify.list | sha256sum -c - >/dev/null 2>&1) || abort "Module integrity check failed."
 set_perm_recursive "$MODPATH" 0 0 0755 0644 || abort "Failed setting module permissions."
-ui_print "- WSM v6.2.0-rc1 / $ABI / integrity PASS"
+ui_print "- WSM v6.3.0-rc1 / $ABI / integrity PASS"
 ui_print "- Enable a compatible Zygisk provider and reboot once."
 ui_print "- Target: com.kakaogames.gdts, version 3.54.0 / code 423 only."
 ui_print "- RC1: complete 47-feature gameplay qualification remains pending."
