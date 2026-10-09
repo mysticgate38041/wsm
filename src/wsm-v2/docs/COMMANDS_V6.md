@@ -1,14 +1,16 @@
-# Command produksi WSM 6
+# Command produksi WSM 6.3
 
-Kandidat terbaru RC2 mempertahankan command RC1 dan menambahkan dukungan relokasi ADR/ADRP untuk wrapped getter speed/critical damage. Prologue dengan branch/literal load yang tidak didukung tetap ditolak. Bukti dump dan uji ARM64 sintetis berada di `ORIGINAL_DUMP_AUDIT.md`; command applied belum menjadi bukti efek damage game.
+Referensi command untuk `v6.3.0-rc1`. Target identity tetap package `com.kakaogames.gdts`, versionName `3.54.0` dan versionCode `423`. `epoch E command` mewajibkan epoch cocok saat enqueue; PANIC menaikkan epoch dan membatalkan permintaan lama. Katalog adalah referensi cakupan, bukan 47 toggle aktif.
 
-Pembaruan kandidat 6.1.0 RC1: `catalog` / `catalog 0..11` membaca seluruh 47 fitur desain dan statusnya; `critdmg 0` / `critdmg 1..5` mengendalikan getter float hero-only eksperimental pada slot 26. `epoch E command` mewajibkan epoch E cocok ketika enqueue; UI memakai bentuk ini untuk mutasi. PANIC menaikkan epoch di bawah queue lock sehingga producer lama ditolak. Identity kini memerlukan package, versionName 3.54.0 dan versionCode 423. Semua command yang belum diimplementasikan tetap ditolak; katalog bukan toggle. Lihat `FINALIZATION_47.md` untuk cakupan dan bukti kandidat.
+Arsitektur/state menu: [modernisasi v6.3](../../../docs/MODERNIZATION_V6_3.md). Bukti RC2 dan semantik desain lama tetap berada di [audit dump](ORIGINAL_DUMP_AUDIT.md) dan [finalisasi 47](FINALIZATION_47.md). ACK tidak membuktikan seluruh efek gameplay.
 
 Native UI dan file transport masuk dispatcher yang sama; parser lama di `engine.cpp` merupakan artefak penelitian dan tidak diekspos langsung.
 
 | Command | Rentang / efek |
 |---|---|
-| `status`, `telemetry` | Snapshot JSON; hanya membaca salinan state |
+| `status` | Snapshot JSON dengan epoch/revisi kontrol; fitur kosong ketika status belum siap/restoring |
+| `telemetry` | Snapshot ditambah revision dan metrik antrean/completion; hanya diagnostik |
+| `catalog` / `catalog 0..11` | Baca katalog 47 fitur beserta status cakupannya |
 | `result ID` | Completion ring 64 entri; `expired` bila ID tidak tersimpan |
 | `panic` | Batalkan command belum dijalankan; hentikan pulse/refill/loot; coba restore semua slot dan opsi milik WSM |
 | `selftest` | Muat helper; 6 × 7 = 42; eksekusi branch/getter wrapper/hero predicate/GOD/neighbor/restore pada kode sintetis; efek game tetap diuji terpisah |
@@ -17,6 +19,7 @@ Native UI dan file transport masuk dispatcher yang sama; parser lama di `engine.
 | `feat dmg 0` atau `feat dmg 1..99` | OFF / pulse power ×100.000 |
 | `feat timescale 0` atau `feat timescale 0.1..5` | OFF idempotent / modifier waktu bernama wsm, ON membutuhkan instance game yang hidup |
 | `speed 0` atau `speed 1..5` | Restore / skala tiga getter gerak hero |
+| `critdmg 0` atau `critdmg 1..5` | Restore / skala critical damage hero, eksperimental |
 | `godmode 0\|1` | Restore / damage guard khusus hero, eksperimental |
 | `nocd 0\|1` | Restore / tiga cooldown gates, eksperimental |
 | `stunall 0\|1` | Restore / freeze AI hook; tidak menjalankan StunCommand lama |

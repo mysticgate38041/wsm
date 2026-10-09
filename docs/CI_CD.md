@@ -38,32 +38,9 @@ Pin action dan toolchain adalah input source saat ini. Runner image serta patch 
 
 ## Build lokal dan portable units
 
-ndk-build tetap default. Contoh PowerShell:
+[Build dan pengujian](BUILDING.md) menjadi panduan toolchain, perintah ndk-build/CMake, output, pengujian Python/Java serta fixture POSIX dan Android. Kedua backend membutuhkan CMake/Ninja untuk graph fixture bersama dan menjalankan gate paket yang sama.
 
-```powershell
-& ./src/wsm-v2/scripts/build.ps1 -Ndk 'C:/Android/ndk/27.2.12479018' `
-  -Jdk 'C:/tools/jdk-17' -Sdk 'C:/Android/sdk' `
-  -Python 'C:/tools/python/python.exe' -Jobs 2 -CatalogSnapshot
-
-& ./src/wsm-v2/scripts/build.ps1 -Ndk 'C:/Android/ndk/27.2.12479018' `
-  -Jdk 'C:/tools/jdk-17' -Sdk 'C:/Android/sdk' `
-  -Python 'C:/tools/python/python.exe' -Jobs 2 -CatalogSnapshot `
-  -NativeBuild CMake -CMake 'C:/tools/cmake/bin/cmake.exe' `
-  -Ninja 'C:/tools/ninja.exe'
-```
-
-Dua backend menjalankan gate package yang sama. Kedua backend memerlukan CMake/Ninja untuk fixture; manifest source/version diperiksa sebelum build. Cache Java/DEX memverifikasi hash seluruh input/output dan selalu mengeksekusi kedua suite Java. CMake output ABI disalin ke lokasi package standar; receipt dibentuk dari binary/source yang baru diperiksa. Hasil final adalah `src/wsm-v2/dist/wsm-v6.3.0-rc1.zip` dan `.zip.sha256`. Keluaran build juga menyertakan fixture di `build/fixtures/x86_64` serta `build/fixtures/arm64-v8a`.
-
-Untuk POSIX/Linux dengan compiler yang tersedia:
-
-```bash
-cmake -S src/wsm-v2/jni -B src/wsm-v2/build/host-tests -G Ninja \
-  -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Release
-cmake --build src/wsm-v2/build/host-tests --parallel 2
-ctest --test-dir src/wsm-v2/build/host-tests --output-on-failure
-```
-
-CMake host sengaja menolak Windows karena fixture memakai API POSIX. Android cross-compile merupakan jalur yang berbeda; executable tidak bisa dijalankan langsung sebagai program Windows. Fixture Android boleh dijalankan pada perangkat/emulator terisolasi tanpa memasang modul aktif ke game; ABI dan execution log harus dicocokkan dengan binary hash.
+Fixture perangkat dapat dijalankan terpisah dari pemasangan modul. Catat ABI, hash binary dan lingkungan eksekusi; hasil host/emulator tidak otomatis mengkualifikasi gameplay atau hardware ARM64 fisik.
 
 ## Snapshot provenance dan receipt
 

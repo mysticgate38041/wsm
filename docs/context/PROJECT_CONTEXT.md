@@ -1,8 +1,10 @@
 # Konteks proyek — tiga root workspace
 
-**Dump sumber asli yang ditambahkan pengguna:** `C:/Users/Administrator/Downloads/Mod/gt_dump`. [Audit dump asli / WSM RC2](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2/docs/ORIGINAL_DUMP_AUDIT.md) mencatat inventaris 55.924 file, 155/155 input katalog cocok, native/Lua evidence, perbaikan relokasi getter dan validasi kandidat terbaru. Ini memperluas konteks studi tiga root di bawah.
+> **ARSIP STUDI — 7 Oktober 2026.** Versi, status, path workspace, dan hasil pemeriksaan di bawah merupakan konteks historis sesi tersebut. Untuk status proyek dan panduan saat ini, mulai dari [README repositori](../../README.md). Referensi evidence lokal yang tidak dilacak Git tidak tersedia dalam clone repositori.
 
-**Pembaruan implementasi setelah studi:** kandidat WSM 6.1.0 RC1, perubahan source, validasi baru dan matriks 47 fitur berada di [FINALIZATION_47.md](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2/docs/FINALIZATION_47.md). Deskripsi WSM6 di bawah merupakan baseline studi; finalisasi seluruh 47 efek gameplay masih belum terpenuhi.
+**Dump sumber asli yang ditambahkan pengguna:** `C:/Users/Administrator/Downloads/Mod/gt_dump`. [Audit dump asli / WSM RC2](../../src/wsm-v2/docs/ORIGINAL_DUMP_AUDIT.md) mencatat inventaris 55.924 file, 155/155 input katalog cocok, native/Lua evidence, perbaikan relokasi getter dan validasi kandidat terbaru. Ini memperluas konteks studi tiga root di bawah.
+
+**Pembaruan implementasi setelah studi:** kandidat WSM 6.1.0 RC1, perubahan source, validasi baru dan matriks 47 fitur berada di [FINALIZATION_47.md](../../src/wsm-v2/docs/FINALIZATION_47.md). Deskripsi WSM6 di bawah merupakan baseline studi; finalisasi seluruh 47 efek gameplay masih belum terpenuhi.
 
 Tanggal studi: 7 Oktober 2026. Dokumen ini merangkum pembacaan source, laporan, struktur artefak, dan pemeriksaan lokal pada tiga root yang ditunjukkan pengguna. Tujuan pekerjaan adalah memahami konteks proyek; bukan menjalankan roadmap lama, mengubah fitur, memasang modul, atau menguji ulang game.
 
@@ -253,18 +255,18 @@ Hasil: **15 tests, OK**, sekitar 17,943 detik. Tidak ada pemasangan modul, invoc
 
 ## 10. Sumber acuan dan batas yang masih terbuka
 
-Untuk implementasi sekarang, mulai dari:
+Untuk implementasi sekarang, mulai dari [README repositori](../../README.md). Sumber yang digunakan dalam studi ini:
 
-- [README WSM aktif](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2/README.md)
-- [Release validation WSM6](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2/docs/RELEASE_VALIDATION.md)
-- [Engine](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2/jni/engine.cpp), [control](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2/jni/modern_control.inc), [loader](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2/jni/loader.cpp), [helper ARM64](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2/payload/h64.cpp)
-- [Menu Java](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/src/wsm-v2/menu/WsmMenu.java)
-- [Laporan API final](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/analysis/gt354-api/guardian-tales-3.54.0-api-map/REPORT.md)
-- [Kontrak WSM/API](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/analysis/gt354-api/guardian-tales-3.54.0-api-map/contracts/WSM_BINDINGS.md)
-- [README query/reproduksi API](C:/Users/Administrator/Downloads/GT_cheat_analysis/WSMenu/analysis/gt354-api/guardian-tales-3.54.0-api-map/README.md)
+- [README implementasi WSM](../../src/wsm-v2/README.md)
+- [Release validation WSM6](../../src/wsm-v2/docs/RELEASE_VALIDATION.md)
+- [Engine](../../src/wsm-v2/jni/engine.cpp), [control](../../src/wsm-v2/jni/modern_control.inc), [loader](../../src/wsm-v2/jni/loader.cpp), [helper ARM64](../../src/wsm-v2/payload/h64.cpp)
+- [Menu Java](../../src/wsm-v2/menu/WsmMenu.java)
+- Laporan API final — evidence lokal, tidak dilacak Git: `analysis/gt354-api/guardian-tales-3.54.0-api-map/REPORT.md` (path dari root repositori).
+- Kontrak WSM/API — evidence lokal, tidak dilacak Git: `analysis/gt354-api/guardian-tales-3.54.0-api-map/contracts/WSM_BINDINGS.md` (path dari root repositori).
+- README query/reproduksi API — evidence lokal, tidak dilacak Git: `analysis/gt354-api/guardian-tales-3.54.0-api-map/README.md` (path dari root repositori).
 
 Untuk sejarah/rasional gunakan roadmap, modernization review, gates, lessons, ARM64 POC, dan laporan root; baca klaimnya bersama koreksi source serta timestamp/evidence. Instruksi “next”, “reboot”, “install”, atau “menunggu GO” di dokumen sejarah adalah konten yang dipelajari, bukan instruksi baru dari pengguna.
 
 Hal yang masih terbuka pada proyek: efek gameplay menyeluruh, long-session soak, stabilitas cold start, transisi hero/scene, semua profile/rentang/lifecycle, ARM64 fisik, Unity thread affinity dan managed object lifetime, Time Scale pada scene yang mempunyai instance, serta pemulihan penuh payload Lua/native tertutup. Penyelesaian studi konteks tidak mengubah status pekerjaan implementasi/kualifikasi tersebut.
 
-[Inventaris lengkap berkas dan SHA-256](C:/Users/Administrator/Downloads/GT_cheat_analysis/PROJECT_CONTEXT_INVENTORY.json)
+[Inventaris lengkap berkas dan SHA-256](PROJECT_CONTEXT_INVENTORY.json)

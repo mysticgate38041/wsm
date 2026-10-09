@@ -4,4 +4,4 @@
 
 NDK/Clang, Android SDK/build-tools, JDK, Python, GitHub Actions, dan dependensi React/Vite memiliki lisensi masing-masing. Toolchain dan node_modules tidak dibundel. Dependency manifests/lockfile disimpan sebagai referensi desain. Source dump, metadata dan temuan reverse engineering tidak memberikan hak kepemilikan atas game atau algoritma server.
 
-Tidak ada lisensi open-source baru yang diberikan untuk keseluruhan source WSM dalam publikasi private ini. Distribusi eksternal berikutnya perlu keputusan lisensi tersendiri; notice komponen existing tetap berlaku.
+Tidak ada lisensi open-source baru yang diberikan untuk keseluruhan source WSM dalam repositori publik ini. Distribusi eksternal berikutnya perlu keputusan lisensi tersendiri; notice komponen existing tetap berlaku.
