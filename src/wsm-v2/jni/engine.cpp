@@ -37,6 +37,7 @@
 #include "wsm_runtime.h"
 #include "dispatcher.h"
 #include "feature_flags.h"
+#include "runtime_status.h"
 #include "payload_worker.h"
 #include "hybrid_resolver.h"
 #include "shared_bus_event.h"
@@ -4724,7 +4725,6 @@ void *feat_thread(void *) {
                 if(!main_sweep_start(pulse,detail,sizeof detail)){g_main_sweep_background=false;g_session_fault=true;ELOGI("periodic damage suspended: %s",detail);}
             }
         }
-        modern_publish();
         if (g_guard_faults != last_faults) {
             g_session_fault = true;
             ELOGI("FEAT guard: +%d faulted (total=%d) pc=0x%llx addr=0x%llx",
@@ -4736,6 +4736,7 @@ void *feat_thread(void *) {
             BEAT_BEGIN(); modern_reset(reset, sizeof reset); BEAT_END();
             last_faults = g_guard_faults;
         }
+        modern_publish(); // One complete observation after maintenance and fault recovery.
         bool active=g_godmode_on||g_speed_on||g_nocd_on||g_loot_on||g_stunall_on||g_critdmg_on;
         for(int i=0;i<FEAT_COUNT;++i) active=active||g_feats[i].on;
         const wsm::WorkerState schedule{

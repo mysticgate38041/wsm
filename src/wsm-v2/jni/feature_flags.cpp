@@ -29,6 +29,25 @@ bool FeatureFlags::reset_values_locked() {
     }
     return changed;
 }
+bool FeatureFlags::publish_observation(uint64_t epoch, bool ready, const FeatureValue (&values)[FeatureCount]) {
+    if (!epoch) return false;
+    for (size_t i=0;i<FeatureCount;++i)
+        if (!std::isfinite(values[i].value) || values[i].value<FeatureSpecs[i].minimum ||
+            values[i].value>FeatureSpecs[i].maximum) return false;
+    pthread_mutex_lock(&mutex_);
+    if (epoch<epoch_.load(std::memory_order_relaxed)) { pthread_mutex_unlock(&mutex_);return false; }
+    bool changed=epoch!=epoch_.load(std::memory_order_relaxed) || ready!=ready_.load(std::memory_order_relaxed);
+    for (size_t i=0;i<FeatureCount;++i) {
+        const bool enabled=values[i].enabled; // Observation is separate from execution readiness.
+        changed=changed || enabled!=values_[i].enabled.load(std::memory_order_relaxed) ||
+            values[i].value!=values_[i].value.load(std::memory_order_relaxed);
+        values_[i].value.store(values[i].value,std::memory_order_relaxed);
+        values_[i].enabled.store(enabled,std::memory_order_relaxed);
+    }
+    epoch_.store(epoch,std::memory_order_relaxed);ready_.store(ready,std::memory_order_release);
+    if (changed) revision_.fetch_add(1,std::memory_order_release);
+    pthread_mutex_unlock(&mutex_);return true;
+}
 bool FeatureFlags::update(FeatureIndex index, bool enabled, float value, uint64_t expected_epoch) {
     const size_t i = static_cast<size_t>(index);
     if (i >= FeatureCount || !std::isfinite(value) || value < FeatureSpecs[i].minimum ||

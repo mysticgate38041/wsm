@@ -9,7 +9,8 @@ static void modern_request(const char *c, char *out, size_t n, uint64_t expected
         }
         modern_request(c + 6 + body, out, n, epoch); return;
     }
-    if (strcmp(c, "status") == 0 || strcmp(c, "telemetry") == 0) { g_runtime.snapshot(out, n); return; }
+    if (strcmp(c, "status") == 0) { g_runtime.snapshot(out, n); return; }
+    if (strcmp(c, "telemetry") == 0) { g_runtime.telemetry(out, n); return; }
     int page = 0; char catalog_tail;
     if (strcmp(c, "catalog") == 0 || sscanf(c, "catalog %d %c", &page, &catalog_tail) == 1) {
         if (page < 0 || page >= 12) snprintf(out, n, "{\"state\":\"rejected\",\"detail\":\"catalog page must be 0..11\"}");
@@ -30,51 +31,46 @@ static void modern_request(const char *c, char *out, size_t n, uint64_t expected
     if (!g_runtime.submit(c, seq, expected_epoch)) { snprintf(out, n, "{\"state\":\"rejected\",\"detail\":\"epoch changed, queue full or command too long\"}"); return; }
     snprintf(out, n, "{\"id\":%llu,\"state\":\"accepted\"}", (unsigned long long)seq);
 }
+// Adapter: only this owner translates legacy backend state into public observations.
+// Queue/results and serializers depend on no game pointer or managed API.
 static void modern_publish() {
-    char out[4096];
     const uint64_t epoch=g_runtime.epoch();
-    const bool epoch_current=g_control_epoch==epoch;
-    if(!epoch_current) {
-        g_feature_flags.lifecycle(epoch,false);
-        snprintf(out,sizeof out,"{\"build\":\"%s\",\"state\":\"reset_pending\",\"ready\":false,\"epoch\":%llu,\"observedEpoch\":%llu,\"features\":{}}",
-                 WSM_BUILD_STAMP,(unsigned long long)epoch,(unsigned long long)g_control_epoch);
-        g_runtime.publish_for_epoch(out,epoch);return;
-    }
-    const bool ready = __atomic_load_n(&g_identity_ok, __ATOMIC_ACQUIRE) &&
-        __atomic_load_n(&g_foreground, __ATOMIC_ACQUIRE) && g_scene_hero && !g_session_fault;
-    const char *state = g_session_fault ? "fault" : !__atomic_load_n(&g_identity_ok, __ATOMIC_ACQUIRE) ? "identity_pending" :
-        !__atomic_load_n(&g_foreground, __ATOMIC_ACQUIRE) ? "paused" : !g_scene_hero ? "scene_pending" : "ready";
-    size_t used = snprintf(out, sizeof out,
-        "{\"build\":\"%s\",\"state\":\"%s\",\"ready\":%s,\"pid\":%d,\"epoch\":%llu,\"faults\":%d,"
-        "\"payload\":%s,\"players\":%d,\"lootCandidates\":%d,\"lootRequested\":%d,\"restorePending\":%s,\"ownedOptionObjects\":%u,\"ownedOptionBits\":%u,\"uncertainOptionObjects\":%u,\"timeModifierOwned\":%s,\"observed\":null,\"features\":{",
-        WSM_BUILD_STAMP, state, ready ? "true" : "false", getpid(), (unsigned long long)epoch,
-        (int)g_guard_faults, g_h64_handle && !g_bus_unhealthy ? "true" : "false", g_last_char_count,
-        g_loot_last_n, g_loot_last_done, g_restoration_pending ? "true" : "false",
-        wsm::owned_option_objects(g_owned_options,64), wsm::owned_option_bits(g_owned_options,64),
-        wsm::uncertain_option_objects(g_owned_options,64),
-        g_timescale_owned ? "true" : "false");
-    for (int i = 0; i < FEAT_COUNT; ++i) {
-        if (i == FEAT_STUN || i == FEAT_AGGRO) continue; // retired entries; no duplicate JSON keys
-        used += snprintf(out + used, sizeof out - used, "%s\"%s\":{\"on\":%s,\"value\":%.3f}",
-                         i ? "," : "", g_feats[i].id, g_feats[i].on ? "true" : "false", (double)g_feats[i].value);
-    }
-    snprintf(out + used, sizeof out - used,
-        ",\"godmode\":{\"on\":%s,\"value\":1},\"speed\":{\"on\":%s,\"value\":%.2f},"
-        "\"nocd\":{\"on\":%s,\"value\":1},\"loot\":{\"on\":%s,\"value\":1},\"stunall\":{\"on\":%s,\"value\":1},\"critdmg\":{\"on\":%s,\"value\":%.2f}}}",
-        g_godmode_on ? "true" : "false", g_speed_on ? "true" : "false", (double)g_speed_value,
-        g_nocd_on ? "true" : "false", g_loot_on ? "true" : "false", g_stunall_on ? "true" : "false",
-        g_critdmg_on ? "true" : "false", (double)g_critdmg_value);
-    g_feature_flags.lifecycle(epoch,ready);
+    wsm::SessionObservation observation{};
+    observation.build=WSM_BUILD_STAMP;
+    observation.pid=getpid();observation.observed_epoch=g_control_epoch;
+    const bool current=g_control_epoch==epoch;
+    const bool identity=__atomic_load_n(&g_identity_ok,__ATOMIC_ACQUIRE);
+    const bool foreground=__atomic_load_n(&g_foreground,__ATOMIC_ACQUIRE);
+    observation.phase=!current?wsm::SessionPhase::ResetPending:
+        g_session_fault?wsm::SessionPhase::Fault:!identity?wsm::SessionPhase::IdentityPending:
+        !foreground?wsm::SessionPhase::Paused:!g_scene_hero?wsm::SessionPhase::ScenePending:wsm::SessionPhase::Ready;
+    wsm::FeatureValue values[wsm::FeatureCount]{};
+    for(size_t i=0;i<wsm::FeatureCount;++i) values[i]={false,wsm::FeatureSpecs[i].initial};
     for(int i=0;i<FEAT_COUNT;++i) {
-        if(i==FEAT_STUN||i==FEAT_AGGRO) continue;
-        g_feature_flags.update(g_feats[i].id,g_feats[i].on,g_feats[i].value,epoch);
+        const int index=wsm::feature_index(g_feats[i].id);
+        if(index>=0) values[index]={g_feats[i].on,g_feats[i].value};
     }
-    g_feature_flags.update("godmode",g_godmode_on,1,epoch);
-    g_feature_flags.update("speed",g_speed_on,g_speed_value,epoch);
-    g_feature_flags.update("nocd",g_nocd_on,1,epoch);
-    g_feature_flags.update("loot",g_loot_on,1,epoch);
-    g_feature_flags.update("stunall",g_stunall_on,1,epoch);
-    g_feature_flags.update("critdmg",g_critdmg_on,g_critdmg_value,epoch);
+    values[(size_t)wsm::FeatureIndex::Godmode]={g_godmode_on,1};
+    values[(size_t)wsm::FeatureIndex::Speed]={g_speed_on!=0,g_speed_value};
+    values[(size_t)wsm::FeatureIndex::NoCooldown]={g_nocd_on!=0,1};
+    values[(size_t)wsm::FeatureIndex::Loot]={g_loot_on!=0,1};
+    values[(size_t)wsm::FeatureIndex::StunAll]={g_stunall_on!=0,1};
+    values[(size_t)wsm::FeatureIndex::CriticalDamage]={g_critdmg_on,g_critdmg_value};
+    if(!g_feature_flags.publish_observation(epoch,observation.phase==wsm::SessionPhase::Ready,values)) {
+        g_feature_flags.reset(epoch);observation.phase=wsm::SessionPhase::Fault;
+    }
+    observation.controls=g_feature_flags.snapshot();
+    observation.faults=(int)g_guard_faults;
+    observation.payload=g_h64_handle&&!g_bus_unhealthy;
+    observation.players=g_last_char_count;
+    observation.loot_candidates=g_loot_last_n;observation.loot_requested=g_loot_last_done;
+    observation.restore_pending=g_restoration_pending;
+    observation.owned_objects=wsm::owned_option_objects(g_owned_options,64);
+    observation.owned_bits=wsm::owned_option_bits(g_owned_options,64);
+    observation.uncertain_objects=wsm::uncertain_option_objects(g_owned_options,64);
+    observation.time_modifier_owned=g_timescale_owned;
+    char out[4096];
+    wsm::serialize_status(observation,out,sizeof out);
     g_runtime.publish_for_epoch(out,epoch);
 }
 static void modern_reset(char *out, size_t cap) {
@@ -156,7 +152,7 @@ static void modern_commands() {
                 (strcmp(c.text, "sweep") == 0 && strncmp(ack, "MSWEEP ", 7) == 0 && strstr(ack, "fault=0"));
         }
         BEAT_END();
-        if(deferred && faults==g_guard_faults){modern_publish();continue;}
+        if(deferred && faults==g_guard_faults){continue;}
         if (faults != g_guard_faults) {
             g_session_fault = true;
             modern_reset(ack, sizeof ack);
@@ -165,19 +161,18 @@ static void modern_commands() {
             g_session_fault = true;
             g_runtime.complete(c, wsm::Outcome::Fault, ack);
         } else g_runtime.complete(c, ok ? wsm::Outcome::Applied : wsm::Outcome::Rejected, ack);
-        modern_publish();
     }
 }
 static void modern_tick() {
     main_sweep_poll();
-    if(main_sweep_pending()){modern_commands();modern_publish();return;}
+    if(main_sweep_pending()){modern_commands();return;}
     const sig_atomic_t tick_faults=g_guard_faults;
     static uint64_t scene_due=0;
     bool active=g_godmode_on||g_speed_on||g_nocd_on||g_loot_on||g_stunall_on||g_critdmg_on;
     for(int i=0;i<FEAT_COUNT;++i)active=active||g_feats[i].on;
     const bool foreground=__atomic_load_n(&g_foreground,__ATOMIC_ACQUIRE);
     const uint64_t current=now_ms();
-    if(foreground&&!g_session_fault&&current<scene_due){modern_commands();modern_publish();return;}
+    if(foreground&&!g_session_fault&&current<scene_due){modern_commands();return;}
     scene_due=current+(active?250:1000); // Reduce managed allocations while OFF/lobby.
     uint64_t hero = 0, stage = 0;
     bool scene_observed = false;
@@ -212,5 +207,4 @@ static void modern_tick() {
         g_session_fault=true;char tmp[512];modern_reset(tmp,sizeof tmp);
         ELOGI("runtime fault: automatic work suspended until target restart");
     }
-    modern_publish();
 }

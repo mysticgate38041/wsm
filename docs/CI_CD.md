@@ -1,16 +1,16 @@
-# Build, CI/CD dan publikasi WSM 6.2.0 RC1
+# Build, CI/CD dan publikasi WSM 6.3.0 RC1
 
-Workflow `.github/workflows/wsm.yml` membangun source modular untuk rilis `v6.2.0-rc1` (module versionCode `60201`). Build lokal, native fixture, remote CI dan gameplay merupakan bukti berbeda; satu jenis hasil tidak otomatis memenuhi jenis lain.
+Workflow `.github/workflows/wsm.yml` membangun source modular untuk rilis `v6.3.0-rc1` (module versionCode `60201`). Build lokal, native fixture, remote CI dan gameplay merupakan bukti berbeda; satu jenis hasil tidak otomatis memenuhi jenis lain.
 
 ## Workflow dan checks
 
 | Job | Runner | Checks / hasil yang dikonfigurasi |
 |---|---|---|
-| `native-tests` | Ubuntu 24.04 | CMake/Ninja compile dan CTest execute dua belas fixture POSIX; package rejection/source receipt tests |
-| `android-build` | Windows 2022, matrix ndk-build/CMake | NDK exact, snapshot generation/diff, catalog tests, lima ELF + DEX, Java state, dua belas fixture Android per ABI, receipt, package tests dan artifact |
+| `native-tests` | Ubuntu 24.04 | CMake/Ninja compile dan CTest execute empat belas fixture POSIX; package rejection/source receipt tests |
+| `android-build` | Windows 2022, matrix ndk-build/CMake | NDK exact, snapshot generation/diff, catalog tests, lima ELF + DEX, dua suite Java, empat belas fixture Android per ABI, receipt, package tests dan artifact |
 | `release` | Ubuntu 24.04 | Membutuhkan native-tests dan seluruh matrix sukses; exact tag guard, verifikasi ZIP/checksum/source/provenance, prerelease publik dan tiga aset dari ndk-build |
 
-Fixture native: runtime, patch, binding, reloc, sweep, restore, flags, resolver, dispatcher, worker, pool dan bus_event. Host execution menguji algoritma/kontrak, bukan menjalankan instruction stream ARM64 atau pipeline Unity/game. Android build mengompilasi 24 executable fixture untuk dua ABI; execution memerlukan runtime Android yang sesuai dan dicatat tersendiri. Gameplay, UI Android, native bridge, installer dan ARM64 fisik memerlukan qualification terpisah.
+Fixture native: runtime, patch, binding, reloc, sweep, restore, flags, resolver, dispatcher, worker, pool, bus_event, status dan bootstrap. Host execution menguji algoritma/kontrak, bukan menjalankan instruction stream ARM64 atau pipeline Unity/game. Android build mengompilasi 28 executable fixture untuk dua ABI; execution memerlukan runtime Android yang sesuai dan dicatat tersendiri. Gameplay, UI Android, native bridge, installer dan ARM64 fisik memerlukan qualification terpisah.
 
 Trigger berlaku untuk push `main`, pull request ke `main`, tag `v*` dan `workflow_dispatch`. Dispatch main membangun tanpa publish. Status eksekusi tersedia pada [GitHub Actions](https://github.com/mysticgate38041/wsm/actions/workflows/wsm.yml).
 
@@ -52,7 +52,7 @@ ndk-build tetap default. Contoh PowerShell:
   -Ninja 'C:/tools/ninja.exe'
 ```
 
-Dua backend menjalankan gate package yang sama. CMake output ABI disalin ke lokasi package standar; receipt dibentuk dari binary/source yang baru diperiksa. Hasil final adalah `src/wsm-v2/dist/wsm-v6.2.0-rc1.zip` dan `.zip.sha256`. Keluaran build juga menyertakan fixture di `build/fixtures/x86_64` serta `build/fixtures/arm64-v8a`.
+Dua backend menjalankan gate package yang sama. Kedua backend memerlukan CMake/Ninja untuk fixture; manifest source/version diperiksa sebelum build. Cache Java/DEX memverifikasi hash seluruh input/output dan selalu mengeksekusi kedua suite Java. CMake output ABI disalin ke lokasi package standar; receipt dibentuk dari binary/source yang baru diperiksa. Hasil final adalah `src/wsm-v2/dist/wsm-v6.3.0-rc1.zip` dan `.zip.sha256`. Keluaran build juga menyertakan fixture di `build/fixtures/x86_64` serta `build/fixtures/arm64-v8a`.
 
 Untuk POSIX/Linux dengan compiler yang tersedia:
 
@@ -75,18 +75,18 @@ Checkpoint/receipt mencakup source modular, termasuk source assembly, include fr
 
 1. Pastikan generated source/snapshot konsisten dan seluruh checks untuk commit kandidat selesai.
 2. Review qualification, notes, exact target identity, module versionCode, stamp engine/helper/package, artifact path dan tag guard. Semuanya harus menyatakan versi yang sama.
-3. Buat tag annotated pada commit yang disetujui dan push tag `v6.2.0-rc1`.
+3. Buat tag annotated pada commit yang disetujui dan push tag `v6.3.0-rc1`.
 4. Tunggu native-tests, seluruh matrix Android dan release job sukses. Aset release diambil dari artifact `wsm-release-candidate-ndk-build`; backend CMake tetap menjadi gate build tersendiri.
 5. Cocokkan repo visibility, prerelease flag, tag commit, ZIP/checksum/provenance dan digest hasil unduhan. Catat run URL/digest dalam receipt publikasi.
 
 ```powershell
-git tag -a v6.2.0-rc1 -m 'WSM 6.2.0 RC1 — modular build, incomplete 47-feature scope'
-git push origin v6.2.0-rc1
+git tag -a v6.3.0-rc1 -m 'WSM 6.3.0 RC1 — modular build, incomplete 47-feature scope'
+git push origin v6.3.0-rc1
 gh run list --repo mysticgate38041/wsm --workflow wsm.yml
-gh release view v6.2.0-rc1 --repo mysticgate38041/wsm
+gh release view v6.3.0-rc1 --repo mysticgate38041/wsm
 ```
 
-Command di atas menerbitkan commit yang telah lulus checks. Workflow menolak tag lain sampai stamp, metadata, tests, paths dan notes diperbarui secara konsisten. Notes aktif berada di [RELEASE_v6.2.0_rc1.md](RELEASE_v6.2.0_rc1.md). CD mengirim aset GitHub Release; workflow tidak memasang modul, menjalankan game atau me-reboot perangkat.
+Command di atas menerbitkan commit yang telah lulus checks. Workflow menolak tag lain sampai stamp, metadata, tests, paths dan notes diperbarui secara konsisten. Notes aktif berada di [RELEASE_v6.3.0_rc1.md](RELEASE_v6.3.0_rc1.md). CD mengirim aset GitHub Release; workflow tidak memasang modul, menjalankan game atau me-reboot perangkat.
 
 ## Izin, artifact dan retry
 
@@ -96,12 +96,16 @@ Timeout native-tests 10 menit, setiap matrix Android 35 menit, release 10 menit.
 
 Upload release existing tidak memakai `--clobber`. Jika publish hanya mengirim sebagian aset, cocokkan digest lalu unggah aset yang belum ada. Perubahan source/binary setelah release memerlukan versi/tag baru; tidak ada penghapusan release, force-push atau penulisan ulang tag otomatis.
 
+## Modernisasi v6.3
+
+Graph CMake bersama membangun 14 fixture per ABI dan menjalankan fixture yang sama pada host POSIX. CI juga memeriksa generated-input drift serta 11 regression test cache/build. D8 memakai `--release`; hasil Java tetap divalidasi pada setiap build. Bukti eksekusi Android dan preview UI dicatat terpisah dalam [laporan modernisasi](MODERNIZATION_V6_3.md).
+
 ## Hasil migrasi awal dan riwayat
 
 Pada migrasi awal 8 Oktober 2026, build backend ndk-build dan CMake lulus gate lima ELF + DEX dan Java state. Sebanyak 35 package regression tests serta sembilan catalog tests lulus. Sebelas fixture native per ABI dieksekusi pada LDPlayer: x86_64 11/11 dan arm64-v8a melalui translation 11/11 lulus, total 22/22. Kernel host fixture adalah x86_64 dengan page size 4 KiB. Installer harness terisolasi lulus 8/8 tanpa memasang modul.
 
 Fixture patch ARM64 translation membandingkan permission sesudah restoration dengan permission aktual sebelum patch; requested RX dapat teramati sebagai R di lingkungan ini. Hasil ini menguji kontrak restoration data/permission aktual dan tidak membuktikan eksekusi trampoline ARM64 pada hardware fisik atau behavior perangkat ARM64 fisik/16 KiB.
 
-ZIP migrasi awal berukuran 470.267 byte dengan SHA-256 `c4a59c8abe207647a6a826f904c5829e834225fbecb9e74c53824d3ad4372470`. Ini artefak lokal historis, bukan checksum aset rilis CI. Pengujian lanjutan memakai paket berbeda dan dijelaskan dalam [laporan runtime](RUNTIME_REPORT_20261008.md). Suite saat rilis mencakup 54 package tests (53 fixture/receipt tests dan satu generated-package test), sembilan catalog tests dan 12 native tests. Generated-package test dilewati pada job host tanpa paket, dan wajib lulus pada build Android serta job release.
+ZIP migrasi awal berukuran 470.267 byte dengan SHA-256 `c4a59c8abe207647a6a826f904c5829e834225fbecb9e74c53824d3ad4372470`. Ini artefak lokal historis, bukan checksum aset rilis CI. Pengujian lanjutan memakai paket berbeda dan dijelaskan dalam [laporan runtime](RUNTIME_REPORT_20261008.md). Suite rilis v6.2 historis mencakup 54 package tests (53 fixture/receipt tests dan satu generated-package test), sembilan catalog tests dan 12 native tests. Generated-package test dilewati pada job host tanpa paket, dan wajib lulus pada build Android serta job release.
 
 Dokumen [RC3 crash repair](CRASH_REPAIR_RC3.md) dan release lama menyimpan hasil serta keterbatasan saat itu. Checksum lama bukan checksum binary RC1. Katalog tetap `completed=0` dan `INCOMPLETE_47_FEATURE_SCOPE`; metadata/API, compilation, native fixtures dan ACK tidak membuktikan seluruh efek desain pada target game.

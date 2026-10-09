@@ -1,0 +1,428 @@
+{
+  "date": "2026-10-09",
+  "timezone": "Asia/Jakarta",
+  "release": "v6.3.0-rc1",
+  "localPackages": {
+    "ndk-build": {
+      "file": "ndk-build-wsm-v6.3.0-rc1.zip",
+      "bytes": 466595,
+      "sha256": "61ef2c6308c94a4ae30b9f4c57d9f8609e7fe684af946337dc40128e64dc377a",
+      "sourceCount": 93
+    },
+    "CMake": {
+      "file": "CMake-wsm-v6.3.0-rc1.zip",
+      "bytes": 1013654,
+      "sha256": "3a319e11b8512adae17d455b7878a17195bc4b8ba6ad9caf166c8e6d2fc007e0",
+      "sourceCount": 93
+    }
+  },
+  "tests": {
+    "nativeAndroidCMake": {
+      "arm64": "Houdini translation on x86_64",
+      "results": [
+        {
+          "abi": "x86_64",
+          "test": "runtime",
+          "sha256": "4ee033ee12781a2bccbf8657ce5fb9c62885b191f7592cec2616d603f8a06e02",
+          "exitCode": 0,
+          "seconds": 0.078,
+          "stdout": "PASS runtime: FIFO/capacity/191-char/history64, PANIC priority and stale completion, lifecycle/notify-before-wait/timeout/shutdown, 4 producers / 4000 commands, 2000 wait boundaries\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "patch",
+          "sha256": "3ab30fde4402d76b6ef1d9238ce33866caa7fc6d1c78de05f1d5f200f4ecde27",
+          "exitCode": 0,
+          "seconds": 0.031,
+          "stdout": "PASS branch: imm26 bounds/alignment, near allocation, atomic 4-byte patch, adjacent bytes unchanged\nPASS patch: 3 aliases, readback, original permissions, invalid range, forced partial failure rollback\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "binding",
+          "sha256": "cd8d6d31bbc041eb813b5bddfb42c8aee05c31723787407909542236874dc36c",
+          "exitCode": 0,
+          "seconds": 0.016,
+          "stdout": "PASS binding: full parameter/return/static contract, ambiguity, generic, enumeration cap, type-name ownership, versionCode identity\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "reloc",
+          "sha256": "f4ef4c31627cff5f48c96c213dee96eccfc67e86ffc6a66800775e75d4155d87",
+          "exitCode": 0,
+          "seconds": 0.015,
+          "stdout": "PASS relocation: ADR/ADRP target conservation, signed boundaries, registers, roundtrip, actual GT critical prologue, unsafe literals/branches, atomic refusal\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "sweep",
+          "sha256": "ae7986f3ef2b1d3896a4b3905349ce264cbff7f7ea240ed783d30eaca19f7648",
+          "exitCode": 0,
+          "seconds": 0.032,
+          "stdout": "sweep PASS: power bounds, critical/noCritical, immutable policy, ONEHP/OHK/clear, errors/cancel/scene/pins; SweepApi=168\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "flags",
+          "sha256": "84a87494d132feb5c1a64863a997407078340432a15c69ad029d7e27b8b3077c",
+          "exitCode": 0,
+          "seconds": 0.047,
+          "stdout": "PASS flags: 18-control mapping, exact float sliders/ranges/nonfinite, readiness/epoch gates, reset/revision semantics, 4 writers / 4000 updates and coherent snapshots\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "resolver",
+          "sha256": "3c1ef432ddeab94388f0dafde49e867b567c2f653c4353534695ad44c58c91ce",
+          "exitCode": 0,
+          "seconds": 0.015,
+          "stdout": "PASS resolver: typed metadata, bounded masked scan, exact identity, ambiguity/budget rejection, native validation, diagnostic-only AOB\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "dispatcher",
+          "sha256": "6806de75bf89c619dae33d694028a6e46df531aa8aab23adc93a3ca0ec235fe6",
+          "exitCode": 0,
+          "seconds": 0.031,
+          "stdout": "dispatcher: command grammar and escaping passed\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "worker",
+          "sha256": "59abd8ccfb9d185aa4163258a3fed9e0f8880ed738d89d94077af217649892e1",
+          "exitCode": 0,
+          "seconds": 0.016,
+          "stdout": "worker: bounded deadlines and producer notification passed\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "pool",
+          "sha256": "f8f0eb30054713634b41fbf19a7e5739b224474c8c24ce9afaa38a6df5f0be19",
+          "exitCode": 0,
+          "seconds": 0.031,
+          "stdout": "pool: retained allocation, bounds, failure and RX sealing passed\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "bus_event",
+          "sha256": "e748ce0491ac3eb6e10a644fc449c15d031e0b2c387eed70a52a207946cf042f",
+          "exitCode": 0,
+          "seconds": 0.047,
+          "stdout": "bus event: notification-before-wait, timeout and producer/ack passed\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "restore",
+          "sha256": "b2e454e2a4a35d2b1f92510e925dedc3746642f21ca44a320af5a24cb7e8c2e6",
+          "exitCode": 0,
+          "seconds": 0.032,
+          "stdout": "restore_test: 20 shared production lease/cleanup cases PASS\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "status",
+          "sha256": "d82e3f54442bd3aaaa32f1270c9aabe3cea7027a84ed97ed6ce718b0bd44c917",
+          "exitCode": 0,
+          "seconds": 0.031,
+          "stdout": "PASS typed status: all18 controls, lifecycle gating, revision, reset, bounded serialization\n",
+          "stderr": ""
+        },
+        {
+          "abi": "x86_64",
+          "test": "bootstrap",
+          "sha256": "a6458320ef4f29e4593fb16107e1304b5c4853af3ae7eecf2af940d446455824",
+          "exitCode": 0,
+          "seconds": 0.031,
+          "stdout": "PASS bootstrap: ordered phases, monotonic clock, handoff, first failure retained, reset\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "runtime",
+          "sha256": "4c93978a298c20d8194f1899c86801a89b19634fa33d79def5d3c3b7a5bdfd4c",
+          "exitCode": 0,
+          "seconds": 0.219,
+          "stdout": "PASS runtime: FIFO/capacity/191-char/history64, PANIC priority and stale completion, lifecycle/notify-before-wait/timeout/shutdown, 4 producers / 4000 commands, 2000 wait boundaries\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "patch",
+          "sha256": "497a219f5cac0b4382400c8e5145d07ad8f7b3fac18351a8acce4be4ec7dc0c1",
+          "exitCode": 0,
+          "seconds": 0.062,
+          "stdout": "INFO requested protection=5, observed=1\nPASS branch: imm26 bounds/alignment, near allocation, atomic 4-byte patch, adjacent bytes unchanged\nPASS patch: 3 aliases, readback, original permissions, invalid range, forced partial failure rollback\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "binding",
+          "sha256": "9fbf6d3db9c447487b50fd59d5dbd6ffe1b1b9862bebbc3a119a6a34ebc096f1",
+          "exitCode": 0,
+          "seconds": 0.047,
+          "stdout": "PASS binding: full parameter/return/static contract, ambiguity, generic, enumeration cap, type-name ownership, versionCode identity\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "reloc",
+          "sha256": "40b7f088f5f9eb40f0f7d0cae5f231a9584a380c6c0c513160241ca83e4218ad",
+          "exitCode": 0,
+          "seconds": 0.063,
+          "stdout": "PASS relocation: ADR/ADRP target conservation, signed boundaries, registers, roundtrip, actual GT critical prologue, unsafe literals/branches, atomic refusal\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "sweep",
+          "sha256": "57ee1e4f71291276090035409dea3a1a68f4afb891767c708c6b50cb4b934f8d",
+          "exitCode": 0,
+          "seconds": 0.063,
+          "stdout": "sweep PASS: power bounds, critical/noCritical, immutable policy, ONEHP/OHK/clear, errors/cancel/scene/pins; SweepApi=168\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "flags",
+          "sha256": "9b083f3d3ed7b92f01335003ffcf54da038a6c24f1dc05288ea4d33382b7d7cd",
+          "exitCode": 0,
+          "seconds": 0.078,
+          "stdout": "PASS flags: 18-control mapping, exact float sliders/ranges/nonfinite, readiness/epoch gates, reset/revision semantics, 4 writers / 4000 updates and coherent snapshots\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "resolver",
+          "sha256": "ecb9aa03a92bfddf81d71d2d37c39f6f217ce4a122a0769e90975c85eb103945",
+          "exitCode": 0,
+          "seconds": 0.063,
+          "stdout": "PASS resolver: typed metadata, bounded masked scan, exact identity, ambiguity/budget rejection, native validation, diagnostic-only AOB\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "dispatcher",
+          "sha256": "8f45c96e8703bc60cf89470305b58e3a874839cc1e732131abbd13353b346c8c",
+          "exitCode": 0,
+          "seconds": 0.063,
+          "stdout": "dispatcher: command grammar and escaping passed\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "worker",
+          "sha256": "f19b748575e3cf1f0c98ae6457a5bd6e5bcfd7f13fefeab6f0996196343b7fc9",
+          "exitCode": 0,
+          "seconds": 0.062,
+          "stdout": "worker: bounded deadlines and producer notification passed\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "pool",
+          "sha256": "6ab62e7c9983d2962a405cf761e57f6d9ef1b633f5e26b85e8f2e9900f6096f6",
+          "exitCode": 0,
+          "seconds": 0.063,
+          "stdout": "pool: retained allocation, bounds, failure and RX sealing passed\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "bus_event",
+          "sha256": "4a1257c5b068390673f8a31ac7386975112bdcb5bd008588d33166625e637f89",
+          "exitCode": 0,
+          "seconds": 0.063,
+          "stdout": "bus event: notification-before-wait, timeout and producer/ack passed\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "restore",
+          "sha256": "85252103c4cb7985a9fc9f9e67f9dfec20d4c5d30dbf1d7b1e38ce4ea2524bdd",
+          "exitCode": 0,
+          "seconds": 0.047,
+          "stdout": "restore_test: 20 shared production lease/cleanup cases PASS\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "status",
+          "sha256": "ebe7f623d88af9582d9a9281ba8e6b752554c4554a357651ec4e818cfb7ca343",
+          "exitCode": 0,
+          "seconds": 0.063,
+          "stdout": "PASS typed status: all18 controls, lifecycle gating, revision, reset, bounded serialization\n",
+          "stderr": ""
+        },
+        {
+          "abi": "arm64-v8a",
+          "test": "bootstrap",
+          "sha256": "aeeb9b2f6671647e2bb2a29ec511970d664a69ca7e4e85db4612ecb37d5543dd",
+          "exitCode": 0,
+          "seconds": 0.047,
+          "stdout": "PASS bootstrap: ordered phases, monotonic clock, handoff, first failure retained, reset\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "javaSuites": [
+      "ControlStateTest",
+      "MenuControllerTest"
+    ],
+    "packageTests": 54,
+    "catalogTests": 9,
+    "buildCacheTests": 11,
+    "ui": {
+      "fixture": "com.wsm.preview",
+      "backend": "synthetic 600ms completion",
+      "checks": [
+        {
+          "id": "god",
+          "name": "God Mode / Opsi",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "hp",
+          "name": "HP Protection",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "stam",
+          "name": "Stamina Refill",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "mana",
+          "name": "Mana Refill",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "poise",
+          "name": "Super Armor",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "immune",
+          "name": "Status Immunity",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "godmode",
+          "name": "Damage Guard",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "ohk",
+          "name": "Auto-Kill Pulse",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "onehp",
+          "name": "Enemy 1 HP",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "aura",
+          "name": "Radius Pulse",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "dmg",
+          "name": "Pulse Power",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "crit",
+          "name": "Critical Pulse",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "critdmg",
+          "name": "Critical Damage Scale",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "nocd",
+          "name": "Cooldown Gates",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "stunall",
+          "name": "Freeze AI",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "speed",
+          "name": "Movement Scale",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "loot",
+          "name": "Auto-Loot",
+          "on": true,
+          "off": true
+        },
+        {
+          "id": "timescale",
+          "name": "Time Scale",
+          "on": true,
+          "off": true
+        }
+      ]
+    },
+    "profile": {
+      "fixture": "com.wsm.preview",
+      "checks": [
+        "profile save after ON",
+        "PANIC resets before load",
+        "manual profile completes 18 controls and restores saved ON",
+        "final PANIC returns OFF"
+      ],
+      "passed": true,
+      "automationNote": "Initial UI dump occurred during sequential profile updates and failed to reach idle. Re-read after completion verified the final state."
+    },
+    "uiOther": [
+      "landscape two columns",
+      "portrait one column and scrolling tabs",
+      "search filter",
+      "PANIC visible in collapsed badge"
+    ]
+  },
+  "warmBuild": {
+    "CMakeSeconds": 6.169209,
+    "bothAbiNinjaNoWork": true,
+    "javaDexCacheHit": true,
+    "javaSuitesStillExecuted": 2
+  },
+  "limitations": [
+    "Synthetic UI backend does not prove game effects",
+    "ARM64 fixtures ran through Houdini translation on x86_64",
+    "No comparative game FPS/CPU/RAM benchmark",
+    "No live-game startup/SIGKILL resolution claimed"
+  ]
+}

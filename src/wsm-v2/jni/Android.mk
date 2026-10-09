@@ -1,8 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
 # Canonical Android build: keep loader/engine on both supported ABIs.
-WSM_ENGINE_SOURCES := engine.cpp il2cpp_resolver.cpp aob_scanner.cpp hybrid_resolver.cpp \
-    feature_flags.cpp dispatcher.cpp payload_worker.cpp
+include $(LOCAL_PATH)/build_sources.mk
 # Keep the statically linked C++ runtime private to each module's documented ABI.
 WSM_LINK_FLAGS := -Wl,--gc-sections -Wl,--exclude-libs,ALL -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384
 

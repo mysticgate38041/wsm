@@ -2,7 +2,7 @@
 
 Proyek modul Android untuk Guardian Tales, dengan loader Zygisk, engine native, helper ARM64, menu Java/DEX di dalam proses, serta transport command dan diagnostik. Implementasi aktif berada di [`src/wsm-v2`](src/wsm-v2). Repo GitHub ini bersifat **publik**.
 
-**Rilis: `v6.2.0-rc1` (prerelease), module versionCode `60201`. Target exact: `com.kakaogames.gdts`, `versionName=3.54.0`, `versionCode=423`, Android API ≥26; ABI x86_64 dan arm64-v8a.** Build dan unit test terverifikasi tidak menyatakan seluruh efek gameplay sudah teruji. Migrasi modular dijelaskan pada [arsitektur v3 yang dikoreksi](docs/ARCHITECTURE_V3.md) dan [release notes RC1](docs/RELEASE_v6.2.0_rc1.md). Perbaikan crash RC3 tetap dicatat pada [laporan historis](docs/CRASH_REPAIR_RC3.md); bukti RC2/baseline 6.0.0 tetap merupakan riwayat terpisah.
+**Rilis: `v6.3.0-rc1` (prerelease), module versionCode `60301`. Target exact: `com.kakaogames.gdts`, `versionName=3.54.0`, `versionCode=423`, Android API ≥26; ABI x86_64 dan arm64-v8a.** Build dan unit test terverifikasi tidak menyatakan seluruh efek gameplay sudah teruji. Modernisasi runtime, UI/UX dan build dijelaskan pada [laporan v6.3](docs/MODERNIZATION_V6_3.md). Migrasi modular awal dijelaskan pada [arsitektur v3 yang dikoreksi](docs/ARCHITECTURE_V3.md) dan [release notes RC1](docs/RELEASE_v6.3.0_rc1.md). Perbaikan crash RC3 tetap dicatat pada [laporan historis](docs/CRASH_REPAIR_RC3.md); bukti RC2/baseline 6.0.0 tetap merupakan riwayat terpisah.
 
 ## Status keseluruhan
 
@@ -45,6 +45,11 @@ Repo menyimpan source WSM, snapshot evidence, inventaris dan laporan. Dump menta
 
 ## Arsitektur dan perilaku runtime
 
+Menu kini dipisah menjadi view Android, controller tanpa dependensi Android, backend JNI, scheduler terbatas, snapshot immutable dan penyimpanan profil. Status/JSON dibaca di worker; polling hasil command memakai timer tanpa menahan worker selama 35 detik. Panel terbuka meminta status setiap 1 detik, badge setiap 5 detik. Profil tersimpan hanya diterapkan melalui tindakan pengguna. Lihat [kontrak dan pengujian modernisasi](docs/MODERNIZATION_V6_3.md).
+
+Runtime menerbitkan satu observasi 18 kontrol per putaran worker. Pembaca snapshot memiliki mutex terpisah dari antrean command. Status yang belum siap atau sedang restore mengirim fitur kosong agar UI mempertahankan label status terakhir sampai ada observasi yang dapat dipercaya. Command `telemetry` menyediakan kedalaman antrean, waktu tunggu, waktu penyelesaian dan revision.
+
+
 ```mermaid
 flowchart LR
     Z[module.cpp / Zygisk] --> E[Engine ABI proses]
@@ -75,7 +80,7 @@ Pipeline RC3 untuk Clear Stage/OHK/One HP tetap menggunakan UnitySynchronization
 
 ## Build yang dapat diulang
 
-Toolchain: **NDK 27.2.12479018 (r27c)**, JDK 17, Python ≥3.10, Android platform 34 dan build-tools 34.0.0. Target native/minimum runtime tetap API 26, dengan STL statis; SDK 34 adalah input kompilasi Java. CMake ≥3.22 dan Ninja diperlukan hanya untuk backend CMake. Zygisk API v4 header terpin SHA-256 di build script; notice lisensinya dipertahankan. Toolchain tidak dibundel dalam repo.
+Toolchain: **NDK 27.2.12479018 (r27c)**, JDK 17, Python ≥3.10, Android platform 34 dan build-tools 34.0.0. Target native/minimum runtime tetap API 26, dengan STL statis; SDK 34 adalah input kompilasi Java. CMake ≥3.22 dan Ninja diperlukan pada kedua backend untuk graph fixture native bersama. Zygisk API v4 header terpin SHA-256 di build script; notice lisensinya dipertahankan. Toolchain tidak dibundel dalam repo.
 
 ```powershell
 git clone https://github.com/mysticgate38041/wsm.git
@@ -87,19 +92,21 @@ powershell -NoProfile -ExecutionPolicy Bypass -File src/wsm-v2/scripts/build.ps1
 
 `-CatalogSnapshot` memvalidasi hash desain, 47 ID, semantik, mapping, selector evidence dan qualification yang sudah di-commit, lalu menghasilkan Java/header yang konsisten. Tanpa flag ini, generator membaca SQLite lokal `analysis/gt354-api/catalog-final/guardian_tales_354.sqlite` dengan `mode=ro`; mode tersebut memerlukan dataset eksternal dan mencatat hash aktualnya.
 
+Daftar source engine, 14 fixture, versi dan stamp ditentukan oleh `scripts/build_manifest.json`; `generate_build_config.py --check` menolak drift generated inputs. Java/DEX memakai cache berdasarkan hash input dan output; dua suite Java tetap dijalankan pada cache hit. Generated inputs hanya ditulis jika isinya berubah.
+
 Backend default adalah `ndk-build`. Untuk backend CMake gunakan command yang sama dengan tambahan `-NativeBuild CMake -CMake 'C:\tools\cmake\bin\cmake.exe' -Ninja 'C:\tools\ninja.exe'`. CMake 3.31.8/Ninja 1.12.1 digunakan dalam build lokal migrasi; CI memasang CMake 3.22.1 dari Android SDK.
 
-Hasil: `src/wsm-v2/dist/wsm-v6.2.0-rc1.zip` dan `.zip.sha256`. Build memeriksa lima ELF, ABI/export/dependency/TEXTREL, LOAD/RELRO alignment 16 KiB, Java state, integritas DEX, source/binary receipt dan regression package tests. Dua belas fixture native juga dikompilasi untuk setiap ABI: runtime, patch, binding, reloc, sweep, restore, flags, resolver, dispatcher, worker, pool dan bus_event. ZIP memiliki 14 entry, timestamp tetap dan manifest SHA-256. ZIP deterministik untuk input identik; perubahan source/toolchain/build provenance dapat mengubah checksum.
+Hasil: `src/wsm-v2/dist/wsm-v6.3.0-rc1.zip` dan `.zip.sha256`. Build memeriksa lima ELF, ABI/export/dependency/TEXTREL, LOAD/RELRO alignment 16 KiB, dua suite Java, cache build, DEX release, source/binary receipt dan regression package tests. Empat belas fixture native juga dikompilasi untuk setiap ABI: runtime, patch, binding, reloc, sweep, restore, flags, resolver, dispatcher, worker, pool, bus_event, status dan bootstrap. ZIP memiliki 14 entry, timestamp tetap dan manifest SHA-256. ZIP deterministik untuk input identik; perubahan source/toolchain/build provenance dapat mengubah checksum.
 
 ## CI/CD dan release
 
-GitHub Actions berjalan untuk push `main`, pull request ke `main`, tag `v*`, serta dispatch manual. Job Ubuntu mengonfigurasi CMake, menjalankan dua belas fixture native dengan CTest, serta package rejection tests. Matrix Windows membangun dua ABI dengan backend `ndk-build` dan CMake, memvalidasi snapshot katalog, lalu mengunggah ZIP/checksum/provenance sebagai artifact 30 hari. Fixture Android dikompilasi; eksekusinya pada perangkat merupakan tahap tersendiri.
+GitHub Actions berjalan untuk push `main`, pull request ke `main`, tag `v*`, serta dispatch manual. Job Ubuntu mengonfigurasi CMake, menjalankan empat belas fixture native dengan CTest, serta package rejection tests. Matrix Windows membangun dua ABI dengan backend `ndk-build` dan CMake, memvalidasi snapshot katalog, lalu mengunggah ZIP/checksum/provenance sebagai artifact 30 hari. Fixture Android dikompilasi; eksekusinya pada perangkat merupakan tahap tersendiri.
 
-Job release hanya berjalan pada tag, setelah native-tests dan seluruh matrix build lulus. Tag harus cocok dengan stamp `v6.2.0-rc1`; ZIP dan checksum diverifikasi lagi sebelum GitHub prerelease dibuat. Aset publikasi diambil dari build `ndk-build`. CD memverifikasi source, receipt binary dan provenance terhadap commit/tag/run yang sama; pemasangan dan pengujian perangkat dilakukan terpisah.
+Job release hanya berjalan pada tag, setelah native-tests dan seluruh matrix build lulus. Tag harus cocok dengan stamp `v6.3.0-rc1`; ZIP dan checksum diverifikasi lagi sebelum GitHub prerelease dibuat. Aset publikasi diambil dari build `ndk-build`. CD memverifikasi source, receipt binary dan provenance terhadap commit/tag/run yang sama; pemasangan dan pengujian perangkat dilakukan terpisah.
 
 Actions dipatok pada commit SHA resmi. Token default `contents: read`; hanya job publish mendapat `contents: write`. Tidak dibutuhkan PAT tambahan atau secret deployment. Checkout tidak menyimpan credential. Workflow merilis binary yang dibangun CI, disertai `ci-build-provenance.json` berisi commit, run, toolchain dan receipt. Release existing tidak di-clobber; retry dengan aset yang sudah ada akan gagal agar binary tidak tertimpa diam-diam.
 
-Detail trigger, pin, prosedur tag, retry dan rollback: [CI/CD](docs/CI_CD.md). Perubahan dan batas kualifikasi saat ini: [release notes RC1](docs/RELEASE_v6.2.0_rc1.md). [Release notes RC3](docs/releases/v6.1.0-rc3.md) tetap merupakan riwayat.
+Detail trigger, pin, prosedur tag, retry dan rollback: [CI/CD](docs/CI_CD.md). Perubahan dan batas kualifikasi saat ini: [release notes RC1](docs/RELEASE_v6.3.0_rc1.md). [Release notes RC3](docs/releases/v6.1.0-rc3.md) tetap merupakan riwayat.
 
 ## Instalasi, operasi dan pemulihan
 

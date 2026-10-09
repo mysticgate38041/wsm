@@ -3,7 +3,9 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include "futex_bus.h"
+#include "runtime_snapshot.h"
 
 namespace wsm {
 constexpr size_t QueueSize = 32, HistorySize = 64, CommandSize = 192;
@@ -20,142 +22,170 @@ inline const char *name(Outcome s) {
 }
 struct Command { uint64_t id, epoch; char text[CommandSize]; };
 struct Result { uint64_t id, epoch; Outcome state; char detail[512]; };
-// The queue lock never covers game calls. The worker owns control state;
-// damage mutations are acknowledged by the ARM64 UnityMain dispatcher.
+struct RuntimeMetrics {
+    uint64_t submitted=0, rejected=0, completed=0, stale=0, duplicateCompletions=0;
+    uint64_t dequeued=0, queueUs=0, maxQueueUs=0, completionUs=0, maxCompletionUs=0;
+    uint64_t waits=0, wakeups=0, publications=0, rejectedPublications=0;
+    size_t queueDepth=0, queueHighWater=0;
+};
+inline uint64_t runtime_now_us() {
+    timespec ts{};
+    if (clock_gettime(CLOCK_MONOTONIC, &ts)) return 0;
+    return static_cast<uint64_t>(ts.tv_sec)*1000000 + static_cast<uint64_t>(ts.tv_nsec)/1000;
+}
+// One owner executes backend work. Producers only submit and query results.
+// Queue/result/epoch share one gate; status bytes have an independent read lock.
+// Game/JNI calls and JSON serialization are never performed under these locks.
 class Runtime {
+public:
+    using Clock = uint64_t (*)();
+private:
+    class Guard {
+        pthread_mutex_t *mutex_;
+    public:
+        explicit Guard(pthread_mutex_t &mutex):mutex_(&mutex) { pthread_mutex_lock(mutex_); }
+        ~Guard() { pthread_mutex_unlock(mutex_); }
+        Guard(const Guard &) = delete;
+        Guard &operator=(const Guard &) = delete;
+    };
     pthread_mutex_t mutex_ = PTHREAD_MUTEX_INITIALIZER;
     Command queue_[QueueSize]{};
     Result results_[HistorySize]{};
-    size_t head_ = 0, count_ = 0;
-    uint64_t next_ = 0, epoch_ = 1;
+    uint64_t enqueued_[HistorySize]{};
+    size_t head_=0, count_=0;
+    uint64_t next_=0, epoch_=1, observed_generation_=0;
     WorkEvent event_;
-    uint64_t observed_generation_ = 0;
-    bool stopping_ = false;
-    char snapshot_[4096] = "{\"state\":\"booting\",\"epoch\":1,\"features\":{}}";
-    void stale_results_locked(const char *detail) {
-        for (auto &r : results_) {
-            if (r.id && r.epoch != epoch_ && r.state == Outcome::Accepted) {
-                r.state = Outcome::Stale;
-                snprintf(r.detail, sizeof r.detail, "%s", detail);
-            }
-        }
+    RuntimeSnapshot snapshot_;
+    RuntimeMetrics metrics_;
+    Clock clock_;
+    bool stopping_=false;
+    void finish_locked(Result &result, Outcome state, const char *detail) {
+        const uint64_t now=clock_(), start=enqueued_[result.id%HistorySize];
+        const uint64_t elapsed=now>=start?now-start:0;
+        result.state=state;
+        snprintf(result.detail,sizeof result.detail,"%s",detail?detail:"");
+        ++metrics_.completed;
+        if (state==Outcome::Stale) ++metrics_.stale;
+        metrics_.completionUs+=elapsed;
+        if (elapsed>metrics_.maxCompletionUs) metrics_.maxCompletionUs=elapsed;
+    }
+    void invalidate_locked(const char *detail) {
+        ++epoch_;
+        for (auto &result:results_)
+            if (result.id && result.state==Outcome::Accepted && result.epoch!=epoch_)
+                finish_locked(result,Outcome::Stale,detail);
+        head_=count_=0;
+        snapshot_.invalidate(epoch_,stopping_?"stopped":"reset_pending");
+        event_.notify_locked();
     }
 public:
-    Runtime() = default;
-    // Call shutdown and join waiters before destroying a Runtime.
+    explicit Runtime(Clock clock=runtime_now_us):clock_(clock?clock:runtime_now_us) {}
+    // shutdown + join waiters before destruction.
     ~Runtime() { pthread_mutex_destroy(&mutex_); }
-    Runtime(const Runtime &) = delete;
-    Runtime &operator=(const Runtime &) = delete;
-    bool submit(const char *s, uint64_t &id, uint64_t expected_epoch = 0) {
-        id = 0;
-        if (!s || !*s || strlen(s) >= CommandSize) return false;
-        pthread_mutex_lock(&mutex_);
-        const bool panic = strcmp(s, "panic") == 0;
-        if (stopping_ || (expected_epoch && expected_epoch != epoch_)) { pthread_mutex_unlock(&mutex_); return false; }
-        if (panic) {
-            ++epoch_; // Also reject delayed producers that were prepared before PANIC.
-            // PANIC invalidates pending mutations and takes the next execution slot.
-            stale_results_locked("cancelled by panic");
-            head_ = count_ = 0;
+    Runtime(const Runtime &)=delete;
+    Runtime &operator=(const Runtime &)=delete;
+    bool submit(const char *text,uint64_t &id,uint64_t expected_epoch=0) {
+        id=0;
+        Guard guard(mutex_);
+        if (!text || !*text || strnlen(text,CommandSize)>=CommandSize || stopping_ ||
+            (expected_epoch && expected_epoch!=epoch_)) { ++metrics_.rejected; return false; }
+        if (strcmp(text,"panic")==0) invalidate_locked("cancelled by panic");
+        Result &result=results_[(next_+1)%HistorySize];
+        // Never evict an outstanding completion to make room for newer history.
+        if (count_==QueueSize || (result.id && result.state==Outcome::Accepted)) {
+            ++metrics_.rejected; return false;
         }
-        if (count_ == QueueSize) { pthread_mutex_unlock(&mutex_); return false; }
-        id = ++next_;
-        Command &c = queue_[(head_ + count_++) % QueueSize];
-        c.id = id; c.epoch = epoch_; snprintf(c.text, sizeof c.text, "%s", s);
-        Result &r = results_[id % HistorySize];
-        r.id = id; r.epoch = epoch_; r.state = Outcome::Accepted;
-        snprintf(r.detail, sizeof r.detail, "queued");
-        event_.notify_locked();
-        pthread_mutex_unlock(&mutex_);
+        id=++next_;
+        Command &command=queue_[(head_+count_++)%QueueSize];
+        command.id=id;command.epoch=epoch_;
+        snprintf(command.text,sizeof command.text,"%s",text);
+        result.id=id;result.epoch=epoch_;result.state=Outcome::Accepted;
+        snprintf(result.detail,sizeof result.detail,"queued");
+        enqueued_[id%HistorySize]=clock_();
+        ++metrics_.submitted;
+        if (count_>metrics_.queueHighWater) metrics_.queueHighWater=count_;
+        event_.notify_locked();return true;
+    }
+    bool pop(Command &command) {
+        Guard guard(mutex_);
+        if (!count_ || stopping_) return false;
+        command=queue_[head_];head_=(head_+1)%QueueSize;--count_;
+        const uint64_t now=clock_(),start=enqueued_[command.id%HistorySize];
+        const uint64_t elapsed=now>=start?now-start:0;
+        ++metrics_.dequeued;metrics_.queueUs+=elapsed;
+        if (elapsed>metrics_.maxQueueUs) metrics_.maxQueueUs=elapsed;
         return true;
     }
-    bool pop(Command &c) {
-        pthread_mutex_lock(&mutex_);
-        bool found = count_ != 0;
-        if (found) { c = queue_[head_]; head_ = (head_ + 1) % QueueSize; --count_; }
-        pthread_mutex_unlock(&mutex_);
-        return found;
-    }
-    void complete(const Command &c, Outcome s, const char *detail) {
-        pthread_mutex_lock(&mutex_);
-        Result &r = results_[c.id % HistorySize];
-        if (r.id == c.id && r.epoch == c.epoch && r.state == Outcome::Accepted) {
-            if (c.epoch != epoch_) {
-                r.state = Outcome::Stale;
-                snprintf(r.detail, sizeof r.detail, "epoch invalidated before completion");
-            } else {
-                r.state = s;
-                snprintf(r.detail, sizeof r.detail, "%s", detail ? detail : "");
-            }
+    void complete(const Command &command,Outcome state,const char *detail) {
+        Guard guard(mutex_);
+        Result &result=results_[command.id%HistorySize];
+        if (!command.id || state==Outcome::Accepted || result.id!=command.id ||
+            result.epoch!=command.epoch || result.state!=Outcome::Accepted) {
+            ++metrics_.duplicateCompletions;return;
         }
-        pthread_mutex_unlock(&mutex_);
+        finish_locked(result,command.epoch==epoch_?state:Outcome::Stale,
+            command.epoch==epoch_?detail:"epoch invalidated before completion");
     }
-    bool result(uint64_t id, Result &r) {
-        pthread_mutex_lock(&mutex_);
-        bool found = id && results_[id % HistorySize].id == id;
-        if (found) r = results_[id % HistorySize];
-        pthread_mutex_unlock(&mutex_);
-        return found;
+    bool result(uint64_t id,Result &out) {
+        Guard guard(mutex_);
+        if (!id || results_[id%HistorySize].id!=id) return false;
+        out=results_[id%HistorySize];return true;
     }
-    uint64_t epoch() {
-        pthread_mutex_lock(&mutex_); uint64_t e = epoch_; pthread_mutex_unlock(&mutex_); return e;
-    }
+    uint64_t epoch() { Guard guard(mutex_);return epoch_; }
     uint64_t invalidate() {
-        pthread_mutex_lock(&mutex_);
-        const uint64_t e = ++epoch_;
-        stale_results_locked("scene/activity changed; submit again");
-        event_.notify_locked();
-        pthread_mutex_unlock(&mutex_);
-        return e;
+        Guard guard(mutex_);invalidate_locked("scene/activity changed; submit again");return epoch_;
     }
-    // True means a command or lifecycle event needs attention. A notification
-    // arriving before wait is retained by its generation. One worker consumes
-    // notification generations; the queue itself remains safe for producers.
-    bool wait_for_work(int timeout_ms = -1) {
-        pthread_mutex_lock(&mutex_);
-        bool found = !stopping_ && (count_ != 0 ||
-            observed_generation_ != event_.generation_locked());
-        if (!found && !stopping_)
-            found = event_.wait_locked(&mutex_, observed_generation_, timeout_ms);
-        if (found) observed_generation_ = event_.generation_locked();
-        found = found && !stopping_;
-        pthread_mutex_unlock(&mutex_);
+    bool wait_for_work(int timeout_ms=-1) {
+        Guard guard(mutex_);++metrics_.waits;
+        bool found=!stopping_ && (count_ || observed_generation_!=event_.generation_locked());
+        if (!found && !stopping_) found=event_.wait_locked(&mutex_,observed_generation_,timeout_ms);
+        if (found) observed_generation_=event_.generation_locked();
+        found=found&&!stopping_;
+        if (found) ++metrics_.wakeups;
         return found;
     }
-    void notify() {
-        pthread_mutex_lock(&mutex_); event_.notify_locked(); pthread_mutex_unlock(&mutex_);
-    }
-    size_t pending() {
-        pthread_mutex_lock(&mutex_); const size_t n = count_; pthread_mutex_unlock(&mutex_); return n;
-    }
-    bool stopping() {
-        pthread_mutex_lock(&mutex_); const bool s = stopping_; pthread_mutex_unlock(&mutex_); return s;
-    }
+    void notify() { Guard guard(mutex_);event_.notify_locked(); }
+    size_t pending() { Guard guard(mutex_);return count_; }
+    bool stopping() { Guard guard(mutex_);return stopping_; }
     void shutdown() {
-        pthread_mutex_lock(&mutex_);
-        if (!stopping_) {
-            stopping_ = true; ++epoch_;
-            stale_results_locked("runtime shutdown");
-            head_ = count_ = 0;
-            event_.notify_locked();
+        Guard guard(mutex_);
+        if (!stopping_) { stopping_=true;invalidate_locked("runtime shutdown"); }
+    }
+    void publish(const char *json) { Guard guard(mutex_);snapshot_.store(json); }
+    bool publish_for_epoch(const char *json,uint64_t expected_epoch) {
+        Guard guard(mutex_);
+        if (expected_epoch!=epoch_ || stopping_) {
+            ++metrics_.rejectedPublications;
+            snapshot_.invalidate(epoch_,stopping_?"stopped":"reset_pending");return false;
         }
-        pthread_mutex_unlock(&mutex_);
+        const bool stored=snapshot_.store(json);
+        if (stored) ++metrics_.publications;else ++metrics_.rejectedPublications;
+        return stored;
     }
-    void publish(const char *s) {
-        pthread_mutex_lock(&mutex_); snprintf(snapshot_, sizeof snapshot_, "%s", s); pthread_mutex_unlock(&mutex_);
+    void snapshot(char *out,size_t size) { snapshot_.copy(out,size); }
+    uint64_t snapshot_revision() { return snapshot_.copy(nullptr,0); }
+    RuntimeMetrics metrics() {
+        Guard guard(mutex_);auto result=metrics_;result.queueDepth=count_;return result;
     }
-    // Prevent a producer invalidating the epoch between serialization and commit.
-    // Pending state contains no enabled observations from the obsolete owner.
-    bool publish_for_epoch(const char *s,uint64_t observed_epoch) {
-        pthread_mutex_lock(&mutex_);
-        const bool current=observed_epoch==epoch_;
-        if(current) snprintf(snapshot_,sizeof snapshot_,"%s",s?s:"");
-        else snprintf(snapshot_,sizeof snapshot_,"{\"state\":\"reset_pending\",\"ready\":false,\"epoch\":%llu,\"features\":{}}",(unsigned long long)epoch_);
-        pthread_mutex_unlock(&mutex_);return current;
-    }
-    void snapshot(char *out, size_t n) {
-        pthread_mutex_lock(&mutex_); snprintf(out, n, "%s", snapshot_); pthread_mutex_unlock(&mutex_);
+    void telemetry(char *out,size_t size) {
+        char status[4096];const uint64_t revision=snapshot_.copy(status,sizeof status);
+        const RuntimeMetrics m=metrics();
+        const size_t length=strlen(status);
+        if (!length || status[length-1]!='}') { if(out&&size)snprintf(out,size,"{}");return; }
+        status[length-1]=0;
+        if (!out || !size) return;
+        const int written=snprintf(out,size,
+            "%s,\"revision\":%llu,\"runtime\":{\"submitted\":%llu,\"rejected\":%llu,\"completed\":%llu,"
+            "\"queueDepth\":%zu,\"queueHighWater\":%zu,\"meanQueueUs\":%llu,\"maxQueueUs\":%llu,"
+            "\"meanCompletionUs\":%llu,\"maxCompletionUs\":%llu,\"waits\":%llu,\"wakeups\":%llu,\"publications\":%llu}}",
+            status,(unsigned long long)revision,(unsigned long long)m.submitted,
+            (unsigned long long)m.rejected,(unsigned long long)m.completed,m.queueDepth,m.queueHighWater,
+            (unsigned long long)(m.dequeued?m.queueUs/m.dequeued:0),(unsigned long long)m.maxQueueUs,
+            (unsigned long long)(m.completed?m.completionUs/m.completed:0),(unsigned long long)m.maxCompletionUs,
+            (unsigned long long)m.waits,(unsigned long long)m.wakeups,(unsigned long long)m.publications);
+        if (written<0 || static_cast<size_t>(written)>=size)
+            snprintf(out,size,"{\"state\":\"fault\",\"ready\":false,\"detail\":\"telemetry buffer too small\"}");
     }
 };
-inline bool finite_range(float v, float lo, float hi) { return v == v && v >= lo && v <= hi; }
+inline bool finite_range(float v,float lo,float hi) { return v==v && v>=lo && v<=hi; }
 }

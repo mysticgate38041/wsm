@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 #define WSM_PROTOCOL_VERSION 3u
-#define WSM_BUILD_STAMP "wsm-v6.2.0-rc1"
+#include "wsm_version.h"
 #define WSM_CHANNEL_MAP_SIZE 4096u
 
 #define WSM_OFF_HELLO 0u

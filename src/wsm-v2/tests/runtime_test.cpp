@@ -140,8 +140,46 @@ static void wait_boundary_stress() {
     }
     consumer.join(); assert(r.pending() == 0);
 }
+static uint64_t fake_time=100;
+static uint64_t test_clock() { return fake_time; }
+static void telemetry_and_publication() {
+    wsm::Runtime runtime(test_clock);uint64_t id=0;wsm::Command command{};
+    assert(runtime.submit("speed 2",id));fake_time=150;assert(runtime.pop(command));
+    fake_time=200;runtime.complete(command,wsm::Outcome::Applied,"done");
+    runtime.complete(command,wsm::Outcome::Fault,"duplicate");
+    auto m=runtime.metrics();
+    assert(m.submitted==1&&m.dequeued==1&&m.completed==1&&m.duplicateCompletions==1);
+    assert(m.queueHighWater==1&&m.queueUs==50&&m.completionUs==100);
+    assert(runtime.publish_for_epoch("{\"ready\":true}",runtime.epoch()));
+    const auto revision=runtime.snapshot_revision();
+    assert(runtime.publish_for_epoch("{\"ready\":true}",runtime.epoch()));
+    assert(runtime.snapshot_revision()==revision);
+    // Invalidation itself hides old ready state, even before the worker runs.
+    runtime.invalidate();char out[4096];runtime.snapshot(out,sizeof out);
+    assert(strstr(out,"reset_pending")&&!strstr(out,"\"ready\":true"));
+    runtime.telemetry(out,sizeof out);
+    assert(strstr(out,"\"meanQueueUs\":50")&&strstr(out,"\"meanCompletionUs\":100"));
+    char too_long[4097];memset(too_long,'x',sizeof too_long);too_long[4096]=0;
+    assert(!runtime.publish_for_epoch(too_long,runtime.epoch()));
+    runtime.snapshot(out,sizeof out);assert(strstr(out,"reset_pending"));
+    runtime.shutdown();runtime.snapshot(out,sizeof out);assert(strstr(out,"stopped"));
+}
+static void retained_completion_backpressure() {
+    wsm::Runtime runtime;uint64_t id;wsm::Command command,first{};wsm::Result result{};
+    // A stalled result cannot be overwritten after history wraps.
+    assert(runtime.submit("speed 2",id)&&runtime.pop(first));
+    for(size_t i=1;i<wsm::HistorySize;++i) {
+        assert(runtime.submit("speed 0",id)&&runtime.pop(command));
+        runtime.complete(command,wsm::Outcome::Applied,"done");
+    }
+    assert(!runtime.submit("speed 2",id));
+    assert(runtime.result(first.id,result)&&result.state==wsm::Outcome::Accepted);
+    runtime.complete(first,wsm::Outcome::Applied,"late");
+    assert(runtime.submit("speed 2",id));
+    runtime.invalidate();assert(runtime.pending()==0);
+}
 int main() {
-    basic_contract(); stale_completion(); event_contract();
+    basic_contract(); stale_completion(); event_contract(); telemetry_and_publication(); retained_completion_backpressure();
     multiproducer_fifo(); wait_boundary_stress();
     puts("PASS runtime: FIFO/capacity/191-char/history64, PANIC priority and stale completion, lifecycle/notify-before-wait/timeout/shutdown, 4 producers / 4000 commands, 2000 wait boundaries");
 }

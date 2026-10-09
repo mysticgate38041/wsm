@@ -110,7 +110,38 @@ static void coherent_snapshots() {
     auto s = flags.snapshot(); assert(s.epoch == 11 && !s.ready);
     for (auto &value : s.features) assert(!value.enabled);
 }
+static void atomic_batch_observations() {
+    wsm::FeatureFlags flags;
+    wsm::FeatureValue values[wsm::FeatureCount];
+    for(size_t i=0;i<wsm::FeatureCount;++i) values[i]={true,wsm::FeatureSpecs[i].initial};
+    assert(flags.publish_observation(20,true,values));
+    auto before=flags.snapshot();assert(before.revision==1);
+    assert(flags.publish_observation(20,true,values)&&flags.revision()==before.revision);
+    values[17].value=std::numeric_limits<float>::quiet_NaN();
+    values[0].enabled=false;
+    assert(!flags.publish_observation(20,true,values));
+    auto unchanged=flags.snapshot();assert(unchanged.revision==before.revision&&unchanged.features[0].enabled);
+    values[17].value=1;
+    std::atomic<bool> done{false};
+    std::thread writer([&] {
+        for(int turn=0;turn<10000;++turn) {
+            for(auto &v:values)v.enabled=(turn%2)==0;
+            assert(flags.publish_observation(20,true,values));
+        }
+        done=true;
+    });
+    do {
+        const auto snapshot=flags.snapshot();
+        for(const auto &v:snapshot.features)assert(v.enabled==snapshot.features[0].enabled);
+    } while(!done);
+    writer.join();
+    assert(flags.reset(21));assert(!flags.publish_observation(20,true,values));
+    for(auto &v:values)v.enabled=true;
+    assert(flags.publish_observation(21,false,values));
+    for(const auto &v:flags.snapshot().features)assert(v.enabled);
+    assert(!flags.enabled(wsm::FeatureIndex::Speed,21)); // Readiness still gates use.
+}
 int main() {
-    mapping_and_revision(); numeric_and_reset(); coherent_snapshots();
+    mapping_and_revision(); numeric_and_reset(); coherent_snapshots(); atomic_batch_observations();
     puts("PASS flags: 18-control mapping, exact float sliders/ranges/nonfinite, readiness/epoch gates, reset/revision semantics, 4 writers / 4000 updates and coherent snapshots");
 }

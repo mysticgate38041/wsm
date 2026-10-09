@@ -7,6 +7,7 @@
 // bounded reads, local frames, silent non-match. exemptFd intentionally NOT used (A02:
 // ZN returned false on emulator; fds opened post-specialize don't need exemption).
 #include <string.h>
+#include <initializer_list>
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -25,6 +26,7 @@
 #include "zygisk.hpp"
 #include "wsm_protocol.h"
 #include "wsm_bus.h"
+#include "bootstrap_progress.h"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "WSM", __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, "WSM", __VA_ARGS__)
@@ -75,6 +77,7 @@ struct Session {
 };
 
 Session g_s{};
+wsm::BootstrapProgress g_bootstrap;
 JavaVM *g_vm = nullptr;
 zygisk::Api *g_api = nullptr;
 
@@ -83,6 +86,19 @@ uint64_t now_ms() {
     clock_gettime(CLOCK_MONOTONIC, &ts);
     return static_cast<uint64_t>(ts.tv_sec) * 1000ull + static_cast<uint64_t>(ts.tv_nsec) / 1000000ull;
 }
+
+void log_bootstrap() {
+    const auto state=g_bootstrap.snapshot();
+    LOGI("BOOT phase=%s elapsed_ms=%llu previous_phase_ms=%llu error=%d",
+         wsm::bootstrap_phase_name(state.phase),
+         (unsigned long long)(state.changed_ms-state.started_ms),
+         (unsigned long long)state.previous_phase_ms,state.error);
+}
+void bootstrap_advance(wsm::BootstrapPhase phase) {
+    if(!g_bootstrap.advance(phase,now_ms()))g_bootstrap.fail(100,now_ms());
+    log_bootstrap();
+}
+void bootstrap_fail(int error) { g_bootstrap.fail(error,now_ms());log_bootstrap(); }
 
 uint64_t fnv1a(const void *data, size_t size) {
     const uint8_t *p = static_cast<const uint8_t *>(data);
@@ -174,6 +190,7 @@ void wait_for_handshake() {
         usleep(50 * 1000);
     }
     if (!ok) {
+        bootstrap_fail(8);
         LOGE("HANDSHAKE_TIMEOUT (10s) — engine did not ack");
         return;
     }
@@ -181,8 +198,9 @@ void wait_for_handshake() {
         ack->engine_pid != static_cast<uint32_t>(getpid()) ||
         strncmp(ack->build, WSM_BUILD_STAMP, sizeof ack->build) != 0 ||
         strncmp(ack->abi, WSM_ABI_STR, sizeof ack->abi) != 0) {
-        LOGE("HANDSHAKE_IDENTITY_MISMATCH"); return;
+        bootstrap_fail(9);LOGE("HANDSHAKE_IDENTITY_MISMATCH"); return;
     }
+    bootstrap_advance(wsm::BootstrapPhase::HandshakeReady);
     LOGI("HANDSHAKE_OK engine_pid=%u engine_uid=%u state=%u caps=0x%x build=%s abi=%s",
          ack->engine_pid, ack->engine_uid, ack->state, ack->caps, ack->build, ack->abi);
 
@@ -194,6 +212,7 @@ void wait_for_handshake() {
         usleep(250 * 1000);
     }
     if (probe->magic == WSM_PROBE_MAGIC) {
+        bootstrap_advance(wsm::BootstrapPhase::ProbeObserved);
         LOGI("PROBE stage=%u base=0x%llx :: %s", probe->stage,
              static_cast<unsigned long long>(probe->il2cpp_base), probe->text);
     } else {
@@ -205,13 +224,15 @@ void *worker_main(void *) {
     const uint64_t wait_deadline = now_ms() + 30000;
     while (!__atomic_load_n(&g_s.post_reached, __ATOMIC_ACQUIRE)) {
         if (now_ms() > wait_deadline) {
+            bootstrap_fail(4);
             LOGE("worker: post not signaled in 30s — abort");
             return nullptr;
         }
         usleep(20 * 1000);
     }
+    bootstrap_advance(wsm::BootstrapPhase::WorkerReady);
     if (!g_vm) {
-        LOGE("worker: no JavaVM");
+        bootstrap_fail(5);LOGE("worker: no JavaVM");
         return nullptr;
     }
     JNIEnv *env = nullptr;
@@ -219,16 +240,16 @@ void *worker_main(void *) {
     jint r = g_vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6);
     if (r == JNI_EDETACHED) {
         if (g_vm->AttachCurrentThread(&env, nullptr) != JNI_OK) {
-            LOGE("worker: attach failed");
+            bootstrap_fail(5);LOGE("worker: attach failed");
             return nullptr;
         }
         attached = true;
     } else if (r != JNI_OK || !env) {
-        LOGE("worker: GetEnv=%d", static_cast<int>(r));
+        bootstrap_fail(5);LOGE("worker: GetEnv=%d", static_cast<int>(r));
         return nullptr;
     }
     if (env->PushLocalFrame(16) != JNI_OK) {
-        LOGE("worker: local frame failed");
+        bootstrap_fail(5);LOGE("worker: local frame failed");
         if (attached) g_vm->DetachCurrentThread();
         return nullptr;
     }
@@ -240,14 +261,15 @@ void *worker_main(void *) {
        Rationale: System.load() NPEs on attached threads (Reflection.getCallerClass()==null);
        dlopen from the staged fd is deterministic and ABI-correct (the native bridge handles
        foreign-arch loads inside bridged processes). */
+    bool loaded=false;
     void *handle = dlopen(fdpath, RTLD_NOW | RTLD_LOCAL);
     if (!handle) {
-        LOGE("ENGINE_DLOPEN_FAIL %s err=%s", fdpath, dlerror());
+        bootstrap_fail(6);LOGE("ENGINE_DLOPEN_FAIL %s err=%s", fdpath, dlerror());
     } else {
         typedef jint (*jni_onload_fn)(JavaVM *, void *);
         jni_onload_fn onload = reinterpret_cast<jni_onload_fn>(dlsym(handle, "JNI_OnLoad"));
         if (!onload) {
-            LOGE("ENGINE_NO_JNI_ONLOAD %s", fdpath);
+            bootstrap_fail(7);LOGE("ENGINE_NO_JNI_ONLOAD %s", fdpath);
         } else {
             jint ver = onload(g_vm, nullptr);
             LOGI("ENGINE_DLOPEN ok %s handle=%p jni_ver=0x%x (payload %zu B fnv64=%016llx)",
@@ -255,11 +277,14 @@ void *worker_main(void *) {
                  static_cast<unsigned long long>(g_s.payload_hash));
             close(g_s.payload_fd); /* mapping persists; fd no longer needed (A07) */
             g_s.payload_fd = -1;
-            wait_for_handshake();
+            if(ver==JNI_VERSION_1_6){loaded=true;bootstrap_advance(wsm::BootstrapPhase::EngineLoaded);}
+            else bootstrap_fail(7);
         }
     }
     env->PopLocalFrame(nullptr);
     if (attached) g_vm->DetachCurrentThread();
+    // Diagnostic waiting needs no Java attachment or local references.
+    if(loaded)wait_for_handshake();
     return nullptr;
 }
 
@@ -299,17 +324,18 @@ public:
         snprintf(g_s.proc, sizeof g_s.proc, "%s", name);
         env_->ReleaseStringUTFChars(args->nice_name, name);
         g_s.target_uid = args->uid;
+        g_bootstrap.begin(now_ms());log_bootstrap();
 
         const int dirfd = g_api->getModuleDir(); /* borrowed fd; valid in pre (S4) */
         if (dirfd < 0) {
-            LOGE("[%s] getModuleDir=%d", g_s.proc, dirfd);
+            bootstrap_fail(1);LOGE("[%s] getModuleDir=%d", g_s.proc, dirfd);
             return;
         }
         size_t size = 0;
         void *data = read_file_bounded(dirfd, kEngineRelPath, &size);
-        if (!data) return;
+        if (!data) {bootstrap_fail(1);return;}
         if (!validate_engine_elf(static_cast<uint8_t *>(data), size)) {
-            LOGE("[%s] engine ELF invalid (size=%zu)", g_s.proc, size);
+            bootstrap_fail(1);LOGE("[%s] engine ELF invalid (size=%zu)", g_s.proc, size);
             free(data);
             return;
         }
@@ -323,7 +349,7 @@ public:
             memcmp(g_s.arm_data, "\177ELF", 4) != 0 ||
             static_cast<uint8_t *>(g_s.arm_data)[4] != 2 ||
             static_cast<uint8_t *>(g_s.arm_data)[18] != 0xb7) {
-            LOGE("ARM64 payload missing/invalid; refusing incomplete module");
+            bootstrap_fail(1);LOGE("ARM64 payload missing/invalid; refusing incomplete module");
             cleanup_stage();
             return;
         }
@@ -341,13 +367,14 @@ public:
                 LOGI("[%s] pre-staged dex=%zu B", g_s.proc, dsize);
             } else { free(dd); }
         }
+        bootstrap_advance(wsm::BootstrapPhase::InputsReady);
     }
 
     void postAppSpecialize(const zygisk::AppSpecializeArgs *) override {
         if (!g_s.selected) return;
         /* A02: stage fds NOW — opened post-specialize they avoid the zygote fd sweep. */
         if (!stage_post()) {
-            cleanup_stage();
+            bootstrap_fail(2);cleanup_stage();
             return;
         }
         __atomic_store_n(&g_s.post_reached, 1, __ATOMIC_RELEASE);
@@ -469,8 +496,9 @@ private:
             setenv("WSM_DEX_FD", tmp, 1);
         }
 
+        bootstrap_advance(wsm::BootstrapPhase::Staged);
         if (pthread_create(&g_s.worker, nullptr, worker_main, nullptr) != 0) {
-            LOGE("[%s] worker spawn failed", g_s.proc);
+            bootstrap_fail(3);LOGE("[%s] worker spawn failed", g_s.proc);
             return false;
         }
         pthread_detach(g_s.worker);
@@ -478,6 +506,7 @@ private:
     }
 
     void cleanup_stage() {
+        for(const char *key:{"WSM_ARM64_FD","WSM_CHANNEL_FD","WSM_PROTOCOL","WSM_NONCE","WSM_DEX_FD"}) unsetenv(key);
         free(g_s.arm_data); g_s.arm_data = nullptr;
         if (g_s.arm_fd >= 0) { close(g_s.arm_fd); g_s.arm_fd = -1; }
         if (g_s.engine_data) {
