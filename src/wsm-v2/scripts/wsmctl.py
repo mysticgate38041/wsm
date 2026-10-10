@@ -3,6 +3,19 @@ import argparse,json,re,shlex,subprocess,sys,time
 from pathlib import Path
 CMD="/data/user/0/com.kakaogames.gdts/files/.7d1b0c33aa94e6f28e5b10c4d9a2f607"
 ACK="/data/user/0/com.kakaogames.gdts/files/.7d1b0c33aa94e6f28e5b10c4d9a2f608"
+NONCE_PATH="/data/adb/modules/wsm_gt/.nonce"
+M64=(1<<64)-1
+def splitmix(state):
+    state=(state+0x9E3779B97F4A7C15)&M64
+    z=state
+    z=((z^(z>>30))*0xBF58476D1CE4E5B9)&M64
+    z=((z^(z>>27))*0x94D049BB133111EB)&M64
+    return state,(z^(z>>31))&M64
+def xor_stream(nonce,data):
+    out=bytearray(len(data));s=nonce
+    for i in range(len(data)):
+        s,r=splitmix(s);out[i]=data[i]^(r&0xFF)
+    return bytes(out)
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--adb",required=True);p.add_argument("--serial",required=True)
@@ -20,16 +33,41 @@ def main():
     def shell(command,root=False,data=None):
         if root:command=shlex.quote(a.su)+" -c "+shlex.quote(command)
         return adb(["shell",command],data)
+    nonce_cache=[None]
+    def channel_nonce(refresh=False):
+        if nonce_cache[0] is not None and not refresh:return nonce_cache[0]
+        try:
+            raw=shell("cat "+shlex.quote(NONCE_PATH),root=True)
+            if re.fullmatch(r"[0-9a-fA-F]{16}",raw):
+                nonce_cache[0]=int(raw,16);return nonce_cache[0]
+        except (RuntimeError,OSError):pass
+        nonce_cache[0]=None;return None
     def request(command):
         token=time.time_ns()
         cmd_q=shlex.quote(CMD);ack_q=shlex.quote(ACK)
+        line="@"+str(token)+" "+command
+        nonce=channel_nonce()
+        payload=("E1:"+xor_stream(nonce,line.encode("utf-8")).hex()) if nonce is not None else line
         write="umask 077; [ ! -L "+cmd_q+" ] || exit 1; cat > "+cmd_q+" && chown \"$(stat -c '%u:%g' /data/user/0/com.kakaogames.gdts)\" "+cmd_q+" && chmod 0600 "+cmd_q
-        shell(write,True,"@"+str(token)+" "+command+"\n")
+        shell(write,True,payload+"\n")
         deadline=time.monotonic()+a.timeout
         while time.monotonic()<deadline:
             try:
-                reply=json.loads(shell("cat "+ack_q,True))
-                if reply.get("request")==token:return reply
+                reply=shell("cat "+ack_q,True)
+                if reply.startswith("E1:"):
+                    decoded=None
+                    for refresh in (False,True):
+                        key=channel_nonce(refresh=refresh)
+                        if key is None:continue
+                        try:
+                            decoded=xor_stream(key,bytes.fromhex(reply[3:])).decode("utf-8")
+                            break
+                        except (ValueError,UnicodeDecodeError):decoded=None
+                    if decoded is None:
+                        time.sleep(.15);continue
+                    reply=decoded
+                parsed=json.loads(reply)
+                if parsed.get("request")==token:return parsed
             except (ValueError,RuntimeError):pass
             time.sleep(.15)
         raise TimeoutError("No correlated acknowledgement; check target process and WSM logs")

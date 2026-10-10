@@ -12,7 +12,8 @@
     "hybrid_resolver.cpp",
     "feature_flags.cpp",
     "dispatcher.cpp",
-    "payload_worker.cpp"
+    "payload_worker.cpp",
+    "transport_crypto.cpp"
   ],
   "fixtures": {
     "runtime": [],
@@ -32,6 +33,9 @@
     ],
     "dispatcher": [
       "dispatcher.cpp"
+    ],
+    "transport": [
+      "transport_crypto.cpp"
     ],
     "worker": [
       "payload_worker.cpp"

@@ -34,6 +34,7 @@
 #include "wsm_binding.h"
 #include "wsm_feature_catalog.h"
 #include "wsm_arm64_reloc.h"
+#include "transport_crypto.h"
 #include "wsm_runtime.h"
 #include "dispatcher.h"
 #include "feature_flags.h"
@@ -5138,11 +5139,25 @@ void ctl_exec(const char *raw, char *ack, size_t cap) {
 
 #include "modern_control.inc"
 
+/* Log hygiene: only the first token of a request/ack ever reaches logcat. */
+static void ctl_log_token(const char *s, char *out, size_t cap) {
+    size_t n = 0;
+    if (!out || cap == 0) return;
+    if (s) {
+        for (; s[n] && s[n] != ' ' && n + 1 < cap; ++n) {
+            out[n] = (s[n] >= 32 && s[n] != 127) ? s[n] : '?';
+        }
+    }
+    out[n] = '\0';
+}
+
 void *control_thread(void *) {
     ELOGI("CTL thread up (paths=%zu)", kCtlCount);
-    char last[kCtlCount][256] = {};
-    char raw[256];
+    char last[kCtlCount][1088] = {};
+    char raw[1088];
+    char cmd[544];
     char ack[4096];
+    static char enc[8704];
     for (;;) {
         BEAT_BEGIN();
         usleep(1000 * 1000); /* 1 s poll */
@@ -5156,14 +5171,29 @@ void *control_thread(void *) {
                 if (*p == '\n' || *p == '\r') { *p = '\0'; break; }
             }
             if (raw[0] == '\0') break;
+            bool encrypted = false;
+            if (strncmp(raw, "E1:", 3) == 0) {
+                /* Keyed frame: only this engine's nonce can recover it; a wrong
+                   or absent key silently refuses the frame (no ack written). */
+                if (!g_cfg_nonce_valid ||
+                    !wsm::transport_decode(g_cfg_nonce, raw, cmd, sizeof cmd)) continue;
+                encrypted = true;
+            } else {
+                snprintf(cmd, sizeof cmd, "%s", raw);
+            }
             ack[0] = '\0';
             unsigned long long request = 0; int offset = 0;
-            if (raw[0] == '@' && sscanf(raw, "@%llu %n", &request, &offset) == 1 && offset > 0) {
-                char response[4000]; modern_request(raw + offset, response, sizeof response);
+            if (cmd[0] == '@' && sscanf(cmd, "@%llu %n", &request, &offset) == 1 && offset > 0) {
+                char response[4000]; modern_request(cmd + offset, response, sizeof response);
                 snprintf(ack, sizeof ack, "{\"request\":%llu,%s", request, response[0] == '{' ? response + 1 : "\"state\":\"fault\"}");
-            } else modern_request(raw, ack, sizeof ack);
-            ELOGI("CTL[%zu] %s -> %s", i, raw, ack);
-            ctl_write(kCtlPaths[i].ack, ack);
+            } else modern_request(cmd, ack, sizeof ack);
+            char rk[25], ak[25];
+            ctl_log_token(raw, rk, sizeof rk);
+            ctl_log_token(ack, ak, sizeof ak);
+            ELOGI("CTL[%zu] %s -> %s enc=%d", i, rk, ak, encrypted ? 1 : 0);
+            const char *out = ack;
+            if (encrypted && wsm::transport_encode(g_cfg_nonce, ack, enc, sizeof enc)) out = enc;
+            ctl_write(kCtlPaths[i].ack, out);
             break;
         }
         BEAT_END();

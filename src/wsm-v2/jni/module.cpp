@@ -330,6 +330,7 @@ public:
             return; /* silent non-match (A05/A19) */
         }
         snprintf(g_s.proc, sizeof g_s.proc, "%s", name);
+        const bool is_main = strcmp(name, "com.kakaogames.gdts") == 0;
         env_->ReleaseStringUTFChars(args->nice_name, name);
         g_s.target_uid = args->uid;
         g_bootstrap.begin(now_ms());log_bootstrap();
@@ -338,6 +339,28 @@ public:
         if (dirfd < 0) {
             bootstrap_fail(1);LOGE("[%s] getModuleDir=%d", g_s.proc, dirfd);
             return;
+        }
+        if (is_main) {
+            /* F2 (v6.4): key the private command channel. The nonce is created
+               in this root phase and consumed twice: handed to the engine
+               in-process, and dropped 0600 into the module dir for root tooling
+               only — the app uid and any child daemon cannot read it. */
+            uint64_t nonce = 0;
+            long gr = syscall(__NR_getrandom, &nonce, sizeof nonce, 0);
+            if (gr != static_cast<long>(sizeof nonce) || nonce == 0) {
+                nonce = (now_ms() << 32) ^ (static_cast<uint64_t>(getpid()) << 16);
+            }
+            g_s.nonce = nonce;
+            const int nfd = openat(dirfd, ".nonce", O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC | O_NOFOLLOW, 0600);
+            if (nfd >= 0) {
+                char nb[17];
+                snprintf(nb, sizeof nb, "%016llx", static_cast<unsigned long long>(nonce));
+                const ssize_t w = write(nfd, nb, 16);
+                close(nfd);
+                if (w != 16) LOGI("[%s] nonce drop incomplete", g_s.proc);
+            } else {
+                LOGI("[%s] nonce drop unavailable (errno=%d)", g_s.proc, errno);
+            }
         }
         size_t size = 0;
         void *data = read_file_bounded(dirfd, kEngineRelPath, &size);
@@ -474,10 +497,14 @@ private:
         g_s.channel_map = cmap;
         g_s.channel_fd = cfd;
 
-        uint64_t nonce = 0;
-        long gr = syscall(__NR_getrandom, &nonce, sizeof nonce, 0);
-        if (gr != static_cast<long>(sizeof nonce) || nonce == 0) {
-            nonce = (now_ms() << 32) ^ (static_cast<uint64_t>(getpid()) << 16);
+        /* F2 (v6.4): reuse the pre-generated key for the main process; only a
+           sub-process without a key falls back to internal randomness. */
+        uint64_t nonce = g_s.nonce;
+        if (nonce == 0) {
+            long gr = syscall(__NR_getrandom, &nonce, sizeof nonce, 0);
+            if (gr != static_cast<long>(sizeof nonce) || nonce == 0) {
+                nonce = (now_ms() << 32) ^ (static_cast<uint64_t>(getpid()) << 16);
+            }
         }
         g_s.nonce = nonce;
 
