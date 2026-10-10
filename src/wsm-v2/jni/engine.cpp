@@ -79,6 +79,9 @@ wsm::BindingApi g_binding_api{};
 float g_speed_value = 2.0f;
 bool g_bus_unhealthy = false;
 bool g_timescale_owned = false;
+/* v6.4 FOV/zoom ownership (official StageCamera API; reverted by PANIC/scene reset) */
+bool g_fov_owned = false;
+float g_fov_value = 2.0f;
 bool g_restoration_pending = false;
 uint64_t g_option_lifetime = 1;
 static void modern_tick();
@@ -595,6 +598,9 @@ void *g_m_fos_checkdie = nullptr, *g_m_fos_changehp = nullptr, *g_m_stats_applyd
 void *g_m_stage_inst = nullptr, *g_m_cm_players = nullptr;
 void *g_f_stage_cm = nullptr, *g_f_char_stats = nullptr;
 void *g_m_stage_getcm = nullptr, *g_m_char_getstats = nullptr;
+/* v6.4 FOV/zoom resolve (official StageCamera API, lazily bound on first use) */
+void *g_cls_stagecam = nullptr, *g_m_stage_getsc = nullptr;
+void *g_m_scam_override = nullptr, *g_m_scam_reset = nullptr, *g_m_scam_getsize = nullptr;
 void *g_objcls = nullptr, *g_clsname = nullptr;
 
 /* Android user-space pointer sanity: reject obvious garbage before we call into it. */
@@ -4405,6 +4411,87 @@ static bool gm_hero_pos(float out[3]) {
     return true;
 }
 
+/* v6.4 FOV/zoom: official game API — Stage.get_StageCamera() +
+   OverrideDefaultCameraSize / ResetDefaultCameraSize (orthographic size).
+   Lazy binding keeps the core resolve gate untouched; owned size is reverted
+   by PANIC and scene change like other owned state. */
+static bool feat_fov_resolve() {
+    if (g_m_stage_getsc && g_m_scam_override && g_m_scam_reset && g_m_scam_getsize) return true;
+    if (!feat_resolve() || !g_img || !g_cls_stage) return false;
+    fn_cfn_t2 cfn = feat_cfn();
+    fn_cgm_t2 cgm = feat_cgm();
+    if (!cfn || !cgm) return false;
+    void *img = reinterpret_cast<void *>(g_img);
+    GUARDED_BEGIN();
+    if (!g_cls_stagecam) g_cls_stagecam = cfn(img, "Oak", "StageCamera");
+    if (!g_m_stage_getsc) g_m_stage_getsc = cgm(g_cls_stage, "get_StageCamera", 0);
+    if (g_cls_stagecam && !g_m_scam_override) g_m_scam_override = cgm(g_cls_stagecam, "OverrideDefaultCameraSize", 1);
+    if (g_cls_stagecam && !g_m_scam_reset) g_m_scam_reset = cgm(g_cls_stagecam, "ResetDefaultCameraSize", 0);
+    if (g_cls_stagecam && !g_m_scam_getsize) g_m_scam_getsize = cgm(g_cls_stagecam, "get_Size", 0);
+    GUARDED_END();
+    return g_m_stage_getsc && g_m_scam_override && g_m_scam_reset && g_m_scam_getsize;
+}
+
+void feat_fov(char *out, size_t cap, const char *arg) {
+    float v = strtof(arg, nullptr);
+    if (!(v == v) || v < 0.0f || (v != 0.0f && (v < 2.0f || v > 40.0f))) {
+        snprintf(out, cap, "FOV range 0 | 2..40");
+        return;
+    }
+    if (!feat_fov_resolve()) { snprintf(out, cap, "FOV fn-missing"); return; }
+    fn_inv_t2 inv = feat_inv();
+    if (!inv) { snprintf(out, cap, "FOV no-invoke"); return; }
+    void *exc = nullptr;
+    void *stage = nullptr;
+    GUARDED_BEGIN();
+    stage = inv(g_m_stage_inst, nullptr, nullptr, &exc);
+    GUARDED_END();
+    if (exc || !ptr_ok(stage)) { snprintf(out, cap, "FOV no-stage"); return; }
+    void *scam = nullptr;
+    exc = nullptr;
+    GUARDED_BEGIN();
+    scam = inv(g_m_stage_getsc, stage, nullptr, &exc);
+    GUARDED_END();
+    if (exc || !ptr_ok(scam)) { snprintf(out, cap, "FOV no-camera"); return; }
+    float before = 0.0f, after = 0.0f;
+    {
+        void *rb = nullptr;
+        exc = nullptr;
+        GUARDED_BEGIN();
+        rb = inv(g_m_scam_getsize, scam, nullptr, &exc);
+        GUARDED_END();
+        if (!exc && ptr_ok(rb)) memcpy(&before, reinterpret_cast<const uint8_t *>(rb) + 0x10, 4);
+    }
+    const sig_atomic_t f0 = g_guard_faults;
+    if (v == 0.0f) {
+        if (g_fov_owned) {
+            GUARDED_BEGIN();
+            (void) inv(g_m_scam_reset, scam, nullptr, &exc);
+            GUARDED_END();
+            g_fov_owned = false;
+        }
+    } else {
+        float size = v;
+        void *args[1] = {&size};
+        GUARDED_BEGIN();
+        (void) inv(g_m_scam_override, scam, args, &exc);
+        GUARDED_END();
+        g_fov_owned = true;
+        g_fov_value = v;
+    }
+    {
+        void *rb = nullptr;
+        exc = nullptr;
+        GUARDED_BEGIN();
+        rb = inv(g_m_scam_getsize, scam, nullptr, &exc);
+        GUARDED_END();
+        if (!exc && ptr_ok(rb)) memcpy(&after, reinterpret_cast<const uint8_t *>(rb) + 0x10, 4);
+    }
+    snprintf(out, cap, "FOV %s want=%.1f size=%.2f->%.2f owned=%d fault=%d",
+             v == 0.0f ? "reset" : "set", (double)v, (double)before, (double)after,
+             g_fov_owned ? 1 : 0, static_cast<int>(g_guard_faults - f0));
+}
+
 /* v5.0: official command kill test — MonsterDeadCommand.Create(info) -> Execute(0) */
 void feat_kcmd(char *out, size_t cap) {
     if (!feat_resolve() || !g_m_mdc_create || !g_m_cmd_exec) {
@@ -4914,6 +5001,10 @@ void ctl_exec(const char *raw, char *ack, size_t cap) {
         snprintf(ack, cap, "%s PANIC restore=%s options_residual=%u bits=0x%x option_failures=%u option_uncertain=%u time_owned=%d hooks=%s loot=future_requests_stopped; prior_requests_not_cancelled",
             restored ? "OK" : "ERR", restored ? "complete" : "incomplete; restart target", options.residual_objects,
             options.residual_bits, options.failed, options.uncertain_objects, g_timescale_owned ? 1 : 0, hooks_ok ? "restored" : "uncertain");
+        return;
+    }
+    if (strncmp(raw, "fov ", 4) == 0) {
+        feat_fov(ack, cap, raw + 4);
         return;
     }
     if (strncmp(raw, "tpr ", 4) == 0) {

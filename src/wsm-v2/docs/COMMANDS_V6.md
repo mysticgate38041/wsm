@@ -19,6 +19,7 @@ Native UI dan file transport masuk dispatcher yang sama; parser lama di `engine.
 | `feat dmg 0` atau `feat dmg 1..99` | OFF / pulse power ×100.000 |
 | `feat timescale 0` atau `feat timescale 0.1..5` | OFF idempotent / modifier waktu bernama wsm, ON membutuhkan instance game yang hidup |
 | `speed 0` atau `speed 1..5` | Restore / skala tiga getter gerak hero |
+| `fov 0` atau `fov 2..40` | Reset / override ukuran kamera stage (orthographic; memakai API resmi `StageCamera.OverrideDefaultCameraSize`, eksperimental) |
 | `critdmg 0` atau `critdmg 1..5` | Restore / skala critical damage hero, eksperimental |
 | `godmode 0\|1` | Restore / damage guard khusus hero, eksperimental |
 | `nocd 0\|1` | Restore / tiga cooldown gates, eksperimental |

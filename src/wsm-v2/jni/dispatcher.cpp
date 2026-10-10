@@ -31,6 +31,7 @@ bool valid_command(const char *c) {
         for(const auto *name:fixed) if(!strcmp(id,name)) return v==0 || v==1;
         return false;
     }
+    if(!strncmp(c,"fov ",4)) return slider_value(c+4,2,40,v);
     if(!strncmp(c,"speed ",6)) return slider_value(c+6,1,5,v);
     if(!strncmp(c,"critdmg ",8)) return slider_value(c+8,1,5,v);
     if(!strncmp(c,"tpr ",4)) return sscanf(c+4,"%f %f %c",&v,&z,&extra)==2 && range(v,-100,100) && range(z,-100,100);

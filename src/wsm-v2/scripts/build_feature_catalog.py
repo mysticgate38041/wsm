@@ -52,7 +52,7 @@ ROWS = {
 "lootesp": (None, "not_implemented", "List drop saja belum menyediakan projection, rarity dan overlay ESP teruji.", ["get_DropManager"]),
 "enemyesp": (None, "not_implemented", "List musuh ada; projection/chams, lifetime dan overlay belum diimplementasikan.", ["GetAllMonsters"]),
 "freecam": (None, "not_implemented", "StageCamera memiliki API kamera; ownership, update Unity dan restore belum diuji.", ["get_Camera", "get_LookAtPosition"]),
-"fov": (None, "not_implemented", "Ukuran kamera stage tidak membuktikan FOV perspektif 60–150 derajat.", ["OverrideDefaultCameraSize", "ResetDefaultCameraSize", "get_FieldOfView"]),
+"fov": ("fov", "prototype", "OverrideDefaultCameraSize/ResetDefaultCameraSize via Stage.get_StageCamera (v6.4, eksperimental): ukuran kamera orthographic (bukan FOV perspektif); efek visual belum diukur.", ["OverrideDefaultCameraSize", "ResetDefaultCameraSize", "get_FieldOfView"]),
 "dumb": ("stunall", "partial", "Gate pemilihan battle action AI; belum membuktikan semua boss tidak menyerang.", ["PickNTriggerBattleAction"]),
 "aggro": ("aggro", "partial", "Jalur publik dibuka (v6.4, eksperimental): ResetAggro sweep per-beat aktif lewat gate terproteksi; efektivitas penuh dan perilaku boss belum terukur di runtime.", ["GetBattleFor", "ResetAggro"]),
 "freeze": (None, "not_implemented", "Gate attack AI tidak menghentikan seluruh animasi; kontrak animasi enemy-only belum tersedia.", ["PickNTriggerBattleAction"]),

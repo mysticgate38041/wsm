@@ -86,7 +86,7 @@ public final class MenuController {
         notice="Nilai kontrol nonaktif dikembalikan ke default";emit();
     }
     public void action(String command){
-        if(!"sweep".equals(command)&&!"selftest".equals(command)&&!"tpr -15 0".equals(command)&&!"tpr 15 0".equals(command)&&!"tpr 0 15".equals(command)&&!"tpr 0 -15".equals(command)&&!"gm all 1".equals(command)&&!"gm all 0".equals(command)&&!"gm max dmg".equals(command)&&!"gm max aura".equals(command)&&!"gm preset save menu".equals(command)&&!"gm preset load menu".equals(command))return;
+        if(!"sweep".equals(command)&&!"selftest".equals(command)&&!"tpr -15 0".equals(command)&&!"tpr 15 0".equals(command)&&!"tpr 0 15".equals(command)&&!"tpr 0 -15".equals(command)&&!"gm all 1".equals(command)&&!"gm all 0".equals(command)&&!"gm max dmg".equals(command)&&!"gm max aura".equals(command)&&!"gm preset save menu".equals(command)&&!"gm preset load menu".equals(command)&&!"gm pos save 0".equals(command)&&!"gm pos load 0".equals(command))return;
         submit(command,null,false,false);
     }
     private boolean submit(String command,Model model,boolean desired,boolean fromProfile){

@@ -78,6 +78,11 @@ static void modern_reset(char *out, size_t cap) {
     ctl_exec("panic", out, cap);
     if (strncmp(out,"OK ",3) != 0 || g_bus_unhealthy) g_session_fault = true;
     g_godmode_on = false;
+    if (g_fov_owned) {
+        char tf[160];
+        feat_fov(tf, sizeof tf, "0");
+        ELOGI("FOV reset -> %s", tf);
+    }
     g_scratched_n = 0; g_scratch_reset = 1;
     g_control_epoch=reset_epoch;
     g_feature_flags.reset(reset_epoch);
@@ -349,6 +354,9 @@ static void modern_commands() {
         } else if (strncmp(c.text, "critdmg ", 8) == 0) {
             float v = strtof(c.text + 8, nullptr); feat_critdmg(ack, sizeof ack, v);
             ok = strncmp(ack, "OK ", 3) == 0 && !g_bus_unhealthy && (v == 0 ? !g_critdmg_on : g_critdmg_on);
+        } else if (strncmp(c.text, "fov ", 4) == 0) {
+            float v = strtof(c.text + 4, nullptr); feat_fov(ack, sizeof ack, c.text + 4);
+            ok = strncmp(ack, "FOV ", 4) == 0 && strstr(ack, "fault=0") && (v == 0 ? !g_fov_owned : g_fov_owned);
         } else if (strncmp(c.text, "godmode ", 8) == 0) {
             bool enabled=false;wsm::toggle_value(c.text+8,enabled);
             if (!enabled) { feat_godoff(ack, sizeof ack); ok = !g_godmode_on && !g_bus_unhealthy && strncmp(ack, "OK ", 3) == 0; }
@@ -408,7 +416,7 @@ static void modern_tick() {
     if (scene_observed && (hero != g_scene_hero || stage != g_scene_stage)) {
         ++g_option_lifetime; // Previous-scene keys cannot authorize managed calls.
         const uint64_t scene_epoch=g_runtime.invalidate();
-        if (g_scene_hero || wsm::owned_option_objects(g_owned_options,64) || g_timescale_owned) {
+        if (g_scene_hero || wsm::owned_option_objects(g_owned_options,64) || g_timescale_owned || g_fov_owned) {
             char tmp[512]; modern_reset(tmp, sizeof tmp);
             if (strncmp(tmp,"OK ",3)) ELOGI("LIFECYCLE cleanup: %s",tmp);
         }
