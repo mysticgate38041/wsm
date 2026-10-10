@@ -1,6 +1,6 @@
 # Command produksi WSM 6.4
 
-Referensi command untuk `v6.4.0-rc1`. Target identity tetap package `com.kakaogames.gdts`, versionName `3.54.0` dan versionCode `423`. `epoch E command` mewajibkan epoch cocok saat enqueue; PANIC menaikkan epoch dan membatalkan permintaan lama. Katalog adalah referensi cakupan, bukan 47 toggle aktif.
+Referensi command untuk `v6.4.0-rc2`. Target identity tetap package `com.kakaogames.gdts`, versionName `3.54.0` dan versionCode `423`. `epoch E command` mewajibkan epoch cocok saat enqueue; PANIC menaikkan epoch dan membatalkan permintaan lama. Katalog adalah referensi cakupan, bukan 47 toggle aktif.
 
 Arsitektur/state menu: [modernisasi v6.3](../../../docs/MODERNIZATION_V6_3.md). Bukti RC2 dan semantik desain lama tetap berada di [audit dump](ORIGINAL_DUMP_AUDIT.md) dan [finalisasi 47](FINALIZATION_47.md). ACK tidak membuktikan seluruh efek gameplay.
 
@@ -19,7 +19,7 @@ Native UI dan file transport masuk dispatcher yang sama; parser lama di `engine.
 | `feat dmg 0` atau `feat dmg 1..99` | OFF / pulse power ×100.000 |
 | `feat timescale 0` atau `feat timescale 0.1..5` | OFF idempotent / modifier waktu bernama wsm, ON membutuhkan instance game yang hidup |
 | `speed 0` atau `speed 1..5` | Restore / skala tiga getter gerak hero |
-| `fov 0` atau `fov 2..40` | Reset / override ukuran kamera stage (orthographic; memakai API resmi `StageCamera.OverrideDefaultCameraSize`, eksperimental) |
+| `fov 0` atau `fov 2..40` | Reset / override ukuran kamera stage (orthographic): set memakai `OverrideDefaultCameraSize` + `ResizeTo` instan, reset memakai `ResetDefaultCameraSize` + `ResizeToDefault`; eksperimental |
 | `critdmg 0` atau `critdmg 1..5` | Restore / skala critical damage hero, eksperimental |
 | `godmode 0\|1` | Restore / damage guard khusus hero, eksperimental |
 | `nocd 0\|1` | Restore / tiga cooldown gates, eksperimental |
@@ -43,7 +43,7 @@ Komposisi di atas kontrol yang sudah terverifikasi — tanpa jalur engine baru: 
 | Command | Rentang / efek |
 |---|---|
 | `gm status` | Ringkasan satu baris: special (godmode/nocd/loot/stunall/speed/critdmg), 12 feat, dan preset tersimpan |
-| `gm reset` | Setara PANIC: semua kontrol OFF + restore default + epoch baru |
+| `gm reset` | Setara PANIC: semua kontrol OFF + restore state milik WSM (nilai slider dipertahankan) + epoch baru |
 | `gm max <id>` | Set ke maksimum: 9 toggle (`god hp stam mana poise immune ohk crit onehp`) → ON; `aura`→40; `dmg`→99; `timescale`→5; `speed`→5; `critdmg`→5 |
 | `gm all 0\|1` | Bundle ON/OFF 12 operasi: godmode + 9 feat tetap + `dmg 99` + `nocd` |
 | `gm preset save <nama>` | Simpan state lengkap (nama ≤16 char `[a-z0-9_]`, maks 8 slot, in-memory) |

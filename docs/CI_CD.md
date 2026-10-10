@@ -1,6 +1,6 @@
-# Build, CI/CD dan publikasi WSM 6.4.0 RC1
+# Build, CI/CD dan publikasi WSM 6.4.0 RC2
 
-Workflow `.github/workflows/wsm.yml` membangun source modular untuk rilis `v6.4.0-rc1` (module versionCode `60401`). Build lokal, native fixture, remote CI dan gameplay merupakan bukti berbeda; satu jenis hasil tidak otomatis memenuhi jenis lain.
+Workflow `.github/workflows/wsm.yml` membangun source modular untuk rilis `v6.4.0-rc2` (module versionCode `60402`). Build lokal, native fixture, remote CI dan gameplay merupakan bukti berbeda; satu jenis hasil tidak otomatis memenuhi jenis lain.
 
 ## Workflow dan checks
 
@@ -52,18 +52,18 @@ Checkpoint/receipt mencakup source modular, termasuk source assembly, include fr
 
 1. Pastikan generated source/snapshot konsisten dan seluruh checks untuk commit kandidat selesai.
 2. Review qualification, notes, exact target identity, module versionCode, stamp engine/helper/package, artifact path dan tag guard. Semuanya harus menyatakan versi yang sama.
-3. Buat tag annotated pada commit yang disetujui dan push tag `v6.4.0-rc1`.
+3. Buat tag annotated pada commit yang disetujui dan push tag `v6.4.0-rc2`.
 4. Tunggu native-tests, seluruh matrix Android dan release job sukses. Aset release diambil dari artifact `wsm-release-candidate-ndk-build`; backend CMake tetap menjadi gate build tersendiri.
 5. Cocokkan repo visibility, prerelease flag, tag commit, ZIP/checksum/provenance dan digest hasil unduhan. Catat run URL/digest dalam receipt publikasi.
 
 ```powershell
-git tag -a v6.4.0-rc1 -m 'WSM 6.4.0 RC1 — GM mode, keyed channel, waypoints, camera override'
-git push origin v6.4.0-rc1
+git tag -a v6.4.0-rc2 -m 'WSM 6.4.0 RC2 — GM speed classification fix, camera ResizeTo, fd hygiene'
+git push origin v6.4.0-rc2
 gh run list --repo mysticgate38041/wsm --workflow wsm.yml
-gh release view v6.4.0-rc1 --repo mysticgate38041/wsm
+gh release view v6.4.0-rc2 --repo mysticgate38041/wsm
 ```
 
-Command di atas menerbitkan commit yang telah lulus checks. Workflow menolak tag lain sampai stamp, metadata, tests, paths dan notes diperbarui secara konsisten. Notes aktif berada di [RELEASE_v6.4.0_rc1.md](RELEASE_v6.4.0_rc1.md). CD mengirim aset GitHub Release; workflow tidak memasang modul, menjalankan game atau me-reboot perangkat.
+Command di atas menerbitkan commit yang telah lulus checks. Workflow menolak tag lain sampai stamp, metadata, tests, paths dan notes diperbarui secara konsisten. Notes aktif berada di [RELEASE_v6.4.0_rc2.md](RELEASE_v6.4.0_rc2.md). CD mengirim aset GitHub Release; workflow tidak memasang modul, menjalankan game atau me-reboot perangkat.
 
 ## Izin, artifact dan retry
 

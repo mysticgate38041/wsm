@@ -75,7 +75,7 @@ public final class MenuView implements MenuController.Listener {
     private LinearLayout.LayoutParams spaced(int width,int height){LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(width,height);params.bottomMargin=dp(8);return params;}
     private void build(){
         root=column();root.setPadding(dp(12),dp(8),dp(12),dp(8));root.setBackground(background(BG,LINE,18));root.setElevation(dp(12));
-        LinearLayout head=row();LinearLayout title=column();TextView name=text("WSM 6.4 RC1",18,TEXT);name.setTypeface(Typeface.DEFAULT,Typeface.BOLD);title.addView(name);
+        LinearLayout head=row();LinearLayout title=column();TextView name=text("WSM 6.4 RC2",18,TEXT);name.setTypeface(Typeface.DEFAULT,Typeface.BOLD);title.addView(name);
         TextView subtitle=text("CONTROL CENTER  /  18 KONTROL",10,DIM);subtitle.setPadding(0,dp(4),0,0);title.addView(subtitle);head.addView(title,new LinearLayout.LayoutParams(0,-2,1));
         TextView panic=button("PANIC",RED,new Runnable(){public void run(){controller.panic();}});panic.setBackground(background(0xFF402331,0xFF784253,10));panic.setContentDescription("PANIC: hentikan semua kontrol sekarang");head.addView(panic);
         TextView collapse=button("−",DIM,new Runnable(){public void run(){setCollapsed(true);}});collapse.setTextSize(22);collapse.setContentDescription("Perkecil menu");LinearLayout.LayoutParams compact=new LinearLayout.LayoutParams(dp(48),dp(48));compact.leftMargin=dp(6);head.addView(collapse,compact);root.addView(head);drag(title);

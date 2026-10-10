@@ -1,9 +1,9 @@
 {
   "schema": 1,
   "release": {
-    "version": "v6.4.0-rc1",
-    "versionCode": 60401,
-    "stamp": "wsm-v6.4.0-rc1"
+    "version": "v6.4.0-rc2",
+    "versionCode": 60402,
+    "stamp": "wsm-v6.4.0-rc2"
   },
   "engineSources": [
     "engine.cpp",

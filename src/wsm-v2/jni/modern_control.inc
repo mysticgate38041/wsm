@@ -115,7 +115,12 @@ static bool gm_apply_speed(float value, char *ack, size_t cap) {
     char arg[32];
     snprintf(arg, sizeof arg, "%.2f", (double)value);
     feat_speed(ack, cap, arg);
-    return strncmp(ack, "OK", 2) == 0;
+    /* v6.4.1 fix: the ON success ack is "SPEED ON ..." (not "OK"); classify on
+       the resulting engine state instead of the ack prefix so `gm max speed`
+       and preset load with speed ON are not mislabeled rejected. */
+    if (strncmp(ack, "SPEED", 5) != 0 && strncmp(ack, "OK", 2) != 0) return false;
+    if (value == 0.0f) return g_speed_on == 0;
+    return g_speed_on != 0 && fabsf(g_speed_value - value) < 0.05f;
 }
 static bool gm_apply_critdmg(float value, char *ack, size_t cap) {
     feat_critdmg(ack, cap, value);
@@ -271,7 +276,7 @@ static bool modern_gm(const char *body, char *ack, size_t cap) {
         modern_reset(tmp, sizeof tmp);
         const bool ok = !g_bus_unhealthy && strncmp(tmp, "OK ", 3) == 0;
         snprintf(ack, cap, "%s GM reset (%s)", ok ? "OK" : "ERR",
-                 ok ? "all controls off, defaults restored" : tmp);
+                 ok ? "all controls off; slider values retained" : tmp);
         return ok;
     }
     if (strcmp(body, "status") == 0) { gm_status(ack, cap); return true; }

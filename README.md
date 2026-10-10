@@ -2,7 +2,7 @@
 
 Modul Android dengan loader Zygisk, engine native, menu Java/DEX dan diagnostik runtime. Implementasi aktif berada di [`src/wsm-v2`](src/wsm-v2); nama folder tersebut dipertahankan untuk kompatibilitas build.
 
-**Rilis: [v6.4.0-rc1](https://github.com/mysticgate38041/wsm/releases/tag/v6.4.0-rc1) · prerelease · versionCode 60401**
+**Rilis: [v6.4.0-rc2](https://github.com/mysticgate38041/wsm/releases/tag/v6.4.0-rc2) · prerelease · versionCode 60402**
 
 **Target:** Guardian Tales `com.kakaogames.gdts`, versi `3.54.0` / `423`, Android API ≥26, ABI x86_64 dan arm64-v8a.
 
