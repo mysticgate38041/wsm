@@ -399,6 +399,22 @@ public:
             } else { free(dd); }
         }
         bootstrap_advance(wsm::BootstrapPhase::InputsReady);
+
+        /* F1b (v6.4.1): the framework hands this dirfd out for the pre phase
+           only, but the number stays in the app process' fd table afterwards
+           and is visible to any same-uid scanner. Replace the file behind the
+           number with /dev/null: the "wsm_gt" path disappears from
+           /proc/self/fd while a later close of the same number (by anyone)
+           still targets a harmless file. */
+        {
+            int devnull = open("/dev/null", O_RDONLY | O_CLOEXEC);
+            if (devnull >= 0) {
+                if (dup2(devnull, dirfd) < 0) {
+                    LOGI("[%s] dirfd neutralize failed errno=%d", g_s.proc, errno);
+                }
+                close(devnull);
+            }
+        }
     }
 
     void postAppSpecialize(const zygisk::AppSpecializeArgs *) override {

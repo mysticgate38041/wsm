@@ -601,6 +601,7 @@ void *g_m_stage_getcm = nullptr, *g_m_char_getstats = nullptr;
 /* v6.4 FOV/zoom resolve (official StageCamera API, lazily bound on first use) */
 void *g_cls_stagecam = nullptr, *g_m_stage_getsc = nullptr;
 void *g_m_scam_override = nullptr, *g_m_scam_reset = nullptr, *g_m_scam_getsize = nullptr;
+void *g_m_scam_getover = nullptr, *g_m_scam_resizeto = nullptr, *g_m_scam_resizedef = nullptr;
 void *g_objcls = nullptr, *g_clsname = nullptr;
 
 /* Android user-space pointer sanity: reject obvious garbage before we call into it. */
@@ -4428,6 +4429,9 @@ static bool feat_fov_resolve() {
     if (g_cls_stagecam && !g_m_scam_override) g_m_scam_override = cgm(g_cls_stagecam, "OverrideDefaultCameraSize", 1);
     if (g_cls_stagecam && !g_m_scam_reset) g_m_scam_reset = cgm(g_cls_stagecam, "ResetDefaultCameraSize", 0);
     if (g_cls_stagecam && !g_m_scam_getsize) g_m_scam_getsize = cgm(g_cls_stagecam, "get_Size", 0);
+    if (g_cls_stagecam && !g_m_scam_getover) g_m_scam_getover = cgm(g_cls_stagecam, "get_OverridenCameraSize", 0);
+    if (g_cls_stagecam && !g_m_scam_resizeto) g_m_scam_resizeto = cgm(g_cls_stagecam, "ResizeTo", 3);
+    if (g_cls_stagecam && !g_m_scam_resizedef) g_m_scam_resizedef = cgm(g_cls_stagecam, "ResizeToDefault", 2);
     GUARDED_END();
     return g_m_stage_getsc && g_m_scam_override && g_m_scam_reset && g_m_scam_getsize;
 }
@@ -4463,11 +4467,18 @@ void feat_fov(char *out, size_t cap, const char *arg) {
         if (!exc && ptr_ok(rb)) memcpy(&before, reinterpret_cast<const uint8_t *>(rb) + 0x10, 4);
     }
     const sig_atomic_t f0 = g_guard_faults;
+    float zero = 0.0f, one_true = 1.0f;
     if (v == 0.0f) {
         if (g_fov_owned) {
             GUARDED_BEGIN();
             (void) inv(g_m_scam_reset, scam, nullptr, &exc);
             GUARDED_END();
+            if (g_m_scam_resizedef) {
+                void *rd[2] = {&zero, &one_true};
+                GUARDED_BEGIN();
+                (void) inv(g_m_scam_resizedef, scam, rd, &exc);
+                GUARDED_END();
+            }
             g_fov_owned = false;
         }
     } else {
@@ -4476,8 +4487,26 @@ void feat_fov(char *out, size_t cap, const char *arg) {
         GUARDED_BEGIN();
         (void) inv(g_m_scam_override, scam, args, &exc);
         GUARDED_END();
+        /* v6.4.1 fix: OverrideDefaultCameraSize alone leaves get_Size() at the
+           previous value on the live target; also request an instant ResizeTo
+           so the override actually reaches the camera. */
+        if (g_m_scam_resizeto) {
+            void *ra[3] = {&size, &zero, &one_true};
+            GUARDED_BEGIN();
+            (void) inv(g_m_scam_resizeto, scam, ra, &exc);
+            GUARDED_END();
+        }
         g_fov_owned = true;
         g_fov_value = v;
+    }
+    float over_after = 0.0f;
+    if (g_m_scam_getover) {
+        void *rb = nullptr;
+        exc = nullptr;
+        GUARDED_BEGIN();
+        rb = inv(g_m_scam_getover, scam, nullptr, &exc);
+        GUARDED_END();
+        if (!exc && ptr_ok(rb)) memcpy(&over_after, reinterpret_cast<const uint8_t *>(rb) + 0x10, 4);
     }
     {
         void *rb = nullptr;
@@ -4487,8 +4516,8 @@ void feat_fov(char *out, size_t cap, const char *arg) {
         GUARDED_END();
         if (!exc && ptr_ok(rb)) memcpy(&after, reinterpret_cast<const uint8_t *>(rb) + 0x10, 4);
     }
-    snprintf(out, cap, "FOV %s want=%.1f size=%.2f->%.2f owned=%d fault=%d",
-             v == 0.0f ? "reset" : "set", (double)v, (double)before, (double)after,
+    snprintf(out, cap, "FOV %s want=%.1f size=%.2f->%.2f over=%.2f owned=%d fault=%d",
+             v == 0.0f ? "reset" : "set", (double)v, (double)before, (double)after, (double)over_after,
              g_fov_owned ? 1 : 0, static_cast<int>(g_guard_faults - f0));
 }
 

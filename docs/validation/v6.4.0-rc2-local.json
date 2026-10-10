@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-10",
+  "timezone": "Asia/Jakarta",
+  "release": "v6.4.0-rc2",
+  "localPackages": {
+    "ndk-build": {
+      "file": "wsm-v6.4.0-rc2.zip",
+      "bytes": 485715,
+      "sha256": "7b0062ab67f9a40d45705859d02cd2d4a4154ef60ed7ebdcaa2d09e771dd62a2"
+    }
+  },
+  "tests": {
+    "nativeAndroidBattery": {
+      "device": "emulator-5554 (LDPlayer x86_64)",
+      "fixtures": 15,
+      "passed": 15,
+      "results": [
+        {
+          "abi": "x86_64",
+          "test": "binding",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "bootstrap",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "bus_event",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "dispatcher",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "flags",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "patch",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "pool",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "reloc",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "resolver",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "restore",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "runtime",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "status",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "sweep",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "transport",
+          "exitCode": 0
+        },
+        {
+          "abi": "x86_64",
+          "test": "worker",
+          "exitCode": 0
+        }
+      ]
+    },
+    "javaRegressionSuites": 2
+  },
+  "notes": "Angka berasal dari build lokal dan battery perangkat pada pohon kerja yang sama; aset GitHub Release dibangun ulang oleh CI dan diverifikasi lewat provenance."
+}
