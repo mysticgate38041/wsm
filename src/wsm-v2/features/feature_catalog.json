@@ -1972,9 +1972,9 @@
       "name": "Invisible / Ignore Aggro",
       "desc": "Tidak terdeteksi musuh, bahkan dari dekat.",
       "category": "ai",
-      "backendId": null,
-      "status": "not_implemented",
-      "reason": "ResetAggro lama belum membuktikan tidak terdeteksi; jalur publik tetap dinonaktifkan.",
+      "backendId": "aggro",
+      "status": "partial",
+      "reason": "Jalur publik dibuka (v6.4, eksperimental): ResetAggro sweep per-beat aktif lewat gate terproteksi; efektivitas penuh dan perilaku boss belum terukur di runtime.",
       "runtimeAcceptance": "UNVERIFIED",
       "evidence": [
         {

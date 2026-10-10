@@ -4362,6 +4362,49 @@ void feat_teleport(float dx, float dz, int absolute, char *out, size_t cap) {
              (fabsf(p1[0] - target.x) < 2.0f && fabsf(p1[2] - target.z) < 2.0f) ? 1 : 0);
 }
 
+/* v6.4 GM: read the live hero position through the same resolve chain as
+   feat_teleport; used by `gm pos save` for absolute waypoints. */
+static bool gm_hero_pos(float out[3]) {
+    if (!feat_resolve()) return false;
+    fn_inv_t2 inv = feat_inv();
+    if (!inv) return false;
+    void *exc = nullptr;
+    void *stage = nullptr;
+    GUARDED_BEGIN();
+    stage = inv(g_m_stage_inst, nullptr, nullptr, &exc);
+    GUARDED_END();
+    void *hero = nullptr;
+    if (ptr_ok(stage) && g_m_stage_getcm) {
+        void *cmgr = nullptr;
+        GUARDED_BEGIN();
+        cmgr = inv(g_m_stage_getcm, stage, nullptr, &exc);
+        GUARDED_END();
+        if (ptr_ok(cmgr) && g_m_cm_players) {
+            void *plist = nullptr;
+            GUARDED_BEGIN();
+            plist = inv(g_m_cm_players, cmgr, nullptr, &exc);
+            GUARDED_END();
+            if (ptr_ok(plist)) {
+                int32_t ps = 0;
+                memcpy(&ps, reinterpret_cast<const uint8_t *>(plist) + 0x18, 4);
+                void **pit = nullptr;
+                memcpy(&pit, reinterpret_cast<const uint8_t *>(plist) + 0x10, 8);
+                if (ps > 0 && ps <= 64 && ptr_ok(pit)) {
+                    memcpy(&hero, reinterpret_cast<const uint8_t *>(pit) + 0x20, 8);
+                }
+            }
+        }
+    }
+    if (!ptr_ok(hero)) return false;
+    float p[3];
+    feat_getpos(hero, p);
+    if (!(fabsf(p[0]) <= 4000.0f && fabsf(p[2]) <= 4000.0f)) return false;
+    out[0] = p[0];
+    out[1] = p[1];
+    out[2] = p[2];
+    return true;
+}
+
 /* v5.0: official command kill test — MonsterDeadCommand.Create(info) -> Execute(0) */
 void feat_kcmd(char *out, size_t cap) {
     if (!feat_resolve() || !g_m_mdc_create || !g_m_cmd_exec) {

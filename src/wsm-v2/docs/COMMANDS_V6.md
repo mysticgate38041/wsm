@@ -48,5 +48,10 @@ Komposisi di atas kontrol yang sudah terverifikasi — tanpa jalur engine baru: 
 | `gm preset save <nama>` | Simpan state lengkap (nama ≤16 char `[a-z0-9_]`, maks 8 slot, in-memory) |
 | `gm preset load <nama>` | Terapkan ulang seluruh state preset lewat handler yang sama |
 | `gm preset list` | Daftar preset tersimpan |
+| `gm pos save <0..7>` | Simpan posisi hero saat ini ke slot waypoint (in-memory, hilang saat proses mati) |
+| `gm pos load <0..7>` | Teleport absolut ke waypoint lewat jalur teleport produksi (provenance read-back `ok=1`) |
+| `gm pos list` | Daftar waypoint tersimpan + koordinat |
+
+`feat aggro 0|1` dibuka sebagai eksperimental (v6.4) — sweep ResetAggro per-beat lewat gate terproteksi; status katalog: partial, efektivitas belum terukur. Menu native mendapat blok **"GM · AKSI PAKET"** (GM ALL ON/OFF, MAX DMG, MAX AURA, SIMPAN/MUAT GM) di kategori Semua/Pertempuran.
 
 Batas kebijakan tetap: ekonomi server-authoritative (gem/gold/gacha/reward progression) tidak termasuk — di luar jangkauan klien; grup GM berada pada scope single-player dan tidak menyentuh mode ranked/co-op.

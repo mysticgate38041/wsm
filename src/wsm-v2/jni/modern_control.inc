@@ -225,6 +225,41 @@ static void gm_status(char *ack, size_t cap) {
              g_feats[FEAT_TIMESCALE].on ? 1 : 0, (double)g_feats[FEAT_TIMESCALE].value,
              presets, names);
 }
+/* v6.4 GM: absolute waypoints. Slots store world (x,y,z); load reuses the
+   production teleport path (absolute mode) with its own read-back proof. */
+static float g_gm_pos[8][3];
+static bool g_gm_pos_used[8];
+static bool gm_pos_save(int slot, char *ack, size_t cap) {
+    if (slot < 0 || slot > 7) { snprintf(ack, cap, "ERR gm pos slot 0..7"); return false; }
+    float p[3];
+    if (!gm_hero_pos(p)) { snprintf(ack, cap, "ERR gm pos: hero tidak ditemukan"); return false; }
+    g_gm_pos[slot][0] = p[0]; g_gm_pos[slot][1] = p[1]; g_gm_pos[slot][2] = p[2];
+    g_gm_pos_used[slot] = true;
+    snprintf(ack, cap, "OK GM pos #%d saved (x=%.1f z=%.1f)", slot, (double)p[0], (double)p[2]);
+    return true;
+}
+static bool gm_pos_load(int slot, char *ack, size_t cap) {
+    if (slot < 0 || slot > 7 || !g_gm_pos_used[slot]) {
+        snprintf(ack, cap, "ERR gm pos #%d kosong (slot 0..7)", slot); return false;
+    }
+    char tmp[256];
+    feat_teleport(g_gm_pos[slot][0], g_gm_pos[slot][2], 1, tmp, sizeof tmp);
+    const bool ok = strstr(tmp, "ok=1") != nullptr;
+    snprintf(ack, cap, "%s GM pos #%d -> (%.1f,%.1f) | %s", ok ? "OK" : "ERR", slot,
+             (double)g_gm_pos[slot][0], (double)g_gm_pos[slot][2], tmp);
+    return ok;
+}
+static void gm_pos_list(char *ack, size_t cap) {
+    int n = 0;
+    char body[192] = {};
+    for (int i = 0; i < 8; ++i) if (g_gm_pos_used[i]) {
+        ++n;
+        char one[40];
+        snprintf(one, sizeof one, "#%d(%.1f,%.1f) ", i, (double)g_gm_pos[i][0], (double)g_gm_pos[i][2]);
+        strncat(body, one, sizeof body - strlen(body) - 1);
+    }
+    snprintf(ack, cap, "OK GM pos %d/8 %s", n, n ? body : "-");
+}
 static bool modern_gm(const char *body, char *ack, size_t cap) {
     if (strcmp(body, "reset") == 0) {
         char tmp[512];
@@ -237,6 +272,13 @@ static bool modern_gm(const char *body, char *ack, size_t cap) {
     if (strcmp(body, "status") == 0) { gm_status(ack, cap); return true; }
     if (strncmp(body, "max ", 4) == 0) return gm_max(body + 4, ack, cap);
     if (strncmp(body, "all ", 4) == 0) { bool on = false; wsm::toggle_value(body + 4, on); return gm_all(on, ack, cap); }
+    if (strncmp(body, "pos ", 4) == 0) {
+        const char *p = body + 4;
+        if (strcmp(p, "list") == 0) { gm_pos_list(ack, cap); return true; }
+        int slot = -1; char tail;
+        if (sscanf(p, "save %d %c", &slot, &tail) == 1) return gm_pos_save(slot, ack, cap);
+        if (sscanf(p, "load %d %c", &slot, &tail) == 1) return gm_pos_load(slot, ack, cap);
+    }
     if (strncmp(body, "preset ", 7) == 0) {
         const char *p = body + 7;
         if (strcmp(p, "list") == 0) {

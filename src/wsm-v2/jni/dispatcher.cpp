@@ -27,7 +27,7 @@ bool valid_command(const char *c) {
         if(!strcmp(id,"aura")) return v==0 || range(v,5,40);
         if(!strcmp(id,"dmg")) return v==0 || range(v,1,99);
         if(!strcmp(id,"timescale")) return v==0 || range(v,.1f,5);
-        const char *fixed[]={"god","hp","stam","mana","poise","immune","ohk","crit","onehp"};
+        const char *fixed[]={"god","hp","stam","mana","poise","immune","ohk","crit","onehp","aggro"};
         for(const auto *name:fixed) if(!strcmp(id,name)) return v==0 || v==1;
         return false;
     }
@@ -50,6 +50,14 @@ bool valid_command(const char *c) {
             return false;
         }
         if(!strncmp(body,"all ",4)) {bool on;return toggle_value(body+4,on);}
+        if(!strncmp(body,"pos ",4)) {
+            const char *p=body+4;
+            if(!strcmp(p,"list")) return true;
+            char sub[8],tail2;int slot;
+            if(sscanf(p,"%7s %d %c",sub,&slot,&tail2)==2 && slot>=0 && slot<=7 &&
+               (!strcmp(sub,"save")||!strcmp(sub,"load"))) return true;
+            return false;
+        }
         if(!strncmp(body,"preset ",7)) {
             const char *p=body+7;
             if(!strncmp(p,"save ",5)||!strncmp(p,"load ",5)) {

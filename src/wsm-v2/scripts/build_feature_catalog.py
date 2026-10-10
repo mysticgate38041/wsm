@@ -54,7 +54,7 @@ ROWS = {
 "freecam": (None, "not_implemented", "StageCamera memiliki API kamera; ownership, update Unity dan restore belum diuji.", ["get_Camera", "get_LookAtPosition"]),
 "fov": (None, "not_implemented", "Ukuran kamera stage tidak membuktikan FOV perspektif 60–150 derajat.", ["OverrideDefaultCameraSize", "ResetDefaultCameraSize", "get_FieldOfView"]),
 "dumb": ("stunall", "partial", "Gate pemilihan battle action AI; belum membuktikan semua boss tidak menyerang.", ["PickNTriggerBattleAction"]),
-"aggro": (None, "not_implemented", "ResetAggro lama belum membuktikan tidak terdeteksi; jalur publik tetap dinonaktifkan.", ["GetBattleFor", "ResetAggro"]),
+"aggro": ("aggro", "partial", "Jalur publik dibuka (v6.4, eksperimental): ResetAggro sweep per-beat aktif lewat gate terproteksi; efektivitas penuh dan perilaku boss belum terukur di runtime.", ["GetBattleFor", "ResetAggro"]),
 "freeze": (None, "not_implemented", "Gate attack AI tidak menghentikan seluruh animasi; kontrak animasi enemy-only belum tersedia.", ["PickNTriggerBattleAction"]),
 "onehp": ("onehp", "partial", "Ledger pulse per-scene, prioritas OHK; hasil semua tipe musuh belum terukur.", ["Damage", "get_Hp"]),
 "drop": (None, "authority_unverified", "Kontrak RNG reward dan rarity/persistensi belum tersedia.", ["DropItem"]),

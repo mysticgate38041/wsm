@@ -43,7 +43,7 @@ final class FeatureCatalog {
         {"freecam","Freecam / Unlocked Camera","esp","not_implemented","StageCamera memiliki API kamera; ownership, update Unity dan restore belum diuji.",""},
         {"fov","Custom FOV","esp","not_implemented","Ukuran kamera stage tidak membuktikan FOV perspektif 60\u2013150 derajat.",""},
         {"dumb","Dumb AI / Enemies Don't Attack","ai","partial","Gate pemilihan battle action AI; belum membuktikan semua boss tidak menyerang.","stunall"},
-        {"aggro","Invisible / Ignore Aggro","ai","not_implemented","ResetAggro lama belum membuktikan tidak terdeteksi; jalur publik tetap dinonaktifkan.",""},
+        {"aggro","Invisible / Ignore Aggro","ai","partial","Jalur publik dibuka (v6.4, eksperimental): ResetAggro sweep per-beat aktif lewat gate terproteksi; efektivitas penuh dan perilaku boss belum terukur di runtime.","aggro"},
         {"freeze","Freeze Enemies","ai","not_implemented","Gate attack AI tidak menghentikan seluruh animasi; kontrak animasi enemy-only belum tersedia.",""},
         {"onehp","Drain Enemy Health / 1 HP","ai","partial","Ledger pulse per-scene, prioritas OHK; hasil semua tipe musuh belum terukur.","onehp"},
         {"drop","100% Drop Rate","ai","authority_unverified","Kontrak RNG reward dan rarity/persistensi belum tersedia.",""},

@@ -9,13 +9,15 @@ int main() {
     "gm reset","gm status","gm preset list","gm max god","gm max hp","gm max stam","gm max mana","gm max poise",
     "gm max immune","gm max ohk","gm max crit","gm max onehp","gm max aura","gm max dmg","gm max timescale",
     "gm max speed","gm max critdmg","gm all 0","gm all 1","gm preset save solo","gm preset save farm_1",
-    "gm preset load solo","gm preset load a1b2c3","gm preset save 1234567890123456"};
+    "gm preset load solo","gm preset load a1b2c3","gm preset save 1234567890123456",
+    "feat aggro 0","feat aggro 1","gm pos list","gm pos save 0","gm pos save 7","gm pos load 3"};
     for (const char *c:allowed) assert(wsm::valid_command(c));
     const char *rejected[]={"","panic x","feat god nan","feat dmg inf","feat aura 4.99","feat dmg 100","feat timescale -1",
-    "feat aggro 1","feat stunall 1","speed 0.5","critdmg 6","feat hp 2","loot 1 trailing","tpr 0 101","mod 5 x","mdmg 1 5",
+    "feat stunall 1","speed 0.5","critdmg 6","feat hp 2","loot 1 trailing","tpr 0 101","mod 5 x","mdmg 1 5",
     "gm","gm ","gm reset x","gm status x","gm max","gm max foo","gm max dmg 99","gm max god 1","gm all","gm all 2",
     "gm all on","gm preset","gm preset save","gm preset load","gm preset save bad-name","gm preset save TOOLONGNAME",
-    "gm preset save 12345678901234567","gm preset load x y","gm preset list x","gm x"};
+    "gm preset save 12345678901234567","gm preset load x y","gm preset list x","gm x",
+    "gm pos","gm pos save","gm pos save 8","gm pos save x","gm pos load -1","gm pos rm 1","gm pos list x","gm pos save 3 y"};
     for (const char *c:rejected) assert(!wsm::valid_command(c));
     assert(!wsm::valid_command(nullptr));char out[20];wsm::escape_json("a\"\\\n",out,sizeof out);
     assert(!strcmp(out,"a\\\"\\\\ "));char tiny[2]={'x','x'};wsm::escape_json("quote",tiny,2);assert(tiny[0]==0);
