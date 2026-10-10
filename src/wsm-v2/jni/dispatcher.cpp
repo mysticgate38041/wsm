@@ -38,6 +38,29 @@ bool valid_command(const char *c) {
     for(const auto *name:toggle) {const size_t n=strlen(name);
         if(!strncmp(c,name,n) && c[n]==' ') return toggle_value(c+n+1,enabled);
     }
+    if(!strncmp(c,"gm ",3)) {
+        const char *body=c+3;
+        if(!strcmp(body,"reset")||!strcmp(body,"status")||!strcmp(body,"preset list")) return true;
+        if(!strncmp(body,"max ",4)) {
+            char id[48],extra;
+            if(sscanf(body+4,"%47s %c",id,&extra)!=1) return false;
+            const char *targets[]={"god","hp","stam","mana","poise","immune","ohk","crit","onehp",
+                                   "aura","dmg","timescale","speed","critdmg"};
+            for(const auto *name:targets) if(!strcmp(id,name)) return true;
+            return false;
+        }
+        if(!strncmp(body,"all ",4)) {bool on;return toggle_value(body+4,on);}
+        if(!strncmp(body,"preset ",7)) {
+            const char *p=body+7;
+            if(!strncmp(p,"save ",5)||!strncmp(p,"load ",5)) {
+                const char *name=p+5;size_t n=0;
+                for(;name[n];++n) if(n>=16||!((name[n]>='a'&&name[n]<='z')||(name[n]>='0'&&name[n]<='9')||name[n]=='_')) return false;
+                return n>0;
+            }
+            return false;
+        }
+        return false;
+    }
     return false;
 }
 void escape_json(const char *s, char *out, size_t cap) {

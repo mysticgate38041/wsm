@@ -60,6 +60,10 @@ namespace {
 JavaVM *g_vm = nullptr;
 int g_init_guard = 0;
 int g_menu_dex_fd = -1;
+/* F1 stealth (v6.4): the channel nonce is cached at bootstrap before the
+   WSM_* environment is consumed-and-cleared; late consumers use this cache. */
+uint64_t g_cfg_nonce = 0;
+bool g_cfg_nonce_valid = false;
 wsm::Runtime g_runtime;
 wsm::FeatureFlags g_feature_flags;
 uint64_t g_control_epoch=1; // owner-observed epoch; advances only after reset/scene transition
@@ -381,15 +385,17 @@ static void guard_install_once() {
     } while (0)
 
 /* ---- G11 control plane: file-based command channel (guarded, reversible).
-   Root writes a command line to wsm_cmd; the engine executes it against the
-   live game and writes an ack line to wsm_ack (+ logcat CTL:...). ---- */
+   Root writes a command line to the request file; the engine executes it
+   against the live game and writes an ack line to the response file
+   (+ logcat CTL:...). v6.4 F1 stealth: neutral dot-prefixed names that match
+   the app's own dotted token files instead of literal "wsm_cmd/wsm_ack". ---- */
 struct CtlPath {
     const char *cmd;
     const char *ack;
 };
 const CtlPath kCtlPaths[] = {
-    {"/data/user/0/com.kakaogames.gdts/files/wsm_cmd",
-     "/data/user/0/com.kakaogames.gdts/files/wsm_ack"},
+    {"/data/user/0/com.kakaogames.gdts/files/.7d1b0c33aa94e6f28e5b10c4d9a2f607",
+     "/data/user/0/com.kakaogames.gdts/files/.7d1b0c33aa94e6f28e5b10c4d9a2f608"},
 };
 const size_t kCtlCount = sizeof(kCtlPaths) / sizeof(kCtlPaths[0]);
 
@@ -2760,7 +2766,8 @@ static bool hook_ensure_payload(void) {
         g_h64_bus[WSM_BUS_VERSION] = WSM_BUS_PROTOCOL;
         g_h64_bus[WSM_BUS_PID] = (uint64_t)getpid();
         const char *nonce = getenv("WSM_NONCE");
-        g_h64_bus[WSM_BUS_NONCE] = nonce ? strtoull(nonce, nullptr, 16) : 0;
+        g_h64_bus[WSM_BUS_NONCE] = nonce ? strtoull(nonce, nullptr, 16)
+                                         : (g_cfg_nonce_valid ? g_cfg_nonce : 0);
         char bus_env[32]; snprintf(bus_env, sizeof bus_env, "%llx", (unsigned long long)(uintptr_t)g_h64_bus);
         setenv("WSM_H64_BUS", bus_env, 1);
         char path[64]; snprintf(path, sizeof path, "/proc/self/fd/%ld", fd);
@@ -5472,11 +5479,23 @@ bool jni_probe() {
 }
 
 void *engine_thread(void *) {
-    const char *fdstr = getenv("WSM_CHANNEL_FD");
-    const char *noncestr = getenv("WSM_NONCE");
-    const char *dfdstr = getenv("WSM_DEX_FD");
-    if (dfdstr) g_menu_dex_fd = atoi(dfdstr);
-    if (!fdstr) {
+    /* F1 stealth (v6.4): consume the WSM_* environment immediately and clear
+       it, so this process' environ (inherited by forks, visible via /proc and
+       to any child daemon) never exposes WSM names after bootstrap. Values
+       are copied into locals before the unset. */
+    char fdstr[32] = {}, noncestr[32] = {}, dfdstr[32] = {};
+    {
+        const char *v = getenv("WSM_CHANNEL_FD");
+        if (v) snprintf(fdstr, sizeof fdstr, "%s", v);
+        v = getenv("WSM_NONCE");
+        if (v) snprintf(noncestr, sizeof noncestr, "%s", v);
+        v = getenv("WSM_DEX_FD");
+        if (v) snprintf(dfdstr, sizeof dfdstr, "%s", v);
+    }
+    if (noncestr[0]) { g_cfg_nonce = strtoull(noncestr, nullptr, 16); g_cfg_nonce_valid = true; }
+    if (dfdstr[0]) g_menu_dex_fd = atoi(dfdstr);
+    unsetenv("WSM_CHANNEL_FD"); unsetenv("WSM_NONCE"); unsetenv("WSM_DEX_FD");
+    if (!fdstr[0]) {
         ELOGI("no WSM_CHANNEL_FD env — engine aborted");
         return nullptr;
     }
@@ -5504,7 +5523,7 @@ void *engine_thread(void *) {
 
     if (hello->magic != WSM_HELLO_MAGIC || hello->protocol != WSM_PROTOCOL_VERSION ||
         hello->loader_pid != (uint32_t)getpid() || hello->target_uid != (uint32_t)getuid() ||
-        !noncestr || hello->nonce != strtoull(noncestr, nullptr, 16) ||
+        !noncestr[0] || hello->nonce != strtoull(noncestr, nullptr, 16) ||
         strncmp(hello->build, WSM_BUILD_STAMP, sizeof hello->build) ||
         strncmp(hello->abi, WSM_ABI_STR, sizeof hello->abi)) {
         ELOGI("BOOTSTRAP identity refused"); munmap(map, WSM_CHANNEL_MAP_SIZE); close(fd); return nullptr;
@@ -5513,7 +5532,7 @@ void *engine_thread(void *) {
     ack->protocol = WSM_PROTOCOL_VERSION;
     if (hello->magic == WSM_HELLO_MAGIC) {
         ack->nonce_echo = hello->nonce;
-    } else if (noncestr) {
+    } else if (noncestr[0]) {
         ack->nonce_echo = strtoull(noncestr, nullptr, 16);
         snprintf(ack->note, sizeof ack->note, "hello missing, used env nonce");
     }

@@ -44,6 +44,14 @@ namespace {
 const char *const kAllowlist[] = {"com.kakaogames.gdts", "com.wsm.fixture"};
 const size_t kAllowCount = sizeof(kAllowlist) / sizeof(kAllowlist[0]);
 const size_t kMaxPayload = 32u * 1024u * 1024u;
+/* F1 stealth (v6.4): memfd labels blend with ordinary Android runtime names.
+   The descriptors are consumed by fd number only, so the label is cosmetic —
+   but it must never carry "wsm" because every map entry is visible to any
+   process that inspects /proc/<pid>/maps. */
+constexpr const char *kMemfdEngine = "jit-cache";
+constexpr const char *kMemfdDex = "dalvik-jit-code-cache";
+constexpr const char *kMemfdArm = "jit-zygote-cache";
+constexpr const char *kMemfdChannel = "jit-cache";
 #if defined(__aarch64__)
 const char *const kEngineRelPath = "engine/arm64-v8a.so";
 constexpr uint16_t kExpectedMachine = 0xb7; /* EM_AARCH64 */
@@ -393,7 +401,7 @@ private:
             LOGE("[%s] post: no pre-staged payload", g_s.proc);
             return false;
         }
-        int pfd = static_cast<int>(syscall(__NR_memfd_create, "wsm_payload", 1));
+        int pfd = static_cast<int>(syscall(__NR_memfd_create, kMemfdEngine, 1));
         if (pfd < 0) {
             LOGE("[%s] payload memfd errno=%d", g_s.proc, errno);
             return false;
@@ -418,7 +426,7 @@ private:
         g_s.payload_fd = pfd;
 
         if (g_s.dex_data && g_s.dex_size > 0) {
-            int d = static_cast<int>(syscall(__NR_memfd_create, "wsm_dex", 1));
+            int d = static_cast<int>(syscall(__NR_memfd_create, kMemfdDex, 1));
             if (d >= 0 && ftruncate(d, static_cast<off_t>(g_s.dex_size)) == 0) {
                 void *dmap = mmap(nullptr, g_s.dex_size, PROT_READ | PROT_WRITE, MAP_SHARED, d, 0);
                 if (dmap != MAP_FAILED) {
@@ -437,7 +445,7 @@ private:
         }
 
         // Package the guest helper in a process-owned descriptor: no root copy to app libdir.
-        g_s.arm_fd = static_cast<int>(syscall(__NR_memfd_create, "wsm_arm64", 1));
+        g_s.arm_fd = static_cast<int>(syscall(__NR_memfd_create, kMemfdArm, 1));
         if (g_s.arm_fd < 0 || ftruncate(g_s.arm_fd, static_cast<off_t>(g_s.arm_size))) return false;
         void *arm_map = mmap(nullptr, g_s.arm_size, PROT_READ | PROT_WRITE, MAP_SHARED, g_s.arm_fd, 0);
         if (arm_map == MAP_FAILED) return false;
@@ -446,7 +454,7 @@ private:
         free(g_s.arm_data); g_s.arm_data = nullptr;
         char arm_env[32]; snprintf(arm_env, sizeof arm_env, "%d", g_s.arm_fd);
         setenv("WSM_ARM64_FD", arm_env, 1);
-        int cfd = static_cast<int>(syscall(__NR_memfd_create, "wsm_chan", 1));
+        int cfd = static_cast<int>(syscall(__NR_memfd_create, kMemfdChannel, 1));
         if (cfd < 0) {
             LOGE("[%s] channel memfd errno=%d", g_s.proc, errno);
             return false;
@@ -487,8 +495,6 @@ private:
         char tmp[40];
         snprintf(tmp, sizeof tmp, "%d", g_s.channel_fd);
         setenv("WSM_CHANNEL_FD", tmp, 1);
-        snprintf(tmp, sizeof tmp, "%u", WSM_PROTOCOL_VERSION);
-        setenv("WSM_PROTOCOL", tmp, 1);
         snprintf(tmp, sizeof tmp, "%016llx", static_cast<unsigned long long>(g_s.nonce));
         setenv("WSM_NONCE", tmp, 1);
         if (g_s.dex_fd >= 0) {
@@ -506,7 +512,7 @@ private:
     }
 
     void cleanup_stage() {
-        for(const char *key:{"WSM_ARM64_FD","WSM_CHANNEL_FD","WSM_PROTOCOL","WSM_NONCE","WSM_DEX_FD"}) unsetenv(key);
+        for(const char *key:{"WSM_ARM64_FD","WSM_CHANNEL_FD","WSM_NONCE","WSM_DEX_FD"}) unsetenv(key);
         free(g_s.arm_data); g_s.arm_data = nullptr;
         if (g_s.arm_fd >= 0) { close(g_s.arm_fd); g_s.arm_fd = -1; }
         if (g_s.engine_data) {

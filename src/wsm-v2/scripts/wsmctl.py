@@ -1,8 +1,8 @@
 """Private, correlated WSM 6 command transport and read-only Android diagnostics."""
 import argparse,json,re,shlex,subprocess,sys,time
 from pathlib import Path
-CMD="/data/user/0/com.kakaogames.gdts/files/wsm_cmd"
-ACK="/data/user/0/com.kakaogames.gdts/files/wsm_ack"
+CMD="/data/user/0/com.kakaogames.gdts/files/.7d1b0c33aa94e6f28e5b10c4d9a2f607"
+ACK="/data/user/0/com.kakaogames.gdts/files/.7d1b0c33aa94e6f28e5b10c4d9a2f608"
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--adb",required=True);p.add_argument("--serial",required=True)
