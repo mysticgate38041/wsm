@@ -98,8 +98,8 @@ jobs:
         with:
           name: wsm-release-candidate-${{ matrix.backend }}
           path: |
-            src/wsm-v2/dist/wsm-v6.3.0-rc1.zip
-            src/wsm-v2/dist/wsm-v6.3.0-rc1.zip.sha256
+            src/wsm-v2/dist/wsm-v6.4.0-rc1.zip
+            src/wsm-v2/dist/wsm-v6.4.0-rc1.zip.sha256
             src/wsm-v2/dist/ci-build-provenance.json
           if-no-files-found: error
           retention-days: 30
@@ -124,9 +124,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$GITHUB_REF_NAME" = v6.3.0-rc1
-          python3 -B src/wsm-v2/scripts/package_release.py src/wsm-v2/dist/wsm-v6.3.0-rc1.zip
-          (cd src/wsm-v2/dist && sha256sum --check wsm-v6.3.0-rc1.zip.sha256)
+          test "$GITHUB_REF_NAME" = v6.4.0-rc1
+          python3 -B src/wsm-v2/scripts/package_release.py src/wsm-v2/dist/wsm-v6.4.0-rc1.zip
+          (cd src/wsm-v2/dist && sha256sum --check wsm-v6.4.0-rc1.zip.sha256)
           WSM_REQUIRE_RELEASE=1 python3 -B -X utf8 -m unittest discover -s src/wsm-v2/tests -p test_release.py
           python3 -B - <<'PY'
           import hashlib, json, os, pathlib, zipfile
@@ -137,7 +137,7 @@ jobs:
                   provenance['runId'] != os.environ['GITHUB_RUN_ID'] or
                   provenance['nativeBuildBackend'] != 'ndk-build'):
               raise SystemExit('CI provenance does not match this tag, commit, run and backend')
-          with zipfile.ZipFile(dist / 'wsm-v6.3.0-rc1.zip') as archive:
+          with zipfile.ZipFile(dist / 'wsm-v6.4.0-rc1.zip') as archive:
               release = json.loads(archive.read('release.json'))
               receipt = provenance['receipt']
               if receipt['sources'] != release['sources'] or receipt['build'] != release['build']:
@@ -155,10 +155,10 @@ jobs:
         run: |
           set -euo pipefail
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" src/wsm-v2/dist/wsm-v6.3.0-rc1.zip src/wsm-v2/dist/wsm-v6.3.0-rc1.zip.sha256 src/wsm-v2/dist/ci-build-provenance.json
+            gh release upload "$GITHUB_REF_NAME" src/wsm-v2/dist/wsm-v6.4.0-rc1.zip src/wsm-v2/dist/wsm-v6.4.0-rc1.zip.sha256 src/wsm-v2/dist/ci-build-provenance.json
           else
             gh release create "$GITHUB_REF_NAME" --verify-tag --prerelease \
-              --title 'WSM 6.3.0 RC1 — runtime and UI modernization' \
-              --notes-file docs/RELEASE_v6.3.0_rc1.md \
-              src/wsm-v2/dist/wsm-v6.3.0-rc1.zip src/wsm-v2/dist/wsm-v6.3.0-rc1.zip.sha256 src/wsm-v2/dist/ci-build-provenance.json
+              --title 'WSM 6.4.0 RC1 — GM mode, keyed channel, waypoints, camera override' \
+              --notes-file docs/RELEASE_v6.4.0_rc1.md \
+              src/wsm-v2/dist/wsm-v6.4.0-rc1.zip src/wsm-v2/dist/wsm-v6.4.0-rc1.zip.sha256 src/wsm-v2/dist/ci-build-provenance.json
           fi

@@ -27,16 +27,48 @@ bool valid_command(const char *c) {
         if(!strcmp(id,"aura")) return v==0 || range(v,5,40);
         if(!strcmp(id,"dmg")) return v==0 || range(v,1,99);
         if(!strcmp(id,"timescale")) return v==0 || range(v,.1f,5);
-        const char *fixed[]={"god","hp","stam","mana","poise","immune","ohk","crit","onehp"};
+        const char *fixed[]={"god","hp","stam","mana","poise","immune","ohk","crit","onehp","aggro"};
         for(const auto *name:fixed) if(!strcmp(id,name)) return v==0 || v==1;
         return false;
     }
+    if(!strncmp(c,"fov ",4)) return slider_value(c+4,2,40,v);
     if(!strncmp(c,"speed ",6)) return slider_value(c+6,1,5,v);
     if(!strncmp(c,"critdmg ",8)) return slider_value(c+8,1,5,v);
     if(!strncmp(c,"tpr ",4)) return sscanf(c+4,"%f %f %c",&v,&z,&extra)==2 && range(v,-100,100) && range(z,-100,100);
     const char *toggle[]={"godmode","nocd","loot","stunall"};bool enabled;
     for(const auto *name:toggle) {const size_t n=strlen(name);
         if(!strncmp(c,name,n) && c[n]==' ') return toggle_value(c+n+1,enabled);
+    }
+    if(!strncmp(c,"gm ",3)) {
+        const char *body=c+3;
+        if(!strcmp(body,"reset")||!strcmp(body,"status")||!strcmp(body,"preset list")) return true;
+        if(!strncmp(body,"max ",4)) {
+            char id[48],extra;
+            if(sscanf(body+4,"%47s %c",id,&extra)!=1) return false;
+            const char *targets[]={"god","hp","stam","mana","poise","immune","ohk","crit","onehp",
+                                   "aura","dmg","timescale","speed","critdmg"};
+            for(const auto *name:targets) if(!strcmp(id,name)) return true;
+            return false;
+        }
+        if(!strncmp(body,"all ",4)) {bool on;return toggle_value(body+4,on);}
+        if(!strncmp(body,"pos ",4)) {
+            const char *p=body+4;
+            if(!strcmp(p,"list")) return true;
+            char sub[8],tail2;int slot;
+            if(sscanf(p,"%7s %d %c",sub,&slot,&tail2)==2 && slot>=0 && slot<=7 &&
+               (!strcmp(sub,"save")||!strcmp(sub,"load"))) return true;
+            return false;
+        }
+        if(!strncmp(body,"preset ",7)) {
+            const char *p=body+7;
+            if(!strncmp(p,"save ",5)||!strncmp(p,"load ",5)) {
+                const char *name=p+5;size_t n=0;
+                for(;name[n];++n) if(n>=16||!((name[n]>='a'&&name[n]<='z')||(name[n]>='0'&&name[n]<='9')||name[n]=='_')) return false;
+                return n>0;
+            }
+            return false;
+        }
+        return false;
     }
     return false;
 }

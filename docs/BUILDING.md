@@ -41,7 +41,7 @@ $buildOptions = @{
 
 | Output | Lokasi |
 |---|---|
-| ZIP dan checksum | `src/wsm-v2/dist/wsm-v6.3.0-rc1.zip` dan `.zip.sha256` |
+| ZIP dan checksum | `src/wsm-v2/dist/wsm-v6.4.0-rc1.zip` dan `.zip.sha256` |
 | Receipt source/binary | `src/wsm-v2/build/build-receipt.json` |
 | Fixture x86_64 | `src/wsm-v2/build/fixtures/x86_64/` |
 | Fixture ARM64 | `src/wsm-v2/build/fixtures/arm64-v8a/` |

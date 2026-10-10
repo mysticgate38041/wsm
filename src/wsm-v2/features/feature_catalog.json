@@ -1885,9 +1885,9 @@
       "unit": "°",
       "def": 90,
       "category": "esp",
-      "backendId": null,
-      "status": "not_implemented",
-      "reason": "Ukuran kamera stage tidak membuktikan FOV perspektif 60–150 derajat.",
+      "backendId": "fov",
+      "status": "prototype",
+      "reason": "OverrideDefaultCameraSize/ResetDefaultCameraSize via Stage.get_StageCamera (v6.4, eksperimental): ukuran kamera orthographic (bukan FOV perspektif); efek visual belum diukur.",
       "runtimeAcceptance": "UNVERIFIED",
       "evidence": [
         {
@@ -1972,9 +1972,9 @@
       "name": "Invisible / Ignore Aggro",
       "desc": "Tidak terdeteksi musuh, bahkan dari dekat.",
       "category": "ai",
-      "backendId": null,
-      "status": "not_implemented",
-      "reason": "ResetAggro lama belum membuktikan tidak terdeteksi; jalur publik tetap dinonaktifkan.",
+      "backendId": "aggro",
+      "status": "partial",
+      "reason": "Jalur publik dibuka (v6.4, eksperimental): ResetAggro sweep per-beat aktif lewat gate terproteksi; efektivitas penuh dan perilaku boss belum terukur di runtime.",
       "runtimeAcceptance": "UNVERIFIED",
       "evidence": [
         {

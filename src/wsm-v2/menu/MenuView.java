@@ -53,7 +53,7 @@ public final class MenuView implements MenuController.Listener {
     private final List<CatalogCard> catalogCards=new ArrayList<CatalogCard>();
     private final List<TextView> actions=new ArrayList<TextView>();
     private final List<TextView> profileButtons=new ArrayList<TextView>();
-    private LinearLayout worldActions,battleActions;
+    private LinearLayout worldActions,battleActions,gmActions;
     private View.OnLayoutChangeListener layoutListener;
     private int lastWidth,lastHeight;
 
@@ -75,7 +75,7 @@ public final class MenuView implements MenuController.Listener {
     private LinearLayout.LayoutParams spaced(int width,int height){LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(width,height);params.bottomMargin=dp(8);return params;}
     private void build(){
         root=column();root.setPadding(dp(12),dp(8),dp(12),dp(8));root.setBackground(background(BG,LINE,18));root.setElevation(dp(12));
-        LinearLayout head=row();LinearLayout title=column();TextView name=text("WSM 6.3 RC1",18,TEXT);name.setTypeface(Typeface.DEFAULT,Typeface.BOLD);title.addView(name);
+        LinearLayout head=row();LinearLayout title=column();TextView name=text("WSM 6.4 RC1",18,TEXT);name.setTypeface(Typeface.DEFAULT,Typeface.BOLD);title.addView(name);
         TextView subtitle=text("CONTROL CENTER  /  18 KONTROL",10,DIM);subtitle.setPadding(0,dp(4),0,0);title.addView(subtitle);head.addView(title,new LinearLayout.LayoutParams(0,-2,1));
         TextView panic=button("PANIC",RED,new Runnable(){public void run(){controller.panic();}});panic.setBackground(background(0xFF402331,0xFF784253,10));panic.setContentDescription("PANIC: hentikan semua kontrol sekarang");head.addView(panic);
         TextView collapse=button("−",DIM,new Runnable(){public void run(){setCollapsed(true);}});collapse.setTextSize(22);collapse.setContentDescription("Perkecil menu");LinearLayout.LayoutParams compact=new LinearLayout.LayoutParams(dp(48),dp(48));compact.leftMargin=dp(6);head.addView(collapse,compact);root.addView(head);drag(title);
@@ -95,6 +95,12 @@ public final class MenuView implements MenuController.Listener {
         worldActions=column();TextView movement=text("PERPINDAHAN · AKSI SEKALI",10,DIM);movement.setPadding(0,dp(8),0,dp(8));worldActions.addView(movement);
         LinearLayout warp=row();String[] directions={"← 15 m","→ 15 m","↑ 15 m","↓ 15 m"};final String[] commands={"tpr -15 0","tpr 15 0","tpr 0 15","tpr 0 -15"};for(int i=0;i<directions.length;i++){final String command=commands[i];TextView action=actionButton(directions[i],command);LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,-2,1);if(i>0)p.leftMargin=dp(4);warp.addView(action,p);}worldActions.addView(warp);controls.addView(worldActions,spaced(-1,-2));
         battleActions=column();battleActions.addView(actionButton("Sapu stage · sekali","sweep"));controls.addView(battleActions,spaced(-1,-2));
+        gmActions=column();TextView gmHead=text("GM · AKSI PAKET",10,DIM);gmHead.setPadding(0,dp(8),0,dp(8));gmActions.addView(gmHead);
+        LinearLayout gm1=row();gm1.addView(actionButton("GM ALL ON","gm all 1"),new LinearLayout.LayoutParams(0,-2,1));LinearLayout.LayoutParams gm1b=new LinearLayout.LayoutParams(0,-2,1);gm1b.leftMargin=dp(4);gm1.addView(actionButton("GM ALL OFF","gm all 0"),gm1b);LinearLayout.LayoutParams gmRow1=new LinearLayout.LayoutParams(-1,-2);gmRow1.bottomMargin=dp(4);gmActions.addView(gm1,gmRow1);
+        LinearLayout gm2=row();gm2.addView(actionButton("MAX DMG","gm max dmg"),new LinearLayout.LayoutParams(0,-2,1));LinearLayout.LayoutParams gm2b=new LinearLayout.LayoutParams(0,-2,1);gm2b.leftMargin=dp(4);gm2.addView(actionButton("MAX AURA","gm max aura"),gm2b);LinearLayout.LayoutParams gmRow2=new LinearLayout.LayoutParams(-1,-2);gmRow2.bottomMargin=dp(4);gmActions.addView(gm2,gmRow2);
+        LinearLayout gm3=row();gm3.addView(actionButton("SIMPAN GM","gm preset save menu"),new LinearLayout.LayoutParams(0,-2,1));LinearLayout.LayoutParams gm3b=new LinearLayout.LayoutParams(0,-2,1);gm3b.leftMargin=dp(4);gm3.addView(actionButton("MUAT GM","gm preset load menu"),gm3b);LinearLayout.LayoutParams gmRow3=new LinearLayout.LayoutParams(-1,-2);gmRow3.bottomMargin=dp(4);gmActions.addView(gm3,gmRow3);
+        LinearLayout gm4=row();gm4.addView(actionButton("SIMPAN POS","gm pos save 0"),new LinearLayout.LayoutParams(0,-2,1));LinearLayout.LayoutParams gm4b=new LinearLayout.LayoutParams(0,-2,1);gm4b.leftMargin=dp(4);gm4.addView(actionButton("MUAT POS","gm pos load 0"),gm4b);gmActions.addView(gm4);
+        controls.addView(gmActions,spaced(-1,-2));
         empty=text("Tidak ada kontrol yang cocok. Coba kata lain atau kategori Semua.",14,DIM);empty.setPadding(dp(12),dp(20),dp(12),dp(20));pages.addView(empty);
         buildProfiles();pages.addView(profiles);
         buildSystem();pages.addView(system);
@@ -164,6 +170,7 @@ public final class MenuView implements MenuController.Listener {
         for(LinearLayout pair:pairs){boolean visible=false;for(int i=0;i<pair.getChildCount();i++)visible|=pair.getChildAt(i).getVisibility()==View.VISIBLE;pair.setVisibility(visible?View.VISIBLE:View.GONE);}
         worldActions.setVisibility(isControls&&query.isEmpty()&&(category.equals("Semua")||category.equals("Dunia"))?View.VISIBLE:View.GONE);
         battleActions.setVisibility(isControls&&query.isEmpty()&&(category.equals("Semua")||category.equals("Pertempuran"))?View.VISIBLE:View.GONE);
+        gmActions.setVisibility(isControls&&query.isEmpty()&&(category.equals("Semua")||category.equals("Pertempuran"))?View.VISIBLE:View.GONE);
         if(isCatalog){count=0;for(CatalogCard card:catalogCards){boolean visible=card.search.contains(query);card.view.setVisibility(visible?View.VISIBLE:View.GONE);if(visible)count++;}}
         empty.setVisibility((isControls||isCatalog)&&count==0?View.VISIBLE:View.GONE);
         setText(sectionTitle,isControls?category.toUpperCase(Locale.ROOT)+"  /  "+count+" KONTROL":isCatalog?"KATALOG  /  "+count+" ENTRI INFORMATIF":category.toUpperCase(Locale.ROOT));
@@ -191,7 +198,7 @@ public final class MenuView implements MenuController.Listener {
         if(parent!=null){if(layoutListener!=null)parent.removeOnLayoutChangeListener(layoutListener);parent.removeView(root);parent.removeView(badge);}
         clearListeners(root);clearListeners(badge);cards.clear();pairs.clear();navigation.clear();catalogCards.clear();actions.clear();profileButtons.clear();
         parent=null;activity=null;latest=null;searchWatcher=null;layoutListener=null;
-        root=body=main=rail=controls=catalog=system=profiles=badge=worldActions=battleActions=null;
+        root=body=main=rail=controls=catalog=system=profiles=badge=worldActions=battleActions=gmActions=null;
         railScroll=scroll=null;tabsScroll=null;search=null;session=summary=sectionTitle=notice=diagnostics=empty=badgeLabel=profileStatus=null;
     }
     private void clearListeners(View view){view.setOnClickListener(null);view.setOnTouchListener(null);view.setOnKeyListener(null);if(view instanceof ViewGroup){ViewGroup group=(ViewGroup)view;for(int i=0;i<group.getChildCount();i++)clearListeners(group.getChildAt(i));}}

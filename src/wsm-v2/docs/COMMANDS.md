@@ -3,7 +3,7 @@
 # COMMANDS — WSM v5.0 Toolkit Reference
 
 > Semua command ditulis ke file control-plane & dieksekusi engine (deferral berlaku via menu).
-> Channel: `/storage/emulated/0/Android/data/com.kakaogames.gdts/files/wsm_cmd` → ack di `wsm_ack`.
+> Channel: `/data/user/0/com.kakaogames.gdts/files/.7d1b0c33aa94e6f28e5b10c4d9a2f607` → ack di `.7d1b0c33aa94e6f28e5b10c4d9a2f608` (nama netral v6.4; dulu `wsm_cmd`/`wsm_ack`).
 > **Catatan dedupe**: content identik tidak dieksekusi ulang — tambah spasi untuk re-run.
 
 ## Kontrol Umum

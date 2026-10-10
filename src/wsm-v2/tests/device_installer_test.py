@@ -11,7 +11,8 @@ results=[]
 with tempfile.TemporaryDirectory(prefix="wsm-installer-") as folder:
     stage=Path(folder)/session;stage.mkdir()
     stage_root=stage.resolve()
-    with zipfile.ZipFile(project/"dist/wsm-v6.3.0-rc1.zip") as z:
+    release=json.loads((project/"scripts/build_manifest.json").read_text(encoding="utf-8"))["release"]
+    with zipfile.ZipFile(project/"dist"/("wsm-"+release["version"]+".zip")) as z:
         for entry in z.infolist():
             n=entry.filename
             if n.startswith("META-INF/"):continue

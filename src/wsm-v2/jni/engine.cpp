@@ -34,6 +34,7 @@
 #include "wsm_binding.h"
 #include "wsm_feature_catalog.h"
 #include "wsm_arm64_reloc.h"
+#include "transport_crypto.h"
 #include "wsm_runtime.h"
 #include "dispatcher.h"
 #include "feature_flags.h"
@@ -60,6 +61,10 @@ namespace {
 JavaVM *g_vm = nullptr;
 int g_init_guard = 0;
 int g_menu_dex_fd = -1;
+/* F1 stealth (v6.4): the channel nonce is cached at bootstrap before the
+   WSM_* environment is consumed-and-cleared; late consumers use this cache. */
+uint64_t g_cfg_nonce = 0;
+bool g_cfg_nonce_valid = false;
 wsm::Runtime g_runtime;
 wsm::FeatureFlags g_feature_flags;
 uint64_t g_control_epoch=1; // owner-observed epoch; advances only after reset/scene transition
@@ -74,6 +79,9 @@ wsm::BindingApi g_binding_api{};
 float g_speed_value = 2.0f;
 bool g_bus_unhealthy = false;
 bool g_timescale_owned = false;
+/* v6.4 FOV/zoom ownership (official StageCamera API; reverted by PANIC/scene reset) */
+bool g_fov_owned = false;
+float g_fov_value = 2.0f;
 bool g_restoration_pending = false;
 uint64_t g_option_lifetime = 1;
 static void modern_tick();
@@ -381,15 +389,17 @@ static void guard_install_once() {
     } while (0)
 
 /* ---- G11 control plane: file-based command channel (guarded, reversible).
-   Root writes a command line to wsm_cmd; the engine executes it against the
-   live game and writes an ack line to wsm_ack (+ logcat CTL:...). ---- */
+   Root writes a command line to the request file; the engine executes it
+   against the live game and writes an ack line to the response file
+   (+ logcat CTL:...). v6.4 F1 stealth: neutral dot-prefixed names that match
+   the app's own dotted token files instead of literal "wsm_cmd/wsm_ack". ---- */
 struct CtlPath {
     const char *cmd;
     const char *ack;
 };
 const CtlPath kCtlPaths[] = {
-    {"/data/user/0/com.kakaogames.gdts/files/wsm_cmd",
-     "/data/user/0/com.kakaogames.gdts/files/wsm_ack"},
+    {"/data/user/0/com.kakaogames.gdts/files/.7d1b0c33aa94e6f28e5b10c4d9a2f607",
+     "/data/user/0/com.kakaogames.gdts/files/.7d1b0c33aa94e6f28e5b10c4d9a2f608"},
 };
 const size_t kCtlCount = sizeof(kCtlPaths) / sizeof(kCtlPaths[0]);
 
@@ -588,6 +598,9 @@ void *g_m_fos_checkdie = nullptr, *g_m_fos_changehp = nullptr, *g_m_stats_applyd
 void *g_m_stage_inst = nullptr, *g_m_cm_players = nullptr;
 void *g_f_stage_cm = nullptr, *g_f_char_stats = nullptr;
 void *g_m_stage_getcm = nullptr, *g_m_char_getstats = nullptr;
+/* v6.4 FOV/zoom resolve (official StageCamera API, lazily bound on first use) */
+void *g_cls_stagecam = nullptr, *g_m_stage_getsc = nullptr;
+void *g_m_scam_override = nullptr, *g_m_scam_reset = nullptr, *g_m_scam_getsize = nullptr;
 void *g_objcls = nullptr, *g_clsname = nullptr;
 
 /* Android user-space pointer sanity: reject obvious garbage before we call into it. */
@@ -2760,7 +2773,8 @@ static bool hook_ensure_payload(void) {
         g_h64_bus[WSM_BUS_VERSION] = WSM_BUS_PROTOCOL;
         g_h64_bus[WSM_BUS_PID] = (uint64_t)getpid();
         const char *nonce = getenv("WSM_NONCE");
-        g_h64_bus[WSM_BUS_NONCE] = nonce ? strtoull(nonce, nullptr, 16) : 0;
+        g_h64_bus[WSM_BUS_NONCE] = nonce ? strtoull(nonce, nullptr, 16)
+                                         : (g_cfg_nonce_valid ? g_cfg_nonce : 0);
         char bus_env[32]; snprintf(bus_env, sizeof bus_env, "%llx", (unsigned long long)(uintptr_t)g_h64_bus);
         setenv("WSM_H64_BUS", bus_env, 1);
         char path[64]; snprintf(path, sizeof path, "/proc/self/fd/%ld", fd);
@@ -4354,6 +4368,130 @@ void feat_teleport(float dx, float dz, int absolute, char *out, size_t cap) {
              (fabsf(p1[0] - target.x) < 2.0f && fabsf(p1[2] - target.z) < 2.0f) ? 1 : 0);
 }
 
+/* v6.4 GM: read the live hero position through the same resolve chain as
+   feat_teleport; used by `gm pos save` for absolute waypoints. */
+static bool gm_hero_pos(float out[3]) {
+    if (!feat_resolve()) return false;
+    fn_inv_t2 inv = feat_inv();
+    if (!inv) return false;
+    void *exc = nullptr;
+    void *stage = nullptr;
+    GUARDED_BEGIN();
+    stage = inv(g_m_stage_inst, nullptr, nullptr, &exc);
+    GUARDED_END();
+    void *hero = nullptr;
+    if (ptr_ok(stage) && g_m_stage_getcm) {
+        void *cmgr = nullptr;
+        GUARDED_BEGIN();
+        cmgr = inv(g_m_stage_getcm, stage, nullptr, &exc);
+        GUARDED_END();
+        if (ptr_ok(cmgr) && g_m_cm_players) {
+            void *plist = nullptr;
+            GUARDED_BEGIN();
+            plist = inv(g_m_cm_players, cmgr, nullptr, &exc);
+            GUARDED_END();
+            if (ptr_ok(plist)) {
+                int32_t ps = 0;
+                memcpy(&ps, reinterpret_cast<const uint8_t *>(plist) + 0x18, 4);
+                void **pit = nullptr;
+                memcpy(&pit, reinterpret_cast<const uint8_t *>(plist) + 0x10, 8);
+                if (ps > 0 && ps <= 64 && ptr_ok(pit)) {
+                    memcpy(&hero, reinterpret_cast<const uint8_t *>(pit) + 0x20, 8);
+                }
+            }
+        }
+    }
+    if (!ptr_ok(hero)) return false;
+    float p[3];
+    feat_getpos(hero, p);
+    if (!(fabsf(p[0]) <= 4000.0f && fabsf(p[2]) <= 4000.0f)) return false;
+    out[0] = p[0];
+    out[1] = p[1];
+    out[2] = p[2];
+    return true;
+}
+
+/* v6.4 FOV/zoom: official game API — Stage.get_StageCamera() +
+   OverrideDefaultCameraSize / ResetDefaultCameraSize (orthographic size).
+   Lazy binding keeps the core resolve gate untouched; owned size is reverted
+   by PANIC and scene change like other owned state. */
+static bool feat_fov_resolve() {
+    if (g_m_stage_getsc && g_m_scam_override && g_m_scam_reset && g_m_scam_getsize) return true;
+    if (!feat_resolve() || !g_img || !g_cls_stage) return false;
+    fn_cfn_t2 cfn = feat_cfn();
+    fn_cgm_t2 cgm = feat_cgm();
+    if (!cfn || !cgm) return false;
+    void *img = reinterpret_cast<void *>(g_img);
+    GUARDED_BEGIN();
+    if (!g_cls_stagecam) g_cls_stagecam = cfn(img, "Oak", "StageCamera");
+    if (!g_m_stage_getsc) g_m_stage_getsc = cgm(g_cls_stage, "get_StageCamera", 0);
+    if (g_cls_stagecam && !g_m_scam_override) g_m_scam_override = cgm(g_cls_stagecam, "OverrideDefaultCameraSize", 1);
+    if (g_cls_stagecam && !g_m_scam_reset) g_m_scam_reset = cgm(g_cls_stagecam, "ResetDefaultCameraSize", 0);
+    if (g_cls_stagecam && !g_m_scam_getsize) g_m_scam_getsize = cgm(g_cls_stagecam, "get_Size", 0);
+    GUARDED_END();
+    return g_m_stage_getsc && g_m_scam_override && g_m_scam_reset && g_m_scam_getsize;
+}
+
+void feat_fov(char *out, size_t cap, const char *arg) {
+    float v = strtof(arg, nullptr);
+    if (!(v == v) || v < 0.0f || (v != 0.0f && (v < 2.0f || v > 40.0f))) {
+        snprintf(out, cap, "FOV range 0 | 2..40");
+        return;
+    }
+    if (!feat_fov_resolve()) { snprintf(out, cap, "FOV fn-missing"); return; }
+    fn_inv_t2 inv = feat_inv();
+    if (!inv) { snprintf(out, cap, "FOV no-invoke"); return; }
+    void *exc = nullptr;
+    void *stage = nullptr;
+    GUARDED_BEGIN();
+    stage = inv(g_m_stage_inst, nullptr, nullptr, &exc);
+    GUARDED_END();
+    if (exc || !ptr_ok(stage)) { snprintf(out, cap, "FOV no-stage"); return; }
+    void *scam = nullptr;
+    exc = nullptr;
+    GUARDED_BEGIN();
+    scam = inv(g_m_stage_getsc, stage, nullptr, &exc);
+    GUARDED_END();
+    if (exc || !ptr_ok(scam)) { snprintf(out, cap, "FOV no-camera"); return; }
+    float before = 0.0f, after = 0.0f;
+    {
+        void *rb = nullptr;
+        exc = nullptr;
+        GUARDED_BEGIN();
+        rb = inv(g_m_scam_getsize, scam, nullptr, &exc);
+        GUARDED_END();
+        if (!exc && ptr_ok(rb)) memcpy(&before, reinterpret_cast<const uint8_t *>(rb) + 0x10, 4);
+    }
+    const sig_atomic_t f0 = g_guard_faults;
+    if (v == 0.0f) {
+        if (g_fov_owned) {
+            GUARDED_BEGIN();
+            (void) inv(g_m_scam_reset, scam, nullptr, &exc);
+            GUARDED_END();
+            g_fov_owned = false;
+        }
+    } else {
+        float size = v;
+        void *args[1] = {&size};
+        GUARDED_BEGIN();
+        (void) inv(g_m_scam_override, scam, args, &exc);
+        GUARDED_END();
+        g_fov_owned = true;
+        g_fov_value = v;
+    }
+    {
+        void *rb = nullptr;
+        exc = nullptr;
+        GUARDED_BEGIN();
+        rb = inv(g_m_scam_getsize, scam, nullptr, &exc);
+        GUARDED_END();
+        if (!exc && ptr_ok(rb)) memcpy(&after, reinterpret_cast<const uint8_t *>(rb) + 0x10, 4);
+    }
+    snprintf(out, cap, "FOV %s want=%.1f size=%.2f->%.2f owned=%d fault=%d",
+             v == 0.0f ? "reset" : "set", (double)v, (double)before, (double)after,
+             g_fov_owned ? 1 : 0, static_cast<int>(g_guard_faults - f0));
+}
+
 /* v5.0: official command kill test — MonsterDeadCommand.Create(info) -> Execute(0) */
 void feat_kcmd(char *out, size_t cap) {
     if (!feat_resolve() || !g_m_mdc_create || !g_m_cmd_exec) {
@@ -4865,6 +5003,10 @@ void ctl_exec(const char *raw, char *ack, size_t cap) {
             options.residual_bits, options.failed, options.uncertain_objects, g_timescale_owned ? 1 : 0, hooks_ok ? "restored" : "uncertain");
         return;
     }
+    if (strncmp(raw, "fov ", 4) == 0) {
+        feat_fov(ack, cap, raw + 4);
+        return;
+    }
     if (strncmp(raw, "tpr ", 4) == 0) {
         float dx = 0, dz = 0;
         if (sscanf(raw + 4, "%f %f", &dx, &dz) == 2) feat_teleport(dx, dz, 0, ack, cap);
@@ -5131,11 +5273,25 @@ void ctl_exec(const char *raw, char *ack, size_t cap) {
 
 #include "modern_control.inc"
 
+/* Log hygiene: only the first token of a request/ack ever reaches logcat. */
+static void ctl_log_token(const char *s, char *out, size_t cap) {
+    size_t n = 0;
+    if (!out || cap == 0) return;
+    if (s) {
+        for (; s[n] && s[n] != ' ' && n + 1 < cap; ++n) {
+            out[n] = (s[n] >= 32 && s[n] != 127) ? s[n] : '?';
+        }
+    }
+    out[n] = '\0';
+}
+
 void *control_thread(void *) {
     ELOGI("CTL thread up (paths=%zu)", kCtlCount);
-    char last[kCtlCount][256] = {};
-    char raw[256];
+    char last[kCtlCount][1088] = {};
+    char raw[1088];
+    char cmd[544];
     char ack[4096];
+    static char enc[8704];
     for (;;) {
         BEAT_BEGIN();
         usleep(1000 * 1000); /* 1 s poll */
@@ -5149,14 +5305,29 @@ void *control_thread(void *) {
                 if (*p == '\n' || *p == '\r') { *p = '\0'; break; }
             }
             if (raw[0] == '\0') break;
+            bool encrypted = false;
+            if (strncmp(raw, "E1:", 3) == 0) {
+                /* Keyed frame: only this engine's nonce can recover it; a wrong
+                   or absent key silently refuses the frame (no ack written). */
+                if (!g_cfg_nonce_valid ||
+                    !wsm::transport_decode(g_cfg_nonce, raw, cmd, sizeof cmd)) continue;
+                encrypted = true;
+            } else {
+                snprintf(cmd, sizeof cmd, "%s", raw);
+            }
             ack[0] = '\0';
             unsigned long long request = 0; int offset = 0;
-            if (raw[0] == '@' && sscanf(raw, "@%llu %n", &request, &offset) == 1 && offset > 0) {
-                char response[4000]; modern_request(raw + offset, response, sizeof response);
+            if (cmd[0] == '@' && sscanf(cmd, "@%llu %n", &request, &offset) == 1 && offset > 0) {
+                char response[4000]; modern_request(cmd + offset, response, sizeof response);
                 snprintf(ack, sizeof ack, "{\"request\":%llu,%s", request, response[0] == '{' ? response + 1 : "\"state\":\"fault\"}");
-            } else modern_request(raw, ack, sizeof ack);
-            ELOGI("CTL[%zu] %s -> %s", i, raw, ack);
-            ctl_write(kCtlPaths[i].ack, ack);
+            } else modern_request(cmd, ack, sizeof ack);
+            char rk[25], ak[25];
+            ctl_log_token(raw, rk, sizeof rk);
+            ctl_log_token(ack, ak, sizeof ak);
+            ELOGI("CTL[%zu] %s -> %s enc=%d", i, rk, ak, encrypted ? 1 : 0);
+            const char *out = ack;
+            if (encrypted && wsm::transport_encode(g_cfg_nonce, ack, enc, sizeof enc)) out = enc;
+            ctl_write(kCtlPaths[i].ack, out);
             break;
         }
         BEAT_END();
@@ -5472,11 +5643,23 @@ bool jni_probe() {
 }
 
 void *engine_thread(void *) {
-    const char *fdstr = getenv("WSM_CHANNEL_FD");
-    const char *noncestr = getenv("WSM_NONCE");
-    const char *dfdstr = getenv("WSM_DEX_FD");
-    if (dfdstr) g_menu_dex_fd = atoi(dfdstr);
-    if (!fdstr) {
+    /* F1 stealth (v6.4): consume the WSM_* environment immediately and clear
+       it, so this process' environ (inherited by forks, visible via /proc and
+       to any child daemon) never exposes WSM names after bootstrap. Values
+       are copied into locals before the unset. */
+    char fdstr[32] = {}, noncestr[32] = {}, dfdstr[32] = {};
+    {
+        const char *v = getenv("WSM_CHANNEL_FD");
+        if (v) snprintf(fdstr, sizeof fdstr, "%s", v);
+        v = getenv("WSM_NONCE");
+        if (v) snprintf(noncestr, sizeof noncestr, "%s", v);
+        v = getenv("WSM_DEX_FD");
+        if (v) snprintf(dfdstr, sizeof dfdstr, "%s", v);
+    }
+    if (noncestr[0]) { g_cfg_nonce = strtoull(noncestr, nullptr, 16); g_cfg_nonce_valid = true; }
+    if (dfdstr[0]) g_menu_dex_fd = atoi(dfdstr);
+    unsetenv("WSM_CHANNEL_FD"); unsetenv("WSM_NONCE"); unsetenv("WSM_DEX_FD");
+    if (!fdstr[0]) {
         ELOGI("no WSM_CHANNEL_FD env — engine aborted");
         return nullptr;
     }
@@ -5504,7 +5687,7 @@ void *engine_thread(void *) {
 
     if (hello->magic != WSM_HELLO_MAGIC || hello->protocol != WSM_PROTOCOL_VERSION ||
         hello->loader_pid != (uint32_t)getpid() || hello->target_uid != (uint32_t)getuid() ||
-        !noncestr || hello->nonce != strtoull(noncestr, nullptr, 16) ||
+        !noncestr[0] || hello->nonce != strtoull(noncestr, nullptr, 16) ||
         strncmp(hello->build, WSM_BUILD_STAMP, sizeof hello->build) ||
         strncmp(hello->abi, WSM_ABI_STR, sizeof hello->abi)) {
         ELOGI("BOOTSTRAP identity refused"); munmap(map, WSM_CHANNEL_MAP_SIZE); close(fd); return nullptr;
@@ -5513,7 +5696,7 @@ void *engine_thread(void *) {
     ack->protocol = WSM_PROTOCOL_VERSION;
     if (hello->magic == WSM_HELLO_MAGIC) {
         ack->nonce_echo = hello->nonce;
-    } else if (noncestr) {
+    } else if (noncestr[0]) {
         ack->nonce_echo = strtoull(noncestr, nullptr, 16);
         snprintf(ack->note, sizeof ack->note, "hello missing, used env nonce");
     }
