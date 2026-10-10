@@ -1,6 +1,6 @@
 # Dokumentasi WSM
 
-Mulai dari [README repo](../README.md). Implementasi aktif adalah WSM **v6.3.0-rc1** di `src/wsm-v2`. Laporan bertanggal menjelaskan kondisi versi dan artefak yang diuji saat itu.
+Mulai dari [README repo](../README.md). Implementasi aktif adalah WSM **v6.4.0-rc1** di `src/wsm-v2`. Laporan bertanggal menjelaskan kondisi versi dan artefak yang diuji saat itu.
 
 ## Panduan terkini
 
@@ -16,7 +16,7 @@ Mulai dari [README repo](../README.md). Implementasi aktif adalah WSM **v6.3.0-r
 
 ## Rilis dan bukti pengujian
 
-- [Release notes v6.3.0-rc1](RELEASE_v6.3.0_rc1.md) dan [receipt lokal](validation/v6.3.0-rc1-local.json).
+- [Release notes v6.4.0-rc1](RELEASE_v6.4.0_rc1.md) dan [receipt lokal](validation/v6.4.0-rc1-local.json); riwayat: [v6.3.0-rc1](RELEASE_v6.3.0_rc1.md).
 - [Release notes v6.2.0-rc1](RELEASE_v6.2.0_rc1.md) dan [arsitektur migrasi v6.2](ARCHITECTURE_V3.md).
 - [Runtime 8 Oktober 2026](RUNTIME_REPORT_20261008.md): observasi game beserta keterbatasannya.
 - [v6.1.0-rc3](releases/v6.1.0-rc3.md) dan [laporan crash RC3](CRASH_REPAIR_RC3.md).

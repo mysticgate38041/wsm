@@ -1,6 +1,6 @@
-# Command produksi WSM 6.3
+# Command produksi WSM 6.4
 
-Referensi command untuk `v6.3.0-rc1`. Target identity tetap package `com.kakaogames.gdts`, versionName `3.54.0` dan versionCode `423`. `epoch E command` mewajibkan epoch cocok saat enqueue; PANIC menaikkan epoch dan membatalkan permintaan lama. Katalog adalah referensi cakupan, bukan 47 toggle aktif.
+Referensi command untuk `v6.4.0-rc1`. Target identity tetap package `com.kakaogames.gdts`, versionName `3.54.0` dan versionCode `423`. `epoch E command` mewajibkan epoch cocok saat enqueue; PANIC menaikkan epoch dan membatalkan permintaan lama. Katalog adalah referensi cakupan, bukan 47 toggle aktif.
 
 Arsitektur/state menu: [modernisasi v6.3](../../../docs/MODERNIZATION_V6_3.md). Bukti RC2 dan semantik desain lama tetap berada di [audit dump](ORIGINAL_DUMP_AUDIT.md) dan [finalisasi 47](FINALIZATION_47.md). ACK tidak membuktikan seluruh efek gameplay.
 
